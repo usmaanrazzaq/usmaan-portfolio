@@ -14,4 +14,33 @@
 
 .nav-bar ul li a {
     text-decoration: none;
+    color: #2b2b2b;
+}
+
+.logo {
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #2b2b2b;
+}
+
+.hero {
+    display: flex;
+
+}
+
+.work-grid {
+    display: grid;
+    row-gap: 0.625rem;
+    column-gap: 20px;
+    flex-shrink: 0;
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.work-item {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
