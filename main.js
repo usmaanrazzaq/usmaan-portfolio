@@ -9,3 +9,8 @@ const li = document.querySelectorAll('li');
 logo.addEventListener('click', () => {
     window.location.href = '#home';
 });
+
+const toggle = document.querySelector('.nav-toggle');
+toggle.addEventListener('click', () => {
+  nav.classList.toggle('expanded');
+});
