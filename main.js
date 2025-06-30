@@ -11,6 +11,8 @@ logo.addEventListener('click', () => {
 });
 
 const toggle = document.querySelector('.nav-toggle');
-toggle.addEventListener('click', () => {
-  nav.classList.toggle('expanded');
-});
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('expanded');
+  });
+}
