@@ -42,6 +42,8 @@ body {
     font-weight: 600;
     font-size: 1.5rem;
     color: #2b2b2b;
+    font-family: 'satoshi', sans-serif;
+    font-variation-settings: "wght" 700;
 }
 
 /* Mobile nav toggle button */
@@ -69,6 +71,8 @@ body {
     font-size: 1.25rem;
     font-weight: 400;
     line-height: 1.5;
+    font-family: 'satoshi', sans-serif;
+    font-variation-settings: "wght" 400;
 }
 
 /* Projects Grid */
