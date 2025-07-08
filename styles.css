@@ -79,6 +79,7 @@ body {
 .work-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 2rem;
     padding: 15px;
     border-top: 0.5px solid #2b2b2b;
@@ -126,83 +127,27 @@ body {
 
 /* Responsive Grid Breakpoints */
 
-/* Tablet Grid */
-@media (max-width: 1080px) {
-  .work-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* Medium screens: 2x2 grid */
-@media (max-width: 1024px) and (min-width: 769px) {
+/* Tablet: 2 columns */
+@media (max-width: 1200px) {
   .work-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-  .work-item img {
-    height: clamp(200px, 40vw, 300px);
-  }
 }
 
-/* Desktop Grid */
-@media (max-width: 1440px) {
+/* Mobile: 1 column */
+@media (max-width: 768px) {
   .work-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .work-item img {
+    height: clamp(180px, 80vw, 320px);
   }
 }
 
 
 @media (max-width: 768px) {
-  /* Show hamburger */
-  .nav-toggle {
-    display: block;
-  }
-  /* Hide nav links by default */
-  .nav-bar ul {
-    display: none;
-    flex-direction: column;
-    gap: 1rem;
-    background-color: #ffffff;
-    position: absolute;
-    z-index: 1000;
-    top: 100%;
-    left: 0;
-    right: 0;
-    padding: 1rem 2rem;
-  }
-  .nav-bar ul li a {
-      color: #2b2b2b;
-  }
-  /* Expanded nav */
-  .nav-bar.expanded ul {
-    display: flex;
-  }
-  /* Hero adjustments */
-  .hero {
-    max-width: 100%;
-    padding: 1rem;
-  }
-  /* Single-column projects */
-  .work-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-  .work-item img {
-    height: clamp(180px, 40vw, 320px);
-  }
-}
-
-/* Mobile Navigation */
-.nav-toggle {
-  display: none;
-  font-size: 1.5rem;
-  background: none;
-  border: none;
-  color: #2b2b2b;
-  cursor: pointer;
-  z-index: 1100;
-}
-
-/*@media (max-width: 768px) {
 
   .nav-toggle {
     display: block;
@@ -240,4 +185,4 @@ body {
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 700;
   }
-}*/
+}
