@@ -128,20 +128,18 @@ body {
 /* Responsive Grid Breakpoints */
 
 /* Tablet Grid */
-@media (max-width: 1024px) {
-  .work-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-  }
-}
-
-/* Desktop Grid */
-@media (max-width: 1200px) {
+@media (max-width: 1080px) {
   .work-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-
+/* Desktop Grid */
+@media (max-width: 1440px) {
+  .work-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
 
 
 @media (max-width: 768px) {
