@@ -170,14 +170,31 @@ body {
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 400;
+  position: relative;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.work-item a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
 }
 
 .work-item a:hover {
   color: #2b2b2b;
-  background-color: #ffffff;
+  transform: scale(1.05);
   font-weight: 500;
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 400;
+}
+
+.work-item a:hover::after {
+  width: 100%;
 }
 
 .work-item h3 {
