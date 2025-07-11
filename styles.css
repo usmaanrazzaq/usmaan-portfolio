@@ -103,13 +103,14 @@ body {
   width: 90%;
 }
 
+/* About Section */
 .about-container {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
   max-width: 700px;
-  padding: 15px;
+  padding: 5px;
   gap: 15px;
 }
 
@@ -124,6 +125,19 @@ body {
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 400;
 }
+
+/* Research Section */
+
+.research-container {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  max-width: 700px;
+  padding: 5px;
+  gap: 15px;
+}
+
 
 /* Projects Grid */
 .work-grid {
