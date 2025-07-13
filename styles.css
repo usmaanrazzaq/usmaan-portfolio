@@ -114,17 +114,19 @@ body {
   gap: 15px;
 }
 
-.about-content h2 {
-  font-size: 1.5rem;
+
+.about-description {
+  width: 100%;
+  max-width: 700px;
   font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-variation-settings: "wght" 500;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #2b2b2b;
+  text-align: left;
 }
 
-.about-content p {
-  font-size: 1rem;
-  font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
-}
+
 
 /* Research Section */
 
@@ -299,3 +301,4 @@ body {
     font-variation-settings: "wght" 700;
   }
 }
+
