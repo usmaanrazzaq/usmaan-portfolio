@@ -360,7 +360,7 @@ body {
 .project-overview-image {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 180px);
+  grid-template-rows: repeat(4, 150px);
   gap: 15px;
   padding: 10px;
   max-width: 90%;
