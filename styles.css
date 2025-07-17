@@ -296,7 +296,7 @@ body {
   }
 }
 
-/* Project Page Layout - Orbitscape Style */
+/* Project Page Layout */
 
 /* Project Hero Section */
 .project-hero {
@@ -306,7 +306,7 @@ body {
 }
 
 .project-hero-content h1 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 600;
@@ -316,7 +316,7 @@ body {
 }
 
 .project-subtitle {
-  font-size: 1.25rem;
+  font-size: 1rem;
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 400;
@@ -379,7 +379,6 @@ body {
 .project-hero-image img {
   width: 100%;
   height: auto;
-  border-radius: 0.5rem;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
 }
 
@@ -406,7 +405,7 @@ body {
 }
 
 .content-section p {
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 400;
@@ -429,7 +428,6 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 0.5rem;
   transition: transform 0.3s ease;
 }
 
