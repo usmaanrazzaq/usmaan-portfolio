@@ -595,4 +595,9 @@ body {
   .social-links li {
     margin: 0;
   }
+  .social-links a {
+    font-size: 0.75rem;
+    font-family: 'satoshi', sans-serif;
+    font-variation-settings: "wght" 400;
+  }
 }
