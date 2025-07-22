@@ -600,4 +600,9 @@ body {
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 400;
   }
+  .status-text {
+    font-size: 0.75rem;
+    font-family: 'satoshi', sans-serif;
+    font-variation-settings: "wght" 400;
+  }
 }
