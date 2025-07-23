@@ -559,7 +559,7 @@ footer span {
   .work-grid .work-item:nth-child(3) img,
   .work-grid .work-item:nth-child(4) img,
   .work-grid .work-item:nth-child(6) img {
-    width: 105%;
+    width: 100%;
     max-width: none;
   }
   
