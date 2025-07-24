@@ -881,4 +881,10 @@ footer span {
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 400;
   }
+  .projects-description {
+    font-size: 0.875rem;
+    font-family: 'general-sans', sans-serif;
+    font-variation-settings: "wght" 400;
+    color: #2b2b2b;
+  }
 }
