@@ -109,7 +109,8 @@ body {
   display: flex;
   gap: 0.75rem;
   list-style: none;
-  margin-top: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
 }
 
 .social-links li {
@@ -154,7 +155,7 @@ footer {
   align-items: center;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  background-color: #ffffff;
+  border-top: 0.5px solid #2b2b2b;
 }
 
 footer span {
@@ -163,6 +164,7 @@ footer span {
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
 }
+
 /* Availability */
 .status-dot {
   display: inline-block;
@@ -175,6 +177,7 @@ footer span {
   animation: pulse 1.5s infinite;
   cursor: default;
 }
+
 /* The text next to the dot */
 .status-text {
   font-size: 1rem;
@@ -183,17 +186,31 @@ footer span {
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
 }
+
 /* Pulse animation */
 @keyframes pulse {
-  0%   { transform: scale(1);   opacity: 1; }
-  50%  { transform: scale(1.4); opacity: 0.7; }
-  100% { transform: scale(1);   opacity: 1; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
+
 /* Offline state */
 .offline .status-dot {
   background-color: #BBB;
   animation: none;
 }
+
 .offline .status-text {
   color: #888;
 }
@@ -270,9 +287,9 @@ footer span {
 .dropdown-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1), 
-              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   opacity: 0;
   padding: 0;
 }
@@ -307,15 +324,15 @@ footer span {
     grid-template-columns: 1fr;
     gap: 0.25rem;
   }
-  
+
   .dropdown-header h2 {
     font-size: 1.25rem;
   }
-  
+
   .dropdown-icon {
     font-size: 1.25rem;
   }
-  
+
   .dropdown-content li {
     font-size: 0.9rem;
   }
@@ -419,8 +436,9 @@ footer span {
   text-decoration-skip-ink: none;
   text-decoration-skip-ink: none;
 }
+
 /*Work item project description*/
-  #project-description {
+#project-description {
   font-size: 0.875rem;
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
@@ -526,6 +544,7 @@ footer span {
   text-decoration-skip-ink: none;
   text-decoration-skip-ink: none;
 }
+
 /* Responsive Grid Breakpoints */
 
 /* Tablet: 2 columns */
@@ -534,10 +553,12 @@ footer span {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
   .projects-display {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
   .project-item img {
     height: clamp(180px, 80vw, 320px);
   }
@@ -553,7 +574,7 @@ footer span {
   .work-item img {
     height: clamp(180px, 80vw, 320px);
   }
-  
+
   /* Increase width for specific items to prevent cut off on mobile */
   .work-grid .work-item:nth-child(1) img,
   .work-grid .work-item:nth-child(3) img,
@@ -562,7 +583,7 @@ footer span {
     width: 100%;
     max-width: none;
   }
-  
+
   .work-item p #project-description {
     font-size: 0.875rem;
     font-weight: 400;
@@ -638,6 +659,7 @@ footer span {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
+
   footer span {
     font-size: 0.875rem;
     font-family: 'satoshi', sans-serif;
@@ -868,19 +890,23 @@ footer span {
     align-items: left;
     gap: 0.75rem;
   }
+
   .social-links li {
     margin: 0;
   }
+
   .social-links a {
     font-size: 0.75rem;
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 400;
   }
+
   .status-text {
     font-size: 0.75rem;
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 400;
   }
+
   .projects-description {
     font-size: 0.875rem;
     font-family: 'general-sans', sans-serif;
