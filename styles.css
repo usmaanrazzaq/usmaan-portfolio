@@ -106,6 +106,7 @@ main {
   padding-top: 10px;
   padding-bottom: 10px;
   margin-top: 5px;
+  padding-left: 5px;
 }
 
 .hero p {
@@ -239,201 +240,6 @@ footer span {
   transition: gap 0.3s ease, grid-template-columns 0.3s ease;
 }
 
-/* Info Card with Gradient */
-.info-card {
-  width: clamp(320px, 85vw, 450px);
-  max-width: 100%;
-  margin-inline: auto;
-  background: linear-gradient(135deg, #f4712f 0%, #515760 50%, #05102d 100%);
-  border-radius: 15px;
-  box-shadow: 0px 10px 20.5px 6px rgba(43, 43, 43, 0.5);
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 20px;
-  gap: 10px;
-  position: relative;
-  overflow: hidden;
-  transition: width 0.3s ease, height 0.3s ease;
-}
-
-.info-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, #f4712f 0%, #515760 30%, #05102d 70%, #05102d 100%);
-  opacity: 0.9;
-  z-index: 1;
-}
-
-.info-card > * {
-  position: relative;
-  z-index: 2;
-}
-
-.position-title {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 600;
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  color: #ffffff;
-  margin-bottom: 0;
-  padding: 10px;
-}
-
-.name {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 700;
-  font-size: clamp(1.5rem, 2.2vw, 2rem);
-  color: #ffffff;
-  margin-bottom: 0;
-  padding: 10px;
-}
-
-.field-of-work {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 400;
-  font-size: clamp(1rem, 1.4vw, 1.25rem);
-  color: #ffffff;
-  margin-bottom: 0;
-  padding: 10px;
-}
-
-/* About Content Area */
-.about-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  max-width: 773px;
-  width: 100%;
-  flex: 1 1 auto;
-  transition: max-width 0.25s ease;
-}
-
-/* About Paragraphs */
-.about-para {
-  padding: 10px;
-  border-bottom: 0.5px solid #2b2b2b;
-  margin-bottom: 0;
-}
-
-.about-para p {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 500;
-  font-size: clamp(1rem, 1.2vw, 1.25rem);
-  line-height: 1.5;
-  color: #000000;
-  margin-bottom: 15px;
-  max-width: 750px;
-}
-
-.about-para p:last-child {
-  margin-bottom: 0;
-}
-
-/* Skills Section */
-.skills-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-  margin-bottom: 0;
-}
-
-.section-header {
-  padding: 10px;
-}
-
-.section-header h2 {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 600;
-  font-size: clamp(1.25rem, 1.8vw, 1.5rem);
-  color: #000000;
-  margin: 0;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 4px;
-}
-
-.skills-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  column-gap: 0;
-  row-gap: 0.25rem;
-  border-bottom: 0.5px solid #2b2b2b;
-  position: relative;
-  transition: grid-template-columns 0.25s ease, row-gap 0.25s ease;
-}
-
-.skills-list::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0.5px;
-  background: #2b2b2b;
-}
-
-.skill-item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 500;
-  font-size: clamp(0.875rem, 0.9vw, 1rem);
-  color: #000000;
-  border-right: 0.5px solid #2b2b2b;
-}
-
-.skill-item:nth-child(even) {
-  border-right: none;
-}
-
-/* Tools Section */
-.tools-section {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
-}
-
-.tools-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  column-gap: 0;
-  row-gap: 0.25rem;
-  position: relative;
-  transition: grid-template-columns 0.25s ease, row-gap 0.25s ease;
-}
-
-.tools-list::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 0.5px;
-  background: #2b2b2b;
-}
-
-.tool-item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 10px;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 500;
-  font-size: clamp(0.875rem, 0.9vw, 1rem);
-  color: #000000;
-  border-right: 0.5px solid #2b2b2b;
-}
-
-.tool-item:nth-child(even) {
-  border-right: none;
-}
-
 /* Research Section */
 .research-container {
   display: flex;
@@ -451,7 +257,7 @@ footer span {
   flex-direction: column;
   gap: clamp(16px, 2vw, 30px);
   padding: 5px 5px 0;
-  border-top: 0.5px solid #2b2b2b;
+  
 }
 
 .work-row {
@@ -459,9 +265,9 @@ footer span {
   align-items: flex-start;
   justify-content: space-between;
   gap: 20px;
-  border-bottom: 0.5px solid #2b2b2b;
   padding-top: 10px;
   padding-bottom: 10px;
+  border-top: 0.5px solid #2b2b2b;
 }
 
 .work-info {
@@ -706,17 +512,6 @@ footer span {
     height: clamp(360px, 40vw, 501px);
   }
 
-  .about-container {
-    grid-template-columns: clamp(300px, 30vw, 400px) 1fr;
-    gap: clamp(40px, 6vw, 80px);
-  }
-
-  .skills-list,
-  .tools-list {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    row-gap: 0.15rem;
-  }
-
   .projects-display {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
@@ -743,15 +538,6 @@ footer span {
     height: clamp(320px, 40vw, 490px);
     width: 100%;
   }
-  .about-container {
-    grid-template-columns: clamp(280px, 32vw, 360px) 1fr;
-    gap: clamp(30px, 5vw, 60px);
-  }
-  .skills-list,
-  .tools-list {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    row-gap: 0.1rem;
-  }
 }
 
 /* Mid-mobile/tablet bridge */
@@ -772,24 +558,11 @@ footer span {
     height: clamp(300px, 45vw, 480px);
   }
 
-  .about-container {
-    grid-template-columns: 1fr;
-    gap: clamp(25px, 4vw, 40px);
-    max-width: 100%;
-  }
-
   .section-header h2 {
     font-size: clamp(1.125rem, 1.6vw, 1.375rem);
   }
-  .about-para p {
-    font-size: clamp(0.95rem, 1.1vw, 1.125rem);
-  }
 
-  .skills-list,
-  .tools-list {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-    row-gap: 0.05rem;
-  }
+
 }
 
 /* Mobile: 1 column */
@@ -922,13 +695,6 @@ footer span {
 
   .project-item img {
     height: clamp(180px, 80vw, 320px);
-  }
-
-  .about-para p {
-    font-size: 0.9rem;
-    width: 95%;
-    font-family: 'general-sans', sans-serif;
-    font-variation-settings: "wght" 400;
   }
 }
 
@@ -1178,56 +944,132 @@ footer span {
     max-width: 100%;
     padding: 0;
   }
+}
 
-  .info-card {
-    width: 100%;
-    height: 400px;
-    margin: 0 auto;
+/* About Section */
+#about .about-container {
+  display: block;
+}
+
+#about .about-frame {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  column-gap: clamp(24px, 7vw, 122px);
+  row-gap: 20px;
+  align-items: start;
+}
+
+#about .section-divider {
+  grid-column: 1 / -1;
+  height: 0.5px;
+  width: 100%;
+  background: #2b2b2b;
+}
+
+#about .about-section {
+  display: contents;
+}
+
+#about .section-index,
+#about .section-title {
+  font-family: 'satoshi', sans-serif;
+  font-variation-settings: "wght" 800;
+  font-size: clamp(1.125rem, 1.6vw, 1.25rem);
+  color: #000000;
+  white-space: nowrap;
+  padding: 0;
+}
+
+#about .section-content {
+  padding: 0;
+  max-width: 750px;
+}
+
+#about .section-content p {
+  font-family: 'satoshi', sans-serif;
+  font-variation-settings: "wght" 500;
+  font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+  line-height: 1.6;
+  color: #000000;
+  padding: 0;
+  margin: 0;
+}
+
+#about .section-content p:last-child {
+  margin-bottom: 0;
+}
+
+#about .tag-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(180px, 1fr));
+  row-gap: 10px;
+  position: relative;
+}
+
+#about .tag-grid::before { content: none; }
+
+#about .tag-grid li {
+  padding: 10px 0;
+  font-family: 'general-sans', sans-serif;
+  font-variation-settings: "wght" 500;
+  font-size: clamp(0.9rem, 0.95vw, 1rem);
+  color: #000000;
+}
+
+/* Align paragraph and tag items' baselines/padding for symmetry */
+#about .section-content p {
+  padding: 5px 0;
+  margin: 0;
+}
+
+#about .section-content p + p { margin-top: 10px; }
+
+#about .tag-grid li { padding: 0; line-height: 1.6; }
+
+/* ===== Responsiveness for About (Figma Frame) ===== */
+@media (max-width: 1024px) {
+  #about .about-frame {
+    column-gap: clamp(20px, 5.5vw, 80px);
   }
-
-  .position-title {
-    font-size: 18px;
-    padding: 8px;
+  #about .tag-grid {
+    grid-template-columns: repeat(2, minmax(160px, 1fr));
   }
+}
 
-  .name {
-    font-size: 28px;
-    padding: 8px;
+@media (max-width: 768px) {
+  #about .about-frame {
+    grid-template-columns: auto 1fr;
+    row-gap: 8px;
   }
-
-  .field-of-work {
-    font-size: 16px;
-    padding: 8px;
+  #about .section-content,
+  #about .tag-grid {
+    grid-column: 1 / -1;
   }
+}
 
-  .about-content {
-    max-width: 100%;
-  }
-
-  .about-para p {
-    font-size: 16px;
-    max-width: 100%;
-  }
-
-  .section-header h2 {
-    font-size: 20px;
-  }
-
-  .skills-list,
-  .tools-list {
+@media (max-width: 520px) {
+  #about .tag-grid {
     grid-template-columns: 1fr;
-    height: auto;
   }
 
-  .skill-item,
-  .tool-item {
-    font-size: 14px;
-    border-right: none;
-    border-bottom: 0.5px solid #2b2b2b;
+  #about .section-title {
+    font-size: 1.25rem;
+    font-variation-settings: "wght" 700;
+    font-family: 'satoshi', sans-serif;
   }
 
-  .skill-item:last-child,
-  .tool-item:last-child {
-    border-bottom: none;
+  #about .section-content p {
+    font-size: 0.875rem;
+  }
+
+  #about .section-content p + p {
+    margin-top: 0px;
+  }
+
+  #about .tag-grid li {
+    font-size: 0.875rem;
   }
 }
