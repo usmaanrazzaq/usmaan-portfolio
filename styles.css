@@ -105,7 +105,7 @@ main {
   max-width: 800px;
   padding-top: 10px;
   padding-bottom: 10px;
-  margin-top: 25px;
+  margin-top: 5px;
 }
 
 .hero p {
@@ -241,8 +241,9 @@ footer span {
 
 /* Info Card with Gradient */
 .info-card {
-  width: clamp(320px, 35vw, 450px);
-  height: clamp(400px, 45vw, 550px);
+  width: clamp(320px, 85vw, 450px);
+  max-width: 100%;
+  margin-inline: auto;
   background: linear-gradient(135deg, #f4712f 0%, #515760 50%, #05102d 100%);
   border-radius: 15px;
   box-shadow: 0px 10px 20.5px 6px rgba(43, 43, 43, 0.5);
@@ -560,8 +561,9 @@ footer span {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  width: min(100%, 926px);
-  height: clamp(360px, 35vw, 501px);
+  width: clamp(300px, 85vw, 926px);
+  max-width: 100%;
+  margin-inline: auto;
   overflow: hidden;
 }
 
@@ -728,7 +730,7 @@ footer span {
 /* Pre-mobile soft scale down near 800px */
 @media (max-width: 840px) {
   .hero p {
-    width: 72%;
+    width: 80%;
     font-size: clamp(0.95rem, 1.3vw, 1.125rem);
   }
   .work-row {
@@ -755,7 +757,7 @@ footer span {
 /* Mid-mobile/tablet bridge */
 @media (max-width: 798px) {
   .hero p {
-    width: 75%;
+    width: 80%;
     font-size: clamp(0.975rem, 1.4vw, 1.125rem);
   }
 
@@ -822,6 +824,13 @@ footer span {
 }
 
 @media (max-width: 768px) {
+  /* Increase main container width for mobile */
+  main {
+    max-width: 100%;
+    padding-left: 0.3rem;
+    padding-right: 0.3rem;
+  }
+
   .nav-toggle {
     display: block;
   }
@@ -865,9 +874,13 @@ footer span {
     font-variation-settings: "wght" 400;
   }
 
+  .hero {
+    max-width: 100%;
+  }
+
   .hero p {
     font-size: 0.9rem;
-    width: 80%;
+    width: 95%;
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 400;
   }
@@ -877,6 +890,14 @@ footer span {
     font-weight: 600;
     font-family: 'satoshi', sans-serif;
     font-variation-settings: "wght" 700;
+  }
+
+  .work-grid {
+    padding: 2px 2px 0;
+  }
+
+  .work-item {
+    padding: 2px;
   }
 
   footer {
@@ -901,6 +922,13 @@ footer span {
 
   .project-item img {
     height: clamp(180px, 80vw, 320px);
+  }
+
+  .about-para p {
+    font-size: 0.9rem;
+    width: 95%;
+    font-family: 'general-sans', sans-serif;
+    font-variation-settings: "wght" 400;
   }
 }
 
