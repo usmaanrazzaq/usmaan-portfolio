@@ -962,7 +962,8 @@ footer span {
 #about .section-divider {
   grid-column: 1 / -1;
   height: 0.5px;
-  width: 1440px;
+  width: min(100%, 1472px);
+  margin-inline: auto;
   background: #2b2b2b;
 }
 
@@ -1041,19 +1042,23 @@ footer span {
 
 @media (max-width: 768px) {
   #about .about-frame {
-    grid-template-columns: auto 1fr;
+    grid-template-columns: minmax(48px, auto) 1fr;
     row-gap: 8px;
   }
   #about .section-content,
   #about .tag-grid {
     grid-column: 1 / -1;
   }
+  #about .section-index,
+  #about .section-title { white-space: normal; }
 }
 
 @media (max-width: 520px) {
   #about .tag-grid {
     grid-template-columns: 1fr;
   }
+  #about .about-frame { column-gap: 16px; }
+  #about .section-index { font-size: 1rem; }
 
   #about .section-title {
     font-size: 1.25rem;
@@ -1063,6 +1068,7 @@ footer span {
 
   #about .section-content p {
     font-size: 0.875rem;
+    width: 100%;
   }
 
   #about .section-content p + p {
