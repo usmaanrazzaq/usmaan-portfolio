@@ -1079,3 +1079,61 @@ footer span {
     font-size: 0.875rem;
   }
 }
+
+/* Research Section */
+#research .research-container {
+  display: block;
+}
+
+#research .research-frame {
+  display: grid;
+  grid-template-columns: auto auto minmax(0, 1fr);
+  column-gap: clamp(24px, 7vw, 122px);
+  row-gap: 20px;
+  align-items: start;
+}
+
+#research .section-divider {
+  grid-column: 1 / -1;
+  height: 0.5px;
+  width: min(100%, 1472px);
+  margin-inline: auto;
+  background: #2b2b2b;
+}
+
+#research .research-section {
+  display: contents;
+}
+
+#research .section-content {
+  padding: 0;
+  max-width: 750px;
+}
+
+#research .section-content p {
+  font-family: 'satoshi', sans-serif;
+  font-variation-settings: "wght" 500;
+  font-size: clamp(0.95rem, 1.2vw, 1.25rem);
+  line-height: 1.6;
+  color: #000000;
+  padding: 0;
+  margin: 0;
+}
+
+#research .section-content p:last-child {
+  margin-bottom: 0;
+}
+
+#research .section-content p + p {
+  margin-top: 10px;
+}
+
+#research .section-index,
+#research .section-title {
+  font-family: 'satoshi', sans-serif;
+  font-variation-settings: "wght" 800;
+  font-size: clamp(1.125rem, 1.6vw, 1.25rem);
+  color: #000000;
+  white-space: nowrap;
+  padding: 0;
+}
