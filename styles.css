@@ -38,7 +38,6 @@ main {
   background-color: transparent;
   padding-left: 1rem;
   padding-right: 1rem;
-  position: relative;
 }
 
 .nav-bar ul {
@@ -47,7 +46,6 @@ main {
   gap: 2rem;
   margin: 0;
   padding: 0;
-  position: relative;
 }
 
 .nav-bar ul li a {
@@ -59,7 +57,6 @@ main {
   font-variation-settings: "wght" 400;
   position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
-  position: relative;
 }
 
 .nav-bar ul li a::after {
@@ -71,18 +68,15 @@ main {
   height: 2px;
   background-color: currentColor;
   transition: width 0.3s ease;
-  position: relative;
 }
 
 .nav-bar ul li a:hover {
   color: #2b2b2b;
   transform: scale(1.05);
-  position: relative;
 }
 
 .nav-bar ul li a:hover::after {
   width: 100%;
-  position: relative;
 }
 
 .logo {
@@ -92,7 +86,6 @@ main {
   color: #2b2b2b;
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 700;
-  position: relative;
 }
 
 /* Mobile nav toggle button */
@@ -103,7 +96,6 @@ main {
   border: none;
   color: #2b2b2b;
   cursor: pointer;
-  position: relative;
 }
 
 /* Hero Section */
@@ -117,7 +109,6 @@ main {
   padding-bottom: 10px;
   margin-top: 5px;
   padding-left: 5px;
-  position: relative;
 }
 
 .hero p {
@@ -128,7 +119,6 @@ main {
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 500;
   width: 65%;
-  position: relative;
 }
 
 .social-links {
@@ -137,13 +127,11 @@ main {
   list-style: none;
   padding-top: 1rem;
   padding-bottom: 1rem;
-  position: relative;
 }
 
 .social-links li {
   display: inline-block;
   margin-right: 1rem;
-  position: relative;
 }
 
 .social-links a {
@@ -152,15 +140,12 @@ main {
   font-weight: 400;
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
-  position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
-  position: relative;
   }
 
 .social-links a:hover {
   color: #2b2b2b;
   transform: scale(1.05);
-  position: relative;
 }
 
 .social-links a::after {
@@ -172,12 +157,11 @@ main {
   height: 2px;
   background-color: currentColor;
   transition: width 0.3s ease;
-  position: relative;
+  
 }
 
 .social-links a:hover::after {
   width: 100%;
-  position: relative;
 }
 
 /* Footer */
@@ -188,7 +172,6 @@ footer {
   padding-top: 2rem;
   padding-bottom: 2rem;
   border-top: 0.5px solid #2b2b2b;
-  position: relative;
   margin-top: 2rem;
 }
 
@@ -197,7 +180,6 @@ footer span {
   font-weight: 400;
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
-  position: relative;
 }
 
 /* Availability */
@@ -211,7 +193,6 @@ footer span {
   vertical-align: middle;
   animation: pulse 1.5s infinite;
   cursor: default;
-  position: relative;
 }
 
 /* The text next to the dot */
@@ -221,7 +202,6 @@ footer span {
   cursor: default;
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
-  position: relative;
 }
 
 /* Pulse animation */
@@ -261,7 +241,6 @@ footer span {
   padding: 0;
   align-items: start;
   transition: gap 0.3s ease, grid-template-columns 0.3s ease;
-  position: relative;
 }
 
 /* Research Section */
@@ -319,7 +298,6 @@ footer span {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: relative;
   padding-top: 10px;
 }
 
@@ -348,7 +326,6 @@ footer span {
 .work-links {
   display: flex;
   gap: 10px;
-  position: relative;
   padding-top: 10px;
 }
 
@@ -367,7 +344,6 @@ footer span {
   color: #2b2b2b;
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
-  position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: clamp(0.875rem, 0.9vw, 1rem);
 }
@@ -483,8 +459,7 @@ footer span {
   color: #2b2b2b;
   font-weight: 400;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
-  position: relative;
+  font-variation-settings: "wght" 400; 
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: 0.875rem;
 }
