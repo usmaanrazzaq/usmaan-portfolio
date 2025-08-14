@@ -1129,7 +1129,7 @@ footer span {
   font-variation-settings: "wght" 500;
   font-size: 32px;
   font-weight: 500;
-  color: #000000;
+  color: #2b2b2b;
   margin: 0;
   line-height: 1;
   text-align: flex-start;
@@ -1178,7 +1178,7 @@ footer span {
 }
 
 .playground-project {
-  background-color: #f3f3f3;
+  background-color: #515760;
   border: 0.25px solid #f3f3f3;
   width: 550px;
   height: 650px;
@@ -1210,7 +1210,7 @@ footer span {
   font-variation-settings: "wght" 500;
   font-size: 1.25rem;
   font-weight: 500;
-  color: #2b2b2b;
+  color: #fbfaf5;
   margin: 0;
   line-height: 1;
   white-space: nowrap;
@@ -1234,7 +1234,7 @@ footer span {
   font-variation-settings: "wght" 300;
   font-size: 0.9375rem;
   font-weight: 300;
-  color: #2b2b2b;
+  color: #fbfaf5;
   white-space: nowrap;
 }
 
