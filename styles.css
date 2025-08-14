@@ -132,6 +132,7 @@ main {
 .social-links li {
   display: inline-block;
   margin-right: 1rem;
+  position: relative;
 }
 
 .social-links a {
@@ -141,6 +142,7 @@ main {
   font-family: 'satoshi', sans-serif;
   font-variation-settings: "wght" 400;
   transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
   }
 
 .social-links a:hover {
