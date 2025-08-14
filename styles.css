@@ -1171,17 +1171,17 @@ footer span {
 .playground-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 650px);
-  gap: 25px;
-  width: 1136px;
+  grid-template-rows: repeat(2, 600px);
+  gap: 5px;
+  width: 1050px;
   flex-shrink: 0;
 }
 
 .playground-project {
   background-color: #515760;
   border: 0.25px solid #f3f3f3;
-  width: 550px;
-  height: 650px;
+  width: 495px;
+  height: 600px;
   position: relative;
   overflow: hidden;
 }
