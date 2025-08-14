@@ -53,7 +53,7 @@ main {
   color: #2b2b2b;
   font-weight: 400;
   font-size: 1rem;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 400;
   position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
@@ -84,7 +84,7 @@ main {
   font-size: 1rem;
   font-weight: 600;
   color: #2b2b2b;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 700;
 }
 
@@ -116,7 +116,7 @@ main {
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 500;
   line-height: 1.5;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 500;
   width: 65%;
 }
@@ -139,8 +139,8 @@ main {
   text-decoration: none;
   color: #2b2b2b;
   font-weight: 400;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
   transition: color 0.3s ease, transform 0.3s ease;
   position: relative;
   }
@@ -180,8 +180,8 @@ footer {
 footer span {
   font-size: 0.875rem;
   font-weight: 400;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
 }
 
 /* Availability */
@@ -202,8 +202,8 @@ footer span {
   font-size: 1rem;
   vertical-align: middle;
   cursor: default;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
 }
 
 /* Pulse animation */
@@ -284,16 +284,18 @@ footer span {
 
 .work-header h3 {
   font-size: clamp(1.125rem, 1.1vw, 1.25rem);
-  font-weight: 600;
-  font-family: 'satoshi', sans-serif;
+  font-weight: 500;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 500;
   color: #2b2b2b;
 }
 
 .work-desc p {
   font-size: clamp(0.875rem, 1vw, 1rem);
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  color: #2b2b2b;
+  font-variation-settings: "wght" 300;
+  color: #252525;
 }
 
 .work-crumbs {
@@ -301,6 +303,7 @@ footer span {
   align-items: center;
   justify-content: space-between;
   padding-top: 10px;
+  border-top: 0.5px solid #2b2b2b;
 }
 
 .work-crumbs::before {
@@ -320,8 +323,9 @@ footer span {
 
 .work-crumbs span {
   font-size: clamp(0.75rem, 0.8vw, 0.875rem);
-  font-weight: 400;
-  font-family: 'general-sans', sans-serif;
+  font-weight: 300;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
   color: #2b2b2b;
 }
 
@@ -329,6 +333,7 @@ footer span {
   display: flex;
   gap: 10px;
   padding-top: 10px;
+  border-top: 0.5px solid #2b2b2b;
 }
 
 .work-links::before {
@@ -344,10 +349,12 @@ footer span {
 .work-links a {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 400;
-  font-family: 'general-sans', sans-serif;
+  font-weight: 300;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: clamp(0.875rem, 0.9vw, 1rem);
+  position: relative;
 }
 
 .work-links a::after {
@@ -430,40 +437,41 @@ footer span {
   display: block;
 }
 
-.projects-title {
+.projects-title h2 {
   font-size: 1rem;
   font-weight: 500;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 500;
   color: #2b2b2b;
 }
 
-.projects-description {
+.projects-description p {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
-  color: #706f6e;
+  font-variation-settings: "wght" 300;
+  color: #252525;
   line-height: 1.5;
   width: 400px;
 }
 
 .project-item p {
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
   color: #706f6e;
-  font-variation-settings: "wght" 400;
+  font-variation-settings: "wght" 300;
 }
 
 .project-item p a {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400; 
+  font-variation-settings: "wght" 300; 
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: 0.875rem;
+  position: relative;
 }
 
 .project-item p a::after {
@@ -489,7 +497,7 @@ footer span {
 .project-item h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 600;
   text-decoration: underline;
   text-underline-offset: 0.25rem;
@@ -646,7 +654,7 @@ footer span {
   .nav-bar ul li a {
     color: #2b2b2b;
     font-size: 0.9rem;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
@@ -657,14 +665,14 @@ footer span {
   .hero p {
     font-size: 0.9rem;
     width: 95%;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'general-sans', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
   .logo {
     font-size: 0.9rem;
     font-weight: 600;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
     font-variation-settings: "wght" 700;
   }
 
@@ -690,7 +698,7 @@ footer span {
 
   footer span {
     font-size: 0.875rem;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
@@ -705,8 +713,6 @@ footer span {
 }
 
 /* Project Page Layout */
-
-/* Project Hero Section */
 .project-hero {
   max-width: 1200px;
   margin: 0 auto;
@@ -716,7 +722,7 @@ footer span {
 .project-hero-content h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 600;
   color: #2b2b2b;
   margin-bottom: 1.5rem;
@@ -725,10 +731,10 @@ footer span {
 
 .project-subtitle {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
-  color: #666;
+  font-variation-settings: "wght" 300;
+  color: #252525;
   margin-bottom: 3rem;
   line-height: 1.5;
   max-width: 600px;
@@ -740,14 +746,15 @@ footer span {
   gap: 0.75rem;
   margin-bottom: 4rem;
   flex-wrap: wrap;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .tag {
   color: #2b2b2b;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 500;
+  font-variation-settings: "wght" 300;
 }
 
 /* Project Metadata */
@@ -761,10 +768,10 @@ footer span {
 
 .meta-item h6 {
   font-size: 0.875rem;
-  font-weight: 600;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 600;
-  color: #666;
+  font-weight: 500;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 500;
+  color: #2b2b2b;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
@@ -772,9 +779,9 @@ footer span {
 
 .meta-item p {
   font-size: 1rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-variation-settings: "wght" 300;
   color: #2b2b2b;
 }
 
@@ -787,7 +794,7 @@ footer span {
 .project-hero-image img {
   width: 100%;
   height: auto;
-  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.05);
 }
 
 /* Project Content */
@@ -804,9 +811,9 @@ footer span {
 
 .content-section h2 {
   font-size: 1.5rem;
-  font-weight: 600;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 600;
+  font-weight: 500;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 500;
   color: #2b2b2b;
   margin-bottom: 1rem;
   line-height: 1.2;
@@ -814,9 +821,9 @@ footer span {
 
 .content-section p {
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 300;
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-variation-settings: "wght" 300;
   color: #2b2b2b;
   line-height: 1.5;
   margin-bottom: 1.5rem;
@@ -925,13 +932,13 @@ footer span {
 
   .social-links a {
     font-size: 0.75rem;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
   .status-text {
     font-size: 0.75rem;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
@@ -982,7 +989,7 @@ footer span {
 
 #about .section-index,
 #about .section-title {
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 800;
   font-size: clamp(1.125rem, 1.6vw, 1.25rem);
   color: #000000;
@@ -996,11 +1003,11 @@ footer span {
 }
 
 #about .section-content p {
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 500;
-  font-size: clamp(0.95rem, 1.2vw, 1.25rem);
-  line-height: 1.6;
-  color: #000000;
+  font-family: 'general-sans', sans-serif;
+  font-variation-settings: "wght" 300;
+  font-size: clamp(0.95rem, 1.2vw, 1rem);
+  line-height: 1.5;
+  color: #252525;
   padding: 0;
   margin: 0;
 }
@@ -1023,10 +1030,10 @@ footer span {
 
 #about .tag-grid li {
   padding: 10px 0;
-  font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 500;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 300;
   font-size: clamp(0.9rem, 0.95vw, 1rem);
-  color: #000000;
+  color: #252525;
 }
 
 /* Align paragraph and tag items' baselines/padding for symmetry */
@@ -1072,7 +1079,7 @@ footer span {
   #about .section-title {
     font-size: 1.25rem;
     font-variation-settings: "wght" 700;
-    font-family: 'satoshi', sans-serif;
+    font-family: 'switzer', sans-serif;
   }
 
   #about .section-content p {
@@ -1125,11 +1132,11 @@ footer span {
 }
 
 .playground-title {
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 500;
   font-size: 32px;
   font-weight: 500;
-  color: #2b2b2b;
+  color: #252525;
   margin: 0;
   line-height: 1;
   text-align: flex-start;
@@ -1160,10 +1167,10 @@ footer span {
 
 .playground-description p {
   font-family: 'general-sans', sans-serif;
-  font-variation-settings: "wght" 400;
+  font-variation-settings: "wght" 300;
   font-size: 1rem;
-  font-weight: 400;
-  color: #2b2b2b;
+  font-weight: 300;
+  color: #252525;
   line-height: 1.5;
   margin: 0;
 }
@@ -1178,7 +1185,7 @@ footer span {
 }
 
 .playground-project {
-  background-color: rgba(231, 229, 221, 0.5);
+  background-color: rgba(231, 229, 221, 0.25);
   border: 0.25px solid #e7e5dd;
   width: 495px;
   height: 600px;
@@ -1206,11 +1213,11 @@ footer span {
 }
 
 .project-title h3 {
-  font-family: 'satoshi', sans-serif;
+  font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 500;
   font-size: 1.25rem;
   font-weight: 500;
-  color: #2b2b2b;
+  color: #252525;
   margin: 0;
   line-height: 1;
   white-space: nowrap;
@@ -1230,11 +1237,11 @@ footer span {
   align-items: center;
   justify-content: center;
   padding: 10px;
-  font-family: 'satoshi', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-family: 'switzer', sans-serif;
+  font-variation-settings: "wght" 200;
   font-size: 0.9375rem;
-  font-weight: 300;
-  color: #2b2b2b;
+  font-weight: 200;
+  color: #252525;
   white-space: nowrap;
 }
 
