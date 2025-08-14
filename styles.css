@@ -1178,8 +1178,8 @@ footer span {
 }
 
 .playground-project {
-  background-color: #515760;
-  border: 0.25px solid #f3f3f3;
+  background-color: rgba(231, 229, 221, 0.5);
+  border: 0.25px solid #e7e5dd;
   width: 495px;
   height: 600px;
   position: relative;
@@ -1210,7 +1210,7 @@ footer span {
   font-variation-settings: "wght" 500;
   font-size: 1.25rem;
   font-weight: 500;
-  color: #fbfaf5;
+  color: #2b2b2b;
   margin: 0;
   line-height: 1;
   white-space: nowrap;
@@ -1234,7 +1234,7 @@ footer span {
   font-variation-settings: "wght" 300;
   font-size: 0.9375rem;
   font-weight: 300;
-  color: #fbfaf5;
+  color: #2b2b2b;
   white-space: nowrap;
 }
 
