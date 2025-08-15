@@ -306,15 +306,7 @@ footer span {
   border-top: 0.5px solid #2b2b2b;
 }
 
-.work-crumbs::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 0.5px;
-  background: #2b2b2b;
-}
+
 
 .crumb-left {
   display: flex;
@@ -336,15 +328,7 @@ footer span {
   border-top: 0.5px solid #2b2b2b;
 }
 
-.work-links::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 0.5px;
-  background: #2b2b2b;
-}
+
 
 .work-links a {
   text-decoration: none;
@@ -608,7 +592,7 @@ footer span {
 
 @media (max-width: 768px) {
   body {
-    margin: 8px;
+    margin: 10px;
   }
 
   /* Increase main container width for mobile */
