@@ -607,6 +607,10 @@ footer span {
 }
 
 @media (max-width: 768px) {
+  body {
+    margin: 8px;
+  }
+
   /* Increase main container width for mobile */
   main {
     max-width: 100%;
