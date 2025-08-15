@@ -437,22 +437,23 @@ footer span {
   display: block;
 }
 
-.projects-title h2 {
-  font-size: 1rem;
-  font-weight: 500;
+.projects-title h1 {
   font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 500;
-  color: #2b2b2b;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #252525;
+  border-bottom: 1px solid #e5e5e5;
 }
 
 .projects-description p {
-  font-size: 1rem;
+  font-size: 0.875rem;
   font-weight: 300;
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 300;
   color: #252525;
   line-height: 1.5;
-  width: 400px;
+  width: 450px;
 }
 
 .project-item p {
@@ -1134,7 +1135,7 @@ footer span {
 .playground-title {
   font-family: 'switzer', sans-serif;
   font-variation-settings: "wght" 500;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
   color: #252525;
   margin: 0;
