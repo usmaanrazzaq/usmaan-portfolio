@@ -1114,7 +1114,7 @@ footer span {
 }
 
 .playground-title-wrapper {
-  display: flex;
+  display: contents;
   justify-content: flex-start;
   align-items: flex-start;
   padding: 10px;
@@ -1150,7 +1150,7 @@ footer span {
   align-items: flex-start;
   justify-content: flex-start;
   padding: 5px;
-  width: 225px;
+  width: 600px;
   flex-shrink: 0;
 }
 
@@ -1171,6 +1171,9 @@ footer span {
   gap: 5px;
   width: 1050px;
   flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
 }
 
 .playground-project {
@@ -1242,7 +1245,8 @@ footer span {
 }
 
 /* Project Image Styling */
-.project-image img {
+.project-image img,
+.project-image video {
   width: 100%;
   height: 100%;
   object-fit: cover;
