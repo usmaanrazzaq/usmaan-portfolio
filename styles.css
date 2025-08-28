@@ -1015,6 +1015,43 @@ footer span {
   margin: 0;
 }
 
+#about .section-content h5 {
+  font-family: 'general-sans', sans-serif;
+  font-variation-settings: "wght" 200;
+  font-size: clamp(0.875rem, 1.1vw, 0.875rem);
+  line-height: 1.5;
+  color: #252525;
+  padding: 0;
+  margin: 0;
+}
+
+#about .section-content h5 a {
+  color: #252525;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #252525;
+}
+
+#about .section-content h5 a:hover {
+  color: #252525;
+  text-decoration: none;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #252525;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: 'general-sans', sans-serif;
+  font-variation-settings: "wght" 200;
+  font-size: clamp(0.875rem, 1.1vw, 0.875rem);
+  line-height: 1.5;
+  color: #252525;
+  padding: 0;
+  margin: 0;
+}
+
+
+
 #about .section-content p:last-child {
   margin-bottom: 0;
 }
@@ -1379,3 +1416,5 @@ footer span {
     padding: 6px 8px;
   }
 }
+
+/* Research Page */
