@@ -717,9 +717,12 @@ footer span {
 
 /* Project Page Layout */
 .project-hero {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 4rem 2rem 2rem;
+  display: flex;
+width: 43.375rem;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 0.625rem;
 }
 
 .project-hero-content h1 {
@@ -730,6 +733,11 @@ footer span {
   color: #2b2b2b;
   margin-bottom: 1.5rem;
   line-height: 1.1;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .project-subtitle {
@@ -741,6 +749,11 @@ footer span {
   margin-bottom: 3rem;
   line-height: 1.5;
   max-width: 600px;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* Project Tags */
@@ -750,6 +763,11 @@ footer span {
   margin-bottom: 4rem;
   flex-wrap: wrap;
   border-bottom: 1px solid #e5e5e5;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .tag {
@@ -767,6 +785,11 @@ footer span {
   gap: 2rem;
   padding-top: 2rem;
   border-top: 1px solid #e5e5e5;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .meta-item h6 {
@@ -778,6 +801,11 @@ footer span {
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .meta-item p {
@@ -786,6 +814,11 @@ footer span {
   font-family: 'general-sans', sans-serif;
   font-variation-settings: "wght" 300;
   color: #2b2b2b;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* Project Hero Image */
@@ -820,6 +853,11 @@ footer span {
   color: #2b2b2b;
   margin-bottom: 1rem;
   line-height: 1.2;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .content-section p {
@@ -830,6 +868,11 @@ footer span {
   color: #2b2b2b;
   line-height: 1.5;
   margin-bottom: 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 /* Project Gallery */
@@ -840,6 +883,11 @@ footer span {
   gap: 1rem;
   margin: 4rem 0;
   max-width: 800px;
+  text-align: center;
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
 }
 
 .project-gallery img {
