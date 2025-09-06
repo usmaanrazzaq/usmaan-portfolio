@@ -1,6 +1,60 @@
 // Test if script is loading
 console.log('=== SCRIPT LOADED ===');
 
+// Mobile video autoplay fix
+function handleVideoAutoplay() {
+    const video = document.getElementById('hero-video');
+    
+    if (video) {
+        console.log('Video element found, attempting autoplay...');
+        
+        // Try to play the video
+        const playPromise = video.play();
+        
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                console.log('Video autoplay successful');
+            }).catch(error => {
+                console.log('Video autoplay failed:', error);
+                
+                // If autoplay fails, try to play on user interaction
+                const playOnInteraction = () => {
+                    video.play().then(() => {
+                        console.log('Video started on user interaction');
+                    }).catch(e => {
+                        console.log('Video failed to start:', e);
+                    });
+                    
+                    // Remove listeners after first interaction
+                    document.removeEventListener('touchstart', playOnInteraction);
+                    document.removeEventListener('click', playOnInteraction);
+                    document.removeEventListener('scroll', playOnInteraction);
+                };
+                
+                // Add listeners for user interaction
+                document.addEventListener('touchstart', playOnInteraction);
+                document.addEventListener('click', playOnInteraction);
+                document.addEventListener('scroll', playOnInteraction);
+            });
+        }
+        
+        // Additional fallback - force play on load
+        video.addEventListener('loadeddata', () => {
+            if (video.paused) {
+                video.play().catch(e => {
+                    console.log('Video play on load failed:', e);
+                });
+            }
+        });
+        
+        // Force video to be ready
+        video.load();
+    }
+}
+
+// Call video autoplay handler immediately
+handleVideoAutoplay();
+
 // Wait for page to load completely
 window.addEventListener('load', function() {
     console.log('=== PAGE LOADED ===');
