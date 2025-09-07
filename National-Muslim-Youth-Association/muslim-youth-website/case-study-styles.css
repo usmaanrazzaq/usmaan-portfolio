@@ -171,6 +171,8 @@ html {
   display: flex;
   align-items: start;
   justify-content: center;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
 }
 
 .video-container video,
