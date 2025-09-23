@@ -328,50 +328,43 @@ html {
 }
 
 .wireframe-container {
-  background-color: #404040;
-  padding: 4rem 15rem;
+  background-color: #212a37;
+  padding: 10px;
   box-shadow: 0px 6px 19.5px 2px rgba(43, 43, 43, 0.25);
   overflow: hidden;
   margin-bottom: 1rem;
-}
-
-.wireframe-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  gap: 1rem;
-  align-items: start;
-  justify-items: center;
-}
-
-.wireframe-homepage {
-  grid-column: 2;
-  grid-row: 1 / 3;
-  max-width: 100%;
-  height: auto;
-}
-
-.wireframe-style-guide {
-  grid-column: 1;
-  grid-row: 1;
-  max-width: 100%;
-  height: auto;
-}
-
-.logo-stack {
-  grid-column: 1;
-  grid-row: 2;
   display: flex;
-  gap: 1rem;
-  background-color: #cdcdcd;
-  padding: 1rem;
   align-items: center;
   justify-content: center;
 }
 
-.logo-stack img {
-  width: 120px;
-  height: auto;
+/* OTRS Merchandise Grid */
+.otrs-merch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 1306px;
+  margin: 0 auto;
+}
+
+.merch-item {
+  position: relative;
+  width: 100%;
+  height: 425px;
+  overflow: hidden;
+}
+
+.merch-item img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  pointer-events: none;
 }
 
 /* Research Display */
@@ -516,6 +509,17 @@ footer span {
   .research-container {
     padding: 2rem;
   }
+  
+  .otrs-merch-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 8px;
+    max-width: 336px;
+  }
+  
+  .merch-item {
+    height: 212px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -621,26 +625,19 @@ footer span {
     height: 400px;
   }
   
-  .wireframe-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+  .wireframe-container {
+    padding: 1rem;
   }
   
-  .wireframe-homepage,
-  .wireframe-style-guide {
-    grid-column: 1;
-    grid-row: auto;
+  .otrs-merch-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    gap: 6px;
+    max-width: 292px;
   }
   
-  .logo-stack {
-    grid-column: 1;
-    grid-row: auto;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
-  
-  .logo-stack img {
-    width: 80px;
+  .merch-item {
+    height: 180px;
   }
   
   footer {
