@@ -1,21 +1,46 @@
-// Get all the elements
-const header = document.querySelector('header');
-const logo = document.querySelector('.logo');
-const nav = document.querySelector('nav');
-const ul = document.querySelector('ul');
-const li = document.querySelectorAll('li');
+// Navigation toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Get all the elements
+  const header = document.querySelector('header');
+  const logo = document.querySelector('.logo');
+  const nav = document.querySelector('.nav-bar');
+  const toggle = document.querySelector('.nav-toggle');
+  
 
-// Add event listener to the logo
-logo.addEventListener('click', () => {
-    window.location.href = '#home';
+  // Add event listener to the logo
+  if (logo) {
+    logo.addEventListener('click', () => {
+      window.location.href = '/';
+    });
+  }
+
+  // Mobile nav toggle
+  if (toggle && nav) {
+    toggle.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      nav.classList.toggle('expanded');
+      
+      // Force a reflow to ensure the animation triggers
+      nav.offsetHeight;
+    });
+
+    // Close menu when clicking on nav links
+    const navLinks = nav.querySelectorAll('ul li a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('expanded');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target)) {
+        nav.classList.remove('expanded');
+      }
+    });
+  }
 });
-
-const toggle = document.querySelector('.nav-toggle');
-if (toggle) {
-  toggle.addEventListener('click', () => {
-    nav.classList.toggle('expanded');
-  });
-}
 
 // Dropdown functionality for skills and tools containers
 document.addEventListener('DOMContentLoaded', function() {
