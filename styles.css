@@ -235,15 +235,20 @@ main {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  padding: 0.5rem;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 32px;
-  height: 32px;
+  width: auto;
+  height: auto;
   position: relative;
   border-radius: 4px;
   transition: background-color 0.2s ease;
+  min-width: 44px;
+  min-height: 44px;
+  z-index: 1001;
+  color: #2b2b2b;
+  font-size: 1.5rem;
 }
 
 /* Ensure nav-toggle shows on mobile screens */
@@ -914,7 +919,7 @@ footer span {
   }
 
   .nav-bar ul {
-    display: none;
+    display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
@@ -925,12 +930,19 @@ footer span {
     left: 0;
     right: 0;
     padding: 1rem 2rem;
-    z-index: 9999;
+    z-index: 1000;
     border-top: 0.5px solid rgba(43, 43, 43, 0.1);
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
   }
 
   .nav-bar.expanded ul {
-    display: flex;
+    max-height: 500px;
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .nav-bar ul li a {

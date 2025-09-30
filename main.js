@@ -16,10 +16,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Mobile nav toggle
   if (toggle && nav) {
+    toggle.setAttribute('aria-expanded', 'false');
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
       nav.classList.toggle('expanded');
+      const isExpanded = nav.classList.contains('expanded');
+      toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
       
       // Force a reflow to ensure the animation triggers
       nav.offsetHeight;
@@ -30,6 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
         nav.classList.remove('expanded');
+        toggle.setAttribute('aria-expanded', 'false');
       });
     });
 
@@ -37,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', (e) => {
       if (!nav.contains(e.target)) {
         nav.classList.remove('expanded');
+        toggle.setAttribute('aria-expanded', 'false');
       }
     });
   }
