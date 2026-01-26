@@ -196,7 +196,8 @@ main {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   font-size: 18px;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   line-height: 1.5;
   margin: 0;
 }
@@ -213,7 +214,8 @@ main {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   font-size: 18px;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   line-height: 1.5;
   margin: 0;
 }
@@ -473,7 +475,8 @@ main {
 .work-description p {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   font-size: 14px;
   line-height: 1.5;
   color: #2b2b2b;
@@ -2619,7 +2622,8 @@ gap: 0.625rem;
   font-size: 18px;
   line-height: 1.5;
   color: #000000;
-  width: 600px;
+  width: 100%;
+  max-width: 600px;
   margin: 0;
 }
 
