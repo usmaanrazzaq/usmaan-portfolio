@@ -2988,14 +2988,33 @@ gap: 0.625rem;
     max-width: 100%;
   }
   
-  .experience-header,
-  .experience-row {
-    grid-template-columns: 1fr;
-    gap: 3px;
+  .experience-header {
+    display: none;
   }
-
-  .exp-year {
-    text-align: left;
+  
+  .experience-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3px;
+    padding: 12px 0;
+  }
+  
+  .experience-row .exp-col:first-child {
+    font-weight: 400;
+    flex-basis: 60%;
+  }
+  
+  .experience-row .exp-col:nth-child(2) {
+    flex-basis: 60%;
+    order: 3;
+  }
+  
+  .experience-row .exp-year {
+    text-align: right;
+    flex-basis: auto;
+    order: 2;
   }
   
   .skills-tools-section {
