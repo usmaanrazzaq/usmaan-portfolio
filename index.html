@@ -15,10 +15,14 @@
         rel="stylesheet">
     <link rel="icon" href="/Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="/iOS Icon.png" sizes="180x180">
-
 </head>
 
 <body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-spinner"></div>
+    </div>
+
     <header>
         <nav class="nav-bar">
             <a href="/" class="logo">Usmaan Razzaq</a>
@@ -31,156 +35,191 @@
             </ul>
         </nav>
     </header>
-    <main class="homepage-layout">
-        <!-- Fixed Left Column -->
-        <aside class="left-column">
-            <div class="hero-section">
-                <div id="availability">
-                    <span class="status-dot" title="Available"></span>
-                    <span class="status-text">Available for work</span>
-                </div>
-                <div class="hero-bio">
-                    <p>Product Designer & Front-End Developer from Queens, NY, focused on crafting strategic and impactful interfaces.</p>
-                    <p>Currently freelancing through my design studio, On The Run Studio, where I partner with clients to design and develop intuitive, impactful websites.</p>
-                </div>
+    
+    <main class="new-homepage">
+        <!-- Hero Section -->
+        <section class="hero-intro">
+            <div class="hero-bio-text">
+                <p><span class="bio-primary">Hi, I'm Usmaan, a Product Designer and Front-End Developer based in Queens, NY. I create impactful interfaces and develop intuitive experiences.</span> <span class="bio-secondary">Currently, I freelance through my design studio, On The Run Studio, where I collaborate with clients to design and develop user-friendly and effective websites.</span></p>
             </div>
-            
-            <div class="divider-horizontal"></div>
-            
-            <div class="get-in-touch">
-                <h3>Get in touch!</h3>
-                <div class="links-container">
-                    <a href="mailto:usmaanrazzaq.designs@gmail.com">Usmaanrazzaq.designs@gmail.com</a>
-                    <a href="https://www.linkedin.com/in/usmaan-razzaq-9886511b1" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-                    <a href="https://github.com/usmaanrazzaq" target="_blank" rel="noopener noreferrer">GitHub</a>
-                    <a href="https://www.instagram.com/usmaanrzq?igsh=cnNwazN1cHdmZHQ5&utm_source=qr" target="_blank" rel="noopener noreferrer">Instagram</a>
-                    <a href="https://x.com/usmaanrzq?s=11" target="_blank" rel="noopener noreferrer">Twitter</a>
-                </div>
-            </div>
-            
-            <div class="divider-horizontal"></div>
-        </aside>
+            <p class="hero-curation"><span class="bio-secondary">A curation of images used as a source of inspiration and design guidance.</span> <a href="/Sandbox/index.html" class="index-link">Index</a></p>
+        </section>
         
-        <!-- Vertical Divider -->
-        <div class="vertical-divider"></div>
+        <div class="hero-divider"></div>
         
-        <!-- Scrollable Work Layout -->
-        <section class="work-layout" id="projects">
-            <div class="work-grid">
-                <div class="work-row">
-                    <div class="work-info">
-                        <div class="work-header">
-                            <h3>National Muslim Youth Association</h3>
-                            <span class="work-date">Nov 2023 - Present</span>
-                        </div>
-                        <div class="work-crumbs">
-                            <span>UI/UX Design</span>
-                            <span>Webflow</span>
-                        </div>
-                        <div class="work-desc">
-                            <p>The National Muslim Youth Association is a Youth Boys Organization. I work with the organization as their lead UI designer and Project Manager. I lead an overhaul redesign of the website, which included a new design system, new components, and a new content management system.</p>
-                        </div>
-                        <div class="work-links">
-                            <a href="https://www.atfalusa.org/" target="_blank" rel="noopener noreferrer">Website</a>
-                            <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html">Case Study</a>
-                        </div>
-                    </div>
-                    <div class="work-visual">
-                        <img src="images/Atfal-Website-Display.jpg" alt="National Muslim Youth Association display">
-                    </div>
+        <!-- Main Content Area -->
+        <section class="content-area">
+            <!-- Work Directory (Left Side - Sticky) -->
+            <aside class="work-directory">
+                <div class="directory-header">
+                    <span>Work Directory</span>
                 </div>
-
-                <div class="work-row">
-                    <div class="work-info">
-                        <div class="work-header">
-                            <h3>On The Run Studio</h3>
+                <!-- Mobile Toggle (Three Lines) -->
+                <button class="directory-toggle" type="button" aria-label="Toggle work directory" aria-expanded="false">
+                    <span class="toggle-line"></span>
+                    <span class="toggle-line"></span>
+                    <span class="toggle-line"></span>
+                </button>
+                <nav class="work-list">
+                    <a href="#" class="work-title active" data-work="otrs">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">On The Run Studio</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="adsum">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Adsum NYC</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="dpr">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">DPR Studio</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="spots">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Spots</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="nmya">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">National Muslim Youth Association</span>
+                    </a>
+                </nav>
+            </aside>
+            
+            <!-- Work Display (Right Side) -->
+            <div class="work-display-container">
+                <!-- On The Run Studio -->
+                <article class="work-display active" data-work="otrs">
+                    <div class="work-image">
+                        <img src="images/OTRS-Screen.png" alt="On The Run Studio website display">
+                    </div>
+                    <div class="work-info-panel">
+                        <div class="work-title-row">
+                            <h2>On The Run Studio</h2>
+                        </div>
+                        <div class="work-crumbs-row">
+                            <div class="crumbs-left">
+                                <span class="crumb">Founder</span>
+                                <span class="crumb">Product Design & Front-End dev</span>
+                            </div>
                             <span class="work-date">Mar 2021 - Present</span>
                         </div>
-                        <div class="work-crumbs">
-                            <span>Founder</span>
-                            <span>Product Design & Front-End dev</span>
+                        <div class="work-description">
+                            <p>On The Run Studio is a personal project, it began as a source to curate and share images that inspired me and my work. Overtime, the page began to grow and build a community of like-minded individuals who were also getting inspired by the posts. Along the way I developed projects designed and inspired by some the images I had curated and through my childhood. On The Run Studio will still aim to share, inspire, and grow the community while connecting with creatives, brands, businesses to assist in Brand Development and Web Development.</p>
                         </div>
-                        <div class="work-desc">
-                            <p>On The Run Studio is a design agency that I founded in 2021. I work with a partner to design and develop websites for clients. We offer a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
-                        </div>
-                        <div class="work-links">
+                        <div class="work-links-row">
                             <a href="https://ontherun.studio/" target="_blank" rel="noopener noreferrer">Website</a>
                             <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">Case Study</a>
                         </div>
                     </div>
-                    <div class="work-visual bg-dark">
-                        <img src="images/OTRS-Mobile.jpg" alt="On The Run Studio mobile display" style="border-radius: 12px; max-height: 300px; width: auto;">
+                </article>
+                
+                <!-- Adsum NYC -->
+                <article class="work-display" data-work="adsum">
+                    <div class="work-image">
+                        <img src="images/Atfal-Website-Display.jpg" alt="Adsum NYC website display">
                     </div>
-                </div>
-
-                <div class="work-row">
-                    <div class="work-info">
-                        <div class="work-header">
-                            <h3>DPR Studio</h3>
+                    <div class="work-info-panel">
+                        <div class="work-title-row">
+                            <h2>Adsum NYC</h2>
+                        </div>
+                        <div class="work-crumbs-row">
+                            <div class="crumbs-left">
+                                <span class="crumb">UI/UX Design</span>
+                                <span class="crumb">Webflow Development</span>
+                            </div>
+                            <span class="work-date">2024</span>
+                        </div>
+                        <div class="work-description">
+                            <p>Adsum NYC is a New York-based outerwear brand focused on functional, well-crafted clothing. I collaborated with the brand to redesign and develop their e-commerce website, creating a seamless shopping experience that reflects their commitment to quality and design.</p>
+                        </div>
+                        <div class="work-links-row">
+                            <a href="#" target="_blank" rel="noopener noreferrer">Website</a>
+                            <a href="#">Case Study</a>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- DPR Studio -->
+                <article class="work-display" data-work="dpr">
+                    <div class="work-image bg-light centered">
+                        <img src="images/DPR-Logo.png" alt="DPR Studio logo" class="logo-image">
+                    </div>
+                    <div class="work-info-panel">
+                        <div class="work-title-row">
+                            <h2>DPR Studio</h2>
+                        </div>
+                        <div class="work-crumbs-row">
+                            <div class="crumbs-left">
+                                <span class="crumb">UI Design</span>
+                                <span class="crumb">Front-End Development</span>
+                            </div>
                             <span class="work-date">Current Client</span>
                         </div>
-                        <div class="work-crumbs">
-                            <span>UI Design</span>
-                            <span>Front-End development</span>
-                        </div>
-                        <div class="work-desc">
+                        <div class="work-description">
                             <p>DPR Studio is a studio based in California specializing in garment design, brand identity, brand strategy, creative direction, production management. I designed and developed the studio's website, through my design studio On The Run Studio.</p>
                         </div>
-                       <!-- <div class="work-links">
+                        <div class="work-links-row">
                             <a href="#">Website</a>
                             <a href="#">Case Study</a>
                         </div>
-                        -->
                     </div>
-                    <div class="work-visual centered bg-light">
-                        <img src="images/DPR-Logo.png" alt="DPR Studio logo" style="max-width: 400px; height: auto;">
+                </article>
+                
+                <!-- Spots -->
+                <article class="work-display" data-work="spots">
+                    <div class="work-image bg-slate centered">
+                        <img src="images/Kyoto-Card.png" alt="Spots app display" class="logo-image">
                     </div>
-                </div>
-
-                <div class="work-row">
-                    <div class="work-info">
-                        <div class="work-header">
-                            <h3>Far East Firm</h3>
-                            <span class="work-date">Current Client</span>
+                    <div class="work-info-panel">
+                        <div class="work-title-row">
+                            <h2>Spots</h2>
                         </div>
-                        <div class="work-crumbs">
-                            <span>Web Design</span>
-                            <span>Front-End Dev</span>
+                        <div class="work-crumbs-row">
+                            <div class="crumbs-left">
+                                <span class="crumb">UI/UX Design</span>
+                                <span class="crumb">Mobile App</span>
+                            </div>
+                            <span class="work-date">2024</span>
                         </div>
-                        <div class="work-desc">
-                            <p>Far East Drafting & 3D Design is a firm specializing in architectural visualization and design services.</p>
+                        <div class="work-description">
+                            <p>Spots is a mobile application concept designed to help users discover and share their favorite local spots. The app focuses on community-driven recommendations and a beautiful, intuitive interface.</p>
                         </div>
-                        <!-- <div class="work-links">
-                            <a href="#">Website</a>
+                        <div class="work-links-row">
+                            <a href="#">Prototype</a>
                             <a href="#">Case Study</a>
                         </div>
-                        -->
                     </div>
-                    <div class="work-visual centered bg-slate">
-                        <img src="images/Arch Firm-Logo.png" alt="Arch Firm logo" style="max-width: 400px; height: auto;">
+                </article>
+                
+                <!-- National Muslim Youth Association -->
+                <article class="work-display" data-work="nmya">
+                    <div class="work-image">
+                        <img src="images/Atfal-Website-Display.jpg" alt="National Muslim Youth Association website display">
                     </div>
-                </div>
-            </div>
-            
-            <div class="work-request-text">
-                <p>More work available upon request.</p>
+                    <div class="work-info-panel">
+                        <div class="work-title-row">
+                            <h2>National Muslim Youth Association</h2>
+                        </div>
+                        <div class="work-crumbs-row">
+                            <div class="crumbs-left">
+                                <span class="crumb">UI/UX Design</span>
+                                <span class="crumb">Webflow</span>
+                            </div>
+                            <span class="work-date">Nov 2023 - Present</span>
+                        </div>
+                        <div class="work-description">
+                            <p>The National Muslim Youth Association is a Youth Boys Organization. I work with the organization as their lead UI designer and Project Manager. I lead an overhaul redesign of the website, which included a new design system, new components, and a new content management system.</p>
+                        </div>
+                        <div class="work-links-row">
+                            <a href="https://www.atfalusa.org/" target="_blank" rel="noopener noreferrer">Website</a>
+                            <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html">Case Study</a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
+    
     <script src="/main.js"></script>
 </body>
-<!-- <footer>
-    <span>V 0.0.1</span>
-    <ul class="social-links">
-        <li><a href="www.linkedin.com/in/usmaan-razzaq-9886511b1" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </li>
-        <li><a href="https://www.instagram.com/usmaanrzq?igsh=cnNwazN1cHdmZHQ5&utm_source=qr" target="_blank"
-                rel="noopener noreferrer">Instagram</a></li>
-        <li><a href="https://github.com/usmaanrazzaq" target="_blank" rel="noopener noreferrer">GitHub</a></li>
-        <li><a href="https://x.com/usmaanrzq?s=11" target="_blank" rel="noopener noreferrer">Twitter(X)</a></li>
-        <li><a href="https://bsky.app/profile/usmaan.bsky.social" target="_blank" rel="noopener noreferrer">Bluesky</a>
-        </li>
-    </ul>
-</footer> -->
 
 </html>
