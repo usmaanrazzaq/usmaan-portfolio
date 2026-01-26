@@ -2990,17 +2990,12 @@ gap: 0.625rem;
   
   .experience-header,
   .experience-row {
-    grid-template-columns: 1fr 1fr;
-    gap: 5px 15px;
-  }
-
-  .experience-header .exp-col:nth-child(2),
-  .experience-row .exp-col:nth-child(2) {
-    display: none;
+    grid-template-columns: 1fr;
+    gap: 3px;
   }
 
   .exp-year {
-    text-align: right;
+    text-align: left;
   }
   
   .skills-tools-section {
