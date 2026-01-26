@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Usmaan Razzaq Portfolio</title>
-    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../styles.css">
     <link href="https://api.fontshare.com/v2/css?f[]=tabular@300,400,500,600&f[]=satoshi@300,400,500,700&f[]=general-sans@300,400,500,600,700&f[]=boska@300,400,500,700&f[]=quicksand@500&display=swap" rel="stylesheet">
     <link href="https://api.fontshare.com/v2/css?f[]=ranade@100,300,400,500,700&f[]=switzer@100,200,300,400,500,600,700,800,900&f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
     <link rel="icon" href="/Favicon.png" sizes="48x48">
@@ -24,129 +24,92 @@
         </nav>
     </header>
     <main>
-        <section id="playground">
-            <div class="playground-container">
-                <!-- Playground Header -->
-                <div class="playground-header">
-                    <div class="playground-title-section">
-                        <div class="playground-title-wrapper">
-                            <h1 class="playground-title">Sandbox</h1>
-                                <p class="playground-description">Sandbox is a collection of design challenges & ideas I work on for fun.</p>
-                        </div>
-                        <div class="divider"></div>
-                    </div>
+        <section id="sandbox">
+            <div class="sandbox-container">
+                <!-- Sandbox Header -->
+                <div class="sandbox-header">
+                    <p class="sandbox-description">Sandbox is my creative playground where I explore innovative projects, challenge my technical skills, and showcase my versatility as a designer through unique and diverse design concepts.</p>
+                    <div class="sandbox-divider"></div>
                 </div>
                 
-                <!-- Playground Content -->
+                <!-- Sandbox Content -->
+                <div class="sandbox-content">
+                    <!-- Top Row - 3 cards -->
+                    <div class="sandbox-row sandbox-top">
+                        <!-- Card 1: Heart Rate Chart -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image">
+                                <img src="../images/Heart-Rate-Chart.png" alt="Heart rate chart mockup">
+                            </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Figma</span>
+                            </div>
+                            <h3 class="sandbox-card-title">Heart rate chart</h3>
+                            <p class="sandbox-card-desc">A design concept of a minimal heart rate chart. Taking inspiration from Apple Health and Strava.</p>
+                        </div>
+                        
+                        <!-- Card 2: AI Chat Input Box -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image">
+                                <img src="../images/Chat Input.png" alt="AI chat input box mockup">
+                            </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Figma</span>
+                            </div>
+                            <h3 class="sandbox-card-title">AI chat input box</h3>
+                            <p class="sandbox-card-desc">A design exploration of a minimal AI chat input. Initially began as a redesign of Claude input box.</p>
+                        </div>
+                        
+                        <!-- Card 3: Minimal Reading App -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image">
+                                <img src="../images/Highlight-Feature-Mockup.png" alt="Minimal reading app mockup">
+                            </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Figma</span>
+                            </div>
+                            <h3 class="sandbox-card-title">A minimal reading app</h3>
+                            <p class="sandbox-card-desc">A UI design concept of a minimal reading app with highlight feature.</p>
+                        </div>
+                    </div>
                     
-                    <div class="playground-grid">
-                        <!-- Project 1: Task Widget Design Challenge -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Task Widget Design Challenge</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image task-widget">
-                                    <img src="../images/Task Widget.png" alt="Task Widget Design Challenge mockup">
-                                </div>
+                    <!-- Bottom Row - 2 cards -->
+                    <div class="sandbox-row sandbox-bottom">
+                        <!-- Card 4: Slack Availability -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image">
+                                <img src="../video/Slack-Availability.gif" alt="Slack availability mockup">
                             </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">React</span>
+                                <span class="sandbox-tag">TypeScript</span>
+                            </div>
+                            <h3 class="sandbox-card-title">Slack Availability</h3>
+                            <p class="sandbox-card-desc">A design and development concept of an availability feature. Inspired by Slack.</p>
                         </div>
                         
-                        <!-- Project 2: AI Chat Search Input -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Ai Chat Search Input</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image chat-input">
-                                    <img src="../images/Chat Input.png" alt="AI Chat Search Input mockup">
-                                </div>
+                        <!-- Card 5: Task Management -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image contained">
+                                <img src="../images/Task Widget.png" alt="Task management widget mockup">
                             </div>
-                        </div>
-                        
-                        <!-- Project 3: Journal App -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Journal app</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image journal-app">
-                                    <img src="../images/Mental-Health-App.png" alt="Journal app mockup">
-                                </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Figma</span>
                             </div>
-                        </div>
-
-                        <!-- Project 4: Heart Rate Chart -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Heart Rate Chart</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image heart-rate">
-                                    <img src="../images/Heart-Rate-Chart.png" alt="Heart Rate Chart mockup">
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Project 5: Minimal Reading App Highlight Feature -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Minimal Reading App Highlight Feature</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image highlight-feature">
-                                    <img src="../images/Highlight-Feature-Mockup.png" alt="Minimal Reading App Highlight Feature mockup">
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Project 6: Travel Card Widget -->
-                        <div class="playground-project">
-                            <div class="project-content">
-                                <div class="project-title">
-                                    <h3>Travel Card Widget</h3>
-                                </div>
-                                <div class="project-tags">
-                                    <span class="tag">Concept</span>
-                                    <span class="tag">UI Design</span>
-                                    <span class="tag">Side Project</span>
-                                </div>
-                                <div class="project-image travel-card">
-                                    <img src="../images/Kyoto-Card.png" alt="Travel Card Widget mockup">
-                                </div>
-                            </div>
+                            <h3 class="sandbox-card-title">Task Management</h3>
+                            <p class="sandbox-card-desc">A minimal task management widget design. Following UI elements from Linear.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
-    <script src="../../main.js"></script>
+    <script src="../main.js"></script>
 </body>
 <footer>
     <span>V 0.0.1</span>

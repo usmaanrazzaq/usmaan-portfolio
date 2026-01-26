@@ -12,7 +12,7 @@ body {
   padding: 0px;
   padding-top: 70px;
   background-color: #ffffff;
-  font-family: system-ui, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   opacity: 0;
   transition: opacity 0.6s ease-in-out;
@@ -83,7 +83,7 @@ main {
 #availability .status-text {
   color: white;
   font-size: 0.75rem;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
 }
 
@@ -95,7 +95,7 @@ main {
 }
 
 .hero-bio p {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 1rem;
   line-height: 1.5;
@@ -111,7 +111,7 @@ main {
 }
 
 .get-in-touch h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
   color: #000000;
@@ -127,7 +127,7 @@ main {
 }
 
 .get-in-touch a {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 0.6875rem;
   color: #000000;
@@ -193,9 +193,10 @@ main {
 }
 
 .hero-bio-text p {
-  font-family: 'Helvetica Neue', 'general-sans', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  width: 600px;
   line-height: 1.5;
   margin: 0;
 }
@@ -209,9 +210,10 @@ main {
 }
 
 .hero-curation {
-  font-family: 'Helvetica Neue', 'general-sans', sans-serif;
-  font-weight: 400;
-  font-size: 20px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  width: 600px;
   line-height: 1.5;
   margin: 0;
 }
@@ -261,7 +263,7 @@ main {
 }
 
 .directory-header span {
-  font-family: 'Helvetica Neue', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   font-size: 16px;
   color: #2b2b2b;
@@ -310,7 +312,7 @@ main {
 }
 
 .work-title .title-text {
-  font-family: 'Helvetica Neue', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 13px;
   color: rgba(0, 0, 0, 0.45);
@@ -329,12 +331,12 @@ main {
 
 /* Work Display Container */
 .work-display-container {
-  width: 721px;
-  max-width: 721px;
+  width: 740px;
+  max-width: 850px;
   position: relative;
   overflow: hidden;
   position: absolute;
-  left: calc(25% + 17px);
+  left: calc(22% + 17px);
 }
 
 .work-display {
@@ -372,10 +374,22 @@ main {
   background-color: #f5f5f5;
 }
 
+/* Video containers adapt to video's natural aspect ratio */
+.work-image.video-container {
+  aspect-ratio: auto;
+  background-color: transparent;
+}
+
 .work-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.work-image video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .work-image.centered {
@@ -385,8 +399,8 @@ main {
 }
 
 .work-image.centered .logo-image {
-  max-width: 60%;
-  max-height: 60%;
+  max-width: 85%;
+  max-height: 85%;
   width: auto;
   height: auto;
   object-fit: contain;
@@ -413,7 +427,7 @@ main {
 }
 
 .work-title-row h2 {
-  font-family: 'Manrope', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 20px;
   color: #2b2b2b;
@@ -438,7 +452,7 @@ main {
 
 .crumb {
   padding: 2px 5px;
-  font-family: 'Inter', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 200;
   font-size: 14px;
   color: #2b2b2b;
@@ -446,7 +460,7 @@ main {
 
 .work-date {
   padding: 2px 5px;
-  font-family: 'Inter', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 200;
   font-size: 14px;
   color: #2b2b2b;
@@ -457,8 +471,9 @@ main {
 }
 
 .work-description p {
-  font-family: 'Hanken Grotesk', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
+  width: 600px;
   font-size: 14px;
   line-height: 1.5;
   color: #2b2b2b;
@@ -473,7 +488,7 @@ main {
 
 .work-links-row a {
   padding: 5px;
-  font-family: 'Inter', 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
   color: #2b2b2b;
@@ -845,7 +860,7 @@ main {
   color: #2b2b2b;
   font-weight: 300;
   font-size: 1rem;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
@@ -876,7 +891,7 @@ main {
   font-size: 1rem;
   font-weight: 600;
   color: #2b2b2b;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 700;
 }
 
@@ -961,7 +976,7 @@ main {
   font-size: clamp(1rem, 1.5vw, 1.25rem);
   font-weight: 500;
   line-height: 1.5;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   width: 65%;
 }
@@ -984,7 +999,7 @@ main {
   text-decoration: none;
   color: #2b2b2b;
   font-weight: 400;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   transition: color 0.3s ease, transform 0.3s ease;
   position: relative;
@@ -1025,7 +1040,7 @@ footer {
 footer span {
   font-size: 0.875rem;
   font-weight: 400;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
 }
 
@@ -1047,7 +1062,7 @@ footer span {
   font-size: 1rem;
   vertical-align: middle;
   cursor: default;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
 }
 
@@ -1140,14 +1155,14 @@ footer span {
 .work-header h3 {
   font-size: 1.25rem;
   font-weight: 500;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   color: #2b2b2b;
   margin: 0;
 }
 
 .work-date {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   font-size: 0.875rem;
   font-weight: 300;
@@ -1158,7 +1173,7 @@ footer span {
 .catchy-title h4 {
   font-size: clamp(0.875rem, 0.9vw, 1rem);
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #2b2b2b;
 }
@@ -1169,7 +1184,7 @@ footer span {
 
 .work-desc p {
   font-size: 0.875rem;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   font-weight: 200;
   color: #2b2b2b;
@@ -1186,7 +1201,7 @@ footer span {
 
 .work-crumbs span {
   font-size: 0.875rem;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   font-weight: 200;
   color: #2b2b2b;
@@ -1201,7 +1216,7 @@ footer span {
 
 .work-links a {
   font-size: 0.875rem;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   font-weight: 300;
   color: #2b2b2b;
@@ -1286,10 +1301,10 @@ footer span {
 }
 
 .work-request-text p {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 0.875rem;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #2b2b2b;
   margin: 0;
@@ -1322,7 +1337,7 @@ footer span {
 }
 
 .projects-title h1 {
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   font-size: 2rem;
   font-weight: 500;
@@ -1333,7 +1348,7 @@ footer span {
 .projects-description p {
   font-size: 0.875rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #252525;
   line-height: 1.5;
@@ -1343,7 +1358,7 @@ footer span {
 .project-item p {
   font-size: 0.875rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   color: #706f6e;
   font-variation-settings: "wght" 300;
 }
@@ -1352,7 +1367,7 @@ footer span {
   text-decoration: none;
   color: #2b2b2b;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300; 
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: 0.875rem;
@@ -1382,7 +1397,7 @@ footer span {
 .project-item h3 {
   font-size: 1.25rem;
   font-weight: 600;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 600;
   text-decoration: underline;
   text-underline-offset: 0.25rem;
@@ -1615,7 +1630,7 @@ footer span {
   .nav-bar ul li a {
     color: #2b2b2b;
     font-size: 0.9rem;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
@@ -1626,14 +1641,14 @@ footer span {
   .hero p {
     font-size: 0.9rem;
     width: 95%;
-    font-family: 'general-sans', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
   .logo {
     font-size: 0.9rem;
     font-weight: 600;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 700;
   }
 
@@ -1659,7 +1674,7 @@ footer span {
 
   footer span {
     font-size: 0.875rem;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
@@ -1686,7 +1701,7 @@ gap: 0.625rem;
 .project-hero-content h1 {
   font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 600;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 600;
   color: #2b2b2b;
   margin-bottom: 1.5rem;
@@ -1701,7 +1716,7 @@ gap: 0.625rem;
 .project-subtitle {
   font-size: 1rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #252525;
   margin-bottom: 3rem;
@@ -1732,7 +1747,7 @@ gap: 0.625rem;
   color: #2b2b2b;
   font-size: 0.875rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
 }
 
@@ -1753,7 +1768,7 @@ gap: 0.625rem;
 .meta-item h6 {
   font-size: 0.875rem;
   font-weight: 500;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   color: #2b2b2b;
   margin-bottom: 0.5rem;
@@ -1769,7 +1784,7 @@ gap: 0.625rem;
 .meta-item p {
   font-size: 1rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #2b2b2b;
   text-align: center;
@@ -1806,7 +1821,7 @@ gap: 0.625rem;
 .content-section h2 {
   font-size: 1.5rem;
   font-weight: 500;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   color: #2b2b2b;
   margin-bottom: 1rem;
@@ -1821,7 +1836,7 @@ gap: 0.625rem;
 .content-section p {
   font-size: 0.875rem;
   font-weight: 300;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   color: #2b2b2b;
   line-height: 1.5;
@@ -1941,19 +1956,19 @@ gap: 0.625rem;
 
   .social-links a {
     font-size: 0.75rem;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
   .status-text {
     font-size: 0.75rem;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
 
   .projects-description {
     font-size: 0.875rem;
-    font-family: 'general-sans', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
     color: #2b2b2b;
     width: 100%;
@@ -1998,7 +2013,7 @@ gap: 0.625rem;
 
 #about .section-index,
 #about .section-title {
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 800;
   font-size: clamp(1.125rem, 1.6vw, 1.25rem);
   color: #2b2b2b;
@@ -2012,7 +2027,7 @@ gap: 0.625rem;
 }
 
 #about .section-content p {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 200;
   font-size: clamp(0.875rem, 1.1vw, 1rem);
   line-height: 1.5;
@@ -2022,7 +2037,7 @@ gap: 0.625rem;
 }
 
 #about .section-content h5 {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 200;
   font-size: clamp(0.875rem, 1.1vw, 0.875rem);
   line-height: 1.5;
@@ -2047,7 +2062,7 @@ gap: 0.625rem;
   text-decoration-color: #252525;
   transition: all 0.3s ease;
   cursor: pointer;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 200;
   font-size: clamp(0.875rem, 1.1vw, 0.875rem);
   line-height: 1.5;
@@ -2076,7 +2091,7 @@ gap: 0.625rem;
 
 #about .tag-grid li {
   padding: 10px 0;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 200;
   font-size: clamp(0.9rem, 0.95vw, 1rem);
   color: #252525;
@@ -2137,7 +2152,7 @@ gap: 0.625rem;
   #about .section-title {
     font-size: 1.25rem;
     font-variation-settings: "wght" 700;
-    font-family: 'switzer', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
   }
 
   #about .section-content p {
@@ -2190,7 +2205,7 @@ gap: 0.625rem;
 }
 
 .playground-title {
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   font-size: 2rem;
   font-weight: 500;
@@ -2208,7 +2223,7 @@ gap: 0.625rem;
 }
 
 .playground-description {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   font-size: 1rem;
   font-weight: 300;
@@ -2258,7 +2273,7 @@ gap: 0.625rem;
 }
 
 .project-title h3 {
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 500;
   font-size: 1.25rem;
   font-weight: 500;
@@ -2282,7 +2297,7 @@ gap: 0.625rem;
   align-items: center;
   justify-content: center;
   padding: 10px;
-  font-family: 'switzer', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 200;
   font-size: 0.9375rem;
   font-weight: 200;
@@ -2367,7 +2382,7 @@ gap: 0.625rem;
   .playground-description {
     font-size: 0.875rem;
     font-weight: 400;
-    font-family: 'general-sans', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
   }
   
@@ -2425,7 +2440,7 @@ gap: 0.625rem;
   position: relative;
   text-align: left;
   padding: 5px;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 100;
   font-size: 0.75rem;
   color: #887f7a;
@@ -2450,7 +2465,7 @@ gap: 0.625rem;
 .skill-item,
 .tool-item {
   padding: 6px;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 400;
   font-size: 0.875rem;
   color: #2b2b2b;
@@ -2471,7 +2486,7 @@ gap: 0.625rem;
   border-bottom: 0.5px solid #2b2b2b;
   text-decoration: none;
   padding: 10px;
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 400;
   font-size: 0.875rem;
   color: #2b2b2b;
@@ -2578,6 +2593,435 @@ gap: 0.625rem;
   .project-tags .tag {
     font-size: 12px;
     padding: 6px 8px;
+  }
+}
+
+/* ===== NEW SANDBOX STYLES ===== */
+.sandbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  max-width: 1472px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+.sandbox-header {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 10px;
+}
+
+.sandbox-description {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #000000;
+  width: 600px;
+  margin: 0;
+}
+
+.sandbox-divider {
+  width: 100%;
+  height: 0.5px;
+  background-color: #2b2b2b;
+}
+
+.sandbox-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.sandbox-row {
+  display: flex;
+  gap: 5px;
+  align-items: flex-start;
+}
+
+.sandbox-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 480px;
+  padding: 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid #2b2b2b;
+  overflow: hidden;
+}
+
+.sandbox-card-image {
+  width: 100%;
+  aspect-ratio: 2198 / 1258;
+  overflow: hidden;
+}
+
+.sandbox-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sandbox-card-image.contained {
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sandbox-card-image.contained img {
+  width: auto;
+  height: auto;
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.sandbox-card-tags {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.sandbox-tag {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #767676;
+  line-height: 1.4;
+}
+
+.sandbox-card-title {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  font-size: 24px;
+  color: #000000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.sandbox-card-desc {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #000000;
+  line-height: 1.5;
+  max-width: 363px;
+  margin: 0;
+}
+
+/* Responsive Design for New Sandbox */
+@media (max-width: 1500px) {
+  .sandbox-row {
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .sandbox-card {
+    width: calc(50% - 2.5px);
+    max-width: 480px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sandbox-card {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .sandbox-row {
+    flex-direction: column;
+  }
+  
+  .sandbox-description {
+    font-size: 18px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sandbox-container {
+    gap: 20px;
+    padding: 5px;
+  }
+  
+  .sandbox-header {
+    padding: 5px;
+  }
+  
+  .sandbox-description {
+    font-size: 16px;
+    font-weight: 400;
+  }
+  
+  .sandbox-card {
+    padding: 15px;
+  }
+  
+  .sandbox-card-title {
+    font-size: 20px;
+  }
+  
+  .sandbox-tag {
+    font-size: 14px;
+  }
+  
+  .sandbox-card-desc {
+    font-size: 14px;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .sandbox-description {
+    font-size: 15px;
+  }
+  
+  .sandbox-card {
+    padding: 10px;
+  }
+  
+  .sandbox-card-title {
+    font-size: 18px;
+  }
+  
+  .sandbox-tag {
+    font-size: 13px;
+  }
+  
+  .sandbox-card-desc {
+    font-size: 13px;
+  }
+}
+
+/* ===== NEW ABOUT PAGE STYLES ===== */
+#about-new {
+  padding: 0;
+}
+
+.about-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  max-width: 1472px;
+  margin: 0 auto;
+}
+
+/* Left Column */
+.about-left {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.about-bio {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.about-bio p {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #000000;
+  margin: 0;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 500px;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  filter: grayscale(100%);
+}
+
+/* Right Column */
+.about-right {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Experience Section */
+.experience-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.experience-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 20px;
+  padding: 10px 0;
+  border-bottom: 0.5px solid #2b2b2b;
+}
+
+.experience-header .exp-col {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000000;
+}
+
+.experience-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 20px;
+  padding: 12px 0;
+  border-bottom: 0.5px solid #e5e5e5;
+}
+
+.experience-row .exp-col {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #000000;
+}
+
+.exp-year {
+  text-align: right;
+  min-width: 100px;
+}
+
+/* Skills & Tools Section */
+.skills-tools-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.section-label {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  color: #000000;
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 0.5px solid #2b2b2b;
+}
+
+.skills-grid,
+.tools-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 20px;
+}
+
+.skills-grid span,
+.tools-grid span {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #000000;
+  padding: 4px 0;
+}
+
+/* Inspiration Section */
+.inspiration-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.inspiration-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inspiration-link {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #000000;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 0.5px;
+  padding: 4px 0;
+  transition: opacity 0.2s ease;
+}
+
+.inspiration-link:hover {
+  opacity: 0.6;
+}
+
+/* Responsive Design for New About */
+@media (max-width: 1024px) {
+  .about-layout {
+    gap: 40px;
+  }
+  
+  .experience-header,
+  .experience-row {
+    grid-template-columns: 1fr 1fr auto;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  
+  .about-left {
+    order: 1;
+  }
+  
+  .about-right {
+    order: 2;
+  }
+  
+  .about-image {
+    max-width: 100%;
+  }
+  
+  .experience-header,
+  .experience-row {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+  
+  .experience-header .exp-col:last-child,
+  .experience-row .exp-col:last-child {
+    display: none;
+  }
+  
+  .exp-year {
+    text-align: left;
+  }
+  
+  .skills-tools-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .about-bio p {
+    font-size: 13px;
+  }
+  
+  .experience-header .exp-col,
+  .experience-row .exp-col,
+  .skills-grid span,
+  .tools-grid span,
+  .inspiration-link {
+    font-size: 13px;
+  }
+  
+  .skills-grid,
+  .tools-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 15px;
   }
 }
 
