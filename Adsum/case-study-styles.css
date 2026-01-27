@@ -8,10 +8,10 @@
 }
 
 body {
-  margin: 15px;
+  margin: 0;
   padding: 0;
   background-color: #ffffff;
-  font-family: 'Manrope', system-ui, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   color: #000000;
 }
@@ -26,7 +26,7 @@ html {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
+  padding: 1rem 15px;
   background-color: transparent;
 }
 
@@ -89,9 +89,9 @@ html {
 
 /* Case Study Container */
 .case-study-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
+  max-width: 100%;
+  margin: 0;
+  padding: 2rem 15px;
 }
 
 /* Hero Section */
@@ -566,9 +566,13 @@ footer span {
 
 @media (max-width: 768px) {
   body {
-    margin: 10px;
+    margin: 0;
   }
-  
+
+  .case-study-container {
+    padding: 1rem 10px;
+  }
+
   .nav-toggle {
     display: block !important;
     position: relative;
@@ -577,10 +581,7 @@ footer span {
   
   .nav-bar {
     position: relative;
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    padding-left: 0;
-    padding-right: 0;
+    padding: 1rem 10px;
   }
 
   .nav-bar ul {
@@ -617,7 +618,7 @@ footer span {
   }
   
   .case-study-container {
-    padding: 1rem 0.5rem;
+    padding: 1rem 10px;
   }
   
   .content-block {

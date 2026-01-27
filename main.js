@@ -1,3 +1,21 @@
+// Load footer dynamically
+document.addEventListener('DOMContentLoaded', function() {
+  const footerContainer = document.getElementById('footer-container');
+  if (footerContainer) {
+    // Determine the correct path to footer.html based on current page depth
+    const path = footerContainer.getAttribute('data-path') || '/footer.html';
+    
+    fetch(path)
+      .then(response => response.text())
+      .then(html => {
+        footerContainer.innerHTML = html;
+      })
+      .catch(err => {
+        console.error('Error loading footer:', err);
+      });
+  }
+});
+
 // Page loader - fade in effect
 window.addEventListener('load', function() {
   // Add loaded class to body to trigger fade-in
