@@ -1,19 +1,67 @@
-// Load footer dynamically
-document.addEventListener('DOMContentLoaded', function() {
-  const footerContainer = document.getElementById('footer-container');
-  if (footerContainer) {
-    // Determine the correct path to footer.html based on current page depth
-    const path = footerContainer.getAttribute('data-path') || '/footer.html';
-    
-    fetch(path)
-      .then(response => response.text())
-      .then(html => {
-        footerContainer.innerHTML = html;
-      })
-      .catch(err => {
-        console.error('Error loading footer:', err);
-      });
+function onDomReady(fn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fn, { once: true });
+    return;
   }
+  fn();
+}
+
+function loadNav() {
+  const navContainer = document.getElementById('nav-container');
+  if (!navContainer) return;
+
+  const path = navContainer.getAttribute('data-path') || '/nav.html';
+
+  fetch(path)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Nav request failed: ${response.status}`);
+      }
+      return response.text();
+    })
+    .then(html => {
+      navContainer.innerHTML = html;
+      // Initialize nav toggle after loading
+      initNavToggle();
+    })
+    .catch(err => {
+      console.error('Error loading nav:', err);
+      // Fallback: inject nav directly if fetch fails
+      navContainer.innerHTML = `
+        <nav class="nav-bar">
+          <a href="/" class="logo">Usmaan Razzaq</a>
+          <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
+          <ul>
+            <li><a href="/Projects/projects/index.html">Projects</a></li>
+            <li><a href="/Sandbox/index.html">Sandbox</a></li>
+            <li><a href="/About/about/index.html">About</a></li>
+            <li><a href="mailto:usmaanrazzaq.designs@gmail.com" title="Contact" target="_blank">Contact</a></li>
+          </ul>
+        </nav>
+      `;
+      initNavToggle();
+    });
+}
+
+// Load nav dynamically
+onDomReady(loadNav);
+
+// Load footer dynamically
+onDomReady(function () {
+  const footerContainer = document.getElementById('footer-container');
+  if (!footerContainer) return;
+
+  // Determine the correct path to footer.html based on current page depth
+  const path = footerContainer.getAttribute('data-path') || '/footer.html';
+
+  fetch(path)
+    .then(response => response.text())
+    .then(html => {
+      footerContainer.innerHTML = html;
+    })
+    .catch(err => {
+      console.error('Error loading footer:', err);
+    });
 });
 
 // Page loader - fade in effect
@@ -30,13 +78,11 @@ window.addEventListener('load', function() {
   }
 });
 
-// Navigation toggle functionality
-document.addEventListener('DOMContentLoaded', function() {
-  // Get all the elements
+// Navigation toggle functionality - reusable function
+function initNavToggle() {
   const logo = document.querySelector('.logo');
   const nav = document.querySelector('.nav-bar');
   const toggle = document.querySelector('.nav-toggle');
-  
 
   // Add event listener to the logo
   if (logo) {
@@ -54,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function() {
       nav.classList.toggle('expanded');
       const isExpanded = nav.classList.contains('expanded');
       toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-      
+
       // Force a reflow to ensure the animation triggers
       nav.offsetHeight;
     });
@@ -75,6 +121,14 @@ document.addEventListener('DOMContentLoaded', function() {
         toggle.setAttribute('aria-expanded', 'false');
       }
     });
+  }
+}
+
+// Initialize nav toggle for pages with static nav (fallback)
+document.addEventListener('DOMContentLoaded', function() {
+  // Only init if nav-container doesn't exist (static nav)
+  if (!document.getElementById('nav-container')) {
+    initNavToggle();
   }
 });
 
