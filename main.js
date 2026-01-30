@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Work Directory - Slide and Fade Transitions
 document.addEventListener('DOMContentLoaded', function() {
   const workDirectory = document.querySelector('.work-directory');
-  const directoryToggle = document.querySelector('.directory-toggle');
+  const directoryHeader = document.querySelector('.directory-header');
   const workTitles = document.querySelectorAll('.work-title');
   const workDisplays = document.querySelectorAll('.work-display');
   
@@ -143,15 +143,27 @@ document.addEventListener('DOMContentLoaded', function() {
   
   let isAnimating = false;
   
-  // Mobile Directory Toggle - Expand/Collapse
-  if (directoryToggle && workDirectory) {
-    directoryToggle.addEventListener('click', function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      
-      workDirectory.classList.toggle('expanded');
-      const isExpanded = workDirectory.classList.contains('expanded');
-      this.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+  // Mobile Directory Toggle - Expand/Collapse (click on header)
+  if (directoryHeader && workDirectory) {
+    function toggleDirectory(e) {
+      // Only toggle on tablet/mobile
+      if (window.innerWidth <= 960) {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        workDirectory.classList.toggle('expanded');
+        const isExpanded = workDirectory.classList.contains('expanded');
+        directoryHeader.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
+      }
+    }
+    
+    directoryHeader.addEventListener('click', toggleDirectory);
+    
+    // Keyboard support for accessibility
+    directoryHeader.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        toggleDirectory(e);
+      }
     });
     
     // Close directory when clicking outside (tablet/mobile only)
@@ -159,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (window.innerWidth <= 960) {
         if (!workDirectory.contains(e.target)) {
           workDirectory.classList.remove('expanded');
-          directoryToggle.setAttribute('aria-expanded', 'false');
+          directoryHeader.setAttribute('aria-expanded', 'false');
         }
       }
     });
@@ -190,8 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
       if (window.innerWidth <= 960 && workDirectory) {
         setTimeout(() => {
           workDirectory.classList.remove('expanded');
-          if (directoryToggle) {
-            directoryToggle.setAttribute('aria-expanded', 'false');
+          if (directoryHeader) {
+            directoryHeader.setAttribute('aria-expanded', 'false');
           }
         }, 150);
       }

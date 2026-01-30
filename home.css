@@ -343,91 +343,60 @@
 /* Mobile Directory Toggle Button (Hidden on Desktop) */
 .directory-toggle {
   display: none;
-  flex-direction: column;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 5px 0;
-  width: 17px;
-  align-items: flex-start;
-  transition: opacity 0.3s ease;
 }
 
-.directory-toggle .toggle-line {
-  display: block;
-  width: 16px;
-  height: 1px;
-  background-color: #2b2b2b;
-  transition: all 0.2s ease-out;
-  transform-origin: center;
-}
-
-.directory-toggle .toggle-line:nth-child(1) {
-  width: 16px;
-  background-color: #6b6b6b;
-}
-
-.directory-toggle .toggle-line:nth-child(2) {
-  width: 17px;
-  background-color: #2b2b2b;
-}
-
-.directory-toggle .toggle-line:nth-child(3) {
-  width: 16px;
-  background-color: #6b6b6b;
-}
-
-/* Transform to X when expanded - properly centered */
-.work-directory.expanded .directory-toggle .toggle-line:nth-child(1) {
-  transform: translateY(5px) rotate(45deg);
-  width: 16px;
-  background-color: #2b2b2b;
-}
-
-.work-directory.expanded .directory-toggle .toggle-line:nth-child(2) {
-  opacity: 0;
-  transform: scaleX(0);
-}
-
-.work-directory.expanded .directory-toggle .toggle-line:nth-child(3) {
-  transform: translateY(-5px) rotate(-45deg);
-  width: 16px;
-  background-color: #2b2b2b;
-}
-
-/* ===== TABLET BREAKPOINT (960px) - Three lines appear ===== */
+/* ===== TABLET BREAKPOINT (960px) ===== */
 @media (max-width: 960px) {
   .content-area {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  /* Hide directory header, show toggle */
-  .directory-header {
-    display: none;
-  }
-
-  .directory-toggle {
-    display: flex;
-  }
-
-  /* Work Directory - Overlaps the work display */
-  .work-directory {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
     position: relative;
-    width: auto;
+    align-items: stretch !important;
+  }
+
+  /* Work Directory - Positioned above work display */
+  .work-directory {
+    position: relative !important;
+    width: 100% !important;
     z-index: 10;
     background-color: transparent;
     padding: 0;
-    transition: background-color 0.3s ease;
+    margin-bottom: 0;
+    display: block !important;
+    top: auto !important;
+    flex-shrink: 0 !important;
   }
 
-  .work-directory.expanded {
-    background-color: rgba(255, 255, 255, 0.95);
+  /* Directory header - visible and tappable on mobile */
+  .directory-header {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    cursor: pointer;
+    width: fit-content;
+    padding: 5px 0;
+    border-bottom: 0.5px solid #767676;
+    transition: opacity 0.2s ease;
   }
 
-  /* Work List - Hidden by default, Notion-style expand animation */
+  .directory-header:hover {
+    opacity: 0.7 !important;
+  }
+
+  .directory-header span {
+    display: inline !important;
+    font-size: 16px;
+    font-weight: 300;
+    color: #2b2b2b;
+  }
+
+  /* Work List - Hidden by default, overlays work display when expanded */
   .work-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
@@ -437,10 +406,16 @@
     pointer-events: none;
     max-height: 0;
     overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid rgba(43, 43, 43, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     transition: opacity 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
                 transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
                 max-height 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
     padding: 0;
+    z-index: 100;
   }
 
   .work-directory.expanded .work-list {
@@ -448,7 +423,7 @@
     transform: translateY(0);
     pointer-events: auto;
     max-height: 350px;
-    padding: 10px 0 5px 0;
+    padding: 12px 10px 10px 10px;
     transition: opacity 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
                 transform 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
                 max-height 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -456,7 +431,7 @@
 
   /* Individual work titles - Notion-style staggered fade */
   .work-title {
-    padding: 5px 0;
+    padding: 8px 0;
     opacity: 0;
     transform: translateX(-4px);
     transition: opacity 0.15s cubic-bezier(0.25, 0.1, 0.25, 1),
@@ -496,9 +471,9 @@
   }
 
   .work-title .title-text {
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(0, 0, 0, 0.5);
     transition: color 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
   }
 
