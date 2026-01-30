@@ -16,6 +16,82 @@
   padding-bottom: 30px;
 }
 
+/* Status Bar - Timestamp & Availability */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.timestamp {
+  font-family: 'IBM Plex Mono', 'SF Mono', 'Consolas', monospace;
+  font-weight: 300;
+  font-size: 12px;
+  color: #767676;
+  line-height: normal;
+}
+
+.availability-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.availability-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  color: #6B9E3C;
+}
+
+.availability-icon svg {
+  width: 14px;
+  height: 14px;
+}
+
+.availability-icon .icon-sun {
+  display: block;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+.availability-icon .icon-moon {
+  display: none;
+}
+
+/* Not available state */
+.availability-indicator.not-available .availability-icon {
+  color: #767676;
+}
+
+.availability-indicator.not-available .icon-sun {
+  display: none;
+}
+
+.availability-indicator.not-available .icon-moon {
+  display: block;
+}
+
+.availability-text {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #000;
+  line-height: normal;
+}
+
 .hero-bio-text p {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
@@ -507,6 +583,28 @@
   .hero-bio-text p,
   .hero-curation {
     font-size: 16px;
+  }
+
+  .status-bar {
+    gap: 12px;
+  }
+
+  .timestamp {
+    font-size: 11px;
+  }
+
+  .availability-text {
+    font-size: 13px;
+  }
+
+  .availability-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .availability-icon svg {
+    width: 12px;
+    height: 12px;
   }
 
   .hero-divider {

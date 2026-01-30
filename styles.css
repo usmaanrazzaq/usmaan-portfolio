@@ -11,6 +11,7 @@ body {
   margin: 0;
   padding: 0px;
   padding-top: 70px;
+  padding-bottom: 60px;
   background-color: #ffffff;
   font-family: 'Helvetica Neue', sans-serif;
   line-height: 1.5;
@@ -1815,12 +1816,11 @@ footer span {
 .sandbox-description {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
-  font-size: 18px;
+  font-size: 14px;
   line-height: 1.5;
   color: #000000;
-  width: 100%;
-  max-width: 600px;
   margin: 0;
+  width: 600px;
 }
 
 .sandbox-divider {
@@ -1938,7 +1938,7 @@ footer span {
   }
   
   .sandbox-description {
-    font-size: 18px;
+    font-size: 14px;
     max-width: 100%;
   }
 }
@@ -1954,8 +1954,8 @@ footer span {
   }
   
   .sandbox-description {
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.5;
   }
   
   .sandbox-card {
@@ -1978,7 +1978,7 @@ footer span {
 
 @media (max-width: 480px) {
   .sandbox-description {
-    font-size: 15px;
+    font-size: 13px;
   }
   
   .sandbox-card {

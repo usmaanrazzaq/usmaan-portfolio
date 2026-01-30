@@ -17,7 +17,8 @@
 .social-links a {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 14px;
   font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   transition: color 0.3s ease, transform 0.3s ease;
@@ -45,7 +46,7 @@
 }
 
 footer {
-  display: flex;
+  display: none;
   justify-content: space-between;
   align-items: center;
   padding: 20px 15px;
@@ -55,7 +56,8 @@ footer {
 
 footer span {
   font-size: 0.875rem;
-  font-weight: 400;
+  font-weight: 300;
+  font-size: 14px;
   font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
 }
@@ -74,7 +76,8 @@ footer span {
   footer span {
     font-size: 0.875rem;
     font-family: 'Helvetica Neue', sans-serif;
-    font-variation-settings: "wght" 400;
+    font-variation-settings: "wght" 300;
+    font-size: 14px;
   }
 
   .social-links {
@@ -90,6 +93,7 @@ footer span {
   .social-links a {
     font-size: 0.75rem;
     font-family: 'Helvetica Neue', sans-serif;
-    font-variation-settings: "wght" 400;
+    font-variation-settings: "wght" 300;
+    font-size: 14px;
   }
 }

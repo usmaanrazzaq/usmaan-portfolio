@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usmaan Razzaq Portfolio</title>
+    <link rel="stylesheet" href="../../styles.css">
+    <link rel="stylesheet" href="../../nav.css">
+    <link
+        href="https://api.fontshare.com/v2/css?f[]=tabular@300,400,500,600&f[]=satoshi@300,400,500,700&f[]=general-sans@300,400,500,600,700&f[]=boska@300,400,500,700&f[]=quicksand@500&display=swap"
+        rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=ranade@100,300,400,500,700&f[]=switzer@100,200,300,400,500,600,700,800,900&f[]=general-sans@200,300,400,500,600,700&display=swap" rel="stylesheet">
+    <link rel="icon" href="/Favicon.png" sizes="48x48">
+    <link rel="apple-touch-icon" href="/iOS Icon.png" sizes="180x180">
+</head>
+
+<body>
+    <!-- Password Protection Overlay -->
+    <div id="password-overlay">
+        <div class="password-container">
+            <h2>Password Required</h2>
+            <p>This page is password protected.</p>
+            <form id="password-form">
+                <input type="password" id="password-input" placeholder="Enter password" autocomplete="off">
+                <button type="submit">Enter</button>
+            </form>
+            <p id="password-error" class="error-message"></p>
+        </div>
+    </div>
+
+    <header id="nav-container" data-path="/nav.html"></header>
+    <main>
+        <section id="sandbox">
+            <div class="sandbox-container">
+                <!-- Work Header -->
+                <div class="sandbox-header">
+                    <p class="sandbox-description">A collection of additional work I've done.</p>
+                    <div class="sandbox-divider"></div>
+                </div>
+
+                <!-- Work Content -->
+                <div class="sandbox-content">
+                    <!-- Top Row - 3 cards -->
+                    <div class="sandbox-row sandbox-top">
+                        <!-- Card 1: Design @ CUNY Website -->
+                        <div class="sandbox-card">
+                            <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" class="sandbox-card-link">
+                                <div class="sandbox-card-image">
+                                    <img src="../../images/Design-CUNY.png" alt="Design @ CUNY Website">
+                                </div>
+                            </a>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">Website Redesign</span>
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Development</span>
+                            </div>
+                            <h3 class="sandbox-card-title">Design @ CUNY Website</h3>
+                            <p class="sandbox-card-desc">A website redesign for Design @ CUNY, a student-run design organization.</p>
+                        </div>
+
+                        <!-- Card 2: CUNY Arts Website -->
+                        <div class="sandbox-card">
+                            <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&node-id=241-2418&viewport=632%2C38%2C0.15&t=shQfp8sd8LmZea1r-1&scaling=scale-down&content-scaling=fixed" target="_blank" class="sandbox-card-link">
+                                <div class="sandbox-card-image">
+                                    <img src="../../images/CUNY-Arts-Mobile.png" alt="CUNY Arts Website">
+                                </div>
+                            </a>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">Website Redesign</span>
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Prototype</span>
+                            </div>
+                            <h3 class="sandbox-card-title">CUNY Arts Website Redesign</h3>
+                            <p class="sandbox-card-desc">A redesign concept for CUNY Arts website with improved navigation and visual hierarchy.</p>
+                        </div>
+
+                        <!-- Card 3: Streaming Platform -->
+                        <div class="sandbox-card">
+                            <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" class="sandbox-card-link">
+                                <div class="sandbox-card-image">
+                                    <img src="../../images/SILO-Display.jpg" alt="Streaming Platform">
+                                </div>
+                            </a>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Development</span>
+                                <span class="sandbox-tag">Platform</span>
+                            </div>
+                            <h3 class="sandbox-card-title">Streaming Platform</h3>
+                            <p class="sandbox-card-desc">A streaming platform concept with a focus on clean UI and user experience.</p>
+                        </div>
+                    </div>
+
+                    <!-- Bottom Row - 2 cards -->
+                    <div class="sandbox-row sandbox-bottom">
+                        <!-- Card 4: Bright Notes -->
+                        <div class="sandbox-card">
+                            <div class="sandbox-card-image">
+                                <img src="../../images/Bright-Notes-Display.png" alt="Bright Notes Landing Page">
+                            </div>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">Landing Page</span>
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Note-taking App</span>
+                            </div>
+                            <h3 class="sandbox-card-title">Bright Notes</h3>
+                            <p class="sandbox-card-desc">A landing page design for a note-taking application with a clean, minimal aesthetic.</p>
+                        </div>
+
+                        <!-- Card 5: CUNY Bridges -->
+                        <div class="sandbox-card">
+                            <a href="https://www.figma.com/proto/yN8zEIKadSfcN0rLPn4Ls8/CUNY-Jobs-Board-app?node-id=0-1&t=v3gY9mFlZltu2XDQ-1" target="_blank" class="sandbox-card-link">
+                                <div class="sandbox-card-image">
+                                    <img src="../../images/CUNY-Bridges-App.png" alt="CUNY Bridges App">
+                                </div>
+                            </a>
+                            <div class="sandbox-card-tags">
+                                <span class="sandbox-tag">UI Design</span>
+                                <span class="sandbox-tag">Prototyping</span>
+                                <span class="sandbox-tag">Mobile App</span>
+                            </div>
+                            <h3 class="sandbox-card-title">CUNY Bridges</h3>
+                            <p class="sandbox-card-desc">A mobile app prototype for connecting CUNY students with job opportunities.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="../../main.js?v=20260129"></script>
+    <style>
+        #password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9998;
+        }
+        #password-overlay.hidden {
+            display: none;
+        }
+        .password-container {
+            text-align: center;
+            padding: 2rem;
+            max-width: 400px;
+        }
+        .password-container h2 {
+            font-family: 'General Sans', sans-serif;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #2b2b2b;
+        }
+        .password-container p {
+            font-family: 'Satoshi', sans-serif;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+        #password-form {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+        #password-input {
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: transparent;
+            color: #2b2b2b;
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1rem;
+            width: 200px;
+        }
+        #password-input:focus {
+            outline: none;
+            border-color: #999;
+        }
+        #password-form button {
+            padding: 0.75rem 1.5rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: transparent;
+            color: #2b2b2b;
+            font-family: 'Satoshi', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, border-color 0.2s;
+        }
+        #password-form button:hover {
+            background: #f5f5f5;
+            border-color: #999;
+        }
+        .error-message {
+            color: #ff6b6b !important;
+            font-size: 0.875rem;
+            margin-top: 1rem !important;
+            min-height: 1.25rem;
+        }
+        body:not(.unlocked) main {
+            visibility: hidden;
+        }
+    </style>
+    <script>
+        (function() {
+            const correctPassword = 'AdditionalWork';
+
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const input = document.getElementById('password-input');
+                const error = document.getElementById('password-error');
+
+                if (input.value === correctPassword) {
+                    document.body.classList.add('unlocked');
+                    document.getElementById('password-overlay').classList.add('hidden');
+                } else {
+                    error.textContent = 'Incorrect password';
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

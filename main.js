@@ -285,3 +285,50 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+
+// EST Timestamp and Availability Indicator
+document.addEventListener('DOMContentLoaded', function() {
+  const timeElement = document.getElementById('est-time');
+  const availabilityIndicator = document.querySelector('.availability-indicator');
+  const availabilityText = document.getElementById('availability-text');
+  
+  // Availability configuration - set to true for available, false for not available
+  const isAvailable = true;
+  
+  // Update availability state
+  if (availabilityIndicator && availabilityText) {
+    if (isAvailable) {
+      availabilityIndicator.classList.remove('not-available');
+      availabilityText.textContent = 'Available for freelance work';
+    } else {
+      availabilityIndicator.classList.add('not-available');
+      availabilityText.textContent = 'Not available for work';
+    }
+  }
+  
+  // Update EST time
+  function updateESTTime() {
+    if (!timeElement) return;
+    
+    const now = new Date();
+    
+    // Format time in EST (America/New_York handles EST/EDT automatically)
+    const options = {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+      timeZone: 'America/New_York'
+    };
+    
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const timeString = formatter.format(now).toLowerCase();
+    
+    timeElement.textContent = timeString;
+  }
+  
+  // Initial update
+  updateESTTime();
+  
+  // Update every minute
+  setInterval(updateESTTime, 60000);
+});
