@@ -48,9 +48,9 @@ footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 0;
+  padding: 20px 15px;
   border-top: 0.5px solid #2b2b2b;
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 footer span {
@@ -67,7 +67,7 @@ footer span {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 0.5rem;
-    padding: 1rem 0;
+    padding: 1rem 15px;
     margin-top: 2rem;
   }
 
