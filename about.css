@@ -38,12 +38,11 @@
 
 .about-image {
   width: 100%;
-  max-width: 500px;
 }
 
 .about-image img {
   width: 100%;
-  height: auto;
+  max-height: 400px;
   object-fit: cover;
   filter: grayscale(100%);
 }
