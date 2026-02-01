@@ -65,7 +65,7 @@
 /* Mobile nav toggle button */
 .nav-toggle {
   display: none;
-  background: none;
+  background: unset;
   border: none;
   cursor: pointer;
   padding: 0.5rem;
@@ -85,7 +85,7 @@
 }
 
 .nav-toggle:hover {
-  background-color: rgba(43, 43, 43, 0.05);
+  background-color: unset;
 }
 
 .hamburger-line {
