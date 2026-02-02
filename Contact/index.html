@@ -31,12 +31,15 @@
     <main class="contact-page">
         <p class="contact-heading">Have a project in mind? Send me a message.</p>
         
-        <form class="contact-form" action="https://formspree.io/f/usmaan@usmaanrazzaq.design" method="POST">
+        <form class="contact-form" action="https://api.web3forms.com/submit" method="POST">
+            <!-- Get your free access key at https://web3forms.com -->
+            <input type="hidden" name="access_key" value="dc134a61-3136-4985-a5f9-c0f336201417">
+            <input type="hidden" name="subject" value="New contact from your portfolio">
+            <input type="hidden" name="redirect" value="https://usmaanrazzaq.design/Contact/thank-you.html">
+            
             <input type="text" name="name" class="contact-input" placeholder="Name" required>
             <input type="email" name="email" class="contact-input" placeholder="Email" required>
             <textarea name="message" class="contact-textarea" placeholder="Type a message" required></textarea>
-            <input type="hidden" name="_subject" value="New contact from your portfolio">
-            <input type="hidden" name="_next" value="https://usmaanrazzaq.design/Contact/thank-you.html">
             <button type="submit" class="contact-submit">Send</button>
         </form>
     </main>
