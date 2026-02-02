@@ -31,12 +31,26 @@
     <main class="contact-page">
         <p class="contact-heading">Have a project in mind? Send me a message.</p>
         
-        <form class="contact-form" action="#" method="POST">
-            <input type="text" name="name" class="contact-input" placeholder="Name" required>
-            <input type="email" name="email" class="contact-input" placeholder="Email" required>
-            <textarea name="message" class="contact-textarea" placeholder="Type a message" required></textarea>
+        <form class="contact-form" id="contact-form">
+            <input type="text" name="name" id="contact-name" class="contact-input" placeholder="Name" required>
+            <input type="email" name="email" id="contact-email" class="contact-input" placeholder="Email" required>
+            <textarea name="message" id="contact-message" class="contact-textarea" placeholder="Type a message" required></textarea>
             <button type="submit" class="contact-submit">Send</button>
         </form>
+
+        <script>
+            document.getElementById('contact-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                const name = document.getElementById('contact-name').value;
+                const email = document.getElementById('contact-email').value;
+                const message = document.getElementById('contact-message').value;
+
+                const subject = encodeURIComponent('Contact from ' + name);
+                const body = encodeURIComponent('From: ' + name + '\nEmail: ' + email + '\n\nMessage:\n' + message);
+
+                window.location.href = 'mailto:usmaan@usmaanrazzaq.design?subject=' + subject + '&body=' + body;
+            });
+        </script>
     </main>
     
     <script src="../main.js?v=20260129"></script>
