@@ -30,7 +30,13 @@
   font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
   position: relative;
-  transition: color 0.3s ease, transform 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  opacity: 0.82;
+  transition:
+    color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-bar ul li a::after {
@@ -38,19 +44,32 @@
   position: absolute;
   left: 0;
   bottom: -3px;
-  width: 0;
+  width: 100%;
   height: 2px;
   background-color: currentColor;
-  transition: width 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .nav-bar ul li a:hover {
   color: #2b2b2b;
-  transform: scale(1.05);
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .nav-bar ul li a:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+}
+
+.nav-bar ul li a:focus-visible {
+  opacity: 1;
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.nav-bar ul li a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 .logo {
@@ -68,12 +87,12 @@
   background: unset;
   border: none;
   cursor: pointer;
-  padding: 0.5rem;
+  padding: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: auto;
-  height: auto;
+  width: 44px;
+  height: 44px;
   position: relative;
   border-radius: 4px;
   transition: background-color 0.2s ease;
@@ -90,10 +109,10 @@
 
 .hamburger-line {
   display: block;
-  width: 16px;
-  height: 1.5px;
+  width: 18px;
+  height: 2px;
   background-color: #2b2b2b;
-  margin: 1.5px 0;
+  margin: 2px 0;
   transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   transform-origin: center;
   border-radius: 1px;
@@ -101,7 +120,7 @@
 
 /* Transform hamburger to X when expanded */
 .nav-bar.expanded .hamburger-line:nth-child(1) {
-  transform: translateY(3px) rotate(45deg);
+  transform: translateY(6px) rotate(45deg);
 }
 
 .nav-bar.expanded .hamburger-line:nth-child(2) {
@@ -110,12 +129,34 @@
 }
 
 .nav-bar.expanded .hamburger-line:nth-child(3) {
-  transform: translateY(-3px) rotate(-45deg);
+  transform: translateY(-6px) rotate(-45deg);
 }
 
 /* Add subtle background change when menu is open */
 .nav-bar.expanded .nav-toggle {
   background-color: rgba(43, 43, 43, 0.08);
+}
+
+@keyframes navMenuEnter {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes navMenuExit {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 /* ===== MOBILE NAVIGATION (768px) ===== */
@@ -133,38 +174,67 @@
     background-color: #ffffff;
   }
 
-  .nav-bar ul {
+  .nav-bar .nav-menu {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
-    gap: 1rem;
+    gap: 0;
     background-color: #ffffff;
     position: absolute;
     top: 100%;
     left: 0;
     right: 0;
-    padding: 1rem 2rem;
+    padding: 0 2rem;
     z-index: 1000;
-    border-top: 0.5px solid rgba(43, 43, 43, 0.1);
-    transition: max-height 0.3s ease, opacity 0.3s ease;
+    border-top: 0 solid rgba(43, 43, 43, 0.1);
     max-height: 0;
     overflow: hidden;
     opacity: 0;
+    transform: translateY(-10px);
+    visibility: hidden;
+    transition:
+      max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      border-top-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0.38s;
+    animation: navMenuExit 0.28s ease both;
     pointer-events: none;
+    will-change: transform, opacity;
   }
 
-  .nav-bar.expanded ul {
-    max-height: 500px;
+  .nav-bar.expanded .nav-menu,
+  .nav-bar .nav-menu[data-state="open"] {
+    gap: 1rem;
+    padding: 1rem 2rem;
+    border-top-width: 0.5px;
+    max-height: 420px;
     opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
+    transition:
+      max-height 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.24s ease,
+      transform 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+      padding 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      border-top-width 0.38s cubic-bezier(0.22, 1, 0.36, 1),
+      visibility 0s linear 0s;
+    animation: navMenuEnter 0.34s cubic-bezier(0.22, 1, 0.36, 1) both;
     pointer-events: auto;
   }
 
-  .nav-bar ul li a {
+  .nav-bar .nav-menu li a {
     color: #2b2b2b;
     font-size: 0.9rem;
     font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 400;
+  }
+
+  .nav-bar .nav-menu li a:hover,
+  .nav-bar .nav-menu li a:focus-visible {
+    transform: translateX(2px);
   }
 
   .logo {
@@ -172,5 +242,14 @@
     font-weight: 600;
     font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 700;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-bar .nav-menu,
+  .nav-bar.expanded .nav-menu,
+  .nav-bar .hamburger-line {
+    transition: none !important;
+    animation: none !important;
   }
 }

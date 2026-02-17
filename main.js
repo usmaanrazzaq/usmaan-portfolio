@@ -30,8 +30,12 @@ function loadNav() {
       navContainer.innerHTML = `
         <nav class="nav-bar">
           <a href="/" class="logo">Usmaan Razzaq</a>
-          <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
-          <ul>
+          <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu" aria-haspopup="true">
+            <span class="hamburger-line" aria-hidden="true"></span>
+            <span class="hamburger-line" aria-hidden="true"></span>
+            <span class="hamburger-line" aria-hidden="true"></span>
+          </button>
+          <ul id="nav-menu" class="nav-menu" data-state="closed">
             <li><a href="/Projects/projects/index.html">Projects</a></li>
             <li><a href="/Sandbox/index.html">Sandbox</a></li>
             <li><a href="/About/about/index.html">About</a></li>
@@ -83,6 +87,7 @@ function initNavToggle() {
   const logo = document.querySelector('.logo');
   const nav = document.querySelector('.nav-bar');
   const toggle = document.querySelector('.nav-toggle');
+  const navMenu = nav ? nav.querySelector('ul') : null;
 
   // Add event listener to the logo
   if (logo) {
@@ -92,33 +97,49 @@ function initNavToggle() {
   }
 
   // Mobile nav toggle
-  if (toggle && nav) {
-    toggle.setAttribute('aria-expanded', 'false');
+  if (toggle && nav && navMenu) {
+    function setNavOpenState(isOpen) {
+      nav.classList.toggle('expanded', isOpen);
+      nav.setAttribute('data-state', isOpen ? 'open' : 'closed');
+      navMenu.setAttribute('data-state', isOpen ? 'open' : 'closed');
+      toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    }
+
+    setNavOpenState(false);
+
     toggle.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
-      nav.classList.toggle('expanded');
       const isExpanded = nav.classList.contains('expanded');
-      toggle.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
-
-      // Force a reflow to ensure the animation triggers
-      nav.offsetHeight;
+      setNavOpenState(!isExpanded);
     });
 
     // Close menu when clicking on nav links
     const navLinks = nav.querySelectorAll('ul li a');
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        nav.classList.remove('expanded');
-        toggle.setAttribute('aria-expanded', 'false');
+        setNavOpenState(false);
       });
     });
 
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!nav.contains(e.target)) {
-        nav.classList.remove('expanded');
-        toggle.setAttribute('aria-expanded', 'false');
+        setNavOpenState(false);
+      }
+    });
+
+    // Escape closes menu for keyboard users
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        setNavOpenState(false);
+      }
+    });
+
+    // Reset mobile nav state on desktop/tablet resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        setNavOpenState(false);
       }
     });
   }

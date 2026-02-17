@@ -1,0 +1,103 @@
+/* Notes page */
+.notes-page {
+    width: 100%;
+    min-height: calc(100vh - 170px);
+    margin: 0 auto;
+    padding-top: clamp(36px, 6vw, 76px);
+    padding-bottom: clamp(20px, 5vw, 60px);
+}
+
+.notes-article {
+    width: min(729px, calc(100vw - 40px));
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: #000000;
+}
+
+.notes-title {
+    margin: 0;
+    padding: 0 5px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: normal;
+}
+
+.notes-date {
+    margin: 0;
+    padding: 0 5px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: normal;
+    color: #767676;
+}
+
+.notes-content {
+    width: 100%;
+    padding: 0 5px;
+    font-family: "Helvetica Neue", sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: normal;
+    color: #000000;
+}
+
+.notes-content p {
+    margin: 0 0 10px;
+}
+
+.notes-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* Keep fluid breathing room while resizing. */
+@media (max-width: 900px) {
+    .notes-page {
+        padding-top: clamp(24px, 5vw, 42px);
+    }
+
+    .notes-article {
+        width: min(729px, calc(100vw - 32px));
+    }
+}
+
+@media (max-width: 768px) {
+    .notes-title {
+        font-size: 18px;
+    }
+
+    .notes-content {
+        font-size: 15px;
+        line-height: 1.45;
+    }
+}
+
+@media (max-width: 520px) {
+    .notes-page {
+        padding-top: 20px;
+    }
+
+    .notes-article {
+        width: calc(100vw - 24px);
+    }
+
+    .notes-title,
+    .notes-date,
+    .notes-content {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .notes-title {
+        font-size: 17px;
+    }
+
+    .notes-date,
+    .notes-content {
+        font-size: 14px;
+        font-weight: 400;
+    }
+}

@@ -1,10 +1,14 @@
 <nav class="nav-bar">
     <a href="/" class="logo">Usmaan Razzaq</a>
-    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false">&#9776;</button>
-    <ul>
+    <button class="nav-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu" aria-haspopup="true">
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+        <span class="hamburger-line" aria-hidden="true"></span>
+    </button>
+    <ul id="nav-menu" class="nav-menu" data-state="closed">
         <li><a href="/work/">Work</a></li>
         <li><a href="/sandbox/">Sandbox</a></li>
-       <!-- <li><a href="/notes/">Notes</a></li> -->
+        <li><a href="/notes/">Notes</a></li>
         <li><a href="/about/">About</a></li>
         <li><a href="/contact/">Contact</a></li>
     </ul>
