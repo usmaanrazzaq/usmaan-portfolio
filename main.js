@@ -161,7 +161,35 @@ document.addEventListener('DOMContentLoaded', function() {
   const workDisplays = document.querySelectorAll('.work-display');
   
   if (workTitles.length === 0 || workDisplays.length === 0) return;
-  
+
+  // Inject role tags into each work title for hover display
+  workTitles.forEach(title => {
+    const key = title.getAttribute('data-work');
+    const article = document.querySelector(`.work-display[data-work="${key}"]`);
+    if (!article) return;
+
+    const crumbs = [...article.querySelectorAll('.crumbs-left .crumb')];
+    if (crumbs.length === 0) return;
+
+    const rolesEl = document.createElement('span');
+    rolesEl.className = 'title-roles';
+
+    crumbs.forEach((crumb, i) => {
+      if (i > 0) {
+        const sep = document.createElement('span');
+        sep.className = 'role-sep';
+        sep.textContent = '·';
+        rolesEl.appendChild(sep);
+      }
+      const tag = document.createElement('span');
+      tag.className = 'role-tag';
+      tag.textContent = crumb.textContent.trim();
+      rolesEl.appendChild(tag);
+    });
+
+    title.appendChild(rolesEl);
+  });
+
   let isAnimating = false;
   
   // Mobile Directory Toggle - Expand/Collapse (click on header)

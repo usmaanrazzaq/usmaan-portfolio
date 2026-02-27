@@ -264,6 +264,46 @@
   color: rgba(0, 0, 0, 0.7);
 }
 
+/* Hover roles — appear to the right of each work title */
+.title-roles {
+  position: absolute;
+  left: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.work-title:hover .title-roles {
+  opacity: 1;
+}
+
+.title-roles .role-tag {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  color: rgba(0, 0, 0, 0.4);
+  line-height: 1;
+}
+
+.title-roles .role-sep {
+  font-size: 10px;
+  color: rgba(0, 0, 0, 0.2);
+  line-height: 1;
+}
+
+/* Hide on tablet/mobile — sidebar becomes a dropdown */
+@media (max-width: 960px) {
+  .title-roles {
+    display: none;
+  }
+}
+
 /* Work Display Container */
 .work-display-container {
   flex: 1;
