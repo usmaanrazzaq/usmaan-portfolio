@@ -1,0 +1,19 @@
+{
+  "name": "usmaan-portfolio",
+  "version": "1.0.0",
+  "description": "This is my personal portfolio website, built using HTML, CSS, and JavaScript. It showcases my design work, development projects, and other creative work.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:20381/git/usmaanrazzaq/usmaan-portfolio"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "sharp": "^0.34.5"
+  }
+}
