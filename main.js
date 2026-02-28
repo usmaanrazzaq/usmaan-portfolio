@@ -36,10 +36,10 @@ function loadNav() {
             <span class="hamburger-line" aria-hidden="true"></span>
           </button>
           <ul id="nav-menu" class="nav-menu" data-state="closed">
-            <li><a href="/Projects/projects/index.html">Projects</a></li>
-            <li><a href="/Sandbox/index.html">Sandbox</a></li>
-            <li><a href="/About/about/index.html">About</a></li>
-            <li><a href="mailto:usmaanrazzaq.designs@gmail.com" title="Contact" target="_blank">Contact</a></li>
+            <li><a href="/work/">Work</a></li>
+            <li><a href="/sandbox/">Sandbox</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
           </ul>
         </nav>
       `;
@@ -89,10 +89,15 @@ function initNavToggle() {
   const toggle = document.querySelector('.nav-toggle');
   const navMenu = nav ? nav.querySelector('ul') : null;
 
-  // Add event listener to the logo
+  // Logo click — use SPA router if available
   if (logo) {
-    logo.addEventListener('click', () => {
-      window.location.href = '/';
+    logo.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (window.spaRouter) {
+        window.spaRouter.navigateTo('/');
+      } else {
+        window.location.href = '/';
+      }
     });
   }
 
@@ -153,13 +158,15 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Work Directory - Slide and Fade Transitions
-document.addEventListener('DOMContentLoaded', function() {
+// ===== PAGE INIT HOOKS =====
+// These run after SPA content swap to re-initialize page-specific JS
+
+function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
   const directoryHeader = document.querySelector('.directory-header');
   const workTitles = document.querySelectorAll('.work-title');
   const workDisplays = document.querySelectorAll('.work-display');
-  
+
   if (workTitles.length === 0 || workDisplays.length === 0) return;
 
   // Inject role tags into each work title for hover display
@@ -178,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
       if (i > 0) {
         const sep = document.createElement('span');
         sep.className = 'role-sep';
-        sep.textContent = '·';
+        sep.textContent = '\u00b7';
         rolesEl.appendChild(sep);
       }
       const tag = document.createElement('span');
@@ -191,31 +198,26 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   let isAnimating = false;
-  
-  // Mobile Directory Toggle - Expand/Collapse (click on header)
+
+  // Mobile Directory Toggle
   if (directoryHeader && workDirectory) {
     function toggleDirectory(e) {
-      // Only toggle on tablet/mobile
       if (window.innerWidth <= 960) {
         e.preventDefault();
         e.stopPropagation();
-        
         workDirectory.classList.toggle('expanded');
         const isExpanded = workDirectory.classList.contains('expanded');
         directoryHeader.setAttribute('aria-expanded', isExpanded ? 'true' : 'false');
       }
     }
-    
+
     directoryHeader.addEventListener('click', toggleDirectory);
-    
-    // Keyboard support for accessibility
     directoryHeader.addEventListener('keydown', function(e) {
       if (e.key === 'Enter' || e.key === ' ') {
         toggleDirectory(e);
       }
     });
-    
-    // Close directory when clicking outside (tablet/mobile only)
+
     document.addEventListener('click', function(e) {
       if (window.innerWidth <= 960) {
         if (!workDirectory.contains(e.target)) {
@@ -225,29 +227,23 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
-  
+
   workTitles.forEach(title => {
     title.addEventListener('click', function(e) {
       e.preventDefault();
-      
-      // Prevent multiple clicks during animation
       if (isAnimating) return;
-      
+
       const targetWork = this.getAttribute('data-work');
       const currentActive = document.querySelector('.work-title.active');
       const currentDisplay = document.querySelector('.work-display.active');
       const targetDisplay = document.querySelector(`.work-display[data-work="${targetWork}"]`);
-      
-      // Don't do anything if clicking the already active item
+
       if (currentActive === this) return;
-      
+
       isAnimating = true;
-      
-      // Update active state on titles
       workTitles.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
-      
-      // On tablet/mobile, collapse the directory after selection
+
       if (window.innerWidth <= 960 && workDirectory) {
         setTimeout(() => {
           workDirectory.classList.remove('expanded');
@@ -256,26 +252,20 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }, 150);
       }
-      
-      // Animate out the current display (slide up and fade)
+
       if (currentDisplay) {
         currentDisplay.classList.remove('active');
         currentDisplay.classList.add('exiting');
-        
-        // After exit animation, show the new display
+
         setTimeout(() => {
           currentDisplay.classList.remove('exiting');
           currentDisplay.style.display = 'none';
-          
-          // Prepare and animate in the new display (slide up from below and fade in)
+
           if (targetDisplay) {
             targetDisplay.style.display = 'flex';
             targetDisplay.classList.add('entering');
-            
-            // Force reflow
             targetDisplay.offsetHeight;
-            
-            // Remove entering class and add active to trigger animation
+
             setTimeout(() => {
               targetDisplay.classList.remove('entering');
               targetDisplay.classList.add('active');
@@ -284,9 +274,8 @@ document.addEventListener('DOMContentLoaded', function() {
           } else {
             isAnimating = false;
           }
-        }, 400); // Match CSS transition duration
+        }, 400);
       } else {
-        // If no current display, just show the target
         if (targetDisplay) {
           targetDisplay.style.display = 'flex';
           targetDisplay.classList.add('active');
@@ -295,19 +284,17 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-});
+}
 
-// Dropdown functionality for skills and tools containers
-document.addEventListener('DOMContentLoaded', function() {
+function initDropdowns() {
   const dropdownHeaders = document.querySelectorAll('.dropdown-header');
-  
+
   dropdownHeaders.forEach(header => {
     header.addEventListener('click', function() {
       const targetId = this.getAttribute('data-target');
       const targetContent = document.getElementById(targetId);
       const isActive = this.classList.contains('active');
-      
-      // Close all other dropdowns first
+
       dropdownHeaders.forEach(otherHeader => {
         if (otherHeader !== this) {
           const otherTargetId = otherHeader.getAttribute('data-target');
@@ -318,8 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
           }
         }
       });
-      
-      // Toggle current dropdown
+
       if (isActive) {
         this.classList.remove('active');
         if (targetContent) {
@@ -333,18 +319,15 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   });
-});
+}
 
-// EST Timestamp and Availability Indicator
-document.addEventListener('DOMContentLoaded', function() {
+function initTimestamp() {
   const timeElement = document.getElementById('est-time');
   const availabilityIndicator = document.querySelector('.availability-indicator');
   const availabilityText = document.getElementById('availability-text');
-  
-  // Availability configuration - set to true for available, false for not available
+
   const isAvailable = true;
-  
-  // Update availability state
+
   if (availabilityIndicator && availabilityText) {
     if (isAvailable) {
       availabilityIndicator.classList.remove('not-available');
@@ -354,30 +337,237 @@ document.addEventListener('DOMContentLoaded', function() {
       availabilityText.textContent = 'Not available for work';
     }
   }
-  
-  // Update EST time
+
   function updateESTTime() {
     if (!timeElement) return;
-    
     const now = new Date();
-    
-    // Format time in EST (America/New_York handles EST/EDT automatically)
     const options = {
       hour: 'numeric',
       minute: '2-digit',
       hour12: true,
       timeZone: 'America/New_York'
     };
-    
     const formatter = new Intl.DateTimeFormat('en-US', options);
     const timeString = formatter.format(now).toLowerCase();
-    
     timeElement.textContent = timeString;
   }
-  
-  // Initial update
+
   updateESTTime();
-  
-  // Update every minute
   setInterval(updateESTTime, 60000);
+}
+
+// Run page-specific init hooks based on current page
+function initPageHooks(page) {
+  if (page === 'home') {
+    initWorkDirectory();
+    initTimestamp();
+  } else if (page === 'about') {
+    initDropdowns();
+  }
+  // work, sandbox, contact don't need special JS init
+}
+
+// ===== SPA ROUTER =====
+(function() {
+  const spaContent = document.getElementById('spa-content');
+  // Only init SPA router on pages that have the SPA shell
+  if (!spaContent) return;
+
+  const routes = {
+    '/': 'home',
+    '/work/': 'work',
+    '/about/': 'about',
+    '/sandbox/': 'sandbox',
+    '/contact/': 'contact'
+  };
+
+  const titles = {
+    'home': 'Usmaan Razzaq Portfolio',
+    'work': 'Work | Usmaan Razzaq',
+    'about': 'About | Usmaan Razzaq',
+    'sandbox': 'Sandbox | Usmaan Razzaq',
+    'contact': 'Contact | Usmaan Razzaq'
+  };
+
+  const mainClasses = {
+    'home': 'new-homepage',
+    'work': '',
+    'about': '',
+    'sandbox': '',
+    'contact': 'contact-page'
+  };
+
+  const cache = new Map();
+  let isTransitioning = false;
+
+  // Normalize path: ensure trailing slash for SPA routes (except /)
+  function normalizePath(path) {
+    if (path === '/') return '/';
+    return path.endsWith('/') ? path : path + '/';
+  }
+
+  // Get page name from path
+  function getPage(path) {
+    return routes[normalizePath(path)] || null;
+  }
+
+  // Fetch a partial and cache it
+  function fetchPartial(page) {
+    if (cache.has(page)) {
+      return Promise.resolve(cache.get(page));
+    }
+    return fetch('/pages/' + page + '.html')
+      .then(function(res) {
+        if (!res.ok) throw new Error('Failed to load ' + page);
+        return res.text();
+      })
+      .then(function(html) {
+        cache.set(page, html);
+        return html;
+      });
+  }
+
+  // Swap content with fade transition
+  function swapContent(page, html) {
+    return new Promise(function(resolve) {
+      isTransitioning = true;
+
+      // Fade out
+      spaContent.classList.add('spa-fade-out');
+
+      setTimeout(function() {
+        // Swap HTML
+        spaContent.innerHTML = html;
+
+        // Update main element class
+        spaContent.className = mainClasses[page] || '';
+        spaContent.id = 'spa-content';
+        spaContent.setAttribute('data-page', page);
+
+        // Update title
+        document.title = titles[page] || 'Usmaan Razzaq Portfolio';
+
+        // Scroll to top
+        window.scrollTo(0, 0);
+
+        // Run page init hooks
+        initPageHooks(page);
+
+        // Force reflow before fade in
+        spaContent.offsetHeight;
+
+        // Fade in (remove the class — CSS transition handles the rest)
+        spaContent.classList.remove('spa-fade-out');
+
+        setTimeout(function() {
+          isTransitioning = false;
+          resolve();
+        }, 200);
+      }, 200);
+    });
+  }
+
+  // Navigate to a SPA route
+  function navigateTo(path, pushState) {
+    if (pushState === undefined) pushState = true;
+    if (isTransitioning) return;
+
+    var normalized = normalizePath(path);
+    var page = routes[normalized];
+    if (!page) return;
+
+    // Don't navigate if already on this page
+    if (spaContent.getAttribute('data-page') === page) return;
+
+    if (pushState) {
+      history.pushState({ page: page }, '', normalized);
+    }
+
+    fetchPartial(page).then(function(html) {
+      swapContent(page, html);
+    }).catch(function(err) {
+      console.error('SPA navigation error:', err);
+      // Fallback: full page load
+      window.location.href = normalized;
+    });
+  }
+
+  // Handle browser back/forward
+  window.addEventListener('popstate', function(e) {
+    var path = window.location.pathname;
+    var page = getPage(path);
+
+    if (page) {
+      fetchPartial(page).then(function(html) {
+        swapContent(page, html);
+      }).catch(function() {
+        window.location.reload();
+      });
+    }
+  });
+
+  // Intercept clicks on nav links
+  document.addEventListener('click', function(e) {
+    // Find the closest <a> tag
+    var link = e.target.closest('a');
+    if (!link) return;
+
+    var href = link.getAttribute('href');
+    if (!href) return;
+
+    // Skip external links, mailto, tel, hash-only, target=_blank
+    if (link.target === '_blank') return;
+    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href === '#') return;
+
+    // Check if this is a SPA route
+    var page = getPage(href);
+    if (page) {
+      e.preventDefault();
+      navigateTo(href);
+    }
+  });
+
+  // Expose router globally for logo click handler
+  window.spaRouter = { navigateTo: navigateTo };
+
+  // On initial load, detect the current route from URL (for htaccess fallback)
+  var initialPage = getPage(window.location.pathname);
+  if (initialPage && initialPage !== 'home') {
+    // We landed on a SPA route via htaccess — load the correct partial
+    fetchPartial(initialPage).then(function(html) {
+      spaContent.innerHTML = html;
+      spaContent.className = mainClasses[initialPage] || '';
+      spaContent.id = 'spa-content';
+      spaContent.setAttribute('data-page', initialPage);
+      document.title = titles[initialPage] || 'Usmaan Razzaq Portfolio';
+      initPageHooks(initialPage);
+    }).catch(function() {
+      // If partial fetch fails, the home page content stays as fallback
+    });
+  } else {
+    // Home page — init hooks for initial content
+    initPageHooks('home');
+  }
+
+  // Pre-cache the home partial from current DOM (so going back to home is instant)
+  cache.set('home', spaContent.innerHTML);
+})();
+
+// ===== Initial page hooks for non-SPA pages =====
+// Work Directory - only runs on non-SPA pages (SPA handles this via initPageHooks)
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('spa-content')) return; // SPA handles this
+  initWorkDirectory();
+});
+
+// Dropdown functionality - only on non-SPA pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('spa-content')) return;
+  initDropdowns();
+});
+
+// EST Timestamp - only on non-SPA pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('spa-content')) return;
+  initTimestamp();
 });

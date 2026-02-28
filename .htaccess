@@ -1,6 +1,9 @@
 # Enable URL Rewriting
 RewriteEngine On
 
+# SPA routes - serve index.html for main nav pages
+RewriteRule ^(work|about|sandbox|contact)/?$ /index.html [L]
+
 # Remove .html extension from URLs
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f

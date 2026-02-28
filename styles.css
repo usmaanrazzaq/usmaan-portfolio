@@ -7,6 +7,14 @@
   box-sizing: border-box;
 }
 
+/* SPA transition */
+#spa-content {
+  transition: opacity 0.2s ease;
+}
+#spa-content.spa-fade-out {
+  opacity: 0;
+}
+
 body {
   margin: 0;
   padding: 0px;
