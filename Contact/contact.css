@@ -106,7 +106,7 @@
     width: min(560px, 100%);
     height: min(680px, calc(100vh - 190px));
     min-height: 520px;
-    background-image: url("./assets/contact-bg.jpg");
+    background-image: url("./assets/contact-bg.webp");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
