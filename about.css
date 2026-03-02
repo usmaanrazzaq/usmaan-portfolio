@@ -62,7 +62,7 @@
 
 .experience-header {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 170px;
   gap: 20px;
   padding: 10px 0;
   border-bottom: 0.5px solid #2b2b2b;
@@ -77,7 +77,7 @@
 
 .experience-row {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 170px;
   gap: 20px;
   padding: 12px 0;
   border-bottom: 0.5px solid #e5e5e5;
@@ -88,11 +88,12 @@
   font-weight: 300;
   font-size: 14px;
   color: #000000;
+  min-width: 0;
 }
 
 .exp-year {
   text-align: right;
-  min-width: 100px;
+  width: 170px;
 }
 
 /* Skills & Tools Section */
@@ -195,7 +196,7 @@
 
   .experience-header,
   .experience-row {
-    grid-template-columns: 1fr 1fr auto;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 150px;
     gap: 15px;
   }
 }
