@@ -450,6 +450,7 @@ function initDropdowns() {
 
 function initTimestamp() {
   const timeElement = document.getElementById('est-time');
+  const timeIcon = document.getElementById('time-icon');
   const availabilityIndicator = document.querySelector('.availability-indicator');
   const availabilityText = document.getElementById('availability-text');
 
@@ -465,6 +466,38 @@ function initTimestamp() {
     }
   }
 
+  // Approximate sunrise/sunset for NYC (40.7°N, 74°W)
+  function getNYCSunTimes(date) {
+    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+    // Simplified solar declination
+    const declination = -23.45 * Math.cos((2 * Math.PI / 365) * (dayOfYear + 10));
+    const latRad = 40.7128 * Math.PI / 180;
+    const declRad = declination * Math.PI / 180;
+    // Hour angle for sunrise/sunset
+    const cosHourAngle = -Math.tan(latRad) * Math.tan(declRad);
+    const hourAngle = Math.acos(Math.max(-1, Math.min(1, cosHourAngle))) * 180 / Math.PI;
+    // Solar noon in UTC (approx 12:00 + longitude correction)
+    const solarNoonUTC = 12 + (74 / 15); // ~16.93 UTC
+    const daylightHours = hourAngle / 7.5; // half-day in hours
+    const sunriseUTC = solarNoonUTC - daylightHours;
+    const sunsetUTC = solarNoonUTC + daylightHours;
+    // Convert to EST (UTC-5) / EDT (UTC-4)
+    const isDST = isEDT(date);
+    const offset = isDST ? 4 : 5;
+    return {
+      sunrise: sunriseUTC - offset,
+      sunset: sunsetUTC - offset
+    };
+  }
+
+  // Check if date falls within EDT (second Sunday of March to first Sunday of November)
+  function isEDT(date) {
+    const year = date.getFullYear();
+    const marchSecondSunday = new Date(year, 2, 8 + (7 - new Date(year, 2, 8).getDay()) % 7);
+    const novFirstSunday = new Date(year, 10, 1 + (7 - new Date(year, 10, 1).getDay()) % 7);
+    return date >= marchSecondSunday && date < novFirstSunday;
+  }
+
   function updateESTTime() {
     if (!timeElement) return;
     const now = new Date();
@@ -477,6 +510,19 @@ function initTimestamp() {
     const formatter = new Intl.DateTimeFormat('en-US', options);
     const timeString = formatter.format(now).toLowerCase();
     timeElement.textContent = timeString;
+
+    // Update sun/moon icon based on NYC sunrise/sunset
+    if (timeIcon) {
+      const estNow = new Date(now.toLocaleString('en-US', { timeZone: 'America/New_York' }));
+      const currentHour = estNow.getHours() + estNow.getMinutes() / 60;
+      const sunTimes = getNYCSunTimes(estNow);
+
+      if (currentHour >= sunTimes.sunrise && currentHour < sunTimes.sunset) {
+        timeIcon.classList.remove('night');
+      } else {
+        timeIcon.classList.add('night');
+      }
+    }
   }
 
   updateESTTime();
