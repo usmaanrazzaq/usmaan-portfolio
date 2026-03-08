@@ -33,31 +33,126 @@
   gap: 10px;
 }
 
-/* Pulsing status dot — subtle scale pulse (like reference), green when available / red when not */
-.availability-dot {
+/* Dot-grid animation — 4×4 grid, wave pulse then forms icon */
+.dot-grid {
   flex-shrink: 0;
-  width: 8px;
-  height: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 3px);
+  gap: 2.5px;
+  width: fit-content;
+}
+
+.dot-grid .dot {
+  width: 3px;
+  height: 3px;
   border-radius: 50%;
   background-color: #22c55e;
-  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4);
-  animation: availability-pulse-scale 2.2s ease-in-out infinite;
+  opacity: 0.15;
+  animation: dot-bg 4s ease-in-out infinite;
 }
 
-.availability-indicator.not-available .availability-dot {
+/* Checkmark icon dots: 8, 9, 11, 14
+   Grid layout:
+   .  .  .  .
+   .  .  .  ●
+   ●  .  ●  .
+   .  ●  .  .
+*/
+.dot-grid .dot:nth-child(8),
+.dot-grid .dot:nth-child(9),
+.dot-grid .dot:nth-child(11),
+.dot-grid .dot:nth-child(14) {
+  animation-name: dot-icon;
+}
+
+/* Stagger the icon dots for a drawing effect */
+.dot-grid .dot:nth-child(14)  { animation-delay: 0s; }
+.dot-grid .dot:nth-child(9)   { animation-delay: 0.06s; }
+.dot-grid .dot:nth-child(11)  { animation-delay: 0.12s; }
+.dot-grid .dot:nth-child(8)   { animation-delay: 0.18s; }
+
+/* Background dot wave delays */
+.dot-grid .dot:nth-child(6),
+.dot-grid .dot:nth-child(7),
+.dot-grid .dot:nth-child(10)  { animation-delay: 0s; }
+
+.dot-grid .dot:nth-child(2),
+.dot-grid .dot:nth-child(3),
+.dot-grid .dot:nth-child(5),
+.dot-grid .dot:nth-child(12),
+.dot-grid .dot:nth-child(15)  { animation-delay: 0.1s; }
+
+.dot-grid .dot:nth-child(1),
+.dot-grid .dot:nth-child(4),
+.dot-grid .dot:nth-child(13),
+.dot-grid .dot:nth-child(16)  { animation-delay: 0.2s; }
+
+/* Not available — red + X icon
+   X dots: 1, 4, 6, 7, 10, 11, 13, 16
+   ●  .  .  ●
+   .  ●  ●  .
+   .  ●  ●  .
+   ●  .  .  ●
+*/
+.availability-indicator.not-available .dot-grid .dot {
   background-color: #ef4444;
-  box-shadow: 0 0 6px rgba(239, 68, 68, 0.4);
-  animation: availability-pulse-scale 2.2s ease-in-out infinite;
+  animation-name: dot-bg;
 }
 
-@keyframes availability-pulse-scale {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
+.availability-indicator.not-available .dot-grid .dot:nth-child(1),
+.availability-indicator.not-available .dot-grid .dot:nth-child(4),
+.availability-indicator.not-available .dot-grid .dot:nth-child(6),
+.availability-indicator.not-available .dot-grid .dot:nth-child(7),
+.availability-indicator.not-available .dot-grid .dot:nth-child(10),
+.availability-indicator.not-available .dot-grid .dot:nth-child(11),
+.availability-indicator.not-available .dot-grid .dot:nth-child(13),
+.availability-indicator.not-available .dot-grid .dot:nth-child(16) {
+  animation-name: dot-icon;
+}
+
+/* Background dots: pulse gently, dim during icon phase */
+@keyframes dot-bg {
+  0%, 40% {
+    opacity: 0.15;
+    transform: scale(0.85);
   }
-  50% {
+  20% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  /* Dim during icon reveal */
+  55%, 75% {
+    opacity: 0.08;
+    transform: scale(0.7);
+  }
+  90%, 100% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+}
+
+/* Icon dots: pulse then brighten to form the shape */
+@keyframes dot-icon {
+  0%, 40% {
+    opacity: 0.15;
+    transform: scale(0.85);
+  }
+  20% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  /* Icon reveal */
+  55% {
+    opacity: 1;
     transform: scale(1.3);
-    opacity: 0.9;
+  }
+  65%, 75% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+  90%, 100% {
+    opacity: 0.15;
+    transform: scale(0.85);
   }
 }
 
@@ -70,6 +165,38 @@
   line-height: normal;
   color: #000;
   margin: 0;
+}
+
+/* Timestamp digit animation */
+.timestamp {
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.time-char {
+  display: inline-block;
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1),
+              opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.time-char-out {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+
+.time-char-in {
+  animation: char-slide-in 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+@keyframes char-slide-in {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .hero-contact-label {
@@ -133,7 +260,7 @@
 .work-section {
   display: grid;
   grid-template-columns: 3fr 2fr 3fr;
-  gap: 5px 0;
+  gap: 30px 0;
   padding: 14px 20px;
   align-items: start;
 }
@@ -189,7 +316,7 @@
 .work-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
   padding: 0;
 }
 
@@ -230,18 +357,22 @@
     flex-shrink: 0 !important;
   }
 
-  /* Directory header - visible and tappable on mobile */
+  /* Directory header - shadcn trigger style */
   .directory-header {
     display: flex !important;
     align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    gap: 8px;
     visibility: visible !important;
     opacity: 1 !important;
     cursor: pointer;
     width: fit-content;
-    padding: 5px 10px 5px 0;
+    padding: 6px 0;
+    border: none;
     border-bottom: 0.5px solid #767676;
-    transition: opacity 0.2s ease;
+    border-radius: 0;
+    background-color: transparent;
+    transition: opacity 0.15s ease;
   }
 
   .directory-header:hover {
@@ -250,104 +381,79 @@
 
   .directory-header span {
     display: inline !important;
-    font-size: 16px;
-    font-weight: 300;
-    color: #2b2b2b;
+    font-size: 14px;
+    font-weight: 500;
+    color: #09090b;
   }
 
-  /* Work List - Hidden by default, overlays work display when expanded */
+  /* Work List - shadcn popover style */
   .work-list {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 6px);
     left: 0;
     right: 0;
     display: flex;
     flex-direction: column;
     gap: 0;
     opacity: 0;
-    transform: translateY(-8px);
+    transform: translateY(-4px) scale(0.98);
     transform-origin: top left;
     pointer-events: none;
     max-height: 0;
     overflow: hidden;
-    background-color: rgba(255, 255, 255, 0.97);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-bottom: 0.5px solid rgba(43, 43, 43, 0.2);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-    transition: opacity 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
-                max-height 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+    background-color: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    transition: opacity 0.15s ease, transform 0.15s ease, max-height 0.2s ease;
     padding: 0;
     z-index: 100;
   }
 
   .work-directory.expanded .work-list {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
     pointer-events: auto;
-    max-height: 350px;
-    padding: 12px 10px 10px 10px;
-    transition: opacity 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
-                max-height 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+    max-height: 400px;
+    padding: 4px;
+    transition: opacity 0.2s ease, transform 0.2s ease, max-height 0.25s ease;
   }
 
-  /* Individual work titles - Notion-style staggered fade */
+  /* Individual work titles - shadcn command item style */
   .work-title {
-    padding: 8px 0;
-    opacity: 0;
-    transform: translateX(-4px);
-    transition: opacity 0.15s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    padding: 8px 12px;
+    border-radius: 6px;
+    opacity: 1;
+    transform: none;
+    transition: background-color 0.1s ease;
   }
 
-  /* Staggered delays for each item */
-  .work-directory.expanded .work-title:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.02s; }
-  .work-directory.expanded .work-title:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.04s; }
-  .work-directory.expanded .work-title:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.06s; }
-  .work-directory.expanded .work-title:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.08s; }
-  .work-directory.expanded .work-title:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.10s; }
-  .work-directory.expanded .work-title:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.12s; }
+  .work-title:hover {
+    background-color: #f5f5f5;
+  }
 
-  /* Notion-style vertical indicator bar */
   .work-title .active-indicator {
-    display: block;
-    width: 2px;
-    min-height: 14px;
-    background-color: transparent;
-    border-radius: 1px;
-    transition: background-color 0.15s cubic-bezier(0.25, 0.1, 0.25, 1),
-                transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
-    transform: scaleY(0.6);
-    font-size: 0;
-    color: transparent;
+    display: none;
   }
 
-  .work-title:hover .active-indicator {
-    background-color: rgba(0, 0, 0, 0.12);
-    transform: scaleY(0.8);
-  }
-
-  .work-title.active .active-indicator {
-    background-color: #2b2b2b;
-    transform: scaleY(1);
+  .work-title.active {
+    background-color: #f5f5f5;
   }
 
   .work-title .title-text {
     font-size: 14px;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.5);
-    transition: color 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    color: #71717a;
+    transition: color 0.1s ease;
   }
 
   .work-title.active .title-text {
-    color: #000;
+    color: #09090b;
     font-weight: 500;
   }
 
   .work-title:hover .title-text {
-    color: rgba(0, 0, 0, 0.7);
+    color: #09090b;
   }
 
   /* Work Display Container - Tablet */
@@ -538,22 +644,37 @@
 }
 
 /* ===== FIGMA HOMEPAGE V2 OVERRIDES ===== */
+/* Same width + padding so hero and work section grids align column-for-column */
+.hero-intro,
+.work-section {
+  --col3-padding: 9px;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+}
+
 .hero-intro {
   display: block;
-  padding: 14px 10px 16px;
-  max-width: none;
+  padding: 14px 20px 16px;
   border-bottom: 0.5px solid #b5b5b5;
 }
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(220px, 0.95fr) minmax(220px, 0.9fr) minmax(320px, 1fr);
+  grid-template-columns: 3fr 2fr 3fr;
   gap: 30px;
   align-items: start;
 }
 
 .hero-col {
   min-width: 0;
+}
+
+/* Symmetrical left edge: bio and work overview use same inner padding */
+.hero-intro .hero-col.hero-col-bio,
+.work-section .work-entry > .work-overview {
+  padding-left: var(--col3-padding);
+  padding-right: var(--col3-padding);
 }
 
 .status-bar {
@@ -569,43 +690,39 @@
   gap: 5px;
   text-decoration: none;
   cursor: pointer;
-  padding: 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background-color 0.1s ease;
+}
+
+.work-title:hover {
+  background-color: #f5f5f5;
+}
+
+.work-title.active {
+  background-color: #f5f5f5;
 }
 
 .work-title .active-indicator {
-  width: 10px;
-  min-height: 10px;
-  flex-shrink: 0;
-  position: relative;
-}
-
-.work-title.active .active-indicator::before {
-  content: '';
-  position: absolute;
-  left: 3px;
-  top: 50%;
-  width: 1px;
-  height: 12px;
-  background-color: #2b2b2b;
-  transform: translateY(-50%);
+  display: none;
 }
 
 .work-title .title-text {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 14px;
-  color: #767676;
+  color: #71717a;
   line-height: 1.3;
-  transition: color 0.2s ease;
+  transition: color 0.1s ease;
 }
 
 .work-title.active .title-text {
-  color: #000;
-  font-weight: 300;
+  color: #09090b;
+  font-weight: 500;
 }
 
 .work-title:hover .title-text {
-  color: rgba(0, 0, 0, 0.6);
+  color: #09090b;
 }
 
 /* Work Entry — display:contents lets children join parent grid */
@@ -661,7 +778,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 13px;
+  padding: 0 var(--col3-padding, 9px);
 }
 
 .meta-group {
@@ -686,11 +803,12 @@
   line-height: normal;
 }
 
-/* Work Overview (Column 3, Row 1) */
+/* Work Overview (Column 3, Row 1) — same padding as .hero-col-bio for alignment */
 .work-entry > .work-overview {
   grid-column: 3;
   grid-row: 1;
-  padding: 0 9px;
+  padding-left: var(--col3-padding, 9px);
+  padding-right: var(--col3-padding, 9px);
 }
 
 .work-overview p {
@@ -1043,7 +1161,8 @@
 
   .meta-label,
   .meta-value {
-    font-size: 14px;
+    font-size: 12px;
+    gap: 0px;
   }
 
   .work-overview p {
@@ -1052,20 +1171,15 @@
   }
 
   .work-visual-side {
-    flex-direction: column;
-    gap: 15px;
-  }
-
-  .visual-item img {
-    height: 140px;
+    display: none;
   }
 }
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .availability-dot {
+  .dot-grid .dot {
     animation: none !important;
-    box-shadow: none !important;
+    opacity: 0.7 !important;
   }
 
   .connect-links a,

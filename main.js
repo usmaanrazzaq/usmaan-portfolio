@@ -161,79 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== PAGE INIT HOOKS =====
 // These run after SPA content swap to re-initialize page-specific JS
 
-// ===== SPLIT-FLAP TEXT ANIMATION =====
-const FLAP_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-·';
 
-function splitFlapElement(el, opts) {
-  const finalText = el.getAttribute('data-text') || el.textContent;
-  // Store original text on first run
-  if (!el.hasAttribute('data-text')) {
-    el.setAttribute('data-text', finalText);
-  }
-
-  const len = finalText.length;
-  const current = new Array(len);
-  const speed = (opts && opts.speed) || 1;
-
-  // Start with scrambled characters (preserve spaces)
-  for (let i = 0; i < len; i++) {
-    current[i] = finalText[i] === ' ' ? ' ' : FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
-  }
-  el.textContent = current.join('');
-
-  // Resolve characters left-to-right with a slight stagger
-  const msPerChar = Math.max(4, Math.min(20, 600 / len)) / speed;
-  const cyclesPerChar = speed >= 2 ? 2 : 3;
-  let tick = 0;
-
-  function step() {
-    tick++;
-
-    // Which character index should be resolved by now?
-    const resolveIndex = Math.floor(tick / cyclesPerChar);
-
-    // Scramble unresolved characters
-    for (let i = resolveIndex; i < len; i++) {
-      if (finalText[i] === ' ') {
-        current[i] = ' ';
-      } else {
-        current[i] = FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
-      }
-    }
-
-    // Lock in resolved characters
-    for (let i = 0; i < Math.min(resolveIndex, len); i++) {
-      current[i] = finalText[i];
-    }
-
-    el.textContent = current.join('');
-
-    if (resolveIndex >= len) {
-      el.textContent = finalText;
-      return;
-    }
-
-    el._flapTimer = setTimeout(() => requestAnimationFrame(step), msPerChar);
-  }
-
-  // Cancel any previous animation on this element
-  if (el._flapTimer) clearTimeout(el._flapTimer);
-
-  requestAnimationFrame(step);
-}
-
-function runSplitFlap(entry) {
-  // Animate meta values
-  entry.querySelectorAll('.meta-value').forEach((el, i) => {
-    setTimeout(() => splitFlapElement(el), i * 40);
-  });
-
-  // Animate overview paragraph
-  const overviewP = entry.querySelector('.work-overview p');
-  if (overviewP) {
-    setTimeout(() => splitFlapElement(overviewP, { speed: 3 }), 80);
-  }
-}
 
 function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
@@ -295,9 +223,6 @@ function initWorkDirectory() {
         // Activate new entry — force reflow so the browser registers opacity:0 first
         targetEntry.classList.add('active');
         targetEntry.offsetHeight;
-
-        // Run split-flap on the new entry's text
-        runSplitFlap(targetEntry);
 
         // After the old entry finishes fading out, remove it from the grid
         setTimeout(() => {
@@ -377,22 +302,67 @@ function initTimestamp() {
     }
   }
 
+  let prevTimeString = '';
+
   function updateESTTime() {
     if (!timeElement) return;
     const now = new Date();
     const options = {
       hour: 'numeric',
       minute: '2-digit',
+      second: '2-digit',
       hour12: true,
       timeZone: 'America/New_York'
     };
     const formatter = new Intl.DateTimeFormat('en-US', options);
     const timeString = formatter.format(now).toLowerCase();
-    timeElement.textContent = timeString;
+
+    if (timeString === prevTimeString) return;
+
+    // First render — just set the text with spans
+    if (!prevTimeString) {
+      timeElement.innerHTML = timeString.split('').map(function(ch) {
+        return '<span class="time-char">' + ch + '</span>';
+      }).join('');
+      prevTimeString = timeString;
+      return;
+    }
+
+    // Animate changed characters
+    var chars = timeElement.querySelectorAll('.time-char');
+    var newChars = timeString.split('');
+
+    // Handle length change (e.g. 9:59 → 10:00)
+    if (newChars.length !== chars.length) {
+      timeElement.innerHTML = newChars.map(function(ch) {
+        return '<span class="time-char time-char-in">' + ch + '</span>';
+      }).join('');
+      prevTimeString = timeString;
+      return;
+    }
+
+    for (var i = 0; i < newChars.length; i++) {
+      if (chars[i] && chars[i].textContent !== newChars[i]) {
+        var span = chars[i];
+        span.classList.add('time-char-out');
+        (function(s, newCh) {
+          setTimeout(function() {
+            s.textContent = newCh;
+            s.classList.remove('time-char-out');
+            s.classList.add('time-char-in');
+            setTimeout(function() {
+              s.classList.remove('time-char-in');
+            }, 300);
+          }, 150);
+        })(span, newChars[i]);
+      }
+    }
+
+    prevTimeString = timeString;
   }
 
   updateESTTime();
-  setInterval(updateESTTime, 60000);
+  setInterval(updateESTTime, 1000);
 }
 
 // ===== IMAGE LIGHTBOX =====
