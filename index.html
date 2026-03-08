@@ -8,7 +8,7 @@
     <title>Usmaan Razzaq Portfolio</title>
     <link rel="stylesheet" href="styles.css?v=20260228">
     <link rel="stylesheet" href="nav.css?v=20260216">
-    <link rel="stylesheet" href="home.css?v=20260305d">
+    <link rel="stylesheet" href="home.css?v=20260308a">
     <link rel="stylesheet" href="about.css?v=20260228">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
@@ -30,6 +30,7 @@
                 <div class="hero-col hero-col-status">
                     <div class="status-bar">
                         <div class="availability-indicator">
+                            <span class="availability-dot" aria-hidden="true"></span>
                             <span class="availability-text" id="availability-text">Available for freelance work</span>
                         </div>
                         <span class="timestamp" id="est-time">--:--</span>
@@ -54,300 +55,266 @@
 
         <div class="hero-divider"></div>
 
-        <section class="home-work-tabs" aria-label="Work tabs">
-            <button type="button" class="home-tab active" data-home-tab="selected" aria-selected="true">Selected Work</button>
-            <button type="button" class="home-tab" data-home-tab="additional" aria-selected="false">Additional Work</button>
-        </section>
+        <section class="work-section">
+            <aside class="work-directory">
+                <div class="directory-header" role="button" tabindex="0" aria-label="Toggle work directory" aria-expanded="false">
+                    <span>Selected Work</span>
+                    <svg class="directory-toggle-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line class="icon-line icon-line-h" x1="0" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1"/>
+                        <line class="icon-line icon-line-v" x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="1"/>
+                    </svg>
+                </div>
+                <nav class="work-list">
+                    <a href="#" class="work-title active" data-work="adsum">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Adsum NYC</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="nmya">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">National Muslim Youth Association</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="otrs">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">On The Run Studio</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="rented">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Rented</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="spots">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Spots</span>
+                    </a>
+                    <a href="#" class="work-title" data-work="dpr">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">DPR Studio</span>
+                    </a>
+                </nav>
+            </aside>
 
-        <section class="home-tab-panels" data-active-tab="selected">
-            <div class="home-tab-track">
-                <div class="home-tab-panel selected-panel" data-tab-panel="selected">
-                    <section class="content-area">
-                        <aside class="work-directory">
-                            <div class="directory-header" role="button" tabindex="0" aria-label="Toggle work directory" aria-expanded="false">
-                                <span>Selected Work</span>
-                                <svg class="directory-toggle-icon" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <line class="icon-line icon-line-h" x1="0" y1="7" x2="14" y2="7" stroke="currentColor" stroke-width="1"/>
-                                    <line class="icon-line icon-line-v" x1="7" y1="0" x2="7" y2="14" stroke="currentColor" stroke-width="1"/>
-                                </svg>
-                            </div>
-                            <nav class="work-list">
-                                <a href="#" class="work-title active" data-work="adsum">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">Adsum NYC</span>
-                                </a>
-                                <a href="#" class="work-title" data-work="nmya">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">National Muslim Youth Association</span>
-                                </a>
-                                <a href="#" class="work-title" data-work="otrs">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">On The Run Studio</span>
-                                </a>
-                                <a href="#" class="work-title" data-work="rented">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">Rented</span>
-                                </a>
-                                <a href="#" class="work-title" data-work="spots">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">Spots</span>
-                                </a>
-                                <a href="#" class="work-title" data-work="dpr">
-                                    <span class="active-indicator"></span>
-                                    <span class="title-text">DPR Studio</span>
-                                </a>
-                            </nav>
-                        </aside>
+            <article class="work-entry active" data-work="adsum">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">Adsum NYC</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">Web Designer</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">Web Design, Campaigns, Marketing</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Nov 2025 - Present</span>
+                    </div>
+                </div>
+                <div class="work-overview">
+                    <p>Adsum is a Brooklyn, NY-based brand. I design landing pages for new collections, sales, and events on an ongoing timeline. Additionally, I assist with launching new campaigns and assist with outreach. I work closely with the brand's founder.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main">
+                        <a href="/adsum/"><video src="video/Adsum-Display.mov" autoplay loop muted playsinline></video></a>
+                    </div>
+                    <div class="work-visual-side">
+                        <figure class="visual-item">
+                            <img src="images/Adsum-Filter-Size-Display.webp" alt="Size Filter Feature">
+                            <figcaption>Size Filter Feature</figcaption>
+                        </figure>
+                        <figure class="visual-item visual-item--contain">
+                            <img src="images/IG Posts.png" alt="Campaigns & IG Posts">
+                            <figcaption>Campaigns & IG Posts</figcaption>
+                        </figure>
+                    </div>
+                </div>
+            </article>
 
-                        <div class="work-display-container">
-                <!-- On The Run Studio -->
-                <article class="work-display" data-work="otrs">
-                    <div class="work-image">
-                       <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"><img src="images/OTRS-Screen.webp" alt="On The Run Studio website display"></a>
+            <article class="work-entry" data-work="nmya">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">National Muslim Youth Association</span>
                     </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>On The Run Studio</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">Founder</span>
-                                <span class="crumb">Product Design & Front-End dev</span>
-                            </div>
-                            <span class="work-date">Mar 2021 - Present</span>
-                        </div>
-                        <div class="work-description">
-                            <p>On The Run Studio is a design agency that I founded in 2021. I work with a partner to design and develop websites for clients. We offer a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
-                        </div>
-                        <div class="work-links-row">
-                            <a href="https://ontherun.studio/" target="_blank" rel="noopener noreferrer">Website</a>
-                            <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">Case Study</a>
-                        </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">UI Designer & Project Manager</span>
                     </div>
-                </article>
-                
-                <!-- Adsum NYC -->
-                <article class="work-display active" data-work="adsum">
-                    <div class="work-image video-container">
-                        <a href="Adsum/"><video src="video/Adsum-Display.mov" autoplay loop muted playsinline></video></a>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">UI/UX Design, Webflow</span>
                     </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>Adsum NYC</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">Web Design</span>
-                                <span class="crumb">Front-End Development</span>
-                                <span class="crumb">Shopify Development</span>
-                            </div>
-                            <span class="work-date">Nov 2025 - Present</span>
-                        </div>
-                        <div class="work-description">
-                            <p>Adsum is a Brooklyn, NY-based brand. I design landing pages for new collections, sales, and events on an ongoing timeline. Additionally, I assist with launching new campaigns and assist with outreach. I work closely with the brand's founder.</p>
-                        </div>
-                        <div class="work-links-row">
-                            <a href="https://adsumnyc.com/" target="_blank" rel="noopener noreferrer">Website</a>
-                            <a href="/adsum/">Case Study</a>
-                        </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Nov 2023 - Nov 2025</span>
                     </div>
-                </article>
-                
-                <!-- DPR Studio -->
-                <article class="work-display" data-work="dpr">
-                    <div class="work-image bg-light centered">
-                        <img src="images/DPR-Display 1.webp" alt="DPR Studio logo" class="logo-image">
-                    </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>DPR Studio</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">UI Design</span>
-                                <span class="crumb">Front-End Development</span>
-                            </div>
-                            <span class="work-date">Current Client</span>
-                        </div>
-                        <div class="work-description">
-                            <p>DPR Studio is a studio based in California specializing in garment design, brand identity, brand strategy, creative direction, production management. I designed and developed the studio's website, through my design studio On The Run Studio.</p>
-                        </div>
-                        <div class="work-links-row">
-                           <!-- <a href="#">Website</a>
-                            <a href="#">Case Study</a>-->
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- Spots -->
-                <article class="work-display" data-work="spots">
-                    <div class="work-image video-container">
-                        <video src="video/Find-My-Americano.mov" autoplay loop muted playsinline></video>
-                    </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>Spots</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">UI/UX Design</span>
-                                <span class="crumb">Mobile App</span>
-                            </div>
-                            <span class="work-date">Personal Project</span>
-                        </div>
-                        <div class="work-description">
-                            <p>Spots is a website where I rate and share cafes where I've bought an Americano. An interactive map makes it easy to pinpoint each cafe's location.</p>
-                        </div>
-                        <div class="work-links-row">
-                            <a href="https://spotsnyc.netlify.app/" target="_blank" rel="noopener noreferrer">View Page</a>
-                            <!--<a href="#">Case Study</a>-->
-                        </div>
-                    </div>
-                </article>
-                
-                <!-- National Muslim Youth Association -->
-                <article class="work-display" data-work="nmya">
-                    <div class="work-image">
+                </div>
+                <div class="work-overview">
+                    <p>The National Muslim Youth Association is a Youth Boys Organization. I work with the organization as their lead UI designer and Project Manager. I lead an overhaul redesign of the website, which included a new design system, new components, and a new content management system.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main">
                         <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html"><img src="images/CleanShot 2025-11-30 at 13.03.58@2x.webp" alt="National Muslim Youth Association website display"></a>
                     </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>National Muslim Youth Association</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">UI/UX Design</span>
-                                <span class="crumb">Webflow</span>
-                            </div>
-                            <span class="work-date">Nov 2023 - Nov 2025</span>
-                        </div>
-                        <div class="work-description">
-                            <p>The National Muslim Youth Association is a Youth Boys Organization. I work with the organization as their lead UI designer and Project Manager. I lead an overhaul redesign of the website, which included a new design system, new components, and a new content management system.</p>
-                        </div>
-                        <div class="work-links-row">
-                            <a href="https://atfal-website.vercel.app/" target="_blank" rel="noopener noreferrer">Website</a>
-                            <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html">Case Study</a>
-                        </div>
-                    </div>
-                </article>
+                    <!-- <div class="work-visual-side">
+                        <figure class="visual-item">
+                            <img src="images/NAA-MobileDisplay.jpg" alt="NAA Mobile Display">
+                            <figcaption>NAA Homepage</figcaption>
+                        </figure>
+                        <figure class="visual-item">
+                            <img src="images/NAA-Al-Bashir-Mobile.jpg" alt="NAA Desktop Display">
+                            <figcaption>Al Bashir Page</figcaption>
+                        </figure>
+                    </div> -->
+                </div>
+            </article>
 
-                <!-- Rented -->
-                <article class="work-display" data-work="rented">
-                    <div class="work-image video-container">
+            <article class="work-entry" data-work="otrs">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">On The Run Studio</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">Founder</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">Product Design, Front-End Development</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Mar 2021 - Present</span>
+                    </div>
+                </div>
+                <div class="work-overview">
+                    <p>On The Run Studio is a design agency that I founded in 2021. I work with a partner to design and develop websites for clients. We offer a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main">
+                        <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"><img src="images/OTRS-Screen.webp" alt="On The Run Studio website display"></a>
+                    </div>
+                   <!-- <div class="work-visual-side">
+                        <figure class="visual-item">
+                            <img src="images/OTRS-Mobile-UI.webp" alt="OTRS Mobile UI">
+                            <figcaption>Mobile Design</figcaption>
+                        </figure>
+                        <figure class="visual-item">
+                            <img src="images/OTRS-About-Display.webp" alt="OTRS About Page">
+                            <figcaption>About Page</figcaption>
+                        </figure>
+                    </div> -->
+                </div>
+            </article>
+
+            <article class="work-entry" data-work="rented">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">Rented</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">UI Designer</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">UI Design, Prototyping, Mobile App</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Nov 2024 - May 2025</span>
+                    </div>
+                </div>
+                <div class="work-overview">
+                    <p>Rented is an application service that allows users to rent tools, objects, and materials, while also allowing them to rent out their own belongings. I designed the UI and built a working prototype for the engineering team.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main">
                         <a href="Rented/rented/index.html"><video src="video/Rented-Display.mov" autoplay loop muted playsinline></video></a>
                     </div>
-                    <div class="work-info-panel">
-                        <div class="work-title-row">
-                            <h2>Rented</h2>
-                        </div>
-                        <div class="work-crumbs-row">
-                            <div class="crumbs-left">
-                                <span class="crumb">UI Design</span>
-                                <span class="crumb">Prototyping</span>
-                                <span class="crumb">Mobile App</span>
-                            </div>
-                            <span class="work-date">Nov 2024 - May 2025</span>
-                        </div>
-                        <div class="work-description">
-                            <p>Rented is an application service that allows users to rent tools, objects, and materials, while also allowing them to rent out their own belongings. I designed the UI and built a working prototype for the engineering team.</p>
-                        </div>
-                        <div class="work-links-row">
-                            <a href="Rented/rented/index.html">Case Study</a>
-                        </div>
+                    <div class="work-visual-side">
+                        <figure class="visual-item">
+                            <img src="images/Rentd-Mobile-Display.webp" alt="Rented Mobile Display">
+                            <figcaption>Mobile App</figcaption>
+                        </figure>
+                        <figure class="visual-item">
+                            <img src="images/Onboarding-v1.webp" alt="Rented Onboarding">
+                            <figcaption>Onboarding Flow</figcaption>
+                        </figure>
                     </div>
-                </article>
-                        </div>
-                    </section>
                 </div>
-                <div class="home-tab-panel additional-panel" data-tab-panel="additional">
-                    <section class="additional-work-shell">
-                        <div class="sandbox-container">
-                            <div class="sandbox-content">
-                                <div class="sandbox-row sandbox-top">
-                                    <article class="sandbox-card">
-                                        <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" rel="noopener noreferrer" class="sandbox-card-link">
-                                            <div class="sandbox-card-image">
-                                                <img src="images/Design-CUNY.webp" alt="Design @ CUNY Website" loading="lazy">
-                                            </div>
-                                        </a>
-                                        <div class="sandbox-card-tags">
-                                            <span class="sandbox-tag">Website Redesign</span>
-                                            <span class="sandbox-tag">UI Design</span>
-                                            <span class="sandbox-tag">Development</span>
-                                        </div>
-                                        <h3 class="sandbox-card-title">Design @ CUNY Website</h3>
-                                        <p class="sandbox-card-desc">A website redesign for Design @ CUNY, a student-run design organization.</p>
-                                    </article>
+            </article>
 
-                                    <article class="sandbox-card">
-                                        <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&amp;node-id=241-2418&amp;viewport=632%2C38%2C0.15&amp;t=shQfp8sd8LmZea1r-1&amp;scaling=scale-down&amp;content-scaling=fixed" target="_blank" rel="noopener noreferrer" class="sandbox-card-link">
-                                            <div class="sandbox-card-image">
-                                                <img src="images/CUNY-Arts-Mobile.webp" alt="CUNY Arts Website" loading="lazy">
-                                            </div>
-                                        </a>
-                                        <div class="sandbox-card-tags">
-                                            <span class="sandbox-tag">Website Redesign</span>
-                                            <span class="sandbox-tag">UI Design</span>
-                                            <span class="sandbox-tag">Prototype</span>
-                                        </div>
-                                        <h3 class="sandbox-card-title">CUNY Arts Website Redesign</h3>
-                                        <p class="sandbox-card-desc">A redesign concept for CUNY Arts website with improved navigation and visual hierarchy.</p>
-                                    </article>
-
-                                    <article class="sandbox-card">
-                                        <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" rel="noopener noreferrer" class="sandbox-card-link">
-                                            <div class="sandbox-card-image">
-                                                <img src="images/SILO-Display.webp" alt="Streaming Platform" loading="lazy">
-                                            </div>
-                                        </a>
-                                        <div class="sandbox-card-tags">
-                                            <span class="sandbox-tag">UI Design</span>
-                                            <span class="sandbox-tag">Development</span>
-                                            <span class="sandbox-tag">Platform</span>
-                                        </div>
-                                        <h3 class="sandbox-card-title">Streaming Platform</h3>
-                                        <p class="sandbox-card-desc">A streaming platform concept with a focus on clean UI and user experience.</p>
-                                    </article>
-                                </div>
-
-                                <div class="sandbox-row sandbox-bottom">
-                                    <article class="sandbox-card">
-                                        <div class="sandbox-card-image">
-                                            <img src="images/Bright-Notes-Display.webp" alt="Bright Notes Landing Page" loading="lazy">
-                                        </div>
-                                        <div class="sandbox-card-tags">
-                                            <span class="sandbox-tag">Landing Page</span>
-                                            <span class="sandbox-tag">UI Design</span>
-                                            <span class="sandbox-tag">Note-taking App</span>
-                                        </div>
-                                        <h3 class="sandbox-card-title">Bright Notes</h3>
-                                        <p class="sandbox-card-desc">A landing page design for a note-taking application with a clean, minimal aesthetic.</p>
-                                    </article>
-
-                                    <article class="sandbox-card">
-                                        <a href="https://www.figma.com/proto/yN8zEIKadSfcN0rLPn4Ls8/CUNY-Jobs-Board-app?node-id=0-1&amp;t=v3gY9mFlZltu2XDQ-1" target="_blank" rel="noopener noreferrer" class="sandbox-card-link">
-                                            <div class="sandbox-card-image">
-                                                <img src="images/CUNY-Bridges-App.webp" alt="CUNY Bridges App" loading="lazy">
-                                            </div>
-                                        </a>
-                                        <div class="sandbox-card-tags">
-                                            <span class="sandbox-tag">UI Design</span>
-                                            <span class="sandbox-tag">Prototyping</span>
-                                            <span class="sandbox-tag">Mobile App</span>
-                                        </div>
-                                        <h3 class="sandbox-card-title">CUNY Bridges</h3>
-                                        <p class="sandbox-card-desc">A mobile app prototype for connecting CUNY students with job opportunities.</p>
-                                    </article>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+            <article class="work-entry" data-work="spots">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">Spots</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">Product Designer</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">UI/UX Design, Mobile App</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Personal Project</span>
+                    </div>
                 </div>
-            </div>
+                <div class="work-overview">
+                    <p>Spots is a website where I rate and share cafes where I've bought an Americano. An interactive map makes it easy to pinpoint each cafe's location.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main">
+                        <a href="https://spotsnyc.netlify.app/" target="_blank" rel="noopener noreferrer"><video src="video/Find-My-Americano.mov" autoplay loop muted playsinline></video></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="work-entry" data-work="dpr">
+                <div class="work-meta">
+                    <div class="meta-group">
+                        <span class="meta-label">Company</span>
+                        <span class="meta-value">DPR Studio</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Role</span>
+                        <span class="meta-value">Web Designer & Developer</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Scope</span>
+                        <span class="meta-value">UI Design, Front-End Development</span>
+                    </div>
+                    <div class="meta-group">
+                        <span class="meta-label">Time</span>
+                        <span class="meta-value">Current Client</span>
+                    </div>
+                </div>
+                <div class="work-overview">
+                    <p>DPR Studio is a studio based in California specializing in garment design, brand identity, brand strategy, creative direction, production management. I designed and developed the studio's website, through my design studio On The Run Studio.</p>
+                </div>
+                <div class="work-visuals">
+                    <div class="work-visual-main bg-light centered">
+                        <img src="images/DPR-Display 1.webp" alt="DPR Studio logo" class="logo-image">
+                    </div>
+                </div>
+            </article>
         </section>
     </main>
     
-    <script src="main.js?v=20260305c"></script>
+    <!-- Image Lightbox -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close" aria-label="Close"></button>
+        <img src="" alt="">
+    </div>
+
+    <script src="main.js?v=20260308b"></script>
 </body>
 
 </html>

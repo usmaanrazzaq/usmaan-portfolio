@@ -161,128 +161,89 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== PAGE INIT HOOKS =====
 // These run after SPA content swap to re-initialize page-specific JS
 
+// ===== SPLIT-FLAP TEXT ANIMATION =====
+const FLAP_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-·';
+
+function splitFlapElement(el, opts) {
+  const finalText = el.getAttribute('data-text') || el.textContent;
+  // Store original text on first run
+  if (!el.hasAttribute('data-text')) {
+    el.setAttribute('data-text', finalText);
+  }
+
+  const len = finalText.length;
+  const current = new Array(len);
+  const speed = (opts && opts.speed) || 1;
+
+  // Start with scrambled characters (preserve spaces)
+  for (let i = 0; i < len; i++) {
+    current[i] = finalText[i] === ' ' ? ' ' : FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
+  }
+  el.textContent = current.join('');
+
+  // Resolve characters left-to-right with a slight stagger
+  const msPerChar = Math.max(4, Math.min(20, 600 / len)) / speed;
+  const cyclesPerChar = speed >= 2 ? 2 : 3;
+  let tick = 0;
+
+  function step() {
+    tick++;
+
+    // Which character index should be resolved by now?
+    const resolveIndex = Math.floor(tick / cyclesPerChar);
+
+    // Scramble unresolved characters
+    for (let i = resolveIndex; i < len; i++) {
+      if (finalText[i] === ' ') {
+        current[i] = ' ';
+      } else {
+        current[i] = FLAP_CHARS[Math.floor(Math.random() * FLAP_CHARS.length)];
+      }
+    }
+
+    // Lock in resolved characters
+    for (let i = 0; i < Math.min(resolveIndex, len); i++) {
+      current[i] = finalText[i];
+    }
+
+    el.textContent = current.join('');
+
+    if (resolveIndex >= len) {
+      el.textContent = finalText;
+      return;
+    }
+
+    el._flapTimer = setTimeout(() => requestAnimationFrame(step), msPerChar);
+  }
+
+  // Cancel any previous animation on this element
+  if (el._flapTimer) clearTimeout(el._flapTimer);
+
+  requestAnimationFrame(step);
+}
+
+function runSplitFlap(entry) {
+  // Animate meta values
+  entry.querySelectorAll('.meta-value').forEach((el, i) => {
+    setTimeout(() => splitFlapElement(el), i * 40);
+  });
+
+  // Animate overview paragraph
+  const overviewP = entry.querySelector('.work-overview p');
+  if (overviewP) {
+    setTimeout(() => splitFlapElement(overviewP, { speed: 3 }), 80);
+  }
+}
+
 function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
   const directoryHeader = document.querySelector('.directory-header');
   const workTitles = document.querySelectorAll('.work-title');
-  const workDisplays = document.querySelectorAll('.work-display');
+  const workEntries = document.querySelectorAll('.work-entry');
 
-  if (workTitles.length === 0 || workDisplays.length === 0) return;
+  if (workTitles.length === 0 || workEntries.length === 0) return;
 
-  // Inject role tags into each work title for hover display
-  workTitles.forEach(title => {
-    if (title.querySelector('.title-roles')) return;
-
-    const key = title.getAttribute('data-work');
-    const article = document.querySelector(`.work-display[data-work="${key}"]`);
-    if (!article) return;
-
-    const crumbs = [...article.querySelectorAll('.crumbs-left .crumb')];
-    if (crumbs.length === 0) return;
-
-    const rolesEl = document.createElement('span');
-    rolesEl.className = 'title-roles';
-
-    crumbs.forEach((crumb, i) => {
-      if (i > 0) {
-        const sep = document.createElement('span');
-        sep.className = 'role-sep';
-        sep.textContent = '\u00b7';
-        rolesEl.appendChild(sep);
-      }
-      const tag = document.createElement('span');
-      tag.className = 'role-tag';
-      tag.textContent = crumb.textContent.trim();
-      rolesEl.appendChild(tag);
-    });
-
-    title.appendChild(rolesEl);
-  });
-
-  // Build Figma-style expandable details under each selected work title
-  function createWorkDropdown(workKey) {
-    const article = document.querySelector(`.work-display[data-work="${workKey}"]`);
-    if (!article) return null;
-
-    const crumbs = [...article.querySelectorAll('.crumbs-left .crumb')];
-    const desc = article.querySelector('.work-description p');
-    const links = [...article.querySelectorAll('.work-links-row a')];
-
-    const dropdown = document.createElement('div');
-    dropdown.className = 'work-title-dropdown';
-    dropdown.setAttribute('data-work', workKey);
-
-    if (crumbs.length > 0) {
-      const crumbsWrap = document.createElement('div');
-      crumbsWrap.className = 'work-title-dropdown-crumbs';
-      crumbs.forEach(crumb => {
-        const crumbEl = document.createElement('span');
-        crumbEl.className = 'work-title-dropdown-crumb';
-        crumbEl.textContent = crumb.textContent.trim();
-        crumbsWrap.appendChild(crumbEl);
-      });
-      dropdown.appendChild(crumbsWrap);
-    }
-
-    if (desc) {
-      const descEl = document.createElement('p');
-      descEl.className = 'work-title-dropdown-desc';
-      descEl.textContent = desc.textContent.trim();
-      dropdown.appendChild(descEl);
-    }
-
-    if (links.length > 0) {
-      const linksWrap = document.createElement('div');
-      linksWrap.className = 'work-title-dropdown-links';
-
-      links.forEach(link => {
-        const linkEl = document.createElement('a');
-        linkEl.href = link.getAttribute('href') || '#';
-        linkEl.textContent = link.textContent.trim();
-
-        if (link.getAttribute('target')) {
-          linkEl.setAttribute('target', link.getAttribute('target'));
-        }
-        if (link.getAttribute('rel')) {
-          linkEl.setAttribute('rel', link.getAttribute('rel'));
-        }
-
-        linksWrap.appendChild(linkEl);
-      });
-
-      dropdown.appendChild(linksWrap);
-    }
-
-    return dropdown;
-  }
-
-  workTitles.forEach(title => {
-    const key = title.getAttribute('data-work');
-    if (!key) return;
-
-    const next = title.nextElementSibling;
-    if (next && next.classList.contains('work-title-dropdown')) return;
-
-    const dropdown = createWorkDropdown(key);
-    if (!dropdown) return;
-    title.insertAdjacentElement('afterend', dropdown);
-  });
-
-  const allDropdowns = () => [...document.querySelectorAll('.work-title-dropdown')];
-  const setActiveDropdown = (workKey) => {
-    allDropdowns().forEach(drop => {
-      drop.classList.toggle('open', drop.getAttribute('data-work') === workKey);
-    });
-  };
-
-  const initialActive = document.querySelector('.work-title.active');
-  if (initialActive) {
-    setActiveDropdown(initialActive.getAttribute('data-work'));
-  }
-
-  let isAnimating = false;
-
-  // Mobile Directory Toggle
+  // Mobile/tablet Directory Toggle
   if (directoryHeader && workDirectory) {
     function toggleDirectory(e) {
       e.preventDefault();
@@ -307,24 +268,48 @@ function initWorkDirectory() {
     });
   }
 
+  let isSwitching = false;
+
   workTitles.forEach(title => {
     title.addEventListener('click', function(e) {
       e.preventDefault();
-      if (isAnimating) return;
 
       const targetWork = this.getAttribute('data-work');
       const currentActive = document.querySelector('.work-title.active');
-      const currentDisplay = document.querySelector('.work-display.active');
-      const targetDisplay = document.querySelector(`.work-display[data-work="${targetWork}"]`);
 
-      if (currentActive === this) return;
+      if (currentActive === this || isSwitching) return;
 
-      isAnimating = true;
+      const currentEntry = document.querySelector('.work-entry.active');
+      const targetEntry = document.querySelector(`.work-entry[data-work="${targetWork}"]`);
+
       workTitles.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
-      setActiveDropdown(targetWork);
 
-      if (window.innerWidth <= 960 && workDirectory) {
+      if (currentEntry && targetEntry && currentEntry !== targetEntry) {
+        isSwitching = true;
+
+        // Both entries become display:contents — children overlap in same grid cells
+        currentEntry.classList.remove('active');
+        currentEntry.classList.add('fading-out');
+
+        // Activate new entry — force reflow so the browser registers opacity:0 first
+        targetEntry.classList.add('active');
+        targetEntry.offsetHeight;
+
+        // Run split-flap on the new entry's text
+        runSplitFlap(targetEntry);
+
+        // After the old entry finishes fading out, remove it from the grid
+        setTimeout(() => {
+          currentEntry.classList.remove('fading-out');
+          isSwitching = false;
+        }, 320);
+      } else if (targetEntry) {
+        workEntries.forEach(entry => entry.classList.remove('active'));
+        targetEntry.classList.add('active');
+      }
+
+      if (window.innerWidth <= 1120 && workDirectory) {
         setTimeout(() => {
           workDirectory.classList.remove('expanded');
           if (directoryHeader) {
@@ -332,85 +317,12 @@ function initWorkDirectory() {
           }
         }, 150);
       }
-
-      if (currentDisplay) {
-        currentDisplay.classList.remove('active');
-        currentDisplay.classList.add('exiting');
-
-        setTimeout(() => {
-          currentDisplay.classList.remove('exiting');
-          currentDisplay.style.display = 'none';
-
-          if (targetDisplay) {
-            targetDisplay.style.display = 'flex';
-            targetDisplay.classList.add('entering');
-            targetDisplay.offsetHeight;
-
-            setTimeout(() => {
-              targetDisplay.classList.remove('entering');
-              targetDisplay.classList.add('active');
-              isAnimating = false;
-            }, 50);
-          } else {
-            isAnimating = false;
-          }
-        }, 400);
-      } else {
-        if (targetDisplay) {
-          targetDisplay.style.display = 'flex';
-          targetDisplay.classList.add('active');
-        }
-        isAnimating = false;
-      }
     });
   });
 }
 
 function initHomeTabs() {
-  const tabContainer = document.querySelector('.home-tab-panels');
-  const tabs = Array.from(document.querySelectorAll('.home-tab'));
-  if (!tabContainer || tabs.length === 0) return;
-
-  let activeTab = tabContainer.getAttribute('data-active-tab') || 'selected';
-
-  function setActiveTab(nextTab) {
-    if (nextTab === activeTab) return;
-
-    tabContainer.classList.remove('tab-forward', 'tab-backward');
-    tabContainer.classList.add(nextTab === 'additional' ? 'tab-forward' : 'tab-backward');
-    tabContainer.setAttribute('data-active-tab', nextTab);
-
-    tabs.forEach(tab => {
-      const isActive = tab.getAttribute('data-home-tab') === nextTab;
-      tab.classList.toggle('active', isActive);
-      tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-      tab.setAttribute('tabindex', isActive ? '0' : '-1');
-    });
-
-    activeTab = nextTab;
-  }
-
-  tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const target = tab.getAttribute('data-home-tab');
-      if (!target) return;
-      setActiveTab(target);
-    });
-
-    tab.addEventListener('keydown', (e) => {
-      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-      e.preventDefault();
-      const currentIndex = tabs.indexOf(tab);
-      const nextIndex = e.key === 'ArrowRight'
-        ? (currentIndex + 1) % tabs.length
-        : (currentIndex - 1 + tabs.length) % tabs.length;
-      tabs[nextIndex].focus();
-      const nextTab = tabs[nextIndex].getAttribute('data-home-tab');
-      if (nextTab) {
-        setActiveTab(nextTab);
-      }
-    });
-  });
+  // Tabs removed in V5 layout — kept as no-op for compatibility
 }
 
 function initDropdowns() {
@@ -483,12 +395,53 @@ function initTimestamp() {
   setInterval(updateESTTime, 60000);
 }
 
+// ===== IMAGE LIGHTBOX =====
+function initLightbox() {
+  const overlay = document.getElementById('lightbox');
+  if (!overlay) return;
+
+  const overlayImg = overlay.querySelector('img');
+  const closeBtn = overlay.querySelector('.lightbox-close');
+
+  function open(src, alt) {
+    overlayImg.src = src;
+    overlayImg.alt = alt || '';
+    // Force reflow so the transition plays
+    overlay.offsetHeight;
+    overlay.classList.add('active');
+  }
+
+  function close() {
+    overlay.classList.remove('active');
+    // Clear src after transition
+    setTimeout(() => { overlayImg.src = ''; }, 300);
+  }
+
+  // Delegate clicks on .visual-item img
+  document.addEventListener('click', function(e) {
+    const img = e.target.closest('.visual-item img');
+    if (img) {
+      e.preventDefault();
+      open(img.src, img.alt);
+    }
+  });
+
+  closeBtn.addEventListener('click', close);
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) close();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) close();
+  });
+}
+
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   if (page === 'home') {
     initHomeTabs();
     initWorkDirectory();
     initTimestamp();
+    initLightbox();
   } else if (page === 'about') {
     initDropdowns();
   }
