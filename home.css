@@ -27,6 +27,62 @@
   gap: 10px;
 }
 
+.time-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  color: #D4A017;
+  transition: color 0.6s ease;
+}
+
+.time-icon .icon-sun {
+  display: block;
+  animation: sunPulse 3s ease-in-out infinite;
+}
+
+.time-icon .icon-moon {
+  display: none;
+}
+
+@keyframes sunPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.15) rotate(15deg);
+  }
+}
+
+@keyframes moonGlow {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: drop-shadow(0 0 2px rgba(123, 104, 238, 0.3));
+  }
+  50% {
+    opacity: 0.85;
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 4px rgba(123, 104, 238, 0.5));
+  }
+}
+
+.time-icon.night {
+  color: #7B68EE;
+}
+
+.time-icon.night .icon-sun {
+  display: none;
+}
+
+.time-icon.night .icon-moon {
+  display: block;
+  animation: moonGlow 3s ease-in-out infinite;
+}
+
 .availability-indicator {
   display: flex;
   align-items: center;
@@ -187,6 +243,386 @@
 
 /* Work List — always visible on desktop */
 .work-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
+}
+
+/* Expanded state - rotate to X */
+.work-directory.expanded .directory-toggle-icon {
+  transform: rotate(45deg);
+}
+
+/* Optional: Scale effect on hover for better feedback */
+.directory-header:hover .directory-toggle-icon {
+  transform: scale(1.1);
+}
+
+.work-directory.expanded .directory-header:hover .directory-toggle-icon {
+  transform: rotate(45deg) scale(1.1);
+}
+
+/* ===== TABLET BREAKPOINT (960px) ===== */
+@media (max-width: 960px) {
+  .content-area {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    position: relative;
+    align-items: stretch !important;
+  }
+
+  /* Work Directory - Positioned above work display */
+  .work-directory {
+    position: relative !important;
+    width: 100% !important;
+    z-index: 10;
+    background-color: transparent;
+    padding: 0;
+    margin-bottom: 0;
+    display: block !important;
+    top: auto !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Directory header - visible and tappable on mobile */
+  .directory-header {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    visibility: visible !important;
+    opacity: 1 !important;
+    cursor: pointer;
+    width: fit-content;
+    padding: 5px 10px 5px 0;
+    border-bottom: 0.5px solid #767676;
+    transition: opacity 0.2s ease;
+  }
+
+  .directory-header:hover {
+    opacity: 0.7 !important;
+  }
+
+  .directory-header span {
+    display: inline !important;
+    font-size: 16px;
+    font-weight: 300;
+    color: #2b2b2b;
+  }
+
+  /* Work List - Hidden by default, overlays work display when expanded */
+  .work-list {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    opacity: 0;
+    transform: translateY(-8px);
+    transform-origin: top left;
+    pointer-events: none;
+    max-height: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid rgba(43, 43, 43, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    transition: opacity 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.18s cubic-bezier(0.25, 0.1, 0.25, 1),
+                max-height 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+    padding: 0;
+    z-index: 100;
+  }
+
+  .work-directory.expanded .work-list {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    max-height: 350px;
+    padding: 12px 10px 10px 10px;
+    transition: opacity 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.22s cubic-bezier(0.25, 0.1, 0.25, 1),
+                max-height 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Individual work titles - Notion-style staggered fade */
+  .work-title {
+    padding: 8px 0;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.15s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  /* Staggered delays for each item */
+  .work-directory.expanded .work-title:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.02s; }
+  .work-directory.expanded .work-title:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.04s; }
+  .work-directory.expanded .work-title:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.06s; }
+  .work-directory.expanded .work-title:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.08s; }
+  .work-directory.expanded .work-title:nth-child(5) { opacity: 1; transform: translateX(0); transition-delay: 0.10s; }
+  .work-directory.expanded .work-title:nth-child(6) { opacity: 1; transform: translateX(0); transition-delay: 0.12s; }
+
+  /* Notion-style vertical indicator bar */
+  .work-title .active-indicator {
+    display: block;
+    width: 2px;
+    min-height: 14px;
+    background-color: transparent;
+    border-radius: 1px;
+    transition: background-color 0.15s cubic-bezier(0.25, 0.1, 0.25, 1),
+                transform 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+    transform: scaleY(0.6);
+    font-size: 0;
+    color: transparent;
+  }
+
+  .work-title:hover .active-indicator {
+    background-color: rgba(0, 0, 0, 0.12);
+    transform: scaleY(0.8);
+  }
+
+  .work-title.active .active-indicator {
+    background-color: #2b2b2b;
+    transform: scaleY(1);
+  }
+
+  .work-title .title-text {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.5);
+    transition: color 0.15s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+
+  .work-title.active .title-text {
+    color: #000;
+    font-weight: 500;
+  }
+
+  .work-title:hover .title-text {
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  /* Work Display Container - Tablet */
+  .work-display-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .connect-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .connect-links-text { 
+    font-size: 14px;
+  }
+  .hero-bio-text p {
+    font-size: 16px;
+  }
+  .hero-curation {
+    font-size: 16px;
+  }
+}
+
+/* ===== MOBILE BREAKPOINT (768px) ===== */
+@media (max-width: 768px) {
+  .hero-intro {
+    padding-top: 20px;
+    padding-bottom: 15px;
+    max-width: 100%;
+    margin: 0;
+    gap: 5px;
+  }
+
+  .hero-bio-text p,
+  .hero-curation {
+    font-size: 14px;
+  }
+
+  .status-bar {
+    gap: 12px;
+  }
+
+  .timestamp {
+    font-size: 11px;
+  }
+
+  .time-icon {
+    width: 10px;
+    height: 10px;
+  }
+
+  .time-icon svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .availability-text {
+    font-size: 13px;
+  }
+
+  .availability-icon {
+    width: 12px;
+    height: 12px;
+  }
+
+  .availability-icon svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .hero-divider {
+    margin-bottom: 20px;
+  }
+
+  /* Work Display Container - Mobile */
+  .work-display-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .work-image {
+    aspect-ratio: 291 / 197;
+  }
+
+  /* Work Info Panel - Mobile */
+  .work-info-panel {
+    max-width: 100%;
+  }
+
+  .work-title-row h2 {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  .work-crumbs-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+  }
+
+  .crumbs-left {
+    flex-wrap: wrap;
+  }
+
+  .crumb,
+  .work-info-panel .work-date {
+    font-size: 12px;
+    padding: 2px 0;
+  }
+
+  .work-description {
+    padding: 5px 0;
+  }
+
+  .work-description p {
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .work-links-row {
+    padding: 5px 0;
+  }
+
+  .work-links-row a {
+    font-size: 13px;
+    padding: 0 5px 0 0;
+  }
+
+  .connect-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+  }
+
+  .connect-links-text {
+    font-size: 13px;
+  }
+
+  .connect-links a {
+    font-size: 13px;
+  }
+
+  .connect-links-separator {
+    font-size: 13px;
+  }
+}
+
+/* ===== SMALL MOBILE BREAKPOINT (480px) ===== */
+@media (max-width: 480px) {
+  .hero-intro {
+    max-width: 100%;
+    gap: 5px;
+  }
+
+  .hero-bio-text p,
+  .hero-curation {
+    font-size: 13px;
+  }
+
+  .work-display-container {
+    max-width: 100%;
+    margin: 0;
+  }
+
+  .work-title .title-text {
+    font-size: 12px;
+  }
+
+  .connect-links {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 5px 0;
+  }
+
+  .connect-links-text,
+  .connect-links a,
+  .connect-links-separator {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .index-link,
+  .index-link::after,
+  .work-links-row a,
+  .work-links-row a::after,
+  .connect-links a,
+  .connect-links a::after {
+    transition: none !important;
+  }
+}
+
+/* ===== FIGMA HOMEPAGE V2 OVERRIDES ===== */
+.hero-intro {
+  display: block;
+  padding: 14px 10px 16px;
+  max-width: none;
+  border-bottom: 0.5px solid #b5b5b5;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.95fr) minmax(220px, 0.9fr) minmax(320px, 1fr);
+  gap: 30px;
+  align-items: start;
+}
+
+.hero-col {
+  min-width: 0;
+}
+
+.status-bar {
   display: flex;
   flex-direction: column;
   gap: 10px;
