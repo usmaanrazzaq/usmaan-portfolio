@@ -27,62 +27,6 @@
   gap: 10px;
 }
 
-.time-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  color: #D4A017;
-  transition: color 0.6s ease;
-}
-
-.time-icon .icon-sun {
-  display: block;
-  animation: sunPulse 3s ease-in-out infinite;
-}
-
-.time-icon .icon-moon {
-  display: none;
-}
-
-@keyframes sunPulse {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1) rotate(0deg);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.15) rotate(15deg);
-  }
-}
-
-@keyframes moonGlow {
-  0%, 100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: drop-shadow(0 0 2px rgba(123, 104, 238, 0.3));
-  }
-  50% {
-    opacity: 0.85;
-    transform: scale(1.08);
-    filter: drop-shadow(0 0 4px rgba(123, 104, 238, 0.5));
-  }
-}
-
-.time-icon.night {
-  color: #7B68EE;
-}
-
-.time-icon.night .icon-sun {
-  display: none;
-}
-
-.time-icon.night .icon-moon {
-  display: block;
-  animation: moonGlow 3s ease-in-out infinite;
-}
-
 .availability-indicator {
   display: flex;
   align-items: center;
@@ -453,16 +397,6 @@
 
   .timestamp {
     font-size: 11px;
-  }
-
-  .time-icon {
-    width: 10px;
-    height: 10px;
-  }
-
-  .time-icon svg {
-    width: 10px;
-    height: 10px;
   }
 
   .availability-text {
