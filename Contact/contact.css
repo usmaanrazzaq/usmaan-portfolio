@@ -131,7 +131,7 @@
     background-color: #ffffff;
     border: 0.5px solid rgba(43, 43, 43, 0.5);
     border-radius: 0;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 300;
     font-size: 16px;
     color: #000000;
@@ -142,7 +142,7 @@
 .contact-input::placeholder,
 .contact-textarea::placeholder {
     color: #737373;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 300;
     font-size: 16px;
 }
@@ -163,7 +163,7 @@
     padding: 10px;
     background-color: #2b2b2b;
     border: 0.5px solid #2b2b2b;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 300;
     font-size: 16px;
     color: #ffffff;
@@ -191,7 +191,7 @@
 }
 
 .contact-back-link {
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-size: 16px;
     font-weight: 300;
     color: #2b2b2b;

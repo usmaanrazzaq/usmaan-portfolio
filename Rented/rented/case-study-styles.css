@@ -11,7 +11,7 @@ body {
   margin: 15px;
   padding: 0;
   background-color: #ffffff;
-  font-family: 'Manrope', system-ui, sans-serif;
+  font-family: 'Helvetica Neue', system-ui, sans-serif;
   line-height: 1.5;
   color: #000000;
 }
@@ -109,7 +109,7 @@ html {
 }
 
 .project-title h1 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: clamp(1.25rem, 2.5vw, 1.25rem);
   color: #8d8383;
@@ -118,7 +118,7 @@ html {
 }
 
 .project-subtitle h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: clamp(1.5rem, 3vw, 2rem);
   color: #000000;
@@ -142,7 +142,7 @@ html {
 }
 
 .crumb {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 200;
   font-size: 0.875rem;
   color: #8d8383;
@@ -150,7 +150,7 @@ html {
 }
 
 .timeline span {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 200;
   font-size: 0.875rem;
   color: #8d8383;
@@ -204,7 +204,7 @@ html {
 }
 
 .directory-header h3 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 1rem;
   color: #000000;
@@ -223,7 +223,7 @@ html {
 .directory-list a {
   display: block;
   padding: 0.3125rem 0.46875rem;
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 0.8125rem;
   color: #8d8383;
@@ -260,7 +260,7 @@ html {
 }
 
 .section-header h2 {
-  font-family: 'Manrope', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 1.25rem;
   color: #000000;
@@ -271,7 +271,7 @@ html {
 }
 
 .section-question h3 {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
   font-size: 0.9375rem;
   color: #000000;
@@ -283,7 +283,7 @@ html {
 }
 
 .section-content p {
-  font-family: 'general-sans', sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   font-weight: 200;
   font-size: 0.9375rem;
   color: #000000;
@@ -442,7 +442,7 @@ footer span {
   .nav-bar ul li a {
     color: #2b2b2b;
     font-size: 0.9rem;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Helvetica Neue', sans-serif;
     font-weight: 400;
   }
 
