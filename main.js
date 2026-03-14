@@ -163,6 +163,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// Lazy-load videos: swap data-src → src and autoplay when entry becomes active
+function activateEntryMedia(entry) {
+  if (!entry) return;
+  entry.querySelectorAll('video[data-src]').forEach(function(video) {
+    video.src = video.getAttribute('data-src');
+    video.removeAttribute('data-src');
+    video.autoplay = true;
+    video.play().catch(function() {});
+  });
+}
+
+// Pause and unload videos when entry is no longer active
+function deactivateEntryMedia(entry) {
+  if (!entry) return;
+  entry.querySelectorAll('video').forEach(function(video) {
+    if (video.src) {
+      video.pause();
+      video.setAttribute('data-src', video.src);
+      video.removeAttribute('src');
+      video.load();
+    }
+  });
+}
+
 function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
   const directoryHeader = document.querySelector('.directory-header');
@@ -222,16 +246,22 @@ function initWorkDirectory() {
 
         // Activate new entry — force reflow so the browser registers opacity:0 first
         targetEntry.classList.add('active');
+        activateEntryMedia(targetEntry);
         targetEntry.offsetHeight;
 
         // After the old entry finishes fading out, remove it from the grid
         setTimeout(() => {
           currentEntry.classList.remove('fading-out');
+          deactivateEntryMedia(currentEntry);
           isSwitching = false;
         }, 320);
       } else if (targetEntry) {
-        workEntries.forEach(entry => entry.classList.remove('active'));
+        workEntries.forEach(entry => {
+          entry.classList.remove('active');
+          deactivateEntryMedia(entry);
+        });
         targetEntry.classList.add('active');
+        activateEntryMedia(targetEntry);
       }
 
       if (window.innerWidth <= 1120 && workDirectory) {
@@ -387,12 +417,30 @@ function initLightbox() {
     setTimeout(() => { overlayImg.src = ''; }, 300);
   }
 
+  // Make lightbox images keyboard-accessible
+  document.querySelectorAll('.visual-item img').forEach(function(img) {
+    img.setAttribute('tabindex', '0');
+    img.setAttribute('role', 'button');
+    img.setAttribute('aria-label', (img.alt || 'Image') + ' — click to enlarge');
+  });
+
   // Delegate clicks on .visual-item img
   document.addEventListener('click', function(e) {
     const img = e.target.closest('.visual-item img');
     if (img) {
       e.preventDefault();
       open(img.src, img.alt);
+    }
+  });
+
+  // Keyboard support for lightbox images
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const img = e.target.closest('.visual-item img');
+      if (img) {
+        e.preventDefault();
+        open(img.src, img.alt);
+      }
     }
   });
 

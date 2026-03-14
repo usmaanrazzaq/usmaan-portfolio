@@ -212,6 +212,9 @@
 
 .connect-links a {
   padding: 0;
+  min-width: 44px;
+  min-height: 44px;
+  justify-content: center;
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
@@ -245,7 +248,7 @@
 }
 
 .bio-secondary {
-  color: #887f7a;
+  color: #736b66;
 }
 
 /* Hero Divider */
@@ -265,6 +268,62 @@
   align-items: start;
 }
 
+.work-overview .work-links {
+  display: flex;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.work-link,
+.work-link:hover,
+.work-link:active,
+.work-link:focus {
+  text-decoration: none;
+}
+
+.work-link {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  color: #09090b;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 0.5px solid #e5e5e5;
+  background-color: #fff;
+  cursor: pointer;
+  transition: background-color 0.15s ease,
+              border-color 0.15s ease,
+              box-shadow 0.15s ease,
+              transform 0.1s ease;
+}
+
+.work-link:hover {
+  background-color: #f5f5f5;
+  border-color: #d4d4d4;
+}
+
+.work-link:active {
+  transform: scale(0.97);
+  background-color: #efefef;
+}
+
+.work-link:focus-visible {
+  outline: 2px solid #2b2b2b;
+  outline-offset: 2px;
+}
+
+.work-link .link-arrow {
+  width: 12px;
+  height: 12px;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.work-link:hover .link-arrow {
+  transform: translateX(2px);
+}
 /* Work Directory (Column 1, sticky) */
 .work-directory {
   grid-column: 1;
@@ -289,12 +348,14 @@
   cursor: default;
 }
 
-.directory-header span {
+.directory-header span,
+.directory-heading {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
   font-size: 16px;
   color: #2b2b2b;
   line-height: normal;
+  margin: 0;
 }
 
 .directory-toggle-icon {
@@ -379,7 +440,8 @@
     opacity: 0.7 !important;
   }
 
-  .directory-header span {
+  .directory-header span,
+  .directory-heading {
     display: inline !important;
     font-size: 14px;
     font-weight: 500;
@@ -725,6 +787,32 @@
   color: #09090b;
 }
 
+/* Button reset for work-title */
+button.work-title {
+  background: none;
+  border: none;
+  font: inherit;
+  text-align: left;
+  width: 100%;
+}
+
+/* Focus-visible styles for all interactive elements */
+.connect-links a:focus-visible,
+.work-title:focus-visible,
+.directory-header:focus-visible,
+.work-visual-main a:focus-visible {
+  outline: 2px solid #2b2b2b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Lightbox close button focus */
+.lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
 /* Work Entry — display:contents lets children join parent grid */
 .work-entry {
   display: none;
@@ -791,7 +879,7 @@
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
-  color: #767676;
+  color: #6b6b6b;
   line-height: normal;
 }
 
@@ -1173,7 +1261,8 @@
     font-size: 13px;
   }
 
-  .directory-header span {
+  .directory-header span,
+  .directory-heading {
     font-size: 15px;
   }
 
