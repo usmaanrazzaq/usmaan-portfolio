@@ -36,8 +36,7 @@ function loadNav() {
             <span class="hamburger-line" aria-hidden="true"></span>
           </button>
           <ul id="nav-menu" class="nav-menu" data-state="closed">
-            <li><a href="/work/">Work</a></li>
-            <li><a href="/sandbox/">Sandbox</a></li>
+            <li><a href="/projects/">Projects</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
           </ul>
@@ -474,17 +473,15 @@ function initPageHooks(page) {
 
   const routes = {
     '/': 'home',
-    '/work/': 'work',
+    '/projects/': 'work',
     '/about/': 'about',
-    '/sandbox/': 'sandbox',
     '/contact/': 'contact'
   };
 
   const titles = {
     'home': 'Usmaan Razzaq Portfolio',
-    'work': 'Work | Usmaan Razzaq',
+    'work': 'Projects | Usmaan Razzaq',
     'about': 'About | Usmaan Razzaq',
-    'sandbox': 'Sandbox | Usmaan Razzaq',
     'contact': 'Contact | Usmaan Razzaq'
   };
 
@@ -492,7 +489,6 @@ function initPageHooks(page) {
     'home': 'new-homepage',
     'work': '',
     'about': '',
-    'sandbox': '',
     'contact': 'contact-page'
   };
 
