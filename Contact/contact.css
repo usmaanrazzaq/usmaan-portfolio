@@ -98,7 +98,8 @@
 }
 
 .contact-links a:focus-visible {
-    outline: none;
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
     color: #2b2b2b;
 }
 
@@ -150,6 +151,8 @@
 .contact-input:focus,
 .contact-textarea:focus {
     border-color: #2b2b2b;
+    outline: 2px solid #2b2b2b;
+    outline-offset: -1px;
 }
 
 .contact-textarea {
@@ -231,7 +234,8 @@
 
 .contact-back-link:focus-visible {
     opacity: 1;
-    outline: none;
+    outline: 2px solid currentColor;
+    outline-offset: 4px;
     transform: translateY(-1px);
 }
 

@@ -64,7 +64,8 @@
 
 .nav-bar ul li a:focus-visible {
   opacity: 1;
-  outline: none;
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
   transform: translateY(-1px);
 }
 
