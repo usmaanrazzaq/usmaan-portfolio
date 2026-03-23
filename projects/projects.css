@@ -1,150 +1,28 @@
-/* ===== PROJECTS PAGE — Additional Work / Side Projects tabs ===== */
+/* ===== PROJECTS PAGE — Single-page 3-column grid ===== */
 
-.projects-tabs-section {
+.projects-section {
   padding: 14px 0 40px;
   max-width: 100%;
   margin: 0;
 }
 
-/* Tab bar */
-.projects-tabs-bar {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  padding: 5px 20px;
-  border-bottom: 0.5px solid transparent;
-}
-
-.projects-tab {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 1;
-  color: #767676;
-  background: none;
-  border: none;
-  padding: 5px 0;
-  cursor: pointer;
-  position: relative;
-  transition: color 0.25s ease;
-}
-
-.projects-tab:hover {
-  color: #2b2b2b;
-}
-
-.projects-tab.active {
-  color: #2b2b2b;
-}
-
-.projects-tab.active::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -5px;
-  height: 0.5px;
-  background-color: #767676;
-}
-
-.projects-tab.active::after {
-  background-color: #2b2b2b;
-}
-
-/* Second tab offset (Figma: left calc(12.5%+18px)) */
-.projects-tab:last-child {
-  margin-left: calc(12.5% - 2ch);
-}
-
-.projects-tabs-divider {
-  width: 100%;
-  height: 0.5px;
-  background-color: #b5b5b5;
-  margin: 0;
-  display: block;
-}
-
-/* Panel brief */
-.projects-panel-brief {
+/* Brief intro text */
+.projects-brief {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 14px;
   line-height: 1.4;
   color: #767676;
   margin: 0 0 40px 10px;
-  opacity: 0;
-  transform: translateY(8px);
-  animation: briefFadeIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s forwards;
 }
 
-.projects-panel.active .projects-panel-brief {
-  animation: briefFadeIn 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) 0.15s forwards;
-}
-
-@keyframes briefFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* Panels container — relative so inactive panels can overlay during fade */
-.projects-panels {
-  position: relative;
-  min-height: 520px;
-  margin-top: 16px;
-  padding: 0 10px;
-}
-
-.projects-panel {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-              visibility 0.4s step-end;
-}
-
-.projects-panel.active {
-  position: relative;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
-              visibility 0s step-end;
-}
-
-/* When switching: outgoing panel fades on top so both transitions are visible */
-.projects-panel.fading-out {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
-}
-
-/* Grid layouts */
+/* Grid layout */
 .projects-grid {
   display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: clamp(16px, 2vw, 24px);
   align-items: start;
-}
-
-.projects-grid--two {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.projects-grid--three {
-  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
+  padding: 0 10px;
 }
 
 /* Project card */
@@ -152,11 +30,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-width: 540px;
-}
-
-.project-card--tall {
-  max-width: 352px;
 }
 
 .project-card-image-link {
@@ -186,14 +59,6 @@
 .project-card-image--gray img {
   object-fit: contain;
   padding: 1rem;
-}
-
-.project-card-image--tall {
-  height: 534px;
-}
-
-.project-card-image--tall img {
-  object-fit: cover;
 }
 
 .project-card-body {
@@ -330,7 +195,6 @@
 }
 
 /* Focus visible */
-.projects-tab:focus-visible,
 .work-link:focus-visible,
 .project-card-image-link:focus-visible {
   outline: 2px solid #2b2b2b;
@@ -340,64 +204,27 @@
 
 /* ===== Responsive ===== */
 
-/* Tablet */
+/* Tablet — 2 columns */
 @media (max-width: 960px) {
-  .projects-tabs-bar {
-    padding: 5px 16px;
-  }
-
-  .projects-panels {
+  .projects-grid {
+    grid-template-columns: repeat(2, 1fr);
     padding: 0 8px;
-  }
-
-  .projects-tab:last-child {
-    margin-left: 24px;
   }
 
   .project-card-image {
     height: 240px;
   }
-
-  .project-card-image--tall {
-    height: 420px;
-  }
 }
 
-/* Mobile */
+/* Mobile — 1 column */
 @media (max-width: 768px) {
-  .project-card,
-  .project-card--tall {
-    max-width: none;
-  }
-
-  .projects-tabs-bar {
-    padding: 8px 0;
-  }
-
-  .projects-tab {
-    font-size: 14px;
-  }
-
-  .projects-tab:last-child {
-    margin-left: 16px;
-  }
-
-  .projects-panels {
-    margin-top: 24px;
-    min-height: auto;
-    padding: 0 4px;
-  }
-
-  .projects-grid--two {
+  .projects-grid {
     grid-template-columns: 1fr;
+    padding: 0 4px;
   }
 
   .project-card-image {
     height: 260px;
-  }
-
-  .project-card-image--tall {
-    height: 380px;
   }
 
   .project-card-title {
@@ -408,21 +235,8 @@
     font-size: 14px;
   }
 
-  .projects-panel-brief {
+  .projects-brief {
     font-size: 13px;
     margin: 0 0 28px 4px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .projects-panel,
-  .projects-panel.active {
-    transition: none;
-  }
-
-  .projects-panel-brief {
-    animation: none;
-    opacity: 1;
-    transform: none;
   }
 }

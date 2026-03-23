@@ -452,55 +452,6 @@ function initLightbox() {
   });
 }
 
-// ===== PROJECTS TABS =====
-function initProjectsTabs() {
-  var section = document.getElementById('projects');
-  if (!section || !section.classList.contains('projects-tabs-section')) return;
-
-  var tabs = section.querySelectorAll('.projects-tab');
-  var panels = section.querySelectorAll('.projects-panel');
-
-  if (tabs.length === 0 || panels.length === 0) return;
-
-  tabs.forEach(function (tab) {
-    tab.addEventListener('click', function () {
-      var targetId = this.getAttribute('aria-controls');
-      var targetPanel = document.getElementById(targetId);
-      var currentPanel = section.querySelector('.projects-panel.active');
-
-      if (!targetPanel || targetPanel === currentPanel) return;
-
-      tabs.forEach(function (t) {
-        t.classList.remove('active');
-        t.setAttribute('aria-selected', 'false');
-      });
-      this.classList.add('active');
-      this.setAttribute('aria-selected', 'true');
-
-      targetPanel.classList.add('active');
-      targetPanel.removeAttribute('aria-hidden');
-
-      if (currentPanel) {
-        currentPanel.classList.remove('active');
-        currentPanel.classList.add('fading-out');
-        currentPanel.setAttribute('aria-hidden', 'true');
-        setTimeout(function () {
-          currentPanel.classList.remove('fading-out');
-        }, 420);
-      }
-    });
-
-    tab.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-      e.preventDefault();
-      var idx = Array.prototype.indexOf.call(tabs, this);
-      if (e.key === 'ArrowLeft') idx = Math.max(0, idx - 1);
-      else idx = Math.min(tabs.length - 1, idx + 1);
-      tabs[idx].focus();
-      tabs[idx].click();
-    });
-  });
-}
 
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
@@ -513,7 +464,7 @@ function initPageHooks(page) {
     initDropdowns();
   }
   if (page === 'projects') {
-    initProjectsTabs();
+    // no special JS init needed
   }
   // contact doesn't need special JS init
 }

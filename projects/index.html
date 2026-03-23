@@ -7,7 +7,7 @@
     <title>Projects | Usmaan Razzaq</title>
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../nav.css?v=20260216">
-    <link rel="stylesheet" href="projects.css?v=8">
+    <link rel="stylesheet" href="projects.css?v=9">
     <link rel="icon" href="/Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="/iOS Icon.png" sizes="180x180">
 </head>
@@ -15,130 +15,110 @@
 <body>
     <header id="nav-container" data-path="/nav.html"></header>
     <main>
-        <section id="projects" class="projects-tabs-section">
-            <!-- Tab bar -->
-            <div class="projects-tabs-bar" role="tablist" aria-label="Additional work and side projects">
-                <button type="button" class="projects-tab active" id="tab-additional-work" role="tab" aria-selected="true" aria-controls="panel-additional-work" data-tab="additional-work">Additional Work</button>
-                <button type="button" class="projects-tab" id="tab-side-projects" role="tab" aria-selected="false" aria-controls="panel-side-projects" data-tab="side-projects">Side Projects</button>
-            </div>
-            <div class="projects-tabs-divider" aria-hidden="true"></div>
-
-            <!-- Panel: Additional Work (default visible) -->
-            <div class="projects-panels">
-                <div class="projects-panel active" id="panel-additional-work" role="tabpanel" aria-labelledby="tab-additional-work">
-                    <p class="projects-panel-brief">Additional client work includes web design, graphic design, brand identity, etc.</p>
-                    <div class="projects-grid projects-grid--two">
-                        <article class="project-card">
-                            <div class="project-card-image">
-                                <img src="../images/Far-East-Firm-Display.jpg" alt="Far East Firm website" loading="lazy">
-                            </div>
-                            <div class="project-card-body">
-                                <div class="project-card-heading">
-                                    <h3 class="project-card-title">Far East Firm</h3>
-                                    <span class="project-status project-status--hold">
-                                        <svg class="project-status-icon" width="11" height="11" viewBox="0 0 9.375 9.375" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.77083 4C4.78334 4 5.60417 3.17919 5.60417 2.16667C5.60417 1.15414 4.78334 0.333333 3.77083 0.333333C2.75831 0.333333 1.9375 1.15414 1.9375 2.16667C1.9375 3.17919 2.75831 4 3.77083 4Z" stroke="#FF5E00" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.333333 8.58333V7.66667C0.333333 6.65416 1.15414 5.83333 2.16667 5.83333H4" stroke="#FF5E00" stroke-width="0.666667" stroke-linecap="round"/><path d="M7.66667 7.20833H7.20833V6.75" stroke="#FF5E00" stroke-width="0.666667" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.20833 9.04167C8.22086 9.04167 9.04167 8.22086 9.04167 7.20833C9.04167 6.19581 8.22086 5.375 7.20833 5.375C6.19581 5.375 5.375 6.19581 5.375 7.20833C5.375 8.22086 6.19581 9.04167 7.20833 9.04167Z" stroke="#FF5E00" stroke-width="0.666667"/></svg>
-                                        Work on hold
-                                    </span>
-                                </div>
-                                <p class="project-card-roles">Web Design · Web Development</p>
-                                <p class="project-card-desc">Website design and development for an up and coming architecture firm. I worked with the firm to design a modern and intuitive website to showcase their work and gain new clients.</p>
-                                <!-- Case study link hidden until ready -->
-                            </div>
-                        </article>
-                        <article class="project-card">
-                            <div class="project-card-image project-card-image--gray">
-                                <img src="../images/Bibz-Knitz-Logo-Option2.png" alt="Bibz Knitz logo" loading="lazy">
-                            </div>
-                            <div class="project-card-body">
-                                <div class="project-card-heading">
-                                    <h3 class="project-card-title">Bibz Knitz</h3>
-                                    <span class="project-status project-status--review">
-                                        <svg class="project-status-icon" width="10" height="10" viewBox="0 0 8.33333 8.33334" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.317171 2.57215C0.00180448 3.3335 -0.080708 4.17129 0.0800629 4.97954C0.240834 5.78779 0.637671 6.53021 1.22039 7.11296C1.80311 7.69567 2.54554 8.0925 3.35379 8.25329C4.16204 8.41404 4.99983 8.33154 5.76117 8.01617C6.52254 7.70079 7.17329 7.16675 7.63113 6.48154C8.08896 5.79633 8.33333 4.99075 8.33333 4.16667V3.75H4.58333V0H4.16667C3.34258 0 2.537 0.244371 1.85179 0.702208C1.16659 1.16005 0.632538 1.81079 0.317171 2.57215Z" fill="#1EFF00"/></svg>
-                                        In Review
-                                    </span>
-                                </div>
-                                <p class="project-card-roles">Logo Design · Brand Identity</p>
-                                <p class="project-card-desc">Logo design and brand identity work for an up and coming Knitting brand. I worked with the founder to design a unique logo representing the brand, the founders background, and the founders attachment to knitting.</p>
-                                <!-- Case study link hidden until ready -->
-                            </div>
-                        </article>
+        <section id="projects" class="projects-section">
+            <p class="projects-brief">A collection of client work and side projects spanning web design, brand identity, and UI design.</p>
+            <div class="projects-grid">
+                <article class="project-card">
+                    <div class="project-card-image">
+                        <img src="../images/Far-East-Firm-Display.jpg" alt="Far East Firm website" loading="lazy">
                     </div>
-                </div>
-
-                <!-- Panel: Side Projects (hidden by default, fades in on tab click) -->
-                <div class="projects-panel" id="panel-side-projects" role="tabpanel" aria-labelledby="tab-side-projects" aria-hidden="true">
-                    <p class="projects-panel-brief">A collection of side projects I designed / developed to continuously practice and create unique UI Designs.</p>
-                    <div class="projects-grid projects-grid--three">
-                        <article class="project-card">
-                            <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
-                                <div class="project-card-image">
-                                    <img src="../images/Design-CUNY-Display.jpg" alt="Design @ CUNY website" loading="lazy">
-                                </div>
-                            </a>
-                            <div class="project-card-body">
-                                <div class="project-card-heading">
-                                    <h3 class="project-card-title">Design @ CUNY</h3>
-                                    <span class="project-status project-status--project">
-                                        <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
-                                        Project
-                                    </span>
-                                </div>
-                                <p class="project-card-roles">Web Design · Web Development</p>
-                                <p class="project-card-desc">Website directory for CUNY Multimedia majors to find design programs throughout CUNY.</p>
-                                <div class="project-card-links">
-                                    <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card">
-                            <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
-                                <div class="project-card-image">
-                                    <img src="../images/SILO-Display-v2.jpg" alt="Silo show page" loading="lazy">
-                                </div>
-                            </a>
-                            <div class="project-card-body">
-                                <div class="project-card-heading">
-                                    <h3 class="project-card-title">Silo Show Page</h3>
-                                    <span class="project-status project-status--project">
-                                        <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
-                                        Project
-                                    </span>
-                                </div>
-                                <p class="project-card-roles">Web Design · Web Development</p>
-                                <p class="project-card-desc">Web design and development for a streaming service. Showcasing the Apple TV show 'Silo' overview with episodes, details, and about the show.</p>
-                                <div class="project-card-links">
-                                    <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                                </div>
-                            </div>
-                        </article>
-                        <article class="project-card project-card--tall">
-                            <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&node-id=241-2418&viewport=632%2C38%2C0.15&t=shQfp8sd8LmZea1r-1&scaling=scale-down&content-scaling=fixed" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
-                                <div class="project-card-image project-card-image--tall">
-                                    <img src="../images/CUNY-Arts-Mobile-v2.jpg" alt="CUNY Arts app" loading="lazy">
-                                </div>
-                            </a>
-                            <div class="project-card-body">
-                                <div class="project-card-heading">
-                                    <h3 class="project-card-title">CUNY Arts Redesign</h3>
-                                    <span class="project-status project-status--project">
-                                        <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
-                                        Project
-                                    </span>
-                                </div>
-                                <p class="project-card-roles">Landing Page · UI Design</p>
-                                <p class="project-card-desc">Redesign of the CUNY Arts website to improve navigation and visual hierarchy.</p>
-                                <div class="project-card-links">
-                                    <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&node-id=241-2418&viewport=632%2C38%2C0.15&t=shQfp8sd8LmZea1r-1&scaling=scale-down&content-scaling=fixed" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                                </div>
-                            </div>
-                        </article>
+                    <div class="project-card-body">
+                        <div class="project-card-heading">
+                            <h3 class="project-card-title">Far East Firm</h3>
+                            <span class="project-status project-status--hold">
+                                <svg class="project-status-icon" width="11" height="11" viewBox="0 0 9.375 9.375" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.77083 4C4.78334 4 5.60417 3.17919 5.60417 2.16667C5.60417 1.15414 4.78334 0.333333 3.77083 0.333333C2.75831 0.333333 1.9375 1.15414 1.9375 2.16667C1.9375 3.17919 2.75831 4 3.77083 4Z" stroke="#FF5E00" stroke-width="0.666667" stroke-linecap="round" stroke-linejoin="round"/><path d="M0.333333 8.58333V7.66667C0.333333 6.65416 1.15414 5.83333 2.16667 5.83333H4" stroke="#FF5E00" stroke-width="0.666667" stroke-linecap="round"/><path d="M7.66667 7.20833H7.20833V6.75" stroke="#FF5E00" stroke-width="0.666667" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/><path d="M7.20833 9.04167C8.22086 9.04167 9.04167 8.22086 9.04167 7.20833C9.04167 6.19581 8.22086 5.375 7.20833 5.375C6.19581 5.375 5.375 6.19581 5.375 7.20833C5.375 8.22086 6.19581 9.04167 7.20833 9.04167Z" stroke="#FF5E00" stroke-width="0.666667"/></svg>
+                                Work on hold
+                            </span>
+                        </div>
+                        <p class="project-card-roles">Web Design · Web Development</p>
+                        <p class="project-card-desc">Website design and development for an up and coming architecture firm. I worked with the firm to design a modern and intuitive website to showcase their work and gain new clients.</p>
+                        <!-- Case study link hidden until ready -->
                     </div>
-                </div>
+                </article>
+                <article class="project-card">
+                    <div class="project-card-image project-card-image--gray">
+                        <img src="../images/Bibz-Knitz-Logo-Option2.png" alt="Bibz Knitz logo" loading="lazy">
+                    </div>
+                    <div class="project-card-body">
+                        <div class="project-card-heading">
+                            <h3 class="project-card-title">Bibz Knitz</h3>
+                            <span class="project-status project-status--review">
+                                <svg class="project-status-icon" width="10" height="10" viewBox="0 0 8.33333 8.33334" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.317171 2.57215C0.00180448 3.3335 -0.080708 4.17129 0.0800629 4.97954C0.240834 5.78779 0.637671 6.53021 1.22039 7.11296C1.80311 7.69567 2.54554 8.0925 3.35379 8.25329C4.16204 8.41404 4.99983 8.33154 5.76117 8.01617C6.52254 7.70079 7.17329 7.16675 7.63113 6.48154C8.08896 5.79633 8.33333 4.99075 8.33333 4.16667V3.75H4.58333V0H4.16667C3.34258 0 2.537 0.244371 1.85179 0.702208C1.16659 1.16005 0.632538 1.81079 0.317171 2.57215Z" fill="#1EFF00"/></svg>
+                                In Review
+                            </span>
+                        </div>
+                        <p class="project-card-roles">Logo Design · Brand Identity</p>
+                        <p class="project-card-desc">Logo design and brand identity work for an up and coming Knitting brand. I worked with the founder to design a unique logo representing the brand, the founders background, and the founders attachment to knitting.</p>
+                        <!-- Case study link hidden until ready -->
+                    </div>
+                </article>
+                <article class="project-card">
+                    <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
+                        <div class="project-card-image">
+                            <img src="../images/Design-CUNY-Display.jpg" alt="Design @ CUNY website" loading="lazy">
+                        </div>
+                    </a>
+                    <div class="project-card-body">
+                        <div class="project-card-heading">
+                            <h3 class="project-card-title">Design @ CUNY</h3>
+                            <span class="project-status project-status--project">
+                                <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
+                                Project
+                            </span>
+                        </div>
+                        <p class="project-card-roles">Web Design · Web Development</p>
+                        <p class="project-card-desc">Website directory for CUNY Multimedia majors to find design programs throughout CUNY.</p>
+                        <div class="project-card-links">
+                            <a href="https://usmaanrazzaq.github.io/MMP240-Class/CunyDesign/index.html" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
+                        <div class="project-card-image">
+                            <img src="../images/SILO-Display-v2.jpg" alt="Silo show page" loading="lazy">
+                        </div>
+                    </a>
+                    <div class="project-card-body">
+                        <div class="project-card-heading">
+                            <h3 class="project-card-title">Silo Show Page</h3>
+                            <span class="project-status project-status--project">
+                                <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
+                                Project
+                            </span>
+                        </div>
+                        <p class="project-card-roles">Web Design · Web Development</p>
+                        <p class="project-card-desc">Web design and development for a streaming service. Showcasing the Apple TV show 'Silo' overview with episodes, details, and about the show.</p>
+                        <div class="project-card-links">
+                            <a href="https://usmaanrazzaq.github.io/mmp240/Midterm/index.html" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        </div>
+                    </div>
+                </article>
+                <article class="project-card">
+                    <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&node-id=241-2418&viewport=632%2C38%2C0.15&t=shQfp8sd8LmZea1r-1&scaling=scale-down&content-scaling=fixed" target="_blank" rel="noopener noreferrer" class="project-card-image-link">
+                        <div class="project-card-image">
+                            <img src="../images/CUNY-Arts-Mobile-v2.jpg" alt="CUNY Arts app" loading="lazy">
+                        </div>
+                    </a>
+                    <div class="project-card-body">
+                        <div class="project-card-heading">
+                            <h3 class="project-card-title">CUNY Arts Redesign</h3>
+                            <span class="project-status project-status--project">
+                                <svg class="project-status-icon" width="10" height="10" viewBox="0 0 9.33686 9.33686" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.97086 5.29247C9.45882 5.78064 9.4589 6.57193 8.97086 7.06006L7.06003 8.97085C6.57194 9.45893 5.78061 9.45881 5.29244 8.97085L4.63165 8.31006L8.31003 4.63164L8.97086 5.29247ZM0.710756 0.121968C0.923777 0.0195309 1.16987 -0.0238524 1.42731 0.0129184L5.04669 0.530089C6.38828 0.72181 7.48044 1.70679 7.80915 3.02155L7.9959 3.76943C7.98511 3.77826 7.97507 3.78822 7.96499 3.79831L3.79832 7.96497C3.78824 7.97506 3.77828 7.9851 3.76944 7.99593L3.02155 7.80914C1.70679 7.48047 0.721814 6.38826 0.530089 5.04668L0.0129184 1.42731C-0.0238524 1.16987 0.0195309 0.923777 0.121968 0.710756L3.28847 3.87768C3.27015 3.94635 3.25959 4.01843 3.25959 4.09293C3.25966 4.5531 3.63273 4.92626 4.0929 4.92626H4.09782C4.55794 4.92618 4.93107 4.55306 4.93115 4.09293C4.93115 3.63273 4.55799 3.25966 4.09782 3.25959H4.0929C4.01844 3.25959 3.94636 3.27015 3.87765 3.28847L0.710756 0.121968Z" fill="#8A38F5"/></svg>
+                                Project
+                            </span>
+                        </div>
+                        <p class="project-card-roles">Landing Page · UI Design</p>
+                        <p class="project-card-desc">Redesign of the CUNY Arts website to improve navigation and visual hierarchy.</p>
+                        <div class="project-card-links">
+                            <a href="https://www.figma.com/proto/02lPMniw1VHD3BMaVwp0Ly/CUNY-Arts-Redesign?page-id=15%3A184&node-id=241-2418&viewport=632%2C38%2C0.15&t=shQfp8sd8LmZea1r-1&scaling=scale-down&content-scaling=fixed" target="_blank" rel="noopener noreferrer" class="work-link">View Project <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                        </div>
+                    </div>
+                </article>
             </div>
         </section>
     </main>
     <script src="../main.js?v=20260316"></script>
-    <script src="projects.js?v=1"></script>
 </body>
 
 </html>
