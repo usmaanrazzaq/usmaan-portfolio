@@ -80,6 +80,11 @@
   color: #2b2b2b;
   font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 700;
+  transition: opacity 0.2s ease;
+}
+
+.logo:hover {
+  opacity: 0.7;
 }
 
 /* Mobile nav toggle button */

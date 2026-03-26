@@ -157,6 +157,65 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
+// ===== GSAP DEFAULTS =====
+if (typeof gsap !== 'undefined') {
+  gsap.defaults({ duration: 0.3, ease: "expo.out" });
+}
+
+// ===== HOVER EFFECTS (GSAP) =====
+function initHoverEffects(page) {
+  if (typeof gsap === 'undefined') return;
+
+  // Only run on pointer devices that support hover
+  var mm = gsap.matchMedia();
+
+  mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", function() {
+
+    if (page === 'projects') {
+      // Project card 3D tilt
+      var cards = document.querySelectorAll('.project-card');
+
+      cards.forEach(function(card) {
+        var xTo = gsap.quickTo(card, "rotateY", { duration: 0.3, ease: "power2.out" });
+        var yTo = gsap.quickTo(card, "rotateX", { duration: 0.3, ease: "power2.out" });
+
+        card.style.transformStyle = "preserve-3d";
+        card.style.perspective = "800px";
+        // Wrap in a perspective container
+        card.parentElement.style.perspective = "800px";
+
+        card.addEventListener("mousemove", function(e) {
+          var rect = card.getBoundingClientRect();
+          var x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
+          var y = (e.clientY - rect.top) / rect.height - 0.5;
+          xTo(x * 4);   // max 2 degrees
+          yTo(-y * 4);  // max 2 degrees
+        });
+
+        card.addEventListener("mouseleave", function() {
+          xTo(0);
+          yTo(0);
+        });
+      });
+
+      // Staggered card entry animation
+      gsap.from(".project-card", {
+        y: 20,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.5,
+        ease: "expo.out",
+        clearProps: "all"
+      });
+    }
+
+    // Return cleanup function
+    return function() {
+      // matchMedia handles cleanup automatically
+    };
+  });
+}
+
 // ===== PAGE INIT HOOKS =====
 // These run after SPA content swap to re-initialize page-specific JS
 
@@ -331,6 +390,27 @@ function initTimestamp() {
     }
   }
 
+  // Wrap timestamp in hover container + add detail label
+  var detail = null;
+  if (timeElement && timeElement.parentNode) {
+    var wrapper = document.createElement('div');
+    wrapper.className = 'timestamp-wrapper';
+    timeElement.parentNode.insertBefore(wrapper, timeElement);
+    wrapper.appendChild(timeElement);
+
+    detail = document.createElement('span');
+    detail.className = 'timestamp-detail';
+    wrapper.appendChild(detail);
+
+    // Set initial detail text
+    var now = new Date();
+    var dateFmt = new Intl.DateTimeFormat('en-US', {
+      month: 'short', day: 'numeric', year: 'numeric',
+      timeZone: 'America/New_York'
+    });
+    detail.textContent = dateFmt.format(now) + ' \u00B7 Eastern Time';
+  }
+
   let prevTimeString = '';
 
   function updateESTTime() {
@@ -381,8 +461,8 @@ function initTimestamp() {
             s.classList.add('time-char-in');
             setTimeout(function() {
               s.classList.remove('time-char-in');
-            }, 300);
-          }, 150);
+            }, 700);
+          }, 350);
         })(span, newChars[i]);
       }
     }
@@ -463,10 +543,8 @@ function initPageHooks(page) {
   } else if (page === 'about') {
     initDropdowns();
   }
-  if (page === 'projects') {
-    // no special JS init needed
-  }
-  // contact doesn't need special JS init
+  // Initialize GSAP hover effects for all pages that need them
+  initHoverEffects(page);
 }
 
 // ===== SPA ROUTER =====

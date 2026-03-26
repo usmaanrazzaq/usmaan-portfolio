@@ -30,6 +30,9 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  transition: transform var(--hover-duration) var(--ease-out-expo),
+              box-shadow var(--hover-duration) var(--ease-out-expo);
+  will-change: transform;
 }
 
 .project-card-image-link {
@@ -50,6 +53,7 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s var(--ease-out-expo);
 }
 
 .project-card-image--gray {
@@ -168,20 +172,43 @@
   border: 0.5px solid #e5e5e5;
   background-color: #fff;
   cursor: pointer;
-  transition: background-color 0.15s ease,
-              border-color 0.15s ease,
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+  transition: color 0.3s var(--ease-out-expo),
+              background-color 0.15s ease,
+              border-color 0.3s var(--ease-out-expo),
               box-shadow 0.15s ease,
               transform 0.1s ease;
 }
 
-.work-link:hover {
-  background-color: #f5f5f5;
-  border-color: #d4d4d4;
+.work-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #09090b;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s var(--ease-out-expo);
+  z-index: -1;
+  border-radius: inherit;
+}
+
+@media (hover: hover) {
+  .work-link:hover::before {
+    transform: scaleX(1);
+  }
+
+  .work-link:hover {
+    color: #ffffff;
+    border-color: #09090b;
+    background-color: transparent;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
 }
 
 .work-link:active {
   transform: scale(0.97);
-  background-color: #efefef;
 }
 
 .work-link .link-arrow {
@@ -195,11 +222,44 @@
 }
 
 /* Focus visible */
-.work-link:focus-visible,
+.work-link:focus-visible {
+  color: #ffffff;
+  border-color: #09090b;
+  background-color: transparent;
+  outline: 2px solid #2b2b2b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.work-link:focus-visible::before {
+  transform: scaleX(1);
+}
+
 .project-card-image-link:focus-visible {
   outline: 2px solid #2b2b2b;
   outline-offset: 2px;
   border-radius: 4px;
+}
+
+/* ===== Hover effects (pointer devices only) ===== */
+@media (hover: hover) {
+  .project-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  }
+
+  .project-card:hover .project-card-image img {
+    transform: scale(1.04);
+  }
+
+  .project-card:focus-within {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  }
+
+  .project-card:focus-within .project-card-image img {
+    transform: scale(1.04);
+  }
 }
 
 /* ===== Responsive ===== */

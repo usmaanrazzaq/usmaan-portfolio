@@ -21,13 +21,17 @@
   font-size: 14px;
   font-family: 'Helvetica Neue', sans-serif;
   font-variation-settings: "wght" 300;
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
   position: relative;
+  opacity: 0.82;
 }
 
 .social-links a:hover {
   color: #2b2b2b;
-  transform: scale(1.05);
+  opacity: 1;
+  transform: translateY(-1px);
 }
 
 .social-links a::after {
@@ -35,14 +39,27 @@
   position: absolute;
   left: 0;
   bottom: -3px;
-  width: 0;
-  height: 2px;
+  width: 100%;
+  height: 1.5px;
   background-color: currentColor;
-  transition: width 0.3s ease;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .social-links a:hover::after {
-  width: 100%;
+  transform: scaleX(1);
+}
+
+.social-links a:focus-visible {
+  opacity: 1;
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  transform: translateY(-1px);
+}
+
+.social-links a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 footer {

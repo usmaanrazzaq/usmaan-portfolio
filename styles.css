@@ -1,3 +1,10 @@
+/* Motion tokens */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --hover-duration: 0.3s;
+  --hover-duration-fast: 0.18s;
+}
+
 /* Reset and box-sizing */
 *,
 *::before,
@@ -5,6 +12,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+/* Global reduced-motion safety net */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01s !important;
+    animation-duration: 0.01s !important;
+  }
 }
 
 /* SPA transition */

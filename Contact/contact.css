@@ -137,7 +137,7 @@
     font-size: 16px;
     color: #000000;
     outline: none;
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .contact-input::placeholder,
@@ -153,6 +153,7 @@
     border-color: #2b2b2b;
     outline: 2px solid #2b2b2b;
     outline-offset: -1px;
+    box-shadow: 0 0 0 3px rgba(43, 43, 43, 0.06);
 }
 
 .contact-textarea {
@@ -171,11 +172,15 @@
     font-size: 16px;
     color: #ffffff;
     cursor: pointer;
-    transition: background-color 0.2s ease, transform 0.1s ease;
+    transition: background-color 0.2s ease,
+                transform 0.25s var(--ease-out-expo),
+                box-shadow 0.25s var(--ease-out-expo);
 }
 
 .contact-submit:hover {
     background-color: #1a1a1a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .contact-submit:active {
@@ -379,7 +384,10 @@
     .contact-links a,
     .contact-links a::after,
     .contact-back-link,
-    .contact-back-link::after {
+    .contact-back-link::after,
+    .contact-submit,
+    .contact-input,
+    .contact-textarea {
         transition: none !important;
     }
 }

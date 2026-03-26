@@ -38,6 +38,7 @@
 
 .about-image {
   width: 100%;
+  overflow: hidden;
 }
 
 .about-image img {
@@ -45,6 +46,25 @@
   max-height: 400px;
   object-fit: cover;
   filter: grayscale(100%);
+  transition: filter 0.5s var(--ease-out-expo),
+              transform 0.5s var(--ease-out-expo);
+}
+
+@media (hover: hover) {
+  .about-image:hover img {
+    filter: grayscale(0%);
+    transform: scale(1.02);
+  }
+}
+
+.experience-row {
+  transition: background-color 0.2s ease;
+}
+
+@media (hover: hover) {
+  .experience-row:hover {
+    background-color: rgba(0, 0, 0, 0.015);
+  }
 }
 
 /* Right Column */
@@ -277,7 +297,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .inspiration-link,
-  .inspiration-link::after {
+  .inspiration-link::after,
+  .about-image img,
+  .experience-row {
     transition: none !important;
   }
 }
