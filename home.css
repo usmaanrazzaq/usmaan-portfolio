@@ -369,50 +369,29 @@
   border: 0.5px solid #e5e5e5;
   background-color: #fff;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  z-index: 0;
   transition: color 0.3s var(--ease-out-expo),
-              background-color 0.15s ease,
+              background-color 0.3s var(--ease-out-expo),
               border-color 0.3s var(--ease-out-expo),
               box-shadow 0.15s ease,
               transform 0.1s ease;
 }
 
-.work-link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: #09090b;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.3s var(--ease-out-expo);
-  z-index: -1;
-  border-radius: inherit;
-}
-
-@media (hover: hover) {
-  .work-link:hover::before {
-    transform: scaleX(1);
-  }
-
-  .work-link:hover {
-    color: #ffffff;
-    border-color: #09090b;
-    background-color: transparent;
-  }
-}
-
-.work-link:focus-visible::before {
-  transform: scaleX(1);
-}
-
-.work-link:focus-visible {
+a.work-link:hover {
   color: #ffffff;
+  background-color: #09090b;
   border-color: #09090b;
-  background-color: transparent;
+}
+
+a.work-link:focus-visible {
+  color: #ffffff;
+  background-color: #09090b;
+  border-color: #09090b;
   outline: 2px solid #2b2b2b;
   outline-offset: 2px;
+}
+
+.work-links a.work-link::after {
+  display: none;
 }
 
 .work-link:active {
@@ -425,7 +404,7 @@
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.work-link:hover .link-arrow {
+a.work-link:hover .link-arrow {
   transform: translateX(2px);
 }
 /* Work Directory (Column 1, sticky) */
@@ -1415,7 +1394,6 @@ button.work-title {
   .connect-links a,
   .timestamp-detail,
   .work-link,
-  .work-link::before,
   .work-title,
   .work-title .title-text,
   .directory-toggle-icon,
