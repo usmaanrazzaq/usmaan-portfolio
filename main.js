@@ -546,14 +546,17 @@ function initCaseStudyNav() {
     { path: '/DPR-Studio/dpr-studio/case-study.html', name: 'DPR Studio' },
   ];
 
-  // Normalize pathname: strip trailing index.html
-  var pathname = window.location.pathname.replace(/index\.html$/, '');
+  // Normalize: strip index.html, trailing slash, and lowercase for comparison
+  function normalizePath(p) {
+    return p.replace(/index\.html$/, '').replace(/\/$/, '').toLowerCase();
+  }
+
+  var pathname = normalizePath(window.location.pathname);
 
   // Find current case study
   var currentIndex = -1;
   for (var i = 0; i < CASE_STUDIES.length; i++) {
-    var normalized = CASE_STUDIES[i].path.replace(/index\.html$/, '');
-    if (pathname === normalized || pathname === normalized.replace(/\/$/, '')) {
+    if (pathname === normalizePath(CASE_STUDIES[i].path)) {
       currentIndex = i;
       break;
     }
