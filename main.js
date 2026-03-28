@@ -539,24 +539,19 @@ function initCaseStudyNav() {
   if (!container) return;
 
   var CASE_STUDIES = [
-    { path: '/adsum/', name: 'Adsum NYC' },
-    { path: '/National-Muslim-Youth-Association/muslim-youth-website/case-study.html', name: 'National Muslim Youth Association' },
-    { path: '/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html', name: 'On The Run Studio' },
-    { path: '/Rented/rented/', name: 'Rented' },
-    { path: '/DPR-Studio/dpr-studio/case-study.html', name: 'DPR Studio' },
+    { path: '/adsum/', match: '/adsum', name: 'Adsum NYC' },
+    { path: '/National-Muslim-Youth-Association/muslim-youth-website/case-study.html', match: 'muslim-youth', name: 'National Muslim Youth Association' },
+    { path: '/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html', match: 'on-the-run-studio', name: 'On The Run Studio' },
+    { path: '/Rented/rented/', match: '/rented', name: 'Rented' },
+    { path: '/DPR-Studio/dpr-studio/case-study.html', match: 'dpr-studio', name: 'DPR Studio' },
   ];
 
-  // Normalize: strip index.html, trailing slash, and lowercase for comparison
-  function normalizePath(p) {
-    return p.replace(/index\.html$/, '').replace(/\/$/, '').toLowerCase();
-  }
+  var pathname = window.location.pathname.toLowerCase();
 
-  var pathname = normalizePath(window.location.pathname);
-
-  // Find current case study
+  // Find current case study by checking if the URL contains a unique identifier
   var currentIndex = -1;
   for (var i = 0; i < CASE_STUDIES.length; i++) {
-    if (pathname === normalizePath(CASE_STUDIES[i].path)) {
+    if (pathname.indexOf(CASE_STUDIES[i].match) !== -1) {
       currentIndex = i;
       break;
     }
@@ -576,6 +571,7 @@ function initCaseStudyNav() {
     '  display: flex; justify-content: space-between; align-items: center;',
     '  padding: 3rem 1rem; margin-top: 3rem;',
     '  border-top: 0.5px solid rgba(43,43,43,0.15);',
+    '  position: relative; z-index: 10; overflow: visible;',
     '}',
     '.case-study-nav a {',
     '  display: flex; align-items: center; gap: 0.5rem;',
