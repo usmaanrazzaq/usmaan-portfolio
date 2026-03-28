@@ -209,6 +209,33 @@
   transform: translateY(-1px);
 }
 
+/* Image Archive Section */
+.image-archive-section {
+  display: flex;
+  flex-direction: column;
+  max-width: 260px;
+}
+
+.image-archive-section .inspiration-link {
+  padding: 4px 0;
+}
+
+.archive-link .arrow-icon {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-4px);
+  transition: opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+  margin-left: 2px;
+  font-size: 13px;
+}
+
+.archive-link:hover .arrow-icon,
+.archive-link:focus-visible .arrow-icon {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 /* Responsive Design for About Page */
 @media (max-width: 1024px) {
   .about-layout {
