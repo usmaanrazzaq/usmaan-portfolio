@@ -533,6 +533,99 @@ function initLightbox() {
 }
 
 
+// ===== CASE STUDY NAVIGATION =====
+function initCaseStudyNav() {
+  var container = document.querySelector('.case-study-container');
+  if (!container) return;
+
+  var CASE_STUDIES = [
+    { path: '/adsum/', name: 'Adsum NYC' },
+    { path: '/National-Muslim-Youth-Association/muslim-youth-website/case-study.html', name: 'National Muslim Youth Association' },
+    { path: '/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html', name: 'On The Run Studio' },
+    { path: '/Rented/rented/', name: 'Rented' },
+    { path: '/DPR-Studio/dpr-studio/case-study.html', name: 'DPR Studio' },
+  ];
+
+  // Normalize pathname: strip trailing index.html
+  var pathname = window.location.pathname.replace(/index\.html$/, '');
+
+  // Find current case study
+  var currentIndex = -1;
+  for (var i = 0; i < CASE_STUDIES.length; i++) {
+    var normalized = CASE_STUDIES[i].path.replace(/index\.html$/, '');
+    if (pathname === normalized || pathname === normalized.replace(/\/$/, '')) {
+      currentIndex = i;
+      break;
+    }
+  }
+  if (currentIndex === -1) return;
+
+  var len = CASE_STUDIES.length;
+  var prev = CASE_STUDIES[(currentIndex - 1 + len) % len];
+  var next = CASE_STUDIES[(currentIndex + 1) % len];
+
+  var arrowSVG = '<svg class="nav-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  // Inject styles
+  var style = document.createElement('style');
+  style.textContent = [
+    '.case-study-nav {',
+    '  display: flex; justify-content: space-between; align-items: center;',
+    '  padding: 3rem 1rem; margin-top: 3rem;',
+    '  border-top: 0.5px solid rgba(43,43,43,0.15);',
+    '}',
+    '.case-study-nav a {',
+    '  display: flex; align-items: center; gap: 0.5rem;',
+    '  text-decoration: none; color: #8d8383;',
+    '  font-family: "Helvetica Neue", sans-serif;',
+    '  font-variation-settings: "wght" 300;',
+    '  font-size: 0.875rem;',
+    '  transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);',
+    '}',
+    '.case-study-nav a:hover { color: #2b2b2b; }',
+    '.case-study-nav .nav-label {',
+    '  display: inline-block; overflow: hidden;',
+    '  max-width: 0; opacity: 0; white-space: nowrap;',
+    '  transition: max-width 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);',
+    '}',
+    '.case-study-nav a:hover .nav-label {',
+    '  max-width: 300px; opacity: 1;',
+    '}',
+    '.case-study-nav .nav-arrow {',
+    '  width: 14px; height: 14px; flex-shrink: 0;',
+    '  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);',
+    '}',
+    '.cs-nav-prev .nav-arrow { transform: scaleX(-1); }',
+    '.cs-nav-prev:hover .nav-arrow { transform: scaleX(-1) translateX(3px); }',
+    '.cs-nav-next:hover .nav-arrow { transform: translateX(3px); }',
+    '@media (prefers-reduced-motion: reduce) {',
+    '  .case-study-nav .nav-arrow { transition: none; }',
+    '  .case-study-nav .nav-label { transition: none; }',
+    '}',
+    '@media (max-width: 768px) {',
+    '  .case-study-nav { padding: 2rem 0; margin-top: 2rem; }',
+    '  .case-study-nav .nav-label { max-width: 300px; opacity: 1; }',
+    '}',
+  ].join('\n');
+  document.head.appendChild(style);
+
+  // Build nav element
+  var nav = document.createElement('nav');
+  nav.className = 'case-study-nav';
+  nav.setAttribute('aria-label', 'Case study navigation');
+  nav.innerHTML =
+    '<a href="' + prev.path + '" class="cs-nav-prev">' +
+      arrowSVG +
+      '<span class="nav-label">' + prev.name + '</span>' +
+    '</a>' +
+    '<a href="' + next.path + '" class="cs-nav-next">' +
+      '<span class="nav-label">' + next.name + '</span>' +
+      arrowSVG +
+    '</a>';
+
+  container.appendChild(nav);
+}
+
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   if (page === 'home') {
@@ -747,4 +840,10 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('spa-content')) return;
   initTimestamp();
+});
+
+// Case Study Navigation - only on non-SPA pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('spa-content')) return;
+  initCaseStudyNav();
 });
