@@ -53,7 +53,7 @@
                     </div>
                     <ul class="directory-list">
                         <li><a href="#overview" data-section="overview">Overview</a></li>
-                        <li><a href="#challenge" data-section="challenge">Challenge</a></li>
+                        <li><a href="#problem" data-section="problem">Problem</a></li>
                         <li><a href="#process" data-section="process">Process</a></li>
                         <li><a href="#outcome" data-section="outcome">Outcome</a></li>
                     </ul>
@@ -70,19 +70,22 @@
                             <h3>What is Rented?</h3>
                         </div>
                         <div class="section-content">
-                            <p>Rented is an application service that allows users to rent tools, objects, materials etc, while also allowing them to rent out their own belongings. Currently, the app is still under development. Below I breakdown my the process of my work for the mobile app.</p>
+                            <p>Rented is a peer-to-peer rental platform for urban renters who need everyday items without the cost and clutter of ownership. I designed the full mobile experience over 6 months — from onboarding through browsing, renting, and listing.</p>
                         </div>
                     </section>
 
                     <!-- Challenge Section -->
-                    <section id="challenge" class="content-block">
+                    <section id="problem" class="content-block">
                         <div class="section-text">
                             <div class="section-header">
-                                <h2>Challenge</h2>
+                                <h2>Problem</h2>
                             </div>
                             <div class="section-content">
-                                <p>When the engineering team approached me, they were looking for someone who could breathe life into their app concept through a working prototype. They trusted me to create something that would feel welcoming from the very first interaction—designing an onboarding experience that respected users' time by letting them simply connect with existing email accounts instead of filling out tedious registration forms. Beyond this first impression, I needed to craft three key spaces within the app: a homepage where users would land and orient themselves, a personal profile space that felt like their own, and a product page that showcased what mattered most.</p>
-                                <p>The engineers shared their vision for an app that wouldn't overwhelm users with complexity—something clean and intuitive that would feel natural in people's hands. They particularly admired ChatGPT's approach to homepage design, appreciating how it creates a sense of calm focus through its minimalist aesthetic.</p>
+                                <p>People regularly pay full price for tools, equipment, and everyday items they'll only use once or twice — a problem that's worse for urban renters with limited storage who can't justify owning things they rarely need. Existing rental options are either industrial (Home Depot, Sunbelt) or buried in marketplace noise (Facebook, Craigslist) with no trust layer. Rented set out to build a peer-to-peer rental platform that makes borrowing from your community as simple and safe as buying online — while reducing the waste of single-use ownership.</p>
+                                <div class="section-header">
+                                    <h3>My Role</h3>
+                                </div>
+                                <p>I was brought on as the sole designer to create Rented's mobile experience from the ground up — defining the onboarding flow, home and explore experience, product pages, and user profiles. My biggest design challenge was creating a browsing experience that felt clear and navigable across wildly diverse item categories, from power tools to camping gear to kitchen appliances.</p>
                             </div>
                         </div>
                     </section>
@@ -94,10 +97,23 @@
                                 <h2>Process</h2>
                             </div>
                             <div class="section-content">
-                                <p>As I began designing the app interface, I drew inspiration from similar apps that aligned with the team's guidelines. To establish the layout and element placement, I started by sketching wireframes. This initial wireframing phase took place in Figma, where I explored multiple frames and design concepts.</p>
-                                <p>Once the final interface was approved, I moved on to developing a functional prototype. For this phase, I worked extensively with Play 2, a newer software that allowed me to create interactive prototypes and test the app directly on my phone throughout development. Play 2 enabled me to incorporate functional input fields, allowing both myself and the engineering team to enter emails and passwords to test the onboarding flow effectively.</p>
-                                <p>The profile page was designed to maintain a minimalistic and simple layout. For inspiration, I looked at selling platforms like eBay and Grailed. The engineering team also wanted to include follower and following information, similar to social media profile pages, referencing Instagram, Facebook, and Twitter (X).</p>
-                                <p>To effectively showcase the user's available and currently rented products, I implemented a tab navigation system with three sections.</p>
+                                <div class="section-header">
+                                    <h3>Research & Inspiration</h3>
+                                </div>
+                                <p>Before opening Figma, I spent time studying how existing rental and marketplace platforms handle the core experience. I looked at apps like Fat Llama, Neighbor, eBay, and Grailed — paying attention to how they onboard new users, structure browsing across diverse item categories, and build trust between strangers transacting for the first time. A few patterns stood out: most platforms front-load heavy registration forms that kill momentum, and almost none handle the renter-to-lister duality well — you're either buying or selling, never both in the same flow. These gaps directly shaped my approach for Rented.</p>
+                                <div class="section-header">
+                                    <h3>Information Architecture</h3>
+                                </div>
+                                <p>Rented has a two-sided problem: the same user might browse for a drill on Monday and list their camping gear on Tuesday. I mapped out the core user flows — onboarding, browsing and renting an item, and listing a belonging — to make sure the app's structure supported both modes without forcing users to context-switch. The onboarding flow was deliberately lightweight: connect with an existing email account, no lengthy registration forms. The goal was to reduce friction to the point where someone could go from download to browsing in under a minute.</p>
+                                <div class="section-header">
+                                    <h3>Exploration</h3>
+                                </div>
+                                <p>With the flows defined, I moved into wireframing in Figma, exploring multiple layout directions for each key screen. The homepage was the hardest call — I explored a category-grid approach (like eBay), a feed-based layout (like Facebook Marketplace), and a minimal focused landing (inspired by ChatGPT's calm entry point). I went with the minimal direction because Rented's catalog was still growing, and a sparse layout would feel intentional rather than empty. A grid full of half-populated categories would have undermined trust in a new platform.</p>
+                                <p>For the profile page, I referenced selling platforms like eBay and Grailed alongside social profiles like Instagram — the engineering team wanted follower/following data to encourage community, so I needed to balance marketplace utility with social familiarity. I landed on a tab navigation system with three sections to separate available items, currently rented items, and activity — keeping the layout clean while accommodating both sides of the platform.</p>
+                                <div class="section-header">
+                                    <h3>Prototyping & Testing</h3>
+                                </div>
+                                <p>Once the final interface was approved, I built a functional prototype using Play 2, which let me test the app directly on my phone throughout development. This wasn't just for presentation — Play 2 supported functional input fields, so both the engineering team and I could enter real emails and passwords to stress-test the onboarding flow on-device. Testing on an actual phone screen surfaced spacing and touch-target issues that weren't visible in Figma, and I iterated on several screens based on what felt off in-hand versus on-screen.</p>
                             </div>
                         </div>
                     </section>
@@ -106,12 +122,22 @@
                     <section id="outcome" class="content-block">
                         <div class="section-text">
                             <div class="section-header">
-                                <h2>Outcome</h2>
+                                <h2>Outcome & Reflection</h2>
                             </div>
                             <div class="section-content">
-                                <p>At the end of the month—the allotted time for the project—I presented the prototype to the engineering team and walked them through my design process. I also shared prototype links, allowing them to experience it firsthand on their phones.</p>
-                                <p>After exploring the prototype, we discussed necessary updates and adjustments. Most of the feedback focused on the explore page, where the team wanted a simpler yet more concise layout to better showcase available products. They also suggested adding more features, with filter and sort options being the most recommended.</p>
-                                <p>Following the initial review meeting, the engineering team decided to take additional time to refine the app's concept and determine which features should be included.</p>
+                                <p>After 6 months of designing, prototyping, and iterating alongside the engineering team, I delivered the final designs and a fully functional prototype. The handoff included the complete design system, annotated screens for all core flows, and interactive prototype links the team could test on their own devices.</p>
+                                <p>The engineering team was aligned on the direction — the onboarding flow, profile structure, and product pages all held up through review. The main feedback centered on the explore page, where the team wanted a simpler layout to better surface available products, and the addition of filter and sort functionality to help users navigate across diverse item categories. That feedback validated a tension I'd felt throughout the project: designing a browsing experience for a platform where the inventory ranges from power drills to camping tents is a fundamentally different problem than a single-category marketplace.
+                                </p>
+                                <p>The app is currently on hold as the engineering team shifted focus to other priorities. While I didn't get to see Rented ship, the project sharpened how I think about designing two-sided platforms, structuring flows for diverse content types, and working within the constraints of a small team on a tight timeline.</p>
+                                <div class="section-header">
+                                    <h3>If I had more time, I would:</h3>
+                                    <ul>
+                                        <li>Run usability tests with 5-8 target users to validate the browsing and onboarding flows before handoff.</li>
+                                        <li>Explore the filter and sort patterns more deeply - the explore page needed more iteration and I'd want to test multiple approaches.</li>
+                                        <li>Build out the trust layer (ratings, verification, transaction history) that a peer-to-peer platform needs to feel safe at scale.</li>
+                                        <li>Design the lister-side experience with the same depth as the renter side - listing an item should feel just as effortless as renting one.</li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </section>
