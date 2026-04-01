@@ -97,3 +97,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set initial active state
     updateActiveLink();
 });
+
+// Lightbox
+function openLightbox(container) {
+    const img = container.querySelector('img');
+    const overlay = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    lightboxImg.src = img.src;
+    lightboxImg.alt = img.alt;
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+    if (e.target.classList.contains('lightbox-img')) return;
+    const overlay = document.getElementById('lightbox');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const overlay = document.getElementById('lightbox');
+        if (overlay && overlay.classList.contains('active')) {
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+});
