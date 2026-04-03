@@ -388,7 +388,7 @@ function initTimestamp() {
   if (availabilityIndicator && availabilityText) {
     if (isAvailable) {
       availabilityIndicator.classList.remove('not-available');
-      availabilityText.textContent = 'Available for freelance work';
+      availabilityText.textContent = 'Available for work';
     } else {
       availabilityIndicator.classList.add('not-available');
       availabilityText.textContent = 'Not available for work';
