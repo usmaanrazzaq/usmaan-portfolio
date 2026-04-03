@@ -305,6 +305,9 @@ function initWorkDirectory() {
         // Activate new entry — force reflow so the browser registers opacity:0 first
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
+        // Reset carousel to first slide
+        var carousel = targetEntry.querySelector('[data-carousel]');
+        if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
         targetEntry.offsetHeight;
 
         // After the old entry finishes fading out, remove it from the grid
@@ -320,6 +323,8 @@ function initWorkDirectory() {
         });
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
+        var carousel2 = targetEntry.querySelector('[data-carousel]');
+        if (carousel2 && carousel2._carouselGoTo) carousel2._carouselGoTo(0, true);
       }
 
       if (window.innerWidth <= 1120 && workDirectory) {
@@ -533,6 +538,179 @@ function initLightbox() {
 }
 
 
+// ===== CAROUSEL =====
+function initCarousels() {
+  var carousels = document.querySelectorAll('[data-carousel]:not([data-single])');
+  if (!carousels.length || typeof gsap === 'undefined') return;
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  carousels.forEach(function(container) {
+    var track = container.querySelector('.carousel-track');
+    var slides = container.querySelectorAll('.carousel-slide');
+    var dotsContainer = container.querySelector('.carousel-dots');
+    if (!track || slides.length < 2) return;
+
+    var currentIndex = 0;
+    var slideCount = slides.length;
+
+    // ARIA
+    container.setAttribute('role', 'region');
+    container.setAttribute('aria-roledescription', 'carousel');
+    container.setAttribute('tabindex', '0');
+
+    // Arrow SVG (simple chevron)
+    var arrowSVG = '<svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+    // Prev/Next arrows overlaid on the carousel
+    var prevBtn = document.createElement('button');
+    prevBtn.className = 'carousel-arrow carousel-arrow--prev';
+    prevBtn.setAttribute('type', 'button');
+    prevBtn.setAttribute('aria-label', 'Previous slide');
+    prevBtn.innerHTML = arrowSVG;
+    prevBtn.disabled = true;
+
+    var nextBtn = document.createElement('button');
+    nextBtn.className = 'carousel-arrow carousel-arrow--next';
+    nextBtn.setAttribute('type', 'button');
+    nextBtn.setAttribute('aria-label', 'Next slide');
+    nextBtn.innerHTML = arrowSVG;
+
+    container.appendChild(prevBtn);
+    container.appendChild(nextBtn);
+
+    // Build dots below the carousel
+    for (var i = 0; i < slideCount; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('type', 'button');
+      dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+      dot.setAttribute('data-index', i);
+      dotsContainer.appendChild(dot);
+    }
+
+    var dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+    function getSlideWidth() {
+      return slides[0].offsetWidth + 14; // matches CSS gap
+    }
+
+    function goTo(index, instant) {
+      if (index < 0) index = 0;
+      if (index >= slideCount) index = slideCount - 1;
+      currentIndex = index;
+
+      var offset = -index * getSlideWidth();
+
+      if (prefersReducedMotion || instant) {
+        gsap.set(track, { x: offset });
+      } else {
+        gsap.to(track, { x: offset, duration: 0.6, ease: 'expo.out' });
+      }
+
+      // Update dots
+      dots.forEach(function(d, di) {
+        d.classList.toggle('active', di === currentIndex);
+      });
+
+      // Update arrows
+      prevBtn.disabled = currentIndex === 0;
+      nextBtn.disabled = currentIndex === slideCount - 1;
+    }
+
+    // Arrow clicks
+    prevBtn.addEventListener('click', function() { goTo(currentIndex - 1); });
+    nextBtn.addEventListener('click', function() { goTo(currentIndex + 1); });
+
+    // Dot clicks
+    dotsContainer.addEventListener('click', function(e) {
+      var dot = e.target.closest('.carousel-dot');
+      if (!dot) return;
+      var idx = parseInt(dot.getAttribute('data-index'), 10);
+      if (!isNaN(idx)) goTo(idx);
+    });
+
+    // Keyboard navigation
+    container.addEventListener('keydown', function(e) {
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        goTo(currentIndex - 1);
+      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        goTo(currentIndex + 1);
+      }
+    });
+
+    // Drag / swipe via pointer events
+    var dragStartX = 0;
+    var dragCurrentX = 0;
+    var isDragging = false;
+    var trackStartX = 0;
+    var threshold = 0.2; // 20% of slide width
+
+    function onPointerDown(e) {
+      // Don't interfere with clicks on links/buttons
+      if (e.target.closest('a, button')) {
+        // Still track for swipe detection
+      }
+      isDragging = true;
+      dragStartX = e.clientX;
+      dragCurrentX = e.clientX;
+      trackStartX = gsap.getProperty(track, 'x') || 0;
+      container.classList.add('is-dragging');
+      track.style.userSelect = 'none';
+    }
+
+    function onPointerMove(e) {
+      if (!isDragging) return;
+      dragCurrentX = e.clientX;
+      var dx = dragCurrentX - dragStartX;
+      gsap.set(track, { x: trackStartX + dx });
+    }
+
+    function onPointerUp(e) {
+      if (!isDragging) return;
+      isDragging = false;
+      container.classList.remove('is-dragging');
+      track.style.userSelect = '';
+
+      var dx = dragCurrentX - dragStartX;
+      var slideW = getSlideWidth();
+      var thresholdPx = slideW * threshold;
+
+      if (Math.abs(dx) > thresholdPx) {
+        if (dx < 0) {
+          goTo(currentIndex + 1);
+        } else {
+          goTo(currentIndex - 1);
+        }
+      } else {
+        // Snap back
+        goTo(currentIndex);
+      }
+    }
+
+    track.addEventListener('pointerdown', onPointerDown);
+    window.addEventListener('pointermove', onPointerMove);
+    window.addEventListener('pointerup', onPointerUp);
+
+    // Prevent native drag on images/videos
+    track.addEventListener('dragstart', function(e) { e.preventDefault(); });
+
+    // Recalculate on resize
+    var resizeTimer;
+    window.addEventListener('resize', function() {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(function() {
+        goTo(currentIndex, true);
+      }, 100);
+    });
+
+    // Expose for external reset
+    container._carouselGoTo = goTo;
+  });
+}
+
 // ===== CASE STUDY NAVIGATION =====
 function initCaseStudyNav() {
   var container = document.querySelector('.case-study-container');
@@ -632,6 +810,7 @@ function initPageHooks(page) {
     initWorkDirectory();
     initTimestamp();
     initLightbox();
+    initCarousels();
   } else if (page === 'about') {
     initDropdowns();
   }

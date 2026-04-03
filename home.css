@@ -890,7 +890,7 @@ button.work-title {
 .connect-links a:focus-visible,
 .work-title:focus-visible,
 .directory-header:focus-visible,
-.work-visual-main a:focus-visible {
+.carousel-slide a:focus-visible {
   outline: 2px solid #2b2b2b;
   outline-offset: 2px;
   border-radius: 4px;
@@ -1003,46 +1003,64 @@ button.work-title {
 .work-entry > .work-visuals {
   grid-column: 1 / -1;
   grid-row: 2;
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
+  min-width: 0;       /* allow grid item to shrink below content size */
   margin-top: 40px;
 }
 
-.work-visual-main {
-  flex: 0 0 65%;
+/* ===== CAROUSEL ===== */
+.carousel {
+  position: relative;
   overflow: hidden;
-  background-color: #f5f5f5;
-}
-
-.work-visual-main img,
-.work-visual-main video {
   width: 100%;
-  height: auto;
-  display: block;
-  object-fit: cover;
-  transition: transform 0.5s var(--ease-out-expo);
 }
 
-@media (hover: hover) {
-  .work-visual-main:hover img,
-  .work-visual-main:hover video {
-    transform: scale(1.02);
-  }
+.carousel-track {
+  display: flex;
+  gap: 14px;
+  will-change: transform;
+  cursor: grab;
 }
 
-.work-visual-main.bg-light {
-  background-color: #ffffff;
+.carousel.is-dragging .carousel-track {
+  cursor: grabbing;
 }
 
-.work-visual-main.centered {
+.carousel-slide {
+  flex: 0 0 93%;
+  overflow: hidden;
+  border-radius: 10px;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+}
+
+.carousel-slide a {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 400px;
+  width: 100%;
+  height: 100%;
 }
 
-.work-visual-main.centered .logo-image {
+.carousel-slide img,
+.carousel-slide video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+/* Centered slide variant (DPR logo) */
+.carousel-slide--centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-slide--centered.bg-light {
+  background-color: #ffffff;
+}
+
+.carousel-slide--centered .logo-image {
   max-width: 85%;
   max-height: 85%;
   width: auto;
@@ -1050,38 +1068,155 @@ button.work-title {
   object-fit: contain;
 }
 
-/* .work-visual-side — sizing from Figma node 1688-316 (Size Filter Feature) */
-.work-visual-side {
-  flex: 1;
+/* Carousel arrows — overlaid on sides */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
   display: flex;
-  flex-direction: column;
-  gap: 15px;
-  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  cursor: pointer;
+  padding: 0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  transition: background 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  color: #2b2b2b;
 }
 
+.carousel-arrow--prev {
+  left: 12px;
+}
+
+.carousel-arrow--next {
+  right: 12px;
+}
+
+.carousel-arrow svg {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+.carousel-arrow:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-50%) scale(1.05);
+}
+
+.carousel-arrow:disabled {
+  opacity: 0;
+  cursor: default;
+  pointer-events: none;
+}
+
+.carousel-arrow--prev svg {
+  transform: scaleX(-1);
+}
+
+/* Dots — centered below carousel */
+.carousel-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 14px;
+}
+
+.carousel-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  background: #d4d4d4;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.carousel-dot:hover {
+  background: #a3a3a3;
+}
+
+.carousel-dot.active {
+  background: #2b2b2b;
+}
+
+/* Single-slide carousels — full width, centered, no nav */
+[data-single] .carousel-slide {
+  flex: 0 0 100%;
+}
+
+[data-single] .carousel-arrow {
+  display: none;
+}
+
+[data-single] .carousel-dots {
+  display: none;
+}
+
+[data-single] .carousel-track {
+  cursor: default;
+  will-change: auto;
+}
+
+/* Figcaptions inside carousel slides */
 .visual-item {
   margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
   width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Image block: compact height, full width, object-cover */
 .visual-item img {
   width: 100%;
-  height: 210px;
+  height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
   cursor: zoom-in;
-  transition: opacity 0.2s ease,
-              transform 0.35s var(--ease-out-expo);
+  transition: opacity 0.2s ease;
 }
 
 @media (hover: hover) {
   .visual-item img:hover {
     opacity: 0.85;
-    transform: scale(1.03);
+  }
+}
+
+.visual-item figcaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 8px 10px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .visual-item:hover figcaption {
+    opacity: 1;
+  }
+}
+
+/* Always visible on touch devices */
+@media (hover: none) {
+  .visual-item figcaption {
+    opacity: 1;
   }
 }
 
@@ -1159,20 +1294,6 @@ button.work-title {
 .visual-item--contain img {
   object-fit: contain;
   background-color: #ffffff;
-}
-
-.visual-item figcaption {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  color: #887f7a;
-  line-height: normal;
-}
-
-/* When no side visuals, main takes full width */
-.work-visuals:not(:has(.work-visual-side)) .work-visual-main,
-.work-visual-main:only-child {
-  flex: 1;
 }
 
 /* ===== RESPONSIVE — TABLET (1120px) ===== */
@@ -1280,6 +1401,9 @@ button.work-title {
 
   .work-entry > .work-meta {
     padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
   }
 
   .work-entry > .work-overview {
@@ -1290,27 +1414,9 @@ button.work-title {
     margin-top: 0;
   }
 
-  .work-visuals {
-    flex-direction: column;
-  }
-
-  .work-visual-main {
-    flex: none;
-    width: 100%;
-  }
-
-  .work-visual-side {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .visual-item {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .visual-item img {
-    height: 160px;
+  .carousel-arrow {
+    width: 30px;
+    height: 30px;
   }
 }
 
@@ -1379,9 +1485,6 @@ button.work-title {
     line-height: 1.4;
   }
 
-  .work-visual-side {
-    display: none;
-  }
 }
 
 /* ===== REDUCED MOTION ===== */
@@ -1398,9 +1501,12 @@ button.work-title {
   .work-title .title-text,
   .directory-toggle-icon,
   .directory-toggle-icon .icon-line,
-  .work-visual-main img,
-  .work-visual-main video,
-  .visual-item img {
+  .carousel-slide img,
+  .carousel-slide video,
+  .visual-item img,
+  .visual-item figcaption,
+  .carousel-dot,
+  .carousel-arrow {
     transition: none !important;
   }
 
