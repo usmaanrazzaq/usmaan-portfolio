@@ -84,10 +84,18 @@ window.addEventListener('load', function() {
     }
 });
 
+// Initialize scroll animations and interactive components
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof initScrollAnimations === 'function') initScrollAnimations();
+    if (typeof initImageCompare === 'function') initImageCompare();
+    if (typeof initStatCounters === 'function') initStatCounters();
+    if (typeof initAnnotatedImages === 'function') initAnnotatedImages();
+});
+
 // Directory scrolling functionality
 document.addEventListener('DOMContentLoaded', function() {
     console.log('=== DOM LOADED ===');
-    
+
     const directoryLinks = document.querySelectorAll('.directory-list a');
     const sections = document.querySelectorAll('.content-block');
     
