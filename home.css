@@ -1517,3 +1517,88 @@ button.work-title {
     transition-delay: 0s !important;
   }
 }
+
+
+/* ===== Chart Card (carousel slide) ===== */
+.chart-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.line-chart {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+}
+
+.chart-label {
+  font-family: inherit;
+  font-size: 11px;
+  fill: #999;
+  font-weight: 400;
+}
+
+.chart-caption {
+  font-family: inherit;
+  font-size: 12px;
+  fill: #999;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Animation: line draws in via stroke-dashoffset */
+.chart-line {
+  stroke-dasharray: var(--chart-length, 1000);
+  stroke-dashoffset: var(--chart-length, 1000);
+}
+
+.chart-card.chart-animated .chart-line {
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Area fades in */
+.chart-area {
+  opacity: 0;
+}
+
+.chart-card.chart-animated .chart-area {
+  opacity: 1;
+  transition: opacity 0.8s ease 0.4s;
+}
+
+/* Dots pop in staggered */
+.chart-dots circle {
+  transform: scale(0);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.chart-card.chart-animated .chart-dots circle {
+  transform: scale(1);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.chart-card.chart-animated .chart-dots circle:nth-child(1) { transition-delay: 0.15s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(2) { transition-delay: 0.35s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(3) { transition-delay: 0.55s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(4) { transition-delay: 0.75s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(5) { transition-delay: 0.95s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(6) { transition-delay: 1.15s; }
+.chart-card.chart-animated .chart-dots circle:nth-child(7) { transition-delay: 1.3s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-line {
+    stroke-dasharray: none;
+    stroke-dashoffset: 0;
+  }
+  .chart-area { opacity: 1; }
+  .chart-dots circle { transform: scale(1); }
+}

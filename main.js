@@ -160,6 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
 // ===== GSAP DEFAULTS =====
 if (typeof gsap !== 'undefined') {
   gsap.defaults({ duration: 0.3, ease: "expo.out" });
+  if (typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
 }
 
 // ===== HOVER EFFECTS (GSAP) =====
@@ -316,6 +319,21 @@ function initWorkDirectory() {
           deactivateEntryMedia(currentEntry);
           isSwitching = false;
         }, 320);
+
+        // Stagger-in meta groups on the new entry
+        if (typeof gsap !== 'undefined') {
+          var metaGroups = targetEntry.querySelectorAll('.meta-group');
+          if (metaGroups.length) {
+            gsap.from(metaGroups, {
+              opacity: 0,
+              y: 10,
+              duration: 0.45,
+              ease: 'expo.out',
+              stagger: 0.06,
+              delay: 0.1
+            });
+          }
+        }
       } else if (targetEntry) {
         workEntries.forEach(entry => {
           entry.classList.remove('active');
@@ -616,6 +634,15 @@ function initCarousels() {
       // Update arrows
       prevBtn.disabled = currentIndex === 0;
       nextBtn.disabled = currentIndex === slideCount - 1;
+
+      // Trigger chart animation if this slide has one
+      var activeSlide = slides[currentIndex];
+      if (activeSlide) {
+        var chart = activeSlide.querySelector('.chart-card');
+        if (chart && !chart.classList.contains('chart-animated')) {
+          initChartAnimation(chart);
+        }
+      }
     }
 
     // Arrow clicks
@@ -803,6 +830,77 @@ function initCaseStudyNav() {
   container.appendChild(nav);
 }
 
+// ===== CHART ANIMATION =====
+function initChartAnimation(chart) {
+  var line = chart.querySelector('.chart-line');
+  if (!line) return;
+
+  // Measure the polyline length and set the CSS variable
+  var length = line.getTotalLength();
+  line.style.setProperty('--chart-length', length);
+  line.style.strokeDasharray = length;
+  line.style.strokeDashoffset = length;
+
+  // Force reflow so the browser registers the initial state
+  chart.offsetHeight;
+
+  // Add animated class to trigger CSS transitions
+  chart.classList.add('chart-animated');
+}
+
+// ===== HOMEPAGE SCROLL ANIMATIONS =====
+function initHomeScrollAnimations() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var mm = gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)', function() {
+
+    // Hero entrance — staggered fade-in + slide-up
+    var heroCols = document.querySelectorAll('.hero-col');
+    if (heroCols.length) {
+      gsap.set(heroCols, { opacity: 0, y: 20 });
+      gsap.to(heroCols, {
+        opacity: 1,
+        y: 0,
+        duration: 0.7,
+        ease: 'expo.out',
+        stagger: 0.12,
+        delay: 0.15
+      });
+    }
+
+    // Work section scroll reveal
+    var workSection = document.querySelector('.work-section');
+    if (workSection) {
+      var workDirectory = workSection.querySelector('.work-directory');
+      var activeEntry = workSection.querySelector('.work-entry.active');
+
+      if (workDirectory) gsap.set(workDirectory, { opacity: 0, x: -20 });
+      if (activeEntry) gsap.set(activeEntry, { opacity: 0, y: 20 });
+
+      ScrollTrigger.create({
+        trigger: workSection,
+        start: 'top 85%',
+        once: true,
+        onEnter: function() {
+          if (workDirectory) {
+            gsap.to(workDirectory, { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' });
+          }
+          if (activeEntry) {
+            gsap.to(activeEntry, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', delay: 0.1 });
+          }
+        }
+      });
+    }
+
+    // Cleanup on SPA page swap
+    return function() {
+      ScrollTrigger.getAll().forEach(function(t) { t.kill(); });
+    };
+  });
+}
+
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   if (page === 'home') {
@@ -811,6 +909,8 @@ function initPageHooks(page) {
     initTimestamp();
     initLightbox();
     initCarousels();
+    initHomeScrollAnimations();
+    if (typeof initStatCounters === 'function') initStatCounters();
   } else if (page === 'about') {
     initDropdowns();
   }

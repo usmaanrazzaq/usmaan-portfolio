@@ -7,8 +7,9 @@
     <meta name="description" content="Portfolio of Usmaan Razzaq — Product Designer & Front-End Developer. Selected projects, case studies, and contact information.">
     <title>Usmaan Razzaq Portfolio</title>
     <link rel="stylesheet" href="styles.css?v=20260228">
-    <link rel="stylesheet" href="nav.css?v=20260216">
+    <link rel="stylesheet" href="nav.css?v=20260216"> 
     <link rel="stylesheet" href="home.css?v=20260402">
+    <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260228" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="projects/projects.css?v=8" media="print" onload="this.media='all'">
@@ -172,10 +173,62 @@
                         <a href="https://atfal-website.vercel.app/" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                     </div>
                 </div>
-                <div class="work-visuals carousel" data-carousel data-single>
+                <div class="work-visuals carousel" data-carousel>
                     <div class="carousel-track">
                         <div class="carousel-slide">
                             <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html" aria-label="View NMYA case study"><img src="images/CleanShot 2025-11-30 at 13.03.58@2x.webp" alt="National Muslim Youth Association website display" loading="lazy"></a>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="chart-card" data-chart="nmya-engagement">
+                                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
+                                    <!-- Gridlines -->
+                                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+
+                                    <!-- Y-axis labels -->
+                                    <text x="48" y="44" text-anchor="end" class="chart-label">+35%</text>
+                                    <text x="48" y="114" text-anchor="end" class="chart-label">+25%</text>
+                                    <text x="48" y="184" text-anchor="end" class="chart-label">+15%</text>
+                                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+
+                                    <!-- Gradient fill under line -->
+                                    <defs>
+                                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path class="chart-area" d="M80,240 L152,230 L224,205 L296,170 L368,110 L440,62 L490,48 L490,250 L80,250 Z" fill="url(#chartGradient)"/>
+
+                                    <!-- Line -->
+                                    <polyline class="chart-line" points="80,240 152,230 224,205 296,170 368,110 440,62 490,48" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+
+                                    <!-- Data points -->
+                                    <g class="chart-dots">
+                                        <circle cx="80" cy="240" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="152" cy="230" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="224" cy="205" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="296" cy="170" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                        <circle cx="490" cy="48" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                    </g>
+
+                                    <!-- X-axis labels -->
+                                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+
+                                    <!-- Caption -->
+                                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Engagement growth post-launch (2024)</text>
+                                </svg>
+                            </div>
                         </div>
                     </div>
                     <div class="carousel-dots" aria-label="Slide navigation"></div>
@@ -344,7 +397,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
-    <script src="main.js?v=20260402"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
+    <script src="shared/interactive-components.js"></script>
+    <script src="main.js?v=20260409"></script>
 </body>
 
 </html>
