@@ -1,0 +1,197 @@
+/* Interactive Ideation Board — view-only pan/zoom canvas */
+
+.ideation-board-wrapper {
+    margin: 1.5rem 0;
+}
+
+.ideation-board-wrapper figcaption {
+    font-size: 0.85rem;
+    color: #8d8383;
+    margin-top: 0.5rem;
+    text-align: center;
+}
+
+.ideation-board {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    background:
+        radial-gradient(circle, rgba(0, 0, 0, 0.08) 1px, transparent 1px) 0 0 / 24px 24px,
+        #f8f8f8;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.ideation-board:focus-visible {
+    outline: 2px solid #4d90fe;
+    outline-offset: 2px;
+}
+
+.ideation-board.is-panning {
+    cursor: grabbing;
+}
+
+.ideation-canvas {
+    position: absolute;
+    inset: 0;
+    transform-origin: 0 0;
+    will-change: transform;
+    transition: transform 0.12s ease-out;
+}
+
+.ideation-board.is-panning .ideation-canvas,
+.ideation-board.is-pinching .ideation-canvas {
+    transition: none;
+}
+
+/* Shared positioning for children via CSS custom props (--x, --y in px) */
+.ideation-sticky,
+.ideation-cluster,
+.ideation-image {
+    position: absolute;
+    left: calc(var(--x, 0) * 1px);
+    top: calc(var(--y, 0) * 1px);
+}
+
+/* Sticky notes */
+.ideation-sticky {
+    width: calc(var(--w, 160) * 1px);
+    min-height: 120px;
+    padding: 0.75rem 0.85rem;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: #2b2b2b;
+    background: #fff2a8;
+    box-shadow:
+        0 1px 2px rgba(0, 0, 0, 0.08),
+        0 6px 14px rgba(0, 0, 0, 0.08);
+    transform: rotate(calc(var(--rot, 0) * 1deg));
+    z-index: 2;
+    font-family: "Helvetica Neue", system-ui, sans-serif;
+    font-weight: 400;
+}
+
+.ideation-sticky--yellow { background: #fff2a8; }
+.ideation-sticky--pink   { background: #fbc7d4; }
+.ideation-sticky--blue   { background: #bfdcf5; }
+.ideation-sticky--green  { background: #c8ecc0; }
+
+/* Clusters — sit behind stickies */
+.ideation-cluster {
+    width: calc(var(--w, 320) * 1px);
+    height: calc(var(--h, 240) * 1px);
+    border: 2px dashed rgba(0, 0, 0, 0.35);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.3);
+    z-index: 1;
+}
+
+.ideation-cluster::before {
+    content: attr(data-label);
+    position: absolute;
+    top: -12px;
+    left: 12px;
+    padding: 2px 10px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: #2b2b2b;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+/* Embedded images */
+.ideation-image {
+    width: calc(var(--w, 240) * 1px);
+    height: auto;
+    background: #fff;
+    padding: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+    transform: rotate(calc(var(--rot, 0) * 1deg));
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* Controls */
+.ideation-board__controls {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    display: flex;
+    gap: 4px;
+    padding: 4px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+    z-index: 10;
+}
+
+.ideation-board__controls button {
+    width: 44px;
+    height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    color: #2b2b2b;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.ideation-board__controls button:hover {
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.ideation-board__controls button:focus-visible {
+    outline: 2px solid #4d90fe;
+    outline-offset: 1px;
+}
+
+/* Hint */
+.ideation-board__hint {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    margin: 0;
+    padding: 6px 10px;
+    font-size: 0.72rem;
+    color: #2b2b2b;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 999px;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 10;
+}
+
+.ideation-board.has-interacted .ideation-board__hint {
+    opacity: 0;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .ideation-canvas,
+    .ideation-board__hint {
+        transition: none;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .ideation-board {
+        aspect-ratio: 4 / 5;
+    }
+    .ideation-board__hint {
+        font-size: 0.68rem;
+    }
+}

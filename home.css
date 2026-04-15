@@ -22,9 +22,10 @@
 /* Status Bar */
 .status-bar {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: flex-start;
   gap: 10px;
+  justify-content: flex-end;
 }
 
 .availability-indicator {
@@ -33,7 +34,9 @@
   gap: 10px;
 }
 
-/* Dot-grid animation — 4×4 grid, wave pulse then forms icon */
+/* Dot-grid — 4×4 grid. Icon is always lit; a bright highlight
+   sweeps along the icon's stroke in order, like light traveling
+   along the shape. Non-icon dots stay faint + static. */
 .dot-grid {
   flex-shrink: 0;
   display: grid;
@@ -47,58 +50,64 @@
   height: 3px;
   border-radius: 50%;
   background-color: #22c55e;
-  opacity: 0.15;
-  animation: dot-bg 4s ease-in-out infinite;
+  opacity: 0.08;
+  transform: scale(0.9);
 }
 
-/* Checkmark icon dots: 8, 9, 11, 14
-   Grid layout:
-   .  .  .  .
-   .  .  .  ●
-   ●  .  ●  .
-   .  ●  .  .
-*/
+/* Available (default) — checkmark: dots 8, 9, 11, 14
+   Stroke order: 14 → 9 → 11 → 8 */
 .dot-grid .dot:nth-child(8),
 .dot-grid .dot:nth-child(9),
 .dot-grid .dot:nth-child(11),
 .dot-grid .dot:nth-child(14) {
-  animation-name: dot-icon;
+  opacity: 1;
+  transform: scale(1);
+  animation: dot-sweep 2.8s ease-in-out infinite;
 }
+.dot-grid .dot:nth-child(14) { animation-delay: 0s; }
+.dot-grid .dot:nth-child(9)  { animation-delay: 0.22s; }
+.dot-grid .dot:nth-child(11) { animation-delay: 0.44s; }
+.dot-grid .dot:nth-child(8)  { animation-delay: 0.66s; }
 
-/* Stagger the icon dots for a drawing effect */
-.dot-grid .dot:nth-child(14)  { animation-delay: 0s; }
-.dot-grid .dot:nth-child(9)   { animation-delay: 0.06s; }
-.dot-grid .dot:nth-child(11)  { animation-delay: 0.12s; }
-.dot-grid .dot:nth-child(8)   { animation-delay: 0.18s; }
+/* Limited — amber dash across row 3: dots 9, 10, 11, 12
+   Sweep left-to-right */
+.availability-indicator.limited .dot-grid .dot {
+  background-color: #f5a524;
+  opacity: 0.08;
+  transform: scale(0.9);
+  animation: none;
+}
+.availability-indicator.limited .dot-grid .dot:nth-child(9),
+.availability-indicator.limited .dot-grid .dot:nth-child(10),
+.availability-indicator.limited .dot-grid .dot:nth-child(11),
+.availability-indicator.limited .dot-grid .dot:nth-child(12) {
+  opacity: 1;
+  transform: scale(1);
+  animation: dot-sweep 2.8s ease-in-out infinite;
+}
+.availability-indicator.limited .dot-grid .dot:nth-child(9)  { animation-delay: 0s; }
+.availability-indicator.limited .dot-grid .dot:nth-child(10) { animation-delay: 0.22s; }
+.availability-indicator.limited .dot-grid .dot:nth-child(11) { animation-delay: 0.44s; }
+.availability-indicator.limited .dot-grid .dot:nth-child(12) { animation-delay: 0.66s; }
 
-/* Background dot wave delays */
-.dot-grid .dot:nth-child(6),
-.dot-grid .dot:nth-child(7),
-.dot-grid .dot:nth-child(10)  { animation-delay: 0s; }
-
-.dot-grid .dot:nth-child(2),
-.dot-grid .dot:nth-child(3),
-.dot-grid .dot:nth-child(5),
-.dot-grid .dot:nth-child(12),
-.dot-grid .dot:nth-child(15)  { animation-delay: 0.1s; }
-
-.dot-grid .dot:nth-child(1),
-.dot-grid .dot:nth-child(4),
-.dot-grid .dot:nth-child(13),
-.dot-grid .dot:nth-child(16)  { animation-delay: 0.2s; }
-
-/* Not available — red + X icon
-   X dots: 1, 4, 6, 7, 10, 11, 13, 16
-   ●  .  .  ●
-   .  ●  ●  .
-   .  ●  ●  .
-   ●  .  .  ●
-*/
+/* Booked — red X: dots 1, 4, 6, 7, 10, 11, 13, 16
+   Two diagonals sweeping together:
+   1 → 6 → 11 → 16   and   4 → 7 → 10 → 13 */
+.availability-indicator.booked .dot-grid .dot,
 .availability-indicator.not-available .dot-grid .dot {
   background-color: #ef4444;
-  animation-name: dot-bg;
+  opacity: 0.08;
+  transform: scale(0.9);
+  animation: none;
 }
-
+.availability-indicator.booked .dot-grid .dot:nth-child(1),
+.availability-indicator.booked .dot-grid .dot:nth-child(4),
+.availability-indicator.booked .dot-grid .dot:nth-child(6),
+.availability-indicator.booked .dot-grid .dot:nth-child(7),
+.availability-indicator.booked .dot-grid .dot:nth-child(10),
+.availability-indicator.booked .dot-grid .dot:nth-child(11),
+.availability-indicator.booked .dot-grid .dot:nth-child(13),
+.availability-indicator.booked .dot-grid .dot:nth-child(16),
 .availability-indicator.not-available .dot-grid .dot:nth-child(1),
 .availability-indicator.not-available .dot-grid .dot:nth-child(4),
 .availability-indicator.not-available .dot-grid .dot:nth-child(6),
@@ -107,52 +116,35 @@
 .availability-indicator.not-available .dot-grid .dot:nth-child(11),
 .availability-indicator.not-available .dot-grid .dot:nth-child(13),
 .availability-indicator.not-available .dot-grid .dot:nth-child(16) {
-  animation-name: dot-icon;
+  opacity: 1;
+  transform: scale(1);
+  animation: dot-sweep 2.8s ease-in-out infinite;
+}
+.availability-indicator.booked .dot-grid .dot:nth-child(1),
+.availability-indicator.booked .dot-grid .dot:nth-child(4)  { animation-delay: 0s; }
+.availability-indicator.booked .dot-grid .dot:nth-child(6),
+.availability-indicator.booked .dot-grid .dot:nth-child(7)  { animation-delay: 0.22s; }
+.availability-indicator.booked .dot-grid .dot:nth-child(11),
+.availability-indicator.booked .dot-grid .dot:nth-child(10) { animation-delay: 0.44s; }
+.availability-indicator.booked .dot-grid .dot:nth-child(16),
+.availability-indicator.booked .dot-grid .dot:nth-child(13) { animation-delay: 0.66s; }
+
+/* Highlight pulse — brief bright, then back to lit-but-calm */
+@keyframes dot-sweep {
+  0%, 40%, 100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+  15% {
+    transform: scale(1.35);
+    filter: brightness(1.5);
+  }
 }
 
-/* Background dots: pulse gently, dim during icon phase */
-@keyframes dot-bg {
-  0%, 40% {
-    opacity: 0.15;
-    transform: scale(0.85);
-  }
-  20% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  /* Dim during icon reveal */
-  55%, 75% {
-    opacity: 0.08;
-    transform: scale(0.7);
-  }
-  90%, 100% {
-    opacity: 0.15;
-    transform: scale(0.85);
-  }
-}
-
-/* Icon dots: pulse then brighten to form the shape */
-@keyframes dot-icon {
-  0%, 40% {
-    opacity: 0.15;
-    transform: scale(0.85);
-  }
-  20% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  /* Icon reveal */
-  55% {
-    opacity: 1;
-    transform: scale(1.3);
-  }
-  65%, 75% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-  90%, 100% {
-    opacity: 0.15;
-    transform: scale(0.85);
+/* Accessibility: honour reduced-motion — no sweep, icon stays lit */
+@media (prefers-reduced-motion: reduce) {
+  .dot-grid .dot {
+    animation: none !important;
   }
 }
 
@@ -201,7 +193,25 @@
 /* Timestamp digit animation */
 .timestamp {
   display: inline-flex;
-  overflow: hidden;
+  overflow: visible;
+  line-height: 0;
+}
+
+/* Braun AB1 analog clock */
+.braun-clock {
+  width: 56px;
+  height: 56px;
+  display: block;
+}
+
+.clock-hand {
+  transform-box: view-box;
+  transform-origin: 50px 50px;
+  transition: transform 0.15s cubic-bezier(0.4, 2.3, 0.6, 1);
+}
+
+.clock-hand.hand-sec {
+  transition: transform 0.12s cubic-bezier(0.4, 2.5, 0.55, 1);
 }
 
 .time-char {
@@ -650,6 +660,11 @@ a.work-link:hover .link-arrow {
     font-size: 11px;
   }
 
+  .braun-clock {
+    width: 44px;
+    height: 44px;
+  }
+
   .availability-text {
     font-size: 13px;
   }
@@ -824,7 +839,8 @@ a.work-link:hover .link-arrow {
 
 .status-bar {
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
   gap: 10px;
   padding: 0;
 }
