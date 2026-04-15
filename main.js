@@ -401,96 +401,49 @@ function initTimestamp() {
   const availabilityIndicator = document.querySelector('.availability-indicator');
   const availabilityText = document.getElementById('availability-text');
 
-  const isAvailable = true;
+  // Availability config — single source of truth.
+  // status: 'available' | 'limited' | 'booked'
+  // bookedThrough: month name, used only when status === 'booked'
+  const availability = {
+    status: 'available',
+    bookedThrough: 'April',
+  };
 
   if (availabilityIndicator && availabilityText) {
-    if (isAvailable) {
-      availabilityIndicator.classList.remove('not-available');
-      availabilityText.textContent = 'Available for work';
+    availabilityIndicator.classList.remove('limited', 'booked', 'not-available');
+
+    if (availability.status === 'limited') {
+      availabilityIndicator.classList.add('limited');
+      availabilityText.textContent = 'Limited availability';
+    } else if (availability.status === 'booked') {
+      availabilityIndicator.classList.add('booked');
+      availabilityText.textContent = `Booked through ${availability.bookedThrough}`;
     } else {
-      availabilityIndicator.classList.add('not-available');
-      availabilityText.textContent = 'Not available for work';
+      availabilityText.textContent = 'Available for work';
     }
   }
 
-  // Wrap timestamp in hover container + add detail label
-  var detail = null;
-  if (timeElement && timeElement.parentNode) {
-    var wrapper = document.createElement('div');
-    wrapper.className = 'timestamp-wrapper';
-    timeElement.parentNode.insertBefore(wrapper, timeElement);
-    wrapper.appendChild(timeElement);
-
-    detail = document.createElement('span');
-    detail.className = 'timestamp-detail';
-    wrapper.appendChild(detail);
-
-    // Set initial detail text
-    var now = new Date();
-    var dateFmt = new Intl.DateTimeFormat('en-US', {
-      month: 'short', day: 'numeric', year: 'numeric',
-      timeZone: 'America/New_York'
-    });
-    detail.textContent = dateFmt.format(now) + ' \u00B7 Eastern Time';
-  }
-
-  let prevTimeString = '';
+  const hourHands = document.querySelectorAll('.braun-clock .hand-hour');
+  const minHands = document.querySelectorAll('.braun-clock .hand-min');
+  const secHands = document.querySelectorAll('.braun-clock .hand-sec');
 
   function updateESTTime() {
-    if (!timeElement) return;
-    const now = new Date();
-    const options = {
-      hour: 'numeric',
-      minute: '2-digit',
-      second: '2-digit',
-      hour12: true,
-      timeZone: 'America/New_York'
-    };
-    const formatter = new Intl.DateTimeFormat('en-US', options);
-    const timeString = formatter.format(now).toLowerCase();
-
-    if (timeString === prevTimeString) return;
-
-    // First render — just set the text with spans
-    if (!prevTimeString) {
-      timeElement.innerHTML = timeString.split('').map(function(ch) {
-        return '<span class="time-char">' + ch + '</span>';
-      }).join('');
-      prevTimeString = timeString;
-      return;
+    const parts = new Intl.DateTimeFormat('en-US', {
+      hour: 'numeric', minute: '2-digit', second: '2-digit',
+      hour12: false, timeZone: 'America/New_York'
+    }).formatToParts(new Date());
+    let h = 0, m = 0, s = 0;
+    for (const p of parts) {
+      if (p.type === 'hour') h = parseInt(p.value, 10) % 24;
+      else if (p.type === 'minute') m = parseInt(p.value, 10);
+      else if (p.type === 'second') s = parseInt(p.value, 10);
     }
-
-    // Animate changed characters
-    var chars = timeElement.querySelectorAll('.time-char');
-    var newChars = timeString.split('');
-
-    // Handle length change (e.g. 9:59 → 10:00)
-    if (newChars.length !== chars.length) {
-      timeElement.innerHTML = newChars.map(function(ch) {
-        return '<span class="time-char time-char-in">' + ch + '</span>';
-      }).join('');
-      prevTimeString = timeString;
-      return;
-    }
-
-    for (var i = 0; i < newChars.length; i++) {
-      if (chars[i] && chars[i].textContent !== newChars[i]) {
-        var span = chars[i];
-        span.classList.add('time-char-out');
-        (function(s, newCh) {
-          setTimeout(function() {
-            s.textContent = newCh;
-            s.classList.remove('time-char-out');
-            s.classList.add('time-char-in');
-            setTimeout(function() {
-              s.classList.remove('time-char-in');
-            }, 700);
-          }, 350);
-        })(span, newChars[i]);
-      }
-    }
-
-    prevTimeString = timeString;
+    const secDeg = s * 6;
+    const minDeg = m * 6 + s * 0.1;
+    const hourDeg = (h % 12) * 30 + m * 0.5;
+    hourHands.forEach(function(el) { el.style.transform = 'rotate(' + hourDeg + 'deg)'; });
+    minHands.forEach(function(el) { el.style.transform = 'rotate(' + minDeg + 'deg)'; });
+    secHands.forEach(function(el) { el.style.transform = 'rotate(' + secDeg + 'deg)'; });
   }
 
   updateESTTime();

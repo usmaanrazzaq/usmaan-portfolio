@@ -7,6 +7,7 @@
     <title>Rented - Case Study</title>
     <link rel="stylesheet" href="case-study-styles.css">
     <link rel="stylesheet" href="../../shared/interactive-components.css">
+    <link rel="stylesheet" href="../../shared/ideation-board.css">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
 
     <link rel="icon" href="../../Favicon.png" sizes="48x48">
@@ -24,7 +25,7 @@
                     <h1>Rented</h1>
                 </div>
                 <div class="project-subtitle">
-                    <h2>UI Design and Prototyping a mobile app</h2>
+                    <h2>Mobile UI design & prototype</h2>
                 </div>
                 <div class="project-tags">
                     <div class="project-crumbs">
@@ -33,7 +34,7 @@
                         <span class="crumb">Mobile App</span>
                     </div>
                     <div class="timeline">
-                        <span>Nov 2024 - Dec 2024</span>
+                        <span>Nov 2024 - May 2025</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +72,7 @@
                             <h3>What is Rented?</h3>
                         </div>
                         <div class="section-content">
-                            <p>Rented is a peer-to-peer rental platform for urban renters who need everyday items without the cost and clutter of ownership. I designed the full mobile experience over 6 months — from onboarding through browsing, renting, and listing.</p>
+                            <p>Peer-to-peer rentals for tools and everyday gear—without buying stuff you use once. I designed the mobile app end-to-end: onboarding, browse, rent, and list.</p>
                         </div>
                     </section>
 
@@ -82,11 +83,11 @@
                                 <h2>Problem</h2>
                             </div>
                             <div class="section-content">
-                                <p>People regularly pay full price for tools, equipment, and everyday items they'll only use once or twice — a problem that's worse for urban renters with limited storage who can't justify owning things they rarely need. Existing rental options are either industrial (Home Depot, Sunbelt) or buried in marketplace noise (Facebook, Craigslist) with no trust layer. Rented set out to build a peer-to-peer rental platform that makes borrowing from your community as simple and safe as buying online — while reducing the waste of single-use ownership.</p>
+                                <p>People buy tools and household items for one-off jobs, then store them—especially painful in small apartments. Store rental is heavy; classifieds are messy and low-trust. Rented aimed to make borrowing from neighbors feel as simple as shopping online.</p>
                                 <div class="section-header">
                                     <h3>My Role</h3>
                                 </div>
-                                <p>I was brought on as the sole designer to create Rented's mobile experience from the ground up — defining the onboarding flow, home and explore experience, product pages, and user profiles. My biggest design challenge was creating a browsing experience that felt clear and navigable across wildly diverse item categories, from power tools to camping gear to kitchen appliances.</p>
+                                <p>Sole designer from scratch: onboarding, home/explore, product pages, and profiles. The hardest problem was browse and discovery that stayed legible across unrelated categories—from drills to tents.</p>
                             </div>
                         </div>
                     </section>
@@ -101,7 +102,7 @@
                                 <div class="section-header">
                                     <h3>Research & Inspiration</h3>
                                 </div>
-                                <p>Before opening Figma, I spent time studying how existing rental and marketplace platforms handle the core experience. I looked at apps like Hygglo, Facebook Marketplace, Craigslist, OfferUp, and Yoodlize — paying attention to how they onboard new users, structure browsing across diverse item categories, and build trust between strangers transacting for the first time. A few patterns stood out: most platforms front-load heavy registration forms that kill momentum, and almost none handle the renter-to-lister duality well — you're either buying or selling, never both in the same flow. These gaps directly shaped my approach for Rented.</p>
+                                <p>I audited rental and marketplace apps (Hygglo, Facebook Marketplace, Craigslist, OfferUp, Yoodlize) for onboarding, catalog structure, and first-time stranger trust. Most bury you in signup; few treat the same person as both renter and lister. Those gaps drove Rented's approach.</p>
                                 <div class="expandable-image" onclick="openLightbox(this)">
                                     <img src="../../images/Competitive-Analysis.png" alt="Rented Competitive Analysis" />
                                     <span class="expand-hint">Click to expand</span>
@@ -109,16 +110,112 @@
                                 <div class="section-header">
                                     <h3>Information Architecture</h3>
                                 </div>
-                                <p>Rented has a two-sided problem: the same user might browse for a drill on Monday and list their camping gear on Tuesday. I mapped out the core user flows — onboarding, browsing and renting an item, and listing a belonging — to make sure the app's structure supported both modes without forcing users to context-switch. The onboarding flow was deliberately lightweight: connect with an existing email account, no lengthy registration forms. The goal was to reduce friction to the point where someone could go from download to browsing in under a minute.</p>
+                                <p>Same user might rent Monday and list Tuesday. I mapped onboarding, rent, and list so the IA supported both without awkward mode switches. Onboarding stays light—email connect, no long forms—so download to browse stays under about a minute.</p>
                                 <div class="section-header">
                                     <h3>Exploration</h3>
                                 </div>
-                                <p>With the flows defined, I moved into wireframing in Figma, exploring multiple layout directions for each key screen. The homepage was the hardest call — I explored a category-grid approach (like eBay), a feed-based layout (like Facebook Marketplace), and a minimal focused landing (inspired by ChatGPT's calm entry point). I went with the minimal direction because Rented's catalog was still growing, and a sparse layout would feel intentional rather than empty. A grid full of half-populated categories would have undermined trust in a new platform.</p>
-                                <p>For the profile page, I referenced selling platforms like eBay and Grailed alongside social profiles like Instagram — the engineering team wanted follower/following data to encourage community, so I needed to balance marketplace utility with social familiarity. I landed on a tab navigation system with three sections to separate available items, currently rented items, and activity — keeping the layout clean while accommodating both sides of the platform.</p>
+                                <p>In Figma I tried category grids, feeds, and a minimal home. With a thin catalog, minimal read as calm—not half-empty grids that erode trust. Profiles mixed marketplace utility (eBay, Grailed) with social familiarity (Instagram) for engineering's follow model: tabs for available, out on rent, and activity.</p>
+
+                                <figure class="ideation-board-wrapper">
+                                    <div class="ideation-board" data-ideation-board role="region"
+                                        aria-label="Ideation board, pan and zoom to explore" tabindex="0">
+                                        <div class="ideation-canvas">
+
+                                            <!-- Cluster: Onboarding -->
+                                            <div class="ideation-cluster" data-label="Onboarding"
+                                                style="--x:40;--y:40;--w:440;--h:360"></div>
+                                            <div class="ideation-sticky ideation-sticky--yellow"
+                                                style="--x:80;--y:90;--w:170;--rot:-2">
+                                                Email connect — no long forms
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--yellow"
+                                                style="--x:280;--y:110;--w:170;--rot:1.5">
+                                                Defer ID upload until first rental is shortlisted
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--yellow"
+                                                style="--x:90;--y:240;--w:170;--rot:1">
+                                                Download → browse in under a minute
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--pink"
+                                                style="--x:290;--y:260;--w:160;--rot:-1.5">
+                                                Same user rents Monday, lists Tuesday — no mode switch
+                                            </div>
+
+                                            <!-- Cluster: Browse & Discovery -->
+                                            <div class="ideation-cluster" data-label="Browse & Discovery"
+                                                style="--x:520;--y:40;--w:500;--h:400"></div>
+                                            <div class="ideation-sticky ideation-sticky--blue"
+                                                style="--x:560;--y:90;--w:180;--rot:-1">
+                                                Drills next to tents — how do you keep it legible?
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--blue"
+                                                style="--x:770;--y:110;--w:170;--rot:2">
+                                                Grid vs. feed vs. minimal home
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--blue"
+                                                style="--x:560;--y:240;--w:170;--rot:1.5">
+                                                Thin catalog → minimal reads as calm, not empty
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--green"
+                                                style="--x:770;--y:260;--w:180;--rot:-2">
+                                                Filter + sort for mixed-category inventory
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--pink"
+                                                style="--x:660;--y:380;--w:170;--rot:0.5">
+                                                Half-empty grids erode trust
+                                            </div>
+
+                                            <!-- Cluster: Trust & Profiles -->
+                                            <div class="ideation-cluster" data-label="Trust & Profiles"
+                                                style="--x:60;--y:460;--w:500;--h:340"></div>
+                                            <div class="ideation-sticky ideation-sticky--green"
+                                                style="--x:100;--y:510;--w:180;--rot:-1.5">
+                                                Marketplace utility (eBay, Grailed) + social familiarity (IG)
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--green"
+                                                style="--x:310;--y:530;--w:170;--rot:2">
+                                                Profile tabs: Available · Out on rent · Activity
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--pink"
+                                                style="--x:120;--y:660;--w:170;--rot:1">
+                                                Stranger-to-stranger needs ratings + verification
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--yellow"
+                                                style="--x:320;--y:680;--w:170;--rot:-2">
+                                                Follow model borrowed from engineering
+                                            </div>
+
+                                            <!-- Cluster: Prototyping -->
+                                            <div class="ideation-cluster" data-label="Prototyping"
+                                                style="--x:600;--y:480;--w:420;--h:300"></div>
+                                            <div class="ideation-sticky ideation-sticky--blue"
+                                                style="--x:640;--y:530;--w:170;--rot:1">
+                                                Play 2 prototype — runs on real devices
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--blue"
+                                                style="--x:830;--y:550;--w:170;--rot:-1.5">
+                                                Working fields to stress-test onboarding
+                                            </div>
+                                            <div class="ideation-sticky ideation-sticky--pink"
+                                                style="--x:700;--y:670;--w:190;--rot:2">
+                                                Phone testing surfaced spacing + tap targets Figma hid
+                                            </div>
+                                        </div>
+
+                                        <p class="ideation-board__hint">Drag to pan · Scroll to zoom</p>
+                                        <div class="ideation-board__controls">
+                                            <button type="button" data-zoom-in aria-label="Zoom in">+</button>
+                                            <button type="button" data-zoom-out aria-label="Zoom out">−</button>
+                                            <button type="button" data-zoom-reset aria-label="Reset view">⟲</button>
+                                        </div>
+                                    </div>
+                                    <figcaption>Clustered ideation from the Rented exploration phase — pan and zoom to explore.</figcaption>
+                                </figure>
+
                                 <div class="section-header">
                                     <h3>Prototyping & Testing</h3>
                                 </div>
-                                <p>Once the final interface was approved, I built a functional prototype using Play 2, which let me test the app directly on my phone throughout development. This wasn't just for presentation — Play 2 supported functional input fields, so both the engineering team and I could enter real emails and passwords to stress-test the onboarding flow on-device. Testing on an actual phone screen surfaced spacing and touch-target issues that weren't visible in Figma, and I iterated on several screens based on what felt off in-hand versus on-screen.</p>
+                                <p>I shipped a Play 2 prototype runnable on real devices, with working fields so we could stress-test onboarding. Phone testing surfaced spacing and tap targets Figma didn't show; I iterated from what felt wrong in-hand.</p>
                             </div>
                         </div>
                     </section>
@@ -130,17 +227,16 @@
                                 <h2>Outcome & Reflection</h2>
                             </div>
                             <div class="section-content">
-                                <p>After 6 months of designing, prototyping, and iterating alongside the engineering team, I delivered the final designs and a fully functional prototype. The handoff included the complete design system, annotated screens for all core flows, and interactive prototype links the team could test on their own devices.</p>
-                                <p>The engineering team was aligned on the direction — the onboarding flow, profile structure, and product pages all held up through review. The main feedback centered on the explore page, where the team wanted a simpler layout to better surface available products, and the addition of filter and sort functionality to help users navigate across diverse item categories. That feedback validated a tension I'd felt throughout the project: designing a browsing experience for a platform where the inventory ranges from power drills to camping tents is a fundamentally different problem than a single-category marketplace.
-                                </p>
-                                <p>The app is currently on hold as the engineering team shifted focus to other priorities. While I didn't get to see Rented ship, the project sharpened how I think about designing two-sided platforms, structuring flows for diverse content types, and working within the constraints of a small team on a tight timeline.</p>
+                                <p>Handoff: design system, annotated core flows, and an interactive prototype the team could run on their own phones.</p>
+                                <p>We aligned on onboarding, profiles, and PDPs. The main ask was a simpler explore plus filter/sort for mixed inventory—which matched the tension I'd felt: multi-category browse is not a single-category shop.</p>
+                                <p>Build paused when engineering reprioritized. The work still sharpened how I think about two-sided flows, heterogeneous catalogs, and small-team delivery.</p>
                                 <div class="section-header">
                                     <h3>If I had more time, I would:</h3>
                                     <ul>
-                                        <li>Run usability tests with 5-8 target users to validate the browsing and onboarding flows before handoff.</li>
-                                        <li>Explore the filter and sort patterns more deeply - the explore page needed more iteration and I'd want to test multiple approaches.</li>
-                                        <li>Build out the trust layer (ratings, verification, transaction history) that a peer-to-peer platform needs to feel safe at scale.</li>
-                                        <li>Design the lister-side experience with the same depth as the renter side - listing an item should feel just as effortless as renting one.</li>
+                                        <li>Usability-test browse and onboarding with 5–8 target users pre-handoff.</li>
+                                        <li>Push explore further: filters, sorts, and tested layout variants.</li>
+                                        <li>Add trust signals—ratings, verification, transaction history—for stranger-to-stranger scale.</li>
+                                        <li>Bring the lister path up to the same polish as renting.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -160,6 +256,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="../../shared/scroll-animations.js"></script>
     <script src="../../shared/interactive-components.js"></script>
+    <script src="../../shared/ideation-board.js"></script>
     <script src="case-study-script.js"></script>
     <script src="../../main.js?v=20260409"></script>
 </body>
