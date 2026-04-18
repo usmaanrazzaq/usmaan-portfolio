@@ -336,11 +336,18 @@
   color: #736b66;
 }
 
-/* Hero Divider — uniform blurred band with cool tint + grain */
+/* Hero Divider — sticky uniform blurred band with cool tint + grain
+   (sticky so the work section scrolls underneath and the blur has
+   something to blur; no progressive gradient mask). */
+.new-homepage {
+  --hero-divider-nav-offset: calc(env(safe-area-inset-top, 0px) + 3.75rem);
+}
+
 .hero-divider {
-  position: relative;
+  position: sticky;
+  top: var(--hero-divider-nav-offset);
   width: 100%;
-  height: 22px;
+  height: 28px;
   margin: 0;
   z-index: 200;
   isolation: isolate;
