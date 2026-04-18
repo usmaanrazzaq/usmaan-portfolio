@@ -336,57 +336,71 @@
   color: #736b66;
 }
 
-/* Hero Divider — progressive backdrop blur strip (sticky below nav) */
-.new-homepage {
-  --hero-divider-nav-offset: calc(env(safe-area-inset-top, 0px) + 3.75rem);
-}
-
+/* Hero Divider — uniform blurred band with cool tint + grain */
 .hero-divider {
-  position: sticky;
-  top: var(--hero-divider-nav-offset);
+  position: relative;
   width: 100%;
-  height: 80px;
+  height: 22px;
   margin: 0;
   z-index: 200;
   isolation: isolate;
   pointer-events: none;
+  overflow: hidden;
 }
 
 .hero-divider-blur {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  min-height: 64px;
-  -webkit-backdrop-filter: blur(18px) saturate(160%);
-  backdrop-filter: blur(18px) saturate(160%);
-  -webkit-mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.35) 35%,
-    rgba(0, 0, 0, 0.85) 72%,
-    rgba(0, 0, 0, 1) 100%
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+}
+
+/* Subtle blue-violet wash (under grain) */
+.hero-divider-blur::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(214, 232, 255, 0.38) 0%,
+    rgba(200, 218, 248, 0.45) 50%,
+    rgba(210, 228, 255, 0.38) 100%
   );
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.35) 35%,
-    rgba(0, 0, 0, 0.85) 72%,
-    rgba(0, 0, 0, 1) 100%
-  );
-  -webkit-mask-size: 100% 100%;
-  mask-size: 100% 100%;
+  pointer-events: none;
+}
+
+/* Film grain (SVG feTurbulence tile) */
+.hero-divider-blur::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0.14;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='128' height='128'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+  mix-blend-mode: soft-light;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .hero-divider-blur {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
+    background: rgba(232, 240, 252, 0.92);
+  }
+
+  .hero-divider-blur::after {
+    opacity: 0.06;
+  }
+
+  .hero-divider-blur::before {
     background: linear-gradient(
-      to bottom,
-      rgba(255, 255, 255, 0) 0%,
-      rgba(245, 245, 245, 0.65) 100%
+      90deg,
+      rgba(220, 234, 252, 0.85) 0%,
+      rgba(208, 226, 248, 0.92) 50%,
+      rgba(220, 234, 252, 0.85) 100%
     );
-    -webkit-mask-image: none;
-    mask-image: none;
   }
 }
 
