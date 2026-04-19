@@ -397,7 +397,6 @@ function initDropdowns() {
 }
 
 function initTimestamp() {
-  const timeElement = document.getElementById('est-time');
   const availabilityIndicator = document.querySelector('.availability-indicator');
   const availabilityText = document.getElementById('availability-text');
 
@@ -422,32 +421,6 @@ function initTimestamp() {
       availabilityText.textContent = 'Available for work';
     }
   }
-
-  const hourHands = document.querySelectorAll('.braun-clock .hand-hour');
-  const minHands = document.querySelectorAll('.braun-clock .hand-min');
-  const secHands = document.querySelectorAll('.braun-clock .hand-sec');
-
-  function updateESTTime() {
-    const parts = new Intl.DateTimeFormat('en-US', {
-      hour: 'numeric', minute: '2-digit', second: '2-digit',
-      hour12: false, timeZone: 'America/New_York'
-    }).formatToParts(new Date());
-    let h = 0, m = 0, s = 0;
-    for (const p of parts) {
-      if (p.type === 'hour') h = parseInt(p.value, 10) % 24;
-      else if (p.type === 'minute') m = parseInt(p.value, 10);
-      else if (p.type === 'second') s = parseInt(p.value, 10);
-    }
-    const secDeg = s * 6;
-    const minDeg = m * 6 + s * 0.1;
-    const hourDeg = (h % 12) * 30 + m * 0.5;
-    hourHands.forEach(function(el) { el.style.transform = 'rotate(' + hourDeg + 'deg)'; });
-    minHands.forEach(function(el) { el.style.transform = 'rotate(' + minDeg + 'deg)'; });
-    secHands.forEach(function(el) { el.style.transform = 'rotate(' + secDeg + 'deg)'; });
-  }
-
-  updateESTTime();
-  setInterval(updateESTTime, 1000);
 }
 
 // ===== IMAGE LIGHTBOX =====
@@ -818,7 +791,8 @@ function initHomeScrollAnimations() {
         y: 0,
         duration: 0.7,
         ease: 'expo.out',
-        stagger: 0.12,
+        /* Keep columns in vertical sync (status + Connect share one baseline) */
+        stagger: 0,
         delay: 0.15
       });
     }

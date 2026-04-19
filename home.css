@@ -11,7 +11,8 @@
   display: grid;
   grid-template-columns: 3fr 2fr 3fr;
   gap: 0;
-  align-items: start;
+  /* Align first text line with Connect label (avoids extra gap above availability) */
+  align-items: baseline;
 }
 
 .hero-col {
@@ -22,10 +23,10 @@
 /* Status Bar */
 .status-bar {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   align-items: flex-start;
-  gap: 10px;
-  justify-content: flex-end;
+  gap: 0;
+  justify-content: flex-start;
 }
 
 .availability-indicator {
@@ -149,7 +150,6 @@
 }
 
 .availability-text,
-.timestamp,
 .hero-contact-label {
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 16px;
@@ -187,56 +187,6 @@
     max-height: 24px;
     opacity: 1;
     margin-top: 4px;
-  }
-}
-
-/* Timestamp digit animation */
-.timestamp {
-  display: inline-flex;
-  align-items: center;
-  overflow: visible;
-  line-height: 1;
-}
-
-.braun-clock {
-  width: 56px;
-  height: 56px;
-  display: block;
-}
-
-.clock-hand {
-  transform-box: view-box;
-  transform-origin: 50px 50px;
-  transition: transform 0.15s cubic-bezier(0.4, 2.3, 0.6, 1);
-}
-
-.clock-hand.hand-sec {
-  transition: transform 0.12s cubic-bezier(0.4, 2.5, 0.55, 1);
-}
-
-.time-char {
-  display: inline-block;
-  transition: filter 0.35s var(--ease-out-expo),
-              opacity 0.35s var(--ease-out-expo);
-}
-
-.time-char-out {
-  filter: blur(4px);
-  opacity: 0;
-}
-
-.time-char-in {
-  animation: char-blur-in 0.7s var(--ease-out-expo);
-}
-
-@keyframes char-blur-in {
-  from {
-    filter: blur(4px);
-    opacity: 0;
-  }
-  to {
-    filter: blur(0);
-    opacity: 1;
   }
 }
 
@@ -656,15 +606,6 @@ a.work-link:hover .link-arrow {
     gap: 12px;
   }
 
-  .timestamp {
-    font-size: 11px;
-  }
-
-  .braun-clock {
-    width: 44px;
-    height: 44px;
-  }
-
   .availability-text {
     font-size: 13px;
   }
@@ -823,7 +764,7 @@ a.work-link:hover .link-arrow {
   display: grid;
   grid-template-columns: 3fr 2fr 3fr;
   gap: 30px 0;
-  align-items: start;
+  align-items: baseline;
 }
 
 .hero-col {
@@ -839,9 +780,9 @@ a.work-link:hover .link-arrow {
 
 .status-bar {
   display: flex;
-  flex-direction: column-reverse;
-  justify-content: flex-end;
-  gap: 10px;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0;
   padding: 0;
 }
 
@@ -1465,7 +1406,6 @@ button.work-title {
   }
 
   .availability-text,
-  .timestamp,
   .hero-contact-label,
   .hero-bio-text p {
     font-size: 14px;
