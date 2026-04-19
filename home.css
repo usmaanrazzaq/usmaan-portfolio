@@ -193,11 +193,11 @@
 /* Timestamp digit animation */
 .timestamp {
   display: inline-flex;
+  align-items: center;
   overflow: visible;
-  line-height: 0;
+  line-height: 1;
 }
 
-/* Braun AB1 analog clock */
 .braun-clock {
   width: 56px;
   height: 56px;
