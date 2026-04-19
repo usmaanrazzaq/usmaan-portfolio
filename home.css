@@ -21,6 +21,48 @@
 }
 
 /* Status Bar */
+/* Location & Time */
+.location-time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: var(--color-secondary, #999);
+  margin-top: 6px;
+}
+
+.location-city {
+  white-space: nowrap;
+}
+
+.location-separator {
+  opacity: 0.4;
+}
+
+.local-time {
+  font-variant-numeric: tabular-nums;
+  display: inline-flex;
+  overflow: hidden;
+}
+
+.local-time .time-digit {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.local-time .time-digit.changing {
+  animation: digit-roll 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes digit-roll {
+  0% { transform: translateY(0); opacity: 1; }
+  40% { transform: translateY(-60%); opacity: 0; }
+  41% { transform: translateY(60%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
 .status-bar {
   display: flex;
   flex-direction: column;

@@ -423,6 +423,39 @@ function initTimestamp() {
   }
 }
 
+// ===== LOCAL TIME =====
+function initLocalTime() {
+  const el = document.getElementById('local-time');
+  if (!el) return;
+
+  let prev = '';
+
+  function update() {
+    const now = new Date().toLocaleTimeString('en-US', {
+      timeZone: 'America/New_York',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    });
+
+    if (now === prev) return;
+
+    const chars = now.split('');
+    const prevChars = prev.split('');
+
+    el.innerHTML = chars.map(function(ch, i) {
+      const changed = prevChars[i] !== ch && prev !== '';
+      return '<span class="time-digit' + (changed ? ' changing' : '') + '">' + ch + '</span>';
+    }).join('');
+
+    prev = now;
+  }
+
+  update();
+  setInterval(update, 1000);
+}
+
 // ===== IMAGE LIGHTBOX =====
 function initLightbox() {
   const overlay = document.getElementById('lightbox');
@@ -834,6 +867,7 @@ function initPageHooks(page) {
     initHomeTabs();
     initWorkDirectory();
     initTimestamp();
+    initLocalTime();
     initLightbox();
     initCarousels();
     initHomeScrollAnimations();
@@ -1045,6 +1079,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('spa-content')) return;
   initTimestamp();
+  initLocalTime();
 });
 
 // Case Study Navigation - only on non-SPA pages
