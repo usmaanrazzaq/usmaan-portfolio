@@ -11,7 +11,8 @@
   display: grid;
   grid-template-columns: 3fr 2fr 3fr;
   gap: 0;
-  align-items: start;
+  /* Align first text line with Connect label (avoids extra gap above availability) */
+  align-items: baseline;
 }
 
 .hero-col {
@@ -763,7 +764,7 @@ a.work-link:hover .link-arrow {
   display: grid;
   grid-template-columns: 3fr 2fr 3fr;
   gap: 30px 0;
-  align-items: start;
+  align-items: baseline;
 }
 
 .hero-col {

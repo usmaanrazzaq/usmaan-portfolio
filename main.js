@@ -791,7 +791,8 @@ function initHomeScrollAnimations() {
         y: 0,
         duration: 0.7,
         ease: 'expo.out',
-        stagger: 0.12,
+        /* Keep columns in vertical sync (status + Connect share one baseline) */
+        stagger: 0,
         delay: 0.15
       });
     }
