@@ -397,30 +397,7 @@ function initDropdowns() {
 }
 
 function initTimestamp() {
-  const availabilityIndicator = document.querySelector('.availability-indicator');
-  const availabilityText = document.getElementById('availability-text');
-
-  // Availability config — single source of truth.
-  // status: 'available' | 'limited' | 'booked'
-  // bookedThrough: month name, used only when status === 'booked'
-  const availability = {
-    status: 'available',
-    bookedThrough: 'April',
-  };
-
-  if (availabilityIndicator && availabilityText) {
-    availabilityIndicator.classList.remove('limited', 'booked', 'not-available');
-
-    if (availability.status === 'limited') {
-      availabilityIndicator.classList.add('limited');
-      availabilityText.textContent = 'Limited availability';
-    } else if (availability.status === 'booked') {
-      availabilityIndicator.classList.add('booked');
-      availabilityText.textContent = `Booked through ${availability.bookedThrough}`;
-    } else {
-      availabilityText.textContent = 'Available for work';
-    }
-  }
+  // Availability indicator removed in v6 layout — no-op
 }
 
 // ===== LOCAL TIME =====
@@ -807,6 +784,210 @@ function initChartAnimation(chart) {
   chart.classList.add('chart-animated');
 }
 
+// ===== PRODUCT DESIGNER CURSOR + BLUEPRINT ANIMATION =====
+function initProductDesignerAnimation() {
+  if (typeof gsap === 'undefined') return;
+
+  var highlight = document.querySelector('.pd-highlight');
+  var cursorsContainer = document.querySelector('.pd-cursors');
+  if (!highlight || !cursorsContainer) return;
+
+  var isDestroyed = false;
+
+  // Figma-style cursor colors
+  // [0] purple = the one that highlights/selects text
+  // [1] green = the one that clicks
+  // [2] orange-red, [3] blue = background cursors
+  var cursorColors = ['#7B61FF', '#0FA958', '#F24822', '#1ABCFE'];
+
+  function cursorSVG(color) {
+    return '<svg viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+      '<path d="M0.5 0.5L13 10.5H6.5L3.5 17.5L0.5 0.5Z" fill="' + color + '" stroke="' + color + '" stroke-width="0.5" stroke-linejoin="round"/>' +
+      '</svg>';
+  }
+
+  function runSequence(isFirstRun) {
+    if (isDestroyed) return;
+
+    // Create cursor elements fresh each cycle
+    var cursorEls = [];
+    cursorColors.forEach(function(color) {
+      var el = document.createElement('div');
+      el.className = 'pd-cursor';
+      el.innerHTML = cursorSVG(color);
+      cursorsContainer.appendChild(el);
+      cursorEls.push(el);
+    });
+
+    // Create click pulse element (appears when green cursor clicks)
+    var clickPulse = document.createElement('div');
+    clickPulse.className = 'pd-cursor-click';
+    cursorsContainer.appendChild(clickPulse);
+
+    // Positions
+    var entryPositions = [
+      { x: -70, y: -55 },
+      { x: 85, y: -45 },
+      { x: 95, y: 65 },
+      { x: -60, y: 70 }
+    ];
+
+    var hoverPositions = [
+      { x: -35, y: -20 },
+      { x: 45, y: -18 },
+      { x: 50, y: 25 },
+      { x: -30, y: 28 }
+    ];
+
+    var exitPositions = [
+      { x: -80, y: -65 },
+      { x: 100, y: -55 },
+      { x: 110, y: 75 },
+      { x: -75, y: 80 }
+    ];
+
+    // The purple cursor drags across text (starts left of text, ends right)
+    var selectStart = { x: -40, y: 2 };
+    var selectEnd = { x: 42, y: 2 };
+
+    // The green cursor clicks on the text center
+    var clickTarget = { x: 5, y: 5 };
+
+    // Set initial positions
+    cursorEls.forEach(function(el, i) {
+      gsap.set(el, {
+        left: '50%',
+        top: '50%',
+        x: entryPositions[i].x,
+        y: entryPositions[i].y,
+        opacity: 0
+      });
+    });
+    gsap.set(clickPulse, { left: '50%', top: '50%', x: clickTarget.x, y: clickTarget.y, scale: 0, opacity: 0 });
+
+    // Reset text state
+    highlight.classList.remove('blueprint-active', 'selected');
+
+    var tl = gsap.timeline({ delay: isFirstRun ? 1.4 : 0 });
+
+    // --- Phase 1: Cursors float in ---
+    cursorEls.forEach(function(el, i) {
+      tl.to(el, {
+        x: hoverPositions[i].x,
+        y: hoverPositions[i].y,
+        opacity: 1,
+        duration: 0.6,
+        ease: 'expo.out'
+      }, i * 0.1);
+    });
+
+    // --- Phase 2: Purple cursor drags across text to select it ---
+    // Move purple cursor to start of text
+    tl.to(cursorEls[0], {
+      x: selectStart.x,
+      y: selectStart.y,
+      duration: 0.4,
+      ease: 'power2.inOut'
+    }, '>+0.3');
+
+    // Start the highlight as purple begins dragging
+    tl.call(function() {
+      highlight.classList.add('selected');
+    });
+
+    // Purple cursor drags to end of text (the selection gesture)
+    tl.to(cursorEls[0], {
+      x: selectEnd.x,
+      y: selectEnd.y,
+      duration: 0.6,
+      ease: 'power1.inOut'
+    });
+
+    // --- Phase 3: Green cursor moves in and clicks ---
+    // Brief pause so selection is visible
+    tl.to(cursorEls[1], {
+      x: clickTarget.x,
+      y: clickTarget.y,
+      duration: 0.4,
+      ease: 'power2.out'
+    }, '>+0.3');
+
+    // Click effect — small cursor bounce + pulse ring
+    tl.to(cursorEls[1], {
+      scale: 0.85,
+      duration: 0.08,
+      ease: 'power2.in'
+    });
+    tl.to(clickPulse, {
+      scale: 2.5,
+      opacity: 0.6,
+      duration: 0.15,
+      ease: 'power1.out'
+    }, '<');
+    tl.to(cursorEls[1], {
+      scale: 1,
+      duration: 0.12,
+      ease: 'power2.out'
+    });
+    tl.to(clickPulse, {
+      scale: 4,
+      opacity: 0,
+      duration: 0.3,
+      ease: 'power1.out'
+    }, '<');
+
+    // --- Phase 4: Click triggers wireframe transformation ---
+    tl.call(function() {
+      highlight.classList.remove('selected');
+      highlight.classList.add('blueprint-active');
+    });
+
+    // --- Phase 5: All cursors exit the frame ---
+    tl.addLabel('exit', '>+0.2');
+    cursorEls.forEach(function(el, i) {
+      tl.to(el, {
+        x: exitPositions[i].x,
+        y: exitPositions[i].y,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.in'
+      }, 'exit+=' + (i * 0.08));
+    });
+
+    // --- Phase 6: Hold wireframe visible, then reset and loop ---
+    tl.call(function() {
+      // Clean up cursor elements
+      cursorEls.forEach(function(el) { el.remove(); });
+      clickPulse.remove();
+
+      // Wait a few seconds, then restart
+      if (!isDestroyed) {
+        gsap.delayedCall(5, function() {
+          if (!isDestroyed) {
+            highlight.classList.remove('blueprint-active');
+            // Small pause before restarting so the text returns to normal
+            gsap.delayedCall(0.8, function() {
+              if (!isDestroyed) runSequence(false);
+            });
+          }
+        });
+      }
+    }, null, '>+0.3');
+  }
+
+  // Kick off the first run
+  runSequence(true);
+
+  // Store cleanup for SPA navigation
+  window._pdAnimationCleanup = function() {
+    isDestroyed = true;
+    gsap.killTweensOf(cursorsContainer.children);
+    cursorsContainer.innerHTML = '';
+    highlight.classList.remove('blueprint-active', 'selected');
+    window._pdAnimationCleanup = null;
+  };
+}
+
 // ===== HOMEPAGE SCROLL ANIMATIONS =====
 function initHomeScrollAnimations() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
@@ -815,40 +996,36 @@ function initHomeScrollAnimations() {
 
   mm.add('(prefers-reduced-motion: no-preference)', function() {
 
-    // Hero entrance — staggered fade-in + slide-up
-    var heroCols = document.querySelectorAll('.hero-col');
-    if (heroCols.length) {
-      gsap.set(heroCols, { opacity: 0, y: 20 });
-      gsap.to(heroCols, {
+    // Hero entrance — fade-in + slide-up
+    var heroContent = document.querySelector('.hero-content');
+    if (heroContent) {
+      gsap.set(heroContent, { opacity: 0, y: 20 });
+      gsap.to(heroContent, {
         opacity: 1,
         y: 0,
         duration: 0.7,
         ease: 'expo.out',
-        /* Keep columns in vertical sync (status + Connect share one baseline) */
-        stagger: 0,
         delay: 0.15
       });
     }
 
+    // Product Designer cursor + blueprint animation
+    initProductDesignerAnimation();
+
     // Work section scroll reveal
     var workSection = document.querySelector('.work-section');
     if (workSection) {
-      var workDirectory = workSection.querySelector('.work-directory');
-      var activeEntry = workSection.querySelector('.work-entry.active');
+      var workDirectoryEl = workSection.querySelector('.work-directory');
 
-      if (workDirectory) gsap.set(workDirectory, { opacity: 0, x: -20 });
-      if (activeEntry) gsap.set(activeEntry, { opacity: 0, y: 20 });
+      if (workDirectoryEl) gsap.set(workDirectoryEl, { opacity: 0, x: -20 });
 
       ScrollTrigger.create({
         trigger: workSection,
         start: 'top 85%',
         once: true,
         onEnter: function() {
-          if (workDirectory) {
-            gsap.to(workDirectory, { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' });
-          }
-          if (activeEntry) {
-            gsap.to(activeEntry, { opacity: 1, y: 0, duration: 0.7, ease: 'expo.out', delay: 0.1 });
+          if (workDirectoryEl) {
+            gsap.to(workDirectoryEl, { opacity: 1, x: 0, duration: 0.7, ease: 'expo.out' });
           }
         }
       });
@@ -856,9 +1033,36 @@ function initHomeScrollAnimations() {
 
     // Cleanup on SPA page swap
     return function() {
+      if (window._pdAnimationCleanup) window._pdAnimationCleanup();
       ScrollTrigger.getAll().forEach(function(t) { t.kill(); });
     };
   });
+}
+
+// ===== SCROLL-DOWN HINT =====
+function initScrollHint() {
+  var btn = document.querySelector('.scroll-hint');
+  if (!btn) return;
+
+  var workSection = document.querySelector('.work-section');
+
+  btn.addEventListener('click', function() {
+    if (workSection) {
+      workSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+
+  var hidden = false;
+  function onScroll() {
+    var atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 20);
+    if (atBottom !== hidden) {
+      hidden = atBottom;
+      btn.classList.toggle('hidden', hidden);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 // Run page-specific init hooks based on current page
@@ -871,10 +1075,17 @@ function initPageHooks(page) {
     initLightbox();
     initCarousels();
     initHomeScrollAnimations();
+    initScrollHint();
     if (typeof initStatCounters === 'function') initStatCounters();
   } else if (page === 'about') {
     initDropdowns();
   }
+  // Show/hide home-only fixed elements
+  var scrollHint = document.querySelector('.scroll-hint');
+  var bottomBlur = document.querySelector('.bottom-blur');
+  if (scrollHint) scrollHint.style.display = page === 'home' ? '' : 'none';
+  if (bottomBlur) bottomBlur.style.display = page === 'home' ? '' : 'none';
+
   // Initialize GSAP hover effects for all pages that need them
   initHoverEffects(page);
 }

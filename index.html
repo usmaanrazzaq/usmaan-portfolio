@@ -20,7 +20,7 @@
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
     <link rel="stylesheet" href="styles.css?v=20260228">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260415c">
+    <link rel="stylesheet" href="home.css?v=20260428">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260228" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
@@ -40,38 +40,20 @@
     
     <main id="spa-content" class="new-homepage" data-page="home">
         <section class="hero-intro">
-            <div class="hero-grid">
-                <div class="hero-col hero-col-status">
-                    <div class="status-bar">
-                        <div class="availability-indicator">
-                            <span class="dot-grid" aria-hidden="true">
-                                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                                <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
-                            </span>
-                            <span class="availability-text" id="availability-text">Available for work</span>
-                        </div>
-                        <div class="location-time">
-                            <span class="location-city">New York, NY</span>
-                            <span class="location-separator">/</span>
-                            <span class="local-time" id="local-time"></span>
-                        </div>
-                    </div>
+            <div class="hero-content">
+                <div class="hero-timestamp">
+                    <span class="location-city">New York, NY</span>
+                    <span class="location-separator">/</span>
+                    <span class="local-time" id="local-time"></span>
                 </div>
-                <div class="hero-col hero-col-contact">
-                    <p class="hero-contact-label">Connect</p>
-                    <div class="connect-links">
-                        <a href="https://www.linkedin.com/in/usmaan-razzaq-9886511b1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
-                        <a href="https://www.instagram.com/usmaanrzq?igsh=cnNwazN1cHdmZHQ5&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
-                        <a href="https://github.com/usmaanrazzaq" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
-                        <a href="https://x.com/usmaanrzq?s=11" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-                    </div>
+                <div class="hero-bio-text">
+                    <p><span class="bio-primary">Hi, I'm Usmaan, a <span class="pd-highlight-wrap"><span class="pd-highlight">Product Designer</span><span class="pd-cursors" aria-hidden="true"></span></span> based in Queens, NY. I design digital products that feel effortless to use, pairing sharp visual craft with a deep interest in how people actually interact with software. I work across mobile and web, from early research through prototyping and hand-off.I also run On The Run Studio, where I collaborate with clients on websites and brand-forward web experiences.</span></p>
                 </div>
-                <div class="hero-col hero-col-bio">
-                    <div class="hero-bio-text">
-                        <p><span class="bio-primary">Hi, I'm Usmaan, a Product Designer based in Queens, NY. I design experiences that feel effortless, blending sharp visual thinking with a deep understanding of how people interact with products.</span> <span class="bio-secondary">Currently, I freelance through my design studio, On The Run Studio, where I collaborate with clients to design and develop user-friendly and effective websites.</span></p>
-                    </div>
+                <div class="connect-links">
+                    <a href="https://www.linkedin.com/in/usmaan-razzaq-9886511b1/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+                    <a href="https://www.instagram.com/usmaanrzq?igsh=cnNwazN1cHdmZHQ5&utm_source=qr" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+                    <a href="https://github.com/usmaanrazzaq" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg></a>
+                    <a href="https://x.com/usmaanrzq?s=11" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                 </div>
             </div>
         </section>
@@ -88,9 +70,9 @@
                     </svg>
                 </div>
                 <nav class="work-list">
-                    <button type="button" class="work-title active" data-work="adsum">
+                    <button type="button" class="work-title active" data-work="rented">
                         <span class="active-indicator"></span>
-                        <span class="title-text">Adsum NYC</span>
+                        <span class="title-text">Rented</span>
                     </button>
                     <button type="button" class="work-title" data-work="nmya">
                         <span class="active-indicator"></span>
@@ -100,307 +82,316 @@
                         <span class="active-indicator"></span>
                         <span class="title-text">On The Run Studio</span>
                     </button>
-                    <button type="button" class="work-title" data-work="rented">
+                    <button type="button" class="work-title" data-work="adsum">
                         <span class="active-indicator"></span>
-                        <span class="title-text">Rented</span>
-                    </button>
-                    <button type="button" class="work-title" data-work="spots">
-                        <span class="active-indicator"></span>
-                        <span class="title-text">Spots</span>
-                    </button>
-                    <button type="button" class="work-title" data-work="dpr">
-                        <span class="active-indicator"></span>
-                        <span class="title-text">DPR Studio</span>
+                        <span class="title-text">Adsum NYC</span>
                     </button>
                 </nav>
             </aside>
 
-            <article class="work-entry active" data-work="adsum">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">Adsum NYC</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">Web Designer</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">Web Design, Campaigns, Marketing</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Nov 2025 - Present</span>
+            <article class="work-entry work-entry--casestudy active" data-work="rented">
+                <div class="cs-header">
+                    <div class="cs-header-left">
+                        <h2 class="cs-title">Rented</h2>
+                        <span class="cs-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 22V12" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 5 9-5" stroke="currentColor" stroke-width="1.5"/></svg> Case Study</span>
                     </div>
                 </div>
-                <div class="work-overview">
+                <p class="cs-subtitle">Designing peer-to-peer rental experience for urban renters.</p>
+                <div class="cs-hero-visual">
+                    <img src="images/Rented-Mobile.webp" alt="Rented Mobile App" loading="eager">
+                </div>
+                <div class="cs-metadata">
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Role</span>
+                        <span class="cs-meta-value">Product Designer</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Duration</span>
+                        <span class="cs-meta-value">Nov 2024 - Feb 2025</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Scope</span>
+                        <span class="cs-meta-value">Product Design</span>
+                        <span class="cs-meta-value">User Research</span>
+                        <span class="cs-meta-value">Prototyping</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Collaborators</span>
+                        <span class="cs-meta-value">Software Engineers</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Tools</span>
+                        <span class="cs-meta-value">Figma</span>
+                        <span class="cs-meta-value">Play 2</span>
+                    </div>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Overview</h3>
+                    <p>Most people own tools and gear they use once, then store forever. Rented lets neighbors lend and borrow instead — without the friction of classifieds or the overhead of a rental shop. I was sole designer across the full mobile experience: onboarding, browse, product pages, and profiles.</p>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Problem</h3>
+                    <p>The P2P rental market has two failure modes. Apps like Hygglo front-load heavy verification and lose users before they ever browse. Apps like Craigslist skip trust entirely and feel unsafe at stranger-to-stranger scale. Neither handles the person who wants to rent their drill out on Tuesday and borrow a camera on Saturday — same person, two roles, no platform built for both. Those three gaps shaped every design decision in Rented.</p>
+                </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/Competitive-Analysis.png" alt="Rented Competitive Analysis" loading="lazy">
+                        <figcaption>Competitive Analysis</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Core Flow</h3>
+                    <p><strong>Onboarding</strong> The first wireframe pass was conventional — email, password, confirm, submit. It asked for commitment before showing any value, which competitive analysis had already flagged as the main drop-off point for Hygglo. The delivered version leads with the product's value proposition, puts SSO front-and-center (Apple, Google, Facebook), and follows auth with a single category prompt — "What are you renting today?" — that gets a new user browse-ready in under a minute without a verification wall.</p>
+                    <p><strong>Browse</strong> The hardest problem was making explore legible across inventory that has nothing in common. A drill and a party tent belong in the same catalog but require completely different browse contexts. A search-first model assumes you know what you're looking for — that fails for the "I need something for a weekend project" use case. The delivered explore surface uses category-led browsing as the primary entry point, with search available but not mandatory. The main unresolved ask at handoff was filter and sort for mixed inventory. Multi-category browse is not a single-category shop, and I hadn't fully cracked it.</p>
+                    <p><strong>Profiles &amp; Listing</strong> The profile had to hold two identities at once — renter and lister — without forcing a mode switch. The delivered structure uses a tabbed layout (Listed · Currently Renting · History · Reviews) that treats both roles as equal rather than defaulting to one. The PDP leads with imagery, surfaces the lister's profile and rating immediately below — trust at the point of decision, not buried — and keeps listing metadata scannable rather than buried in a long-form description field.</p>
+                </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/Design-Process.png" alt="Rented Design Process" loading="lazy">
+                        <figcaption>Design Process</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Outcome</h3>
+                    <p>Handoff included a design system, annotated core flows, and an interactive prototype the team could run on their own phones. We aligned on onboarding, profiles, and PDPs. The outstanding ask was a simpler explore with filter and sort for mixed inventory — the surface most likely to drive retention, and the one that needed more cycles. Build paused when engineering reprioritized. The work sharpened how I think about products where the same person plays two roles, catalogs that resist easy categorization, and what it means to design for a small team's real delivery constraints.</p>
+                    <p>What I'd do with more time: usability-test browse and onboarding with real users before handoff, not after. Push explore further — filters, sorts, layout variants for different category densities. Bring the lister path to the same polish as the renter path. Add trust infrastructure — ratings, verification, transaction history — that holds up when a stranger is renting your camera to another stranger.</p>
+                </div>
+            </article>
+
+            <article class="work-entry work-entry--casestudy" data-work="nmya">
+                <div class="cs-header">
+                    <div class="cs-header-left">
+                        <h2 class="cs-title">National Muslim Youth Association</h2>
+                        <span class="cs-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 22V12" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 5 9-5" stroke="currentColor" stroke-width="1.5"/></svg> Case Study</span>
+                    </div>
+                    <a href="https://www.naa-us.com" target="_blank" rel="noopener noreferrer" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+                <p class="cs-subtitle">Redesigning a non-profit website to better serve the Muslim youth community.</p>
+                <div class="cs-hero-visual">
+                    <img src="images/CleanShot 2025-11-30 at 13.03.58@2x.webp" alt="National Muslim Youth Association website display" loading="lazy">
+                </div>
+                <div class="cs-metadata">
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Role</span>
+                        <span class="cs-meta-value">UI Designer & Project Manager</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Duration</span>
+                        <span class="cs-meta-value">Nov 2023 - Nov 2025</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Scope</span>
+                        <span class="cs-meta-value">UI/UX Design</span>
+                        <span class="cs-meta-value">Project Management</span>
+                        <span class="cs-meta-value">User Research</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Platform</span>
+                        <span class="cs-meta-value">Webflow</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Tools</span>
+                        <span class="cs-meta-value">Figma</span>
+                        <span class="cs-meta-value">Webflow</span>
+                    </div>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Overview</h3>
+                    <p>The National Muslim Youth Association is a non-profit whose website hosts religious teachings, event materials, and program resources visited by youth members nationally. I was brought on to maintain the site, but after assessing its state — cluttered navigation, outdated content, and active malware — I proposed and led a full redesign.</p>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Problem</h3>
+                    <p>Years of content updates without structural cleanup left the site hard to navigate. Parents couldn't find teaching materials. Youth skipped the site entirely. The WordPress build had malware issues that made maintenance risky. The site needed to be rebuilt from the ground up — new platform, new IA, new design system.</p>
+                </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/NAA-Display-Img.webp" alt="Old vs New NMYA Website" loading="lazy">
+                        <figcaption>Old NAA UI vs. New Design</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Wireframe & Development</h3>
+                    <p>I began working on wireframes for the new website, researching and solving the major pain points users were facing. Once the board approved the final wireframes, I developed the site on Webflow — incorporating the organization's logo colors and assets, introducing additional colors for the interface, and prioritizing accessibility across screen sizes, particularly mobile devices and tablets.</p>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">User Research</h3>
+                    <p>While developing the new website, I conducted user research groups. I collaborated with small focus groups, providing them with an early prototype. This helped me understand how users navigated and interacted with the site, and compare their behavior against the old website.</p>
+                </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/User-Research-Chart 1.webp" alt="User Research Chart" loading="lazy">
+                        <figcaption>User Research Results</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Outcome</h3>
+                    <p>The final version launched in June 2024. After a few months, traffic increased by ~30% as users became familiar with the site. Youth visitors rose due to the interactive sections on various pages. Parents and teachers found it much easier to navigate. I continue to manage, enhance, and maintain the website.</p>
+                </div>
+                <div class="cs-visual cs-visual--chart">
+                    <div class="chart-card" data-chart="nmya-engagement">
+                        <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
+                            <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                            <text x="48" y="44" text-anchor="end" class="chart-label">+35%</text>
+                            <text x="48" y="114" text-anchor="end" class="chart-label">+25%</text>
+                            <text x="48" y="184" text-anchor="end" class="chart-label">+15%</text>
+                            <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                            <defs>
+                                <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart-area" d="M80,240 L152,230 L224,205 L296,170 L368,110 L440,62 L490,48 L490,250 L80,250 Z" fill="url(#chartGradient)"/>
+                            <polyline class="chart-line" points="80,240 152,230 224,205 296,170 368,110 440,62 490,48" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <g class="chart-dots">
+                                <circle cx="80" cy="240" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="152" cy="230" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="224" cy="205" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="296" cy="170" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="490" cy="48" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            </g>
+                            <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                            <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                            <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                            <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                            <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                            <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                            <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+                            <text x="275" y="308" text-anchor="middle" class="chart-caption">Engagement growth post-launch (2024)</text>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+
+            <article class="work-entry work-entry--casestudy" data-work="otrs">
+                <div class="cs-header">
+                    <div class="cs-header-left">
+                        <h2 class="cs-title">On The Run Studio</h2>
+                        <span class="cs-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 22V12" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 5 9-5" stroke="currentColor" stroke-width="1.5"/></svg> Case Study</span>
+                    </div>
+                    <a href="https://www.ontherunstudio.com" target="_blank" rel="noopener noreferrer" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+                <p class="cs-subtitle">Creating a brand and a Design Studio.</p>
+                <div class="cs-hero-visual">
+                    <img src="images/OTRS-Screen.webp" alt="On The Run Studio website display" loading="lazy">
+                </div>
+                <div class="cs-metadata">
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Role</span>
+                        <span class="cs-meta-value">Founder</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Duration</span>
+                        <span class="cs-meta-value">Mar 2021 - Present</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Scope</span>
+                        <span class="cs-meta-value">Product Design</span>
+                        <span class="cs-meta-value">Front-End Development</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Platform</span>
+                        <span class="cs-meta-value">Custom Domain</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Tools</span>
+                        <span class="cs-meta-value">Figma</span>
+                        <span class="cs-meta-value">HTML/CSS/JS</span>
+                    </div>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Overview</h3>
+                    <p>On The Run Studio is a design studio that began as a personal project to curate and share images that inspired me and my work. Over time, the page grew and built a community of like-minded individuals who found inspiration in the posts. Along the way, I designed and produced products and merchandise inspired by these influences. On The Run Studio continues to share, inspire, and grow the community while connecting with brands and companies to assist in web design and development.</p>
+                </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/OTRS-Mobile-UI.webp" alt="On The Run Studio Mobile UI" loading="lazy">
+                        <figcaption>On The Run Studio Mobile UI</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Merchandise</h3>
+                    <p>For 2 and a half years, I designed and produced merchandise inspired by my upbringing and the images I had curated. I started off with a t-shirt and a mug. For the t-shirt, I created a design that was simple and clean — the graphic was inspired by the Unisphere in Flushing, NY. For the mug, I placed the early On The Run Studio logo on the front.</p>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Web Development</h3>
+                    <p>The On The Run Studio website was hosted on Shopify initially for the first year and a half. The following year, I redesigned and hosted the website on Squarespace. After another year and a half, I moved to Framer for a few months. Currently, the website is hosted on my own domain and is built with HTML, CSS, and JavaScript.</p>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Design Studio</h3>
+                    <p>On The Run Studio is continuing as a design agency to assist brands and companies to strategically design and develop their websites. The agency provides a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
+                </div>
+            </article>
+
+            <article class="work-entry work-entry--casestudy" data-work="adsum">
+                <div class="cs-header">
+                    <div class="cs-header-left">
+                        <h2 class="cs-title">Adsum NYC</h2>
+                        <span class="cs-badge"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L3 7v10l9 5 9-5V7l-9-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M12 22V12" stroke="currentColor" stroke-width="1.5"/><path d="M3 7l9 5 9-5" stroke="currentColor" stroke-width="1.5"/></svg> Case Study</span>
+                    </div>
+                    <a href="https://www.adsumnyc.com" target="_blank" rel="noopener noreferrer" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+                </div>
+                <p class="cs-subtitle">Web Design & Marketing for a Brooklyn-based brand.</p>
+                <div class="cs-hero-visual cs-hero-visual--video">
+                    <video src="video/Adsum-Display.mp4" autoplay loop muted playsinline preload="metadata"></video>
+                </div>
+                <div class="cs-metadata">
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Role</span>
+                        <span class="cs-meta-value">Web Designer</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Duration</span>
+                        <span class="cs-meta-value">Nov 2025 - Present</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Scope</span>
+                        <span class="cs-meta-value">Web Design</span>
+                        <span class="cs-meta-value">Campaigns</span>
+                        <span class="cs-meta-value">Marketing</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Collaborators</span>
+                        <span class="cs-meta-value">Brand Founder</span>
+                    </div>
+                    <div class="cs-meta-col">
+                        <span class="cs-meta-label">Tools</span>
+                        <span class="cs-meta-value">Figma</span>
+                        <span class="cs-meta-value">Shopify</span>
+                    </div>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Overview</h3>
                     <p>Adsum is a Brooklyn, NY-based brand. I design landing pages for new collections, sales, and events on an ongoing timeline. Additionally, I assist with launching new campaigns and assist with outreach. I work closely with the brand's founder.</p>
-                    <div class="work-links">
-                        <a href="/adsum/" class="work-link">View Case Study <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                        <a href="https://adsumnyc.com/" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    </div>
                 </div>
-                <div class="work-visuals carousel" data-carousel>
-                    <div class="carousel-track">
-                        <div class="carousel-slide">
-                            <a href="/adsum/" aria-label="View Adsum NYC project"><video src="video/Adsum-Display.mp4" autoplay loop muted playsinline preload="metadata"></video></a>
-                        </div>
-                        <div class="carousel-slide">
-                            <figure class="visual-item">
-                                <img src="images/Adsum-Filter-Size-Display.webp" alt="Size Filter Feature" loading="lazy">
-                                <figcaption>Size Filter Feature</figcaption>
-                            </figure>
-                        </div>
-                        <div class="carousel-slide">
-                            <figure class="visual-item visual-item--contain">
-                                <img src="images/IG Posts.jpg" alt="Campaigns & IG Posts" loading="lazy">
-                                <figcaption>Campaigns & IG Posts</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Landing Pages</h3>
+                    <p>I designed landing pages for the brand's new collections and releases, as well as for the holiday sale announcements. Each page is crafted to match the brand's visual identity while driving conversion.</p>
                 </div>
-            </article>
-
-            <article class="work-entry" data-work="nmya">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">National Muslim Youth Association</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">UI Designer & Project Manager</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">UI/UX Design, Webflow</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Nov 2023 - Nov 2025</span>
-                    </div>
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/Adsum-Filter-Size-Display.webp" alt="Size Filter Feature" loading="lazy">
+                        <figcaption>Size Filter Feature</figcaption>
+                    </figure>
                 </div>
-                <div class="work-overview">
-                    <p>The National Muslim Youth Association is a youth boys organization where I serve as Lead UI Designer and Project Manager. I spearheaded a full website overhaul — introducing a new design system, custom components, and a revamped content management system — resulting in a 30–35% increase in engagement post-launch.</p>
-                    <div class="work-links">
-                        <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html" class="work-link">View Case Study <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                        <a href="https://atfal-website.vercel.app/" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Size Filter</h3>
+                    <p>I designed and developed a size filter feature for the collection pages, enabling customers to filter products by their sizes and see what is available. This reduced friction in the shopping experience and helped customers quickly find items in their size.</p>
                 </div>
-                <div class="work-visuals carousel" data-carousel>
-                    <div class="carousel-track">
-                        <div class="carousel-slide">
-                            <a href="National-Muslim-Youth-Association/muslim-youth-website/case-study.html" aria-label="View NMYA case study"><img src="images/CleanShot 2025-11-30 at 13.03.58@2x.webp" alt="National Muslim Youth Association website display" loading="lazy"></a>
-                        </div>
-                        <div class="carousel-slide">
-                            <div class="chart-card" data-chart="nmya-engagement">
-                                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
-                                    <!-- Gridlines -->
-                                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
-
-                                    <!-- Y-axis labels -->
-                                    <text x="48" y="44" text-anchor="end" class="chart-label">+35%</text>
-                                    <text x="48" y="114" text-anchor="end" class="chart-label">+25%</text>
-                                    <text x="48" y="184" text-anchor="end" class="chart-label">+15%</text>
-                                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
-
-                                    <!-- Gradient fill under line -->
-                                    <defs>
-                                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
-                                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="chart-area" d="M80,240 L152,230 L224,205 L296,170 L368,110 L440,62 L490,48 L490,250 L80,250 Z" fill="url(#chartGradient)"/>
-
-                                    <!-- Line -->
-                                    <polyline class="chart-line" points="80,240 152,230 224,205 296,170 368,110 440,62 490,48" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-                                    <!-- Data points -->
-                                    <g class="chart-dots">
-                                        <circle cx="80" cy="240" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="152" cy="230" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="224" cy="205" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="296" cy="170" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="490" cy="48" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                    </g>
-
-                                    <!-- X-axis labels -->
-                                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
-                                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
-                                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
-                                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
-                                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
-                                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
-                                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
-
-                                    <!-- Caption -->
-                                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Engagement growth post-launch (2024)</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Additional Work</h3>
+                    <p>Beyond web design, I have created graphic designs for the brand's email announcements — including Black Friday and Cyber Monday campaigns — and assist with ongoing marketing outreach and social media content.</p>
                 </div>
-            </article>
-
-            <article class="work-entry" data-work="otrs">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">On The Run Studio</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">Founder</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">Product Design, Front-End Development</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Mar 2021 - Present</span>
-                    </div>
-                </div>
-                <div class="work-overview">
-                    <p>On The Run Studio is a design agency that I founded in 2021. I work with a partner to design and develop websites for clients. We offer a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
-                    <div class="work-links">
-                        <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html" class="work-link">View Case Study <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                        <a href="https://ontherun.studio/" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    </div>
-                </div>
-                <div class="work-visuals carousel" data-carousel data-single>
-                    <div class="carousel-track">
-                        <div class="carousel-slide">
-                            <a href="On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html" aria-label="View On The Run Studio case study"><img src="images/OTRS-Screen.webp" alt="On The Run Studio website display" loading="lazy"></a>
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
-                </div>
-            </article>
-
-            <article class="work-entry" data-work="rented">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">Rented</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">Product Designer</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">Product Design, User Research, Prototyping</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Nov 2024 - Feb 2025</span>
-                    </div>
-                </div>
-                <div class="work-overview">
-                    <p>Peer-to-peer rental for tools and everyday items. I owned the mobile product experience, the design system, and a functional prototype with engineers.</p>
-                    <div class="work-links">
-                        <a href="Rented/rented/index.html" class="work-link">View Case Study <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    </div>
-                </div>
-                <div class="work-visuals carousel" data-carousel>
-                    <div class="carousel-track">
-                        <div class="carousel-slide">
-                            <a href="Rented/rented/index.html" aria-label="View Rented project"><video data-src="video/Rented-Display.mp4" loop muted playsinline preload="none"></video></a>
-                        </div>
-                        <div class="carousel-slide">
-                            <figure class="visual-item">
-                                <img src="images/Rentd-Mobile-Display.webp" alt="Rented Mobile Display" loading="lazy">
-                                <figcaption>Mobile App</figcaption>
-                            </figure>
-                        </div>
-                        <div class="carousel-slide">
-                            <figure class="visual-item">
-                                <img src="images/Onboarding-v1.webp" alt="Rented Onboarding" loading="lazy">
-                                <figcaption>Onboarding Flow</figcaption>
-                            </figure>
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
-                </div>
-            </article>
-
-            <article class="work-entry" data-work="spots">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">Spots</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">Product Designer</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">UI/UX Design, Mobile App</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Personal Project</span>
-                    </div>
-                </div>
-                <div class="work-overview">
-                    <p>Spots is a website where I rate and share cafes where I've bought an Americano. An interactive map makes it easy to pinpoint each cafe's location.</p>
-                    <div class="work-links">
-                        <a href="https://spotsnyc.netlify.app/" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 6H9.5M9.5 6L6.5 3M9.5 6L6.5 9" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-                    </div>
-                </div>
-                <div class="work-visuals carousel" data-carousel data-single>
-                    <div class="carousel-track">
-                        <div class="carousel-slide">
-                            <a href="https://spotsnyc.netlify.app/" target="_blank" rel="noopener noreferrer" aria-label="View Spots project"><video data-src="video/Find-My-Americano.mp4" loop muted playsinline preload="none"></video></a>
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
-                </div>
-            </article>
-
-            <article class="work-entry" data-work="dpr">
-                <div class="work-meta">
-                    <div class="meta-group">
-                        <span class="meta-label">Company</span>
-                        <span class="meta-value">DPR Studio</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Role</span>
-                        <span class="meta-value">Web Designer & Developer</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Scope</span>
-                        <span class="meta-value">UI Design, Front-End Development</span>
-                    </div>
-                    <div class="meta-group">
-                        <span class="meta-label">Time</span>
-                        <span class="meta-value">Current Client</span>
-                    </div>
-                </div>
-                <div class="work-overview">
-                    <p>DPR Studio is a studio based in California specializing in garment design, brand identity, brand strategy, creative direction, production management. I designed and developed the studio's website, through my design studio On The Run Studio.</p>
-                    <div class="work-links">
-                        <!-- Website link hidden until ready -->
-                    </div>
-                </div>
-                <div class="work-visuals carousel" data-carousel data-single>
-                    <div class="carousel-track">
-                        <div class="carousel-slide carousel-slide--centered bg-light">
-                            <img src="images/DPR-Display 1.webp" alt="DPR Studio logo" class="logo-image" loading="lazy">
-                        </div>
-                    </div>
-                    <div class="carousel-dots" aria-label="Slide navigation"></div>
+                <div class="cs-visual">
+                    <figure class="visual-item visual-item--contain">
+                        <img src="images/IG Posts.jpg" alt="Campaigns & IG Posts" loading="lazy">
+                        <figcaption>Campaigns & IG Posts</figcaption>
+                    </figure>
                 </div>
             </article>
         </section>
@@ -411,6 +402,16 @@
         <button class="lightbox-close" aria-label="Close"></button>
         <img src="" alt="Enlarged view">
     </div>
+
+    <!-- Bottom blur -->
+    <div class="bottom-blur"></div>
+
+    <!-- Scroll-down hint -->
+    <button class="scroll-hint" aria-label="Scroll down">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
