@@ -1077,6 +1077,9 @@ function initPageHooks(page) {
     initHomeScrollAnimations();
     initScrollHint();
     if (typeof initStatCounters === 'function') initStatCounters();
+    if (typeof initCompetitiveAnalysis === 'function') initCompetitiveAnalysis();
+    if (typeof initDesignEvolution === 'function') initDesignEvolution();
+    if (typeof initPhoneMockup === 'function') initPhoneMockup();
   } else if (page === 'about') {
     initDropdowns();
   }
