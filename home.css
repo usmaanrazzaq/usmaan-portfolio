@@ -1,5 +1,11 @@
 /* ===== HOMEPAGE V6 STYLES ===== */
 
+:root {
+  --home-column-max: 786px;
+  --home-column-pad-x: 10px;
+  --home-visual-max: 1100px;
+}
+
 /* ===== HERO INTRO — Single-column centered ===== */
 .hero-intro {
   display: block;
@@ -14,9 +20,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 786px;
+  max-width: var(--home-column-max);
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 var(--home-column-pad-x);
 }
 
 .hero-timestamp {
@@ -317,9 +323,9 @@ button.work-title {
   grid-column: 1;
   grid-row: 1;
   justify-self: center;
-  max-width: 786px;
+  max-width: var(--home-column-max);
   width: 100%;
-  padding: 0 10px;
+  padding: 0 var(--home-column-pad-x);
   box-sizing: border-box;
 }
 
@@ -551,10 +557,11 @@ a.work-link:hover .link-arrow {
 
 .cs-hero-visual {
   width: 100%;
-  max-width: 807px;
+  max-width: 100%;
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 4px 14.8px 0px rgba(0, 0, 0, 0.25);
+  background: #f5f5f5;
 }
 
 .cs-hero-visual img,
@@ -562,7 +569,7 @@ a.work-link:hover .link-arrow {
   width: 100%;
   height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 /* 5-column metadata row */
@@ -570,7 +577,7 @@ a.work-link:hover .link-arrow {
   display: flex;
   gap: 25px;
   width: 100%;
-  max-width: 807px;
+  max-width: 100%;
   margin-top: 10px;
 }
 
@@ -632,7 +639,8 @@ a.work-link:hover .link-arrow {
 
 /* Case study inline visuals */
 .cs-visual {
-  max-width: 807px;
+  width: 100%;
+  max-width: 100%;
   border-radius: 10px;
   overflow: hidden;
   margin-top: 10px;
@@ -699,6 +707,7 @@ a.work-link:hover .link-arrow {
   aspect-ratio: 16 / 10;
 }
 
+
 /* ===== CAROUSEL ===== */
 .carousel {
   position: relative;
@@ -721,7 +730,8 @@ a.work-link:hover .link-arrow {
   flex: 0 0 93%;
   overflow: hidden;
   border-radius: 10px;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: auto;
+  align-self: center;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
 }
 
@@ -730,15 +740,15 @@ a.work-link:hover .link-arrow {
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  min-height: 0;
 }
 
 .carousel-slide img,
 .carousel-slide video {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .carousel-slide--centered {
@@ -1099,6 +1109,10 @@ a.work-link:hover .link-arrow {
   .work-directory.expanded .work-title:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.06s; }
   .work-directory.expanded .work-title:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.08s; }
 
+  .work-entry {
+    align-self: center;
+  }
+
   .work-entry > .work-meta {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1295,9 +1309,9 @@ a.work-link:hover .link-arrow {
 }
 
 .line-chart {
-  width: 90%;
-  height: 90%;
-  max-width: 580px;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
 }
 
 .chart-label {
