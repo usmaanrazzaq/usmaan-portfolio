@@ -335,8 +335,9 @@ html {
 /* Expandable Images */
 .expandable-image {
   position: relative;
-  width: 100%;
-  margin: 1rem 0;
+  width: calc(100% + 8rem);
+  margin: 1rem -4rem;
+  max-width: none;
   cursor: pointer;
   border-radius: 6px;
   overflow: hidden;
@@ -481,6 +482,12 @@ footer span {
   .content-layout {
     grid-template-columns: 1fr;
     gap: 2rem;
+  }
+
+  .expandable-image {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .content-directory {

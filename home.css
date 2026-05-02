@@ -196,7 +196,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 5px 0;
-  border-bottom: 0.5px solid #767676;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
   cursor: default;
 }
 
@@ -268,7 +268,7 @@
 }
 
 .work-title.active {
-  background-color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 .work-title .active-indicator {
@@ -556,8 +556,10 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-hero-visual {
-  width: 100%;
-  max-width: 100%;
+  width: var(--home-visual-max);
+  max-width: calc(100vw - 40px);
+  margin-left: calc((100% - var(--home-visual-max)) / 2);
+  margin-right: calc((100% - var(--home-visual-max)) / 2);
   border-radius: 10px;
   overflow: hidden;
   box-shadow: 0px 4px 14.8px 0px rgba(0, 0, 0, 0.25);
@@ -639,8 +641,10 @@ a.work-link:hover .link-arrow {
 
 /* Case study inline visuals */
 .cs-visual {
-  width: 100%;
-  max-width: 100%;
+  width: var(--home-visual-max);
+  max-width: calc(100vw - 40px);
+  margin-left: calc((100% - var(--home-visual-max)) / 2);
+  margin-right: calc((100% - var(--home-visual-max)) / 2);
   border-radius: 10px;
   overflow: hidden;
   margin-top: 10px;
@@ -1036,6 +1040,14 @@ a.work-link:hover .link-arrow {
 
 /* ===== RESPONSIVE — TABLET (1120px) ===== */
 @media (max-width: 1120px) {
+  .cs-hero-visual,
+  .cs-visual {
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   .work-section {
     display: flex;
     flex-direction: column;
