@@ -186,16 +186,17 @@
   z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   width: fit-content;
-  max-width: 200px;
+  max-width: 170px;
+  margin-left: -6px;
 }
 
 .directory-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 5px 0;
+  padding: 4px 0;
   border-bottom: 0.5px solid rgba(0, 0, 0, 0.1);
   cursor: default;
 }
@@ -204,7 +205,7 @@
 .directory-heading {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
-  font-size: 16px;
+  font-size: 14px;
   color: #2b2b2b;
   line-height: normal;
   margin: 0;
@@ -228,7 +229,7 @@
 .work-list {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 1px;
   padding: 0;
 }
 
@@ -248,10 +249,10 @@
 .work-title {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   text-decoration: none;
   cursor: pointer;
-  padding: 6px 10px;
+  padding: 4px 7px;
   border-radius: 6px;
   transition: background-color 0.1s ease,
               transform 0.2s var(--ease-out-expo);
@@ -278,9 +279,9 @@
 .work-title .title-text {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 12px;
   color: #71717a;
-  line-height: 1.3;
+  line-height: 1.28;
   transition: color 0.1s ease;
 }
 
@@ -668,6 +669,25 @@ a.work-link:hover .link-arrow {
   transition: opacity 0.2s ease;
 }
 
+.cs-visual--split {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  overflow: visible;
+}
+
+.cs-visual--split .visual-item {
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.cs-visual--split .visual-item img {
+  height: 100%;
+  object-fit: cover;
+}
+
 @media (hover: hover) {
   .cs-visual .visual-item img:hover {
     opacity: 0.85;
@@ -702,6 +722,11 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-visual--chart {
+  overflow: visible;
+  border-radius: 0;
+}
+
+.cs-visual--findings {
   overflow: visible;
   border-radius: 0;
 }
@@ -1048,6 +1073,14 @@ a.work-link:hover .link-arrow {
     margin-right: 0;
   }
 
+  .cs-visual--research {
+    width: min(var(--home-visual-max), calc(100vw - 40px));
+    max-width: none;
+    margin-left: 50%;
+    margin-right: 0;
+    transform: translateX(-50%);
+  }
+
   .work-section {
     display: flex;
     flex-direction: column;
@@ -1060,15 +1093,16 @@ a.work-link:hover .link-arrow {
     top: auto;
     width: 100%;
     max-width: 100%;
+    margin-left: 0;
     flex-direction: row;
     align-items: flex-start;
-    gap: 10px;
+    gap: 8px;
   }
 
   .directory-header {
     cursor: pointer;
     width: fit-content;
-    padding: 5px 10px 5px 0;
+    padding: 4px 8px 4px 0;
     transition: opacity 0.2s ease;
   }
 
@@ -1106,11 +1140,11 @@ a.work-link:hover .link-arrow {
     max-height: 350px;
     opacity: 1;
     pointer-events: auto;
-    padding: 12px 10px 10px 10px;
+    padding: 10px 8px 8px 8px;
   }
 
   .work-title {
-    padding: 8px 0;
+    padding: 6px 0;
     opacity: 0;
     transform: translateX(-4px);
     transition: opacity 0.15s ease, transform 0.15s ease;
@@ -1182,13 +1216,17 @@ a.work-link:hover .link-arrow {
     gap: 16px;
   }
 
+  .cs-visual--split {
+    grid-template-columns: 1fr;
+  }
+
   .work-title .title-text {
-    font-size: 13px;
+    font-size: 12px;
   }
 
   .directory-header span,
   .directory-heading {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .meta-label,
@@ -1253,7 +1291,7 @@ a.work-link:hover .link-arrow {
   }
 
   .work-title .title-text {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 

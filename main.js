@@ -308,6 +308,12 @@ function initWorkDirectory() {
         // Activate new entry — force reflow so the browser registers opacity:0 first
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
+        if (typeof ScrollTrigger !== 'undefined') {
+          requestAnimationFrame(function() {
+            ScrollTrigger.refresh();
+            if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+          });
+        }
         // Reset carousel to first slide
         var carousel = targetEntry.querySelector('[data-carousel]');
         if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
@@ -318,6 +324,7 @@ function initWorkDirectory() {
           currentEntry.classList.remove('fading-out');
           deactivateEntryMedia(currentEntry);
           isSwitching = false;
+          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         }, 320);
 
         // Stagger-in meta groups on the new entry
@@ -341,6 +348,12 @@ function initWorkDirectory() {
         });
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
+        if (typeof ScrollTrigger !== 'undefined') {
+          requestAnimationFrame(function() {
+            ScrollTrigger.refresh();
+            if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+          });
+        }
         var carousel2 = targetEntry.querySelector('[data-carousel]');
         if (carousel2 && carousel2._carouselGoTo) carousel2._carouselGoTo(0, true);
       }
@@ -772,7 +785,12 @@ function initChartAnimation(chart) {
   if (!line) return;
 
   // Measure the polyline length and set the CSS variable
-  var length = line.getTotalLength();
+  var length = 0;
+  try {
+    length = line.getTotalLength();
+  } catch (e) {
+    length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
+  }
   line.style.setProperty('--chart-length', length);
   line.style.strokeDasharray = length;
   line.style.strokeDashoffset = length;
@@ -1080,6 +1098,8 @@ function initPageHooks(page) {
     if (typeof initCompetitiveAnalysis === 'function') initCompetitiveAnalysis();
     if (typeof initDesignEvolution === 'function') initDesignEvolution();
     if (typeof initPhoneMockup === 'function') initPhoneMockup();
+    if (typeof initResearchFindings === 'function') initResearchFindings();
+    if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
   } else if (page === 'about') {
     initDropdowns();
   }

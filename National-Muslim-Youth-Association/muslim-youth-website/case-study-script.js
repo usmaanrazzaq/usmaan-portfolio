@@ -91,6 +91,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (typeof initStatCounters === 'function') initStatCounters();
     if (typeof initAnnotatedImages === 'function') initAnnotatedImages();
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+    if (typeof initResearchFindings === 'function') initResearchFindings();
 });
 
 // Directory scrolling functionality

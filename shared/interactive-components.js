@@ -217,7 +217,12 @@ function initChartAnimation(chart) {
   var line = chart.querySelector('.chart-line');
   if (!line) return;
 
-  var length = line.getTotalLength();
+  var length = 0;
+  try {
+    length = line.getTotalLength();
+  } catch (e) {
+    length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
+  }
   line.style.setProperty('--chart-length', length);
   line.style.strokeDasharray = length;
   line.style.strokeDashoffset = length;
@@ -239,7 +244,9 @@ function initChartScrollTriggers() {
     var mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', function() {
       charts.forEach(function(chart) {
-        if (chart.classList.contains('chart-animated')) return;
+        if (chart._chartScrollTriggerInit || chart.classList.contains('chart-animated')) return;
+        if (!chart.offsetParent && chart.getClientRects().length === 0) return;
+        chart._chartScrollTriggerInit = true;
 
         ScrollTrigger.create({
           trigger: chart,
@@ -304,7 +311,12 @@ function initCompetitiveAnalysis() {
           var axes = container.querySelectorAll('.comp-map__axis');
           if (axes.length) {
             axes.forEach(function(axis) {
-              var length = axis.getTotalLength();
+              var length = 0;
+              try {
+                length = axis.getTotalLength();
+              } catch (e) {
+                return;
+              }
               gsap.set(axis, {
                 strokeDasharray: length,
                 strokeDashoffset: length
@@ -681,5 +693,141 @@ function initPhoneMockup() {
         }
       });
     }
+  });
+}
+
+
+// --- User Research Findings ---
+function initResearchFindings() {
+  if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+  var containers = document.querySelectorAll('[data-research-findings]');
+  if (!containers.length) return;
+
+  var mm = gsap.matchMedia();
+
+  mm.add('(prefers-reduced-motion: no-preference)', function() {
+    containers.forEach(function(container) {
+      var intro = container.querySelector('.research-findings__intro');
+      var groups = container.querySelectorAll('.research-findings__group');
+      var rows = container.querySelectorAll('.research-findings__row');
+      var connector = container.querySelector('.research-findings__connector');
+      var response = container.querySelector('.research-findings__response');
+      var chips = container.querySelectorAll('.research-findings__chip');
+
+      // Set initial states
+      if (intro) gsap.set(intro, { opacity: 0, y: 15 });
+      gsap.set(groups, { opacity: 0, y: 18, scale: 0.98 });
+      gsap.set(rows, { opacity: 0, y: 12 });
+      if (connector) gsap.set(connector, { opacity: 0, scaleX: 0.72, transformOrigin: 'center center' });
+      if (response) gsap.set(response, { opacity: 0, y: 14 });
+      gsap.set(chips, { opacity: 0, y: 8 });
+
+      ScrollTrigger.create({
+        trigger: container,
+        start: 'top 75%',
+        once: true,
+        onEnter: function() {
+          var tl = gsap.timeline();
+
+          // Phase 1: Intro blurb fades in
+          if (intro) {
+            tl.to(intro, {
+              opacity: 1,
+              y: 0,
+              duration: 0.5,
+              ease: 'expo.out'
+            });
+          }
+
+          // Phase 2: Audience lanes enter
+          tl.to(groups, {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.55,
+            ease: 'expo.out',
+            stagger: 0.1
+          }, intro ? '-=0.2' : '0');
+
+          // Phase 3: Pain point rows stagger in
+          tl.to(rows, {
+            opacity: 1,
+            y: 0,
+            duration: 0.45,
+            ease: 'power2.out',
+            stagger: 0.05
+          }, '-=0.2');
+
+          // Phase 4: Connect research themes to the design response
+          if (connector) {
+            tl.to(connector, {
+              opacity: 1,
+              scaleX: 1,
+              duration: 0.45,
+              ease: 'power2.out'
+            }, '-=0.05');
+          }
+
+          if (response) {
+            tl.to(response, {
+              opacity: 1,
+              y: 0,
+              duration: 0.45,
+              ease: 'power2.out'
+            }, connector ? '-=0.18' : '-=0.05');
+          }
+
+          tl.to(chips, {
+            opacity: 1,
+            y: 0,
+            duration: 0.35,
+            ease: 'power2.out',
+            stagger: 0.06
+          }, response ? '-=0.18' : '-=0.05');
+        }
+      });
+    });
+
+    return function() {};
+  });
+
+  // Reduced motion: show everything immediately
+  mm.add('(prefers-reduced-motion: reduce)', function() {
+    containers.forEach(function(container) {
+      var intro = container.querySelector('.research-findings__intro');
+      var groups = container.querySelectorAll('.research-findings__group');
+      var rows = container.querySelectorAll('.research-findings__row');
+      var connector = container.querySelector('.research-findings__connector');
+      var response = container.querySelector('.research-findings__response');
+      var chips = container.querySelectorAll('.research-findings__chip');
+
+      if (intro) {
+        intro.style.opacity = '1';
+        intro.style.transform = 'none';
+      }
+      groups.forEach(function(group) {
+        group.style.opacity = '1';
+        group.style.transform = 'none';
+      });
+      rows.forEach(function(r) {
+        r.style.opacity = '1';
+        r.style.transform = 'none';
+      });
+      if (connector) {
+        connector.style.opacity = '1';
+        connector.style.transform = 'none';
+      }
+      if (response) {
+        response.style.opacity = '1';
+        response.style.transform = 'none';
+      }
+      chips.forEach(function(chip) {
+        chip.style.opacity = '1';
+        chip.style.transform = 'none';
+      });
+    });
+
+    return function() {};
   });
 }
