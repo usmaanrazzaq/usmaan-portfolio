@@ -1279,7 +1279,8 @@ a.work-link:hover .link-arrow {
   .work-entry--casestudy[data-work="nmya"] .cs-header,
   .work-entry--casestudy[data-work="otrs"] .cs-header {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
+    /* Badge + link hug content; trailing column so they stay grouped on the left */
+    grid-template-columns: auto auto 1fr;
     align-items: center;
     column-gap: 12px;
     row-gap: 10px;
