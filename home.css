@@ -1275,6 +1275,26 @@ a.work-link:hover .link-arrow {
     font-size: 18px;
   }
 
+  /* NMYA + OTRS: title on first row; badge + View Website on second row */
+  .work-entry--casestudy[data-work="nmya"] .cs-header,
+  .work-entry--casestudy[data-work="otrs"] .cs-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 12px;
+    row-gap: 10px;
+  }
+
+  .work-entry--casestudy[data-work="nmya"] .cs-header-left,
+  .work-entry--casestudy[data-work="otrs"] .cs-header-left {
+    display: contents;
+  }
+
+  .work-entry--casestudy[data-work="nmya"] .cs-title,
+  .work-entry--casestudy[data-work="otrs"] .cs-title {
+    grid-column: 1 / -1;
+  }
+
   .cs-subtitle {
     font-size: 16px;
   }
