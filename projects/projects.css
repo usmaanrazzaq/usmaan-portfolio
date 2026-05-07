@@ -4,15 +4,20 @@
   padding: 14px 0 48px;
   max-width: 100%;
   margin: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .projects-mosaic-header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 0 10px;
+  padding-left: max(10px, env(safe-area-inset-left, 0px));
+  padding-right: max(10px, env(safe-area-inset-right, 0px));
   margin-bottom: clamp(20px, 4vw, 30px);
   max-width: min(100%, 42rem);
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 .projects-mosaic-title {
@@ -38,8 +43,14 @@
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
   gap: clamp(10px, 1.4vw, 12px) clamp(10px, 1.4vw, 12px);
-  padding: 0 10px;
+  padding-left: max(10px, env(safe-area-inset-left, 0px));
+  padding-right: max(10px, env(safe-area-inset-right, 0px));
   align-items: stretch;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  box-sizing: border-box;
+  justify-items: stretch;
 }
 
 .project-mosaic {
@@ -50,6 +61,9 @@
   color: inherit;
   min-width: 0;
   min-height: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   isolation: isolate;
   transition: box-shadow 0.35s var(--ease-out-expo, cubic-bezier(0.16, 1, 0.3, 1));
 }
@@ -279,20 +293,21 @@
 @media (max-width: 640px) {
   .projects-mosaic-grid {
     grid-template-columns: 1fr;
-    padding: 0 8px;
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
     gap: 10px;
+  }
+
+  .projects-mosaic-header {
+    padding-left: max(12px, env(safe-area-inset-left, 0px));
+    padding-right: max(12px, env(safe-area-inset-right, 0px));
   }
 
   .project-mosaic--wide,
   .project-mosaic--narrow {
     grid-column: 1 / -1;
+    justify-self: stretch;
     aspect-ratio: 16 / 10;
-    min-height: min(72vw, 320px);
-  }
-
-  .project-mosaic--bibz {
-    aspect-ratio: 1 / 1;
-    min-height: min(88vw, 360px);
   }
 
   .project-mosaic__crumbs {
@@ -301,7 +316,8 @@
   }
 
   .project-mosaic__crumbs--bibz {
-    right: 10px;
+    top: clamp(10px, 2vw, 14px);
+    right: clamp(64px, 22vw, 100px);
     font-size: clamp(0.6rem, 0.55rem + 1vw, 0.75rem);
   }
 
@@ -311,13 +327,10 @@
   }
 
   .project-mosaic__view--bibz {
-    top: auto;
-    bottom: clamp(12px, 3vw, 16px);
-    left: clamp(8px, 1.2vw, 10px);
-  }
-
-  .project-mosaic__crumbs--bibz {
-    top: clamp(10px, 2vw, 14px);
+    top: clamp(10px, 1.8vw, 15px);
+    right: clamp(8px, 1.2vw, 15px);
+    left: auto;
+    bottom: auto;
   }
 }
 
