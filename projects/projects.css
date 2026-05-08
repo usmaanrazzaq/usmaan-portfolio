@@ -16,7 +16,7 @@
   padding-right: max(10px, env(safe-area-inset-right, 0px));
   margin-bottom: clamp(20px, 4vw, 30px);
   max-width: min(100%, 42rem);
-  margin-inline: auto;
+  margin-inline: 0;
   box-sizing: border-box;
 }
 
