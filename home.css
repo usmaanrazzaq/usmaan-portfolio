@@ -57,11 +57,16 @@
 .local-time {
   font-variant-numeric: tabular-nums;
   display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  line-height: 1.2;
   overflow: hidden;
 }
 
 .local-time .time-digit {
   display: inline-block;
+  line-height: 1;
+  vertical-align: baseline;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
               opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -997,11 +1002,14 @@ a.work-link:hover .link-arrow {
 /* ===== PRODUCT DESIGNER ANIMATION ===== */
 .pd-highlight-wrap {
   position: relative;
-  /* Atomic inline box; cursors stay out of text-adjacency order for line-box quirks */
-  display: inline-block;
-  vertical-align: baseline;
+  /*
+   * Must stay `inline`, not inline-block: an inline-block is atomic — if the line
+   * runs out of space after “…a ”, the whole “Product Designer” chunk moves down,
+   * splitting the sentence (“Hi…” on one line, phrase + rest on the next).
+   * Absolute .pd-cursors uses fixed px/vw sizing so % containment bugs don’t apply.
+   */
+  display: inline;
   line-height: inherit;
-  overflow: visible;
 }
 
 .pd-highlight {
