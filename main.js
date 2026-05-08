@@ -67,19 +67,23 @@ onDomReady(function () {
     });
 });
 
-// Page loader - fade in effect
-window.addEventListener('load', function() {
-  // Add loaded class to body to trigger fade-in
+// Page loader - fade in as soon as the DOM is ready (do not wait for window "load":
+// large videos and images would keep the UI hidden for a long time on slow networks).
+function finishPageLoadTransition() {
   document.body.classList.add('loaded');
-
-  // Remove loader if it exists
   const loader = document.querySelector('.page-loader');
   if (loader) {
-    setTimeout(() => {
+    setTimeout(function() {
       loader.classList.add('hidden');
     }, 100);
   }
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', finishPageLoadTransition, { once: true });
+} else {
+  finishPageLoadTransition();
+}
 
 // Navigation toggle functionality - reusable function
 function initNavToggle() {
