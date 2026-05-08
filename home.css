@@ -997,10 +997,11 @@ a.work-link:hover .link-arrow {
 /* ===== PRODUCT DESIGNER ANIMATION ===== */
 .pd-highlight-wrap {
   position: relative;
-  /* Atomic inline box: inline+position:relative fragmented badly with .pd-cursors */
+  /* Atomic inline box; cursors stay out of text-adjacency order for line-box quirks */
   display: inline-block;
   vertical-align: baseline;
-  max-width: 100%;
+  line-height: inherit;
+  overflow: visible;
 }
 
 .pd-highlight {
@@ -1052,8 +1053,9 @@ a.work-link:hover .link-arrow {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 160%;
-  height: 320%;
+  /* Fixed footprint — % height against small inline-blocks caused stray line-gap in WebKit/Blink */
+  width: min(288px, 55vw);
+  height: min(148px, 22vh);
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 2;
@@ -1197,8 +1199,8 @@ a.work-link:hover .link-arrow {
 /* ===== RESPONSIVE — MOBILE (768px) ===== */
 @media (max-width: 768px) {
   .pd-cursors {
-    width: 130%;
-    height: 280%;
+    width: min(240px, 58vw);
+    height: min(128px, 20vh);
   }
 
   .pd-cursor svg {

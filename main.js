@@ -1027,7 +1027,10 @@ function initHomeScrollAnimations() {
         y: 0,
         duration: 0.7,
         ease: 'expo.out',
-        delay: 0.15
+        delay: 0.15,
+        onComplete: function() {
+          gsap.set(heroContent, { clearProps: 'transform' });
+        }
       });
     }
 
