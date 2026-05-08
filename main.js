@@ -814,6 +814,10 @@ function initProductDesignerAnimation() {
   var cursorsContainer = document.querySelector('.pd-cursors');
   if (!highlight || !cursorsContainer) return;
 
+  // Clear any stale cursor children left over from the SPA cache before starting fresh.
+  cursorsContainer.innerHTML = '';
+  highlight.classList.remove('blueprint-active', 'selected');
+
   var isDestroyed = false;
 
   // Figma-style cursor colors
