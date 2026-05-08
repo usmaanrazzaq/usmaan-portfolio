@@ -37,6 +37,15 @@
   align-self: flex-start;
 }
 
+/* Full column width: avoids shrink-to-fit wrap glitches after the PD highlight. */
+.hero-bio-text {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  align-self: stretch;
+  box-sizing: border-box;
+}
+
 .location-city {
   white-space: nowrap;
 }
@@ -988,7 +997,10 @@ a.work-link:hover .link-arrow {
 /* ===== PRODUCT DESIGNER ANIMATION ===== */
 .pd-highlight-wrap {
   position: relative;
-  display: inline;
+  /* Atomic inline box: inline+position:relative fragmented badly with .pd-cursors */
+  display: inline-block;
+  vertical-align: baseline;
+  max-width: 100%;
 }
 
 .pd-highlight {
