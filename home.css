@@ -1000,14 +1000,14 @@ a.work-link:hover .link-arrow {
 .lightbox-close:hover::after { opacity: 0.6; }
 
 /* ===== PRODUCT DESIGNER ANIMATION ===== */
+/* Keeps "a Product Designer" on the same line — the &nbsp; alone wasn't reliable
+   across the inline span boundary, so the engine was splitting after "…a". */
+.pd-bind {
+  white-space: nowrap;
+}
+
 .pd-highlight-wrap {
   position: relative;
-  /*
-   * Must stay `inline`, not inline-block: an inline-block is atomic — if the line
-   * runs out of space after “…a ”, the whole “Product Designer” chunk moves down,
-   * splitting the sentence (“Hi…” on one line, phrase + rest on the next).
-   * Absolute .pd-cursors uses fixed px/vw sizing so % containment bugs don’t apply.
-   */
   display: inline;
   line-height: inherit;
 }
