@@ -702,6 +702,13 @@ a.work-link:hover .link-arrow {
   object-fit: cover;
 }
 
+.cs-visual--split .visual-item video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 @media (hover: hover) {
   .cs-visual .visual-item img:hover {
     opacity: 0.85;

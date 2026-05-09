@@ -78,6 +78,10 @@
                         <span class="active-indicator"></span>
                         <span class="title-text">National Muslim Youth Association</span>
                     </button>
+                    <button type="button" class="work-title" data-work="image-library">
+                        <span class="active-indicator"></span>
+                        <span class="title-text">Image Library</span>
+                    </button>
                     <button type="button" class="work-title" data-work="otrs">
                         <span class="active-indicator"></span>
                         <span class="title-text">On The Run Studio</span>
@@ -86,10 +90,6 @@
                         <span class="active-indicator"></span>
                         <span class="title-text">Adsum NYC</span>
                     </button>
-                  <!--  <button type="button" class="work-title" data-work="image-library">
-                        <span class="active-indicator"></span>
-                        <span class="title-text">Image Library</span>
-                    </button> -->
                 </nav>
             </aside>
 
@@ -590,7 +590,7 @@
                 </div>
             </article>
 
-            <!-- <article class="work-entry work-entry--casestudy" data-work="image-library">
+            <article class="work-entry work-entry--casestudy" data-work="image-library">
                 <div class="cs-header">
                     <div class="cs-header-left">
                         <h2 class="cs-title">Image Library</h2>
@@ -599,11 +599,8 @@
                     <a href="https://image-library-eta.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
                 </div>
                 <p class="cs-subtitle">A browseable archive for curated visual reference and inspiration.</p>
-                <div class="cs-hero-visual">
-                    <picture>
-                        <source srcset="images/projects-figma/image-library.webp" type="image/webp">
-                        <img src="images/projects-figma/image-library.png" alt="Image Library website — archive grid and detail views" width="730" height="443" loading="lazy" decoding="async">
-                    </picture>
+                <div class="cs-hero-visual cs-hero-visual--video">
+                    <video data-src="video/Image-Library.mov" muted loop playsinline preload="none" aria-label="Image Library website — archive grid and detail views"></video>
                 </div>
                 <div class="cs-metadata">
                     <div class="cs-meta-col">
@@ -632,13 +629,33 @@
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Overview</h3>
-                    <p>Image Library started as a way to organize reference images I revisit for client work and personal projects. The live site wraps that collection in a lightweight archive UI—quick to scan, easy to browse, and simple to extend as the library grows.</p>
+                    <p>Image Library started as a way to organize reference images I revisit for personal inspiration and reference for my work. The live site wraps that collection in a lightweight archive UI—quick to scan, easy to browse, and simple to extend as the library grows.</p>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Design & build</h3>
-                    <p>I designed the layout hierarchy and interactions, then built the front end on Netlify around a readable grid system and performance-minded assets. The focus stays on imagery and pacing: dense where it helps exploration, restrained where detail matters.</p>
+                    <p>I designed the layout hierarchy and interactions, built the design system, designed the UI in Figma, before bringing it to life in HTML, CSS, and JavaScript — with images managed through an images.json file. The intent of this project was to create a personal reference library for curated inspiration imagery, kept minimal and distraction-free. Built in collaboration with Cursor and Claude Code, the interface is intentionally paced: dense where exploration benefits from proximity, restrained where individual images deserve space to breathe.</p>
                 </div>
-            </article> -->
+                <div class="cs-visual">
+                    <figure class="visual-item">
+                        <img src="images/Image-Library-Judd.png" alt="Image Library - Judd" loading="lazy" decoding="async">
+                        <figcaption>Image Library - Judd</figcaption>
+                    </figure>
+                </div>
+                <div class="cs-section">
+                    <h3 class="cs-section-heading">Filter Feature</h3>
+                    <p>I implemented a filter feature that allows easy navigation through the images by medium. This is accomplished by using tags in the images.json file to categorize the images. The filters update as I continue to add more images and the new tags get placed in the filter dropdown.</p>
+                </div>
+                <div class="cs-visual cs-visual--split">
+                    <figure class="visual-item">
+                        <img src="images/Image-Library-Filter-SS.png" alt="Image Library Filter" loading="lazy" decoding="async">
+                        <figcaption>Image Library Filter UI</figcaption>
+                    </figure>
+                    <figure class="visual-item">
+                        <video data-src="video/Image-Library-Filter.mov" poster="images/Image-Library-Filter.png" muted loop playsinline preload="none" aria-label="Image Library — filter demo"></video>
+                        <figcaption>Image Library Filter in motion</figcaption>
+                    </figure>
+                </div>
+            </article> 
         </section>
     </main>
     
