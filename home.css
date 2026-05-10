@@ -1166,7 +1166,9 @@ a.work-link:hover .link-arrow {
   }
 
   .work-directory.expanded .work-list {
-    max-height: 350px;
+    max-height: min(70vh, 520px);
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     opacity: 1;
     pointer-events: auto;
     padding: 10px 8px 8px 8px;
@@ -1179,10 +1181,20 @@ a.work-link:hover .link-arrow {
     transition: opacity 0.15s ease, transform 0.15s ease;
   }
 
-  .work-directory.expanded .work-title:nth-child(1) { opacity: 1; transform: translateX(0); transition-delay: 0.02s; }
-  .work-directory.expanded .work-title:nth-child(2) { opacity: 1; transform: translateX(0); transition-delay: 0.04s; }
-  .work-directory.expanded .work-title:nth-child(3) { opacity: 1; transform: translateX(0); transition-delay: 0.06s; }
-  .work-directory.expanded .work-title:nth-child(4) { opacity: 1; transform: translateX(0); transition-delay: 0.08s; }
+  /* Show every directory row when expanded (nth-child rules below only stagger delay). */
+  .work-directory.expanded .work-title {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .work-directory.expanded .work-title:nth-child(1) { transition-delay: 0.02s; }
+  .work-directory.expanded .work-title:nth-child(2) { transition-delay: 0.04s; }
+  .work-directory.expanded .work-title:nth-child(3) { transition-delay: 0.06s; }
+  .work-directory.expanded .work-title:nth-child(4) { transition-delay: 0.08s; }
+  .work-directory.expanded .work-title:nth-child(5) { transition-delay: 0.1s; }
+  .work-directory.expanded .work-title:nth-child(6) { transition-delay: 0.12s; }
+  .work-directory.expanded .work-title:nth-child(7) { transition-delay: 0.14s; }
+  .work-directory.expanded .work-title:nth-child(8) { transition-delay: 0.16s; }
 
   .work-entry {
     align-self: center;
