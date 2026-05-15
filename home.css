@@ -268,8 +268,8 @@
   cursor: pointer;
   padding: 4px 7px;
   border-radius: 6px;
-  transition: background-color 0.1s ease,
-              transform 0.2s var(--ease-out-expo);
+  transition: background-color 0.2s ease,
+              transform 0.25s var(--ease-out-expo);
 }
 
 .work-title:hover {
@@ -296,12 +296,11 @@
   font-size: 12px;
   color: #71717a;
   line-height: 1.28;
-  transition: color 0.1s ease;
+  transition: color 0.22s ease;
 }
 
 .work-title.active .title-text {
   color: #09090b;
-  font-weight: 500;
 }
 
 .work-title:hover .title-text {

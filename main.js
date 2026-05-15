@@ -252,6 +252,19 @@ function deactivateEntryMedia(entry) {
   });
 }
 
+// One debounced refresh after work switches — avoids double ScrollTrigger
+// recalculation (rAF + timeout) that caused visible jitter / scroll snap.
+var workSwitchScrollRefreshTimer = null;
+function scheduleWorkScrollRefreshAfterSwitch() {
+  if (typeof ScrollTrigger === 'undefined') return;
+  if (workSwitchScrollRefreshTimer) clearTimeout(workSwitchScrollRefreshTimer);
+  workSwitchScrollRefreshTimer = setTimeout(function() {
+    workSwitchScrollRefreshTimer = null;
+    ScrollTrigger.refresh();
+    if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+  }, 400);
+}
+
 function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
   const directoryHeader = document.querySelector('.directory-header');
@@ -305,19 +318,13 @@ function initWorkDirectory() {
       if (currentEntry && targetEntry && currentEntry !== targetEntry) {
         isSwitching = true;
 
-        // Both entries become display:contents — children overlap in same grid cells
         currentEntry.classList.remove('active');
         currentEntry.classList.add('fading-out');
 
         // Activate new entry — force reflow so the browser registers opacity:0 first
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
-        if (typeof ScrollTrigger !== 'undefined') {
-          requestAnimationFrame(function() {
-            ScrollTrigger.refresh();
-            if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
-          });
-        }
+        scheduleWorkScrollRefreshAfterSwitch();
         // Reset carousel to first slide
         var carousel = targetEntry.querySelector('[data-carousel]');
         if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
@@ -328,13 +335,13 @@ function initWorkDirectory() {
           currentEntry.classList.remove('fading-out');
           deactivateEntryMedia(currentEntry);
           isSwitching = false;
-          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
         }, 320);
 
         // Stagger-in meta groups on the new entry
         if (typeof gsap !== 'undefined') {
           var metaGroups = targetEntry.querySelectorAll('.meta-group');
           if (metaGroups.length) {
+            gsap.killTweensOf(metaGroups);
             gsap.from(metaGroups, {
               opacity: 0,
               y: 10,
@@ -352,12 +359,7 @@ function initWorkDirectory() {
         });
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
-        if (typeof ScrollTrigger !== 'undefined') {
-          requestAnimationFrame(function() {
-            ScrollTrigger.refresh();
-            if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
-          });
-        }
+        scheduleWorkScrollRefreshAfterSwitch();
         var carousel2 = targetEntry.querySelector('[data-carousel]');
         if (carousel2 && carousel2._carouselGoTo) carousel2._carouselGoTo(0, true);
       }
