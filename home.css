@@ -187,6 +187,7 @@
   width: 100%;
   max-width: 100%;
   position: relative;
+  isolation: isolate;
 }
 
 /* Work Directory (sticky sidebar) */
@@ -347,6 +348,8 @@ button.work-title {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  position: relative;
+  z-index: 2;
 }
 
 .work-entry.fading-out {
@@ -355,6 +358,7 @@ button.work-title {
   gap: 20px;
   position: absolute;
   pointer-events: none;
+  z-index: 1;
 }
 
 .work-entry > .work-meta,
@@ -404,6 +408,21 @@ button.work-title {
   opacity: 0;
   transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
   transition-delay: 0s;
+}
+
+/* Case-study copy: shorter outgoing fade + gentler incoming curve so two
+   projects’ text stacks less (DOM order used to paint outgoing on top). */
+.work-entry.fading-out > .cs-subtitle,
+.work-entry.fading-out > .cs-section {
+  transition-duration: 0.2s;
+  transition-timing-function: ease-out;
+}
+
+.work-entry--casestudy > .cs-subtitle,
+.work-entry--casestudy > .cs-section {
+  transition-duration: 0.48s;
+  transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Work Meta */

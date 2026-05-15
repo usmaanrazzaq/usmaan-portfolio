@@ -337,21 +337,6 @@ function initWorkDirectory() {
           isSwitching = false;
         }, 320);
 
-        // Stagger-in meta groups on the new entry
-        if (typeof gsap !== 'undefined') {
-          var metaGroups = targetEntry.querySelectorAll('.meta-group');
-          if (metaGroups.length) {
-            gsap.killTweensOf(metaGroups);
-            gsap.from(metaGroups, {
-              opacity: 0,
-              y: 10,
-              duration: 0.45,
-              ease: 'expo.out',
-              stagger: 0.06,
-              delay: 0.1
-            });
-          }
-        }
       } else if (targetEntry) {
         workEntries.forEach(entry => {
           entry.classList.remove('active');
