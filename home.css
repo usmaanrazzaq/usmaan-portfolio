@@ -672,6 +672,26 @@ a.work-link:hover .link-arrow {
   font-weight: 500;
 }
 
+.cs-section ol,
+.cs-section ul {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: #000;
+  line-height: 1.5;
+  margin: 0;
+  padding-left: 1.25em;
+}
+
+.cs-section ol li,
+.cs-section ul li {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+}
+
 /* Case study inline visuals */
 .cs-visual {
   width: var(--home-visual-max);
@@ -1323,6 +1343,11 @@ a.work-link:hover .link-arrow {
   }
 
   .cs-section p {
+    font-size: 14px;
+  }
+
+  .cs-section ol,
+  .cs-section ul {
     font-size: 14px;
   }
 

@@ -131,11 +131,16 @@
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Overview</h3>
-                    <p>Most people own tools and gear they use once, then store forever. Rented lets neighbors lend and borrow instead — without the friction of classifieds or the overhead of a rental shop. I was sole designer across the full mobile experience: onboarding, browse, product pages, and profiles.</p>
+                    <p>Most people own tools and gear they use once, then store forever. Rented lets neighbors lend and borrow instead. I was sole designer across onboarding, browse, PDPs, and profiles, from November 2024 to engineering handoff in February 2025.</p>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Problem</h3>
-                    <p>The P2P rental market has two failure modes. Apps like Hygglo front-load heavy verification and lose users before they ever browse. Apps like Craigslist skip trust entirely and feel unsafe at stranger-to-stranger scale. Neither handles the person who wants to rent their drill out on Tuesday and borrow a camera on Saturday — same person, two roles, no platform built for both. Those three gaps shaped every design decision in Rented.</p>
+                    <p>The P2P rental market has two failure modes. Apps like Hygglo front-load heavy verification and lose users before they ever browse. Apps like Craigslist skip trust entirely and feel unsafe at stranger-to-stranger scale. Neither handles the person who wants to rent their drill out on Tuesday and borrow a camera on Saturday.</p>
+                    <ol>
+                        <li>Onboarding Friction Most platforms front-load heavy verification or skip it entirely. None balance fast onboarding with trustworthiness.</li>
+                        <li>Two-Sided Role Support No platform handles the renter-to-lister duality well. You're either buying or selling, never both seamlessly.</li>
+                        <li>Cross-Category Browsing Every app struggles to make browsing feel clear across wildly diverse item types — tools, cameras, camping gear, party supplies.</li>
+                    </ol>
                 </div>
                 <div class="cs-visual cs-visual--competitive" data-competitive-analysis>
                     <div class="comp-map">
@@ -220,10 +225,15 @@
                     <figcaption class="comp-caption">Competitive Analysis</figcaption>
                 </div>
                 <div class="cs-section">
-                    <h3 class="cs-section-heading">Core Flow</h3>
-                    <p><strong>Onboarding</strong> The first wireframe pass was conventional — email, password, confirm, submit. It asked for commitment before showing any value, which competitive analysis had already flagged as the main drop-off point for Hygglo. The delivered version leads with the product's value proposition, puts SSO front-and-center (Apple, Google, Facebook), and follows auth with a single category prompt — "What are you renting today?" — that gets a new user browse-ready in under a minute without a verification wall.</p>
-                    <p><strong>Browse</strong> The hardest problem was making explore legible across inventory that has nothing in common. A drill and a party tent belong in the same catalog but require completely different browse contexts. A search-first model assumes you know what you're looking for — that fails for the "I need something for a weekend project" use case. The delivered explore surface uses category-led browsing as the primary entry point, with search available but not mandatory. The main unresolved ask at handoff was filter and sort for mixed inventory. Multi-category browse is not a single-category shop, and I hadn't fully cracked it.</p>
-                    <p><strong>Profiles &amp; Listing</strong> The profile had to hold two identities at once — renter and lister — without forcing a mode switch. The delivered structure uses a tabbed layout (Listed · Currently Renting · History · Reviews) that treats both roles as equal rather than defaulting to one. The PDP leads with imagery, surfaces the lister's profile and rating immediately below — trust at the point of decision, not buried — and keeps listing metadata scannable rather than buried in a long-form description field.</p>
+                    <h3 class="cs-section-heading">Research</h3>
+                    <p>Two rounds of comparative user sessions — Round 1 with 4 participants (3 in-person, 1 async), Round 2 with 3 of the same participants on a revised prototype.</p>
+                    <p>I started by asking how participants used resale platforms they already knew (eBay, Grailed, Depop), then walked them through competitor rental apps before handing them an early Rented prototype to compare directly.</p>
+                    <p>Three patterns held across the sessions:</p>
+                    <ol>
+                        <li><strong>Minimal Search Won:</strong> Cluttered filters and dense forms killed momentum. Participants who used Depop most often cited its search simplicity as the reason.</li>
+                        <li><strong>Role-Switching Is the Point:</strong> Every participant described themselves as someone who'd both list and rent depending on the week. Every competitor forced a buyer-or-seller framing.</li>
+                        <li><strong>Long Catalogs Caused Drop-Off:</strong> Users got fatigued scrolling flat browse surfaces. Multiple asked for "something at the top that's actually for me."</li>
+                    </ol>
                 </div>
                 <div class="cs-visual" data-design-evolution>
                     <div class="evolution-tabs" role="tablist" aria-label="Design stage">
@@ -254,9 +264,26 @@
                     </div>
                 </div>
                 <div class="cs-section">
+                    <h3 class="cs-section-heading">Design Decisions</h3>
+                    <p>Onboarding — SSO front-and-center (Apple, Google, Facebook), followed by a single category prompt — "What are you renting today?" — that gets a new user browse-ready in under a minute without a verification wall.</p>
+                    <p>TProfiles — Tabbed layout (Listed · Currently Renting · History · Reviews) holds both roles as equal rather than defaulting to one. PDP surfaces the lister's profile and rating immediately below the imagery — trust at the point of decision.</p>
+                    <p>Browse — the surface that changed most between rounds.</p>
+                    <p>Round 1 was a flat search-and-scroll catalog. Round 2 added two changes:</p>
+                    <ul>
+                        <li>"Best Match" section above the catalog, surfacing items matched to a user's budget, timeframe, and location. This came directly from Round 1 — users were dropping off in long scrolls and asking for a curated entry point. Round 2 participants engaged with Best Match first in every session.</li>
+                        <li>Suggestion tags above the search input. Not from user requests — from competitive design reference and a judgment call about whitespace and search friction. Round 2 participants used the tags more than direct text input.</li>
+                    </ul>
+                    <p>The unresolved piece — filter and sort across mixed inventory — was the surface I wanted more time on. A drill and a tent need filters that share almost nothing.</p>
+                </div>
+                <div class="cs-section">
                     <h3 class="cs-section-heading">Outcome</h3>
-                    <p>Handoff included a design system, annotated core flows, and an interactive prototype the team could run on their own phones. We aligned on onboarding, profiles, and PDPs. The outstanding ask was a simpler explore with filter and sort for mixed inventory — the surface most likely to drive retention, and the one that needed more cycles. Build paused when engineering reprioritized. The work sharpened how I think about products where the same person plays two roles, catalogs that resist easy categorization, and what it means to design for a small team's real delivery constraints.</p>
-                    <p>What I'd do with more time: usability-test browse and onboarding with real users before handoff, not after. Push explore further — filters, sorts, layout variants for different category densities. Bring the lister path to the same polish as the renter path. Add trust infrastructure — ratings, verification, transaction history — that holds up when a stranger is renting your camera to another stranger.</p>
+                    <p>Handoff included an interactive prototype, a design system and component library, and annotated core flows. We aligned on onboarding, profiles, and PDPs. The outstanding ask was a simpler explore surface with filter and sort for mixed inventory. Build paused when engineering reprioritized.</p>
+                    <p>What I'd push further:</p>
+                    <ul>
+                        <li>More user sessions on browse and filter — 3 participants validated direction, not enough to settle mixed-inventory filtering.</li>
+                        <li>Bring the lister experience to the same fidelity as the renter experience.</li>
+                        <li>Build out trust infrastructure — ratings, verification, transaction history.</li>
+                    </ul>
                 </div>
                 <div class="cs-visual">
                     <figure class="visual-item">
