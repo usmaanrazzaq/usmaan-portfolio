@@ -265,9 +265,23 @@ function scheduleWorkScrollRefreshAfterSwitch() {
   }, 400);
 }
 
+function getWorkEntryHeight(entry) {
+  if (!entry) return 0;
+
+  const wasActive = entry.classList.contains('active');
+  const wasMeasuring = entry.classList.contains('measuring');
+
+  if (!wasActive) entry.classList.add('measuring');
+  const height = entry.offsetHeight;
+  if (!wasActive && !wasMeasuring) entry.classList.remove('measuring');
+
+  return height;
+}
+
 function initWorkDirectory() {
   const workDirectory = document.querySelector('.work-directory');
   const directoryHeader = document.querySelector('.directory-header');
+  const workSection = document.querySelector('.work-section');
   const workTitles = document.querySelectorAll('.work-title');
   const workEntries = document.querySelectorAll('.work-entry');
 
@@ -318,24 +332,38 @@ function initWorkDirectory() {
       if (currentEntry && targetEntry && currentEntry !== targetEntry) {
         isSwitching = true;
 
+        if (workSection) {
+          const stableHeight = Math.max(
+            getWorkEntryHeight(currentEntry),
+            getWorkEntryHeight(targetEntry)
+          );
+          workSection.style.minHeight = `${stableHeight}px`;
+          workSection.classList.add('is-switching');
+        }
+
         currentEntry.classList.remove('active');
         currentEntry.classList.add('fading-out');
 
-        // Activate new entry — force reflow so the browser registers opacity:0 first
-        targetEntry.classList.add('active');
+        // Activate new entry from an explicit opacity:0 state so the crossfade is stable.
+        targetEntry.classList.add('active', 'entering');
         activateEntryMedia(targetEntry);
-        scheduleWorkScrollRefreshAfterSwitch();
         // Reset carousel to first slide
         var carousel = targetEntry.querySelector('[data-carousel]');
         if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
         targetEntry.offsetHeight;
+        targetEntry.classList.remove('entering');
 
         // After the old entry finishes fading out, remove it from the grid
         setTimeout(() => {
           currentEntry.classList.remove('fading-out');
           deactivateEntryMedia(currentEntry);
+          if (workSection) {
+            workSection.classList.remove('is-switching');
+            workSection.style.minHeight = '';
+          }
+          scheduleWorkScrollRefreshAfterSwitch();
           isSwitching = false;
-        }, 320);
+        }, 380);
 
       } else if (targetEntry) {
         workEntries.forEach(entry => {
@@ -1221,4 +1249,3 @@ document.addEventListener('DOMContentLoaded', function() {
   initTimestamp();
   initLocalTime();
 });
-

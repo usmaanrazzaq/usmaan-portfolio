@@ -190,6 +190,10 @@
   isolation: isolate;
 }
 
+.work-section.is-switching {
+  overflow: hidden;
+}
+
 /* Work Directory (sticky sidebar) */
 .work-directory {
   grid-column: 1;
@@ -342,6 +346,8 @@ button.work-title {
   width: 100%;
   padding: 0 var(--home-column-pad-x);
   box-sizing: border-box;
+  opacity: 0;
+  transition: opacity 0.36s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .work-entry.active {
@@ -350,6 +356,11 @@ button.work-title {
   gap: 20px;
   position: relative;
   z-index: 2;
+  opacity: 1;
+}
+
+.work-entry.active.entering {
+  opacity: 0;
 }
 
 .work-entry.fading-out {
@@ -357,8 +368,12 @@ button.work-title {
   flex-direction: column;
   gap: 20px;
   position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
   pointer-events: none;
   z-index: 1;
+  opacity: 0;
 }
 
 .work-entry > .work-meta,
@@ -370,8 +385,8 @@ button.work-title {
 .work-entry--casestudy > .cs-metadata,
 .work-entry--casestudy > .cs-section,
 .work-entry--casestudy > .cs-visual {
-  opacity: 0;
-  transition: opacity 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  opacity: 1;
+  transition: none;
 }
 
 .work-entry.active > .work-meta,
@@ -386,16 +401,6 @@ button.work-title {
   opacity: 1;
 }
 
-.work-entry.active > .work-meta,
-.work-entry.active > .cs-header { transition-delay: 0.03s; }
-.work-entry.active > .work-overview,
-.work-entry.active > .cs-subtitle { transition-delay: 0.06s; }
-.work-entry.active > .work-visuals,
-.work-entry.active > .cs-hero-visual { transition-delay: 0.1s; }
-.work-entry.active > .cs-metadata { transition-delay: 0.14s; }
-.work-entry.active > .cs-section { transition-delay: 0.18s; }
-.work-entry.active > .cs-visual { transition-delay: 0.22s; }
-
 .work-entry.fading-out > .work-meta,
 .work-entry.fading-out > .work-overview,
 .work-entry.fading-out > .work-visuals,
@@ -405,24 +410,24 @@ button.work-title {
 .work-entry.fading-out > .cs-metadata,
 .work-entry.fading-out > .cs-section,
 .work-entry.fading-out > .cs-visual {
-  opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+  opacity: 1;
+  transition: none;
   transition-delay: 0s;
-}
-
-/* Case-study copy: shorter outgoing fade + gentler incoming curve so two
-   projects’ text stacks less (DOM order used to paint outgoing on top). */
-.work-entry.fading-out > .cs-subtitle,
-.work-entry.fading-out > .cs-section {
-  transition-duration: 0.2s;
-  transition-timing-function: ease-out;
 }
 
 .work-entry--casestudy > .cs-subtitle,
 .work-entry--casestudy > .cs-section {
-  transition-duration: 0.48s;
-  transition-timing-function: cubic-bezier(0.33, 1, 0.68, 1);
   -webkit-font-smoothing: antialiased;
+}
+
+.work-entry.measuring {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Work Meta */
@@ -1437,6 +1442,10 @@ a.work-link:hover .link-arrow {
   .work-entry--casestudy > .cs-visual {
     transition-duration: 0.01s !important;
     transition-delay: 0s !important;
+  }
+
+  .work-entry {
+    transition-duration: 0.01s !important;
   }
 
   .index-link,
