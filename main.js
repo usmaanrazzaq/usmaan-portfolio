@@ -1017,6 +1017,116 @@ function initScrollHint() {
   onScroll();
 }
 
+// Inspiration links — floating source-preview card that follows the cursor
+function initInspirationPreview() {
+  var links = document.querySelectorAll('.inspiration-link[data-preview-domain]');
+  if (!links.length) return;
+
+  // Pointer-driven enhancement only — leave touch/coarse pointers untouched
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Reuse the shared card across SPA navigations so it never stacks
+  var card = document.getElementById('inspiration-preview-card');
+  if (!card) {
+    card = document.createElement('div');
+    card.id = 'inspiration-preview-card';
+    card.className = 'inspiration-preview';
+    card.setAttribute('aria-hidden', 'true');
+    card.innerHTML =
+      '<div class="inspiration-preview-source">' +
+        '<img class="inspiration-preview-favicon" alt="" width="16" height="16">' +
+        '<span class="inspiration-preview-domain"></span>' +
+      '</div>' +
+      '<span class="inspiration-preview-title"></span>';
+    document.body.appendChild(card);
+  }
+
+  var faviconEl = card.querySelector('.inspiration-preview-favicon');
+  var domainEl = card.querySelector('.inspiration-preview-domain');
+  var titleEl = card.querySelector('.inspiration-preview-title');
+  faviconEl.onerror = function() { faviconEl.style.display = 'none'; };
+
+  var OFFSET = 18;
+  var EDGE = 12;
+  var targetX = 0, targetY = 0, curX = 0, curY = 0;
+  var rafId = null;
+  var tracking = false;
+
+  function place(x, y) {
+    var w = card.offsetWidth || 220;
+    var h = card.offsetHeight || 80;
+    var px = x + OFFSET;
+    var py = y + OFFSET;
+    if (px + w + EDGE > window.innerWidth) px = x - w - OFFSET;
+    if (py + h + EDGE > window.innerHeight) py = y - h - OFFSET;
+    card.style.left = Math.max(EDGE, px) + 'px';
+    card.style.top = Math.max(EDGE, py) + 'px';
+  }
+
+  function loop() {
+    curX += (targetX - curX) * 0.18;
+    curY += (targetY - curY) * 0.18;
+    place(curX, curY);
+    rafId = tracking ? requestAnimationFrame(loop) : null;
+  }
+
+  function showCard(link) {
+    var domain = link.getAttribute('data-preview-domain');
+    domainEl.textContent = domain;
+    titleEl.textContent = link.textContent.trim();
+    faviconEl.style.display = '';
+    faviconEl.src = 'https://www.google.com/s2/favicons?domain=' +
+      encodeURIComponent(domain) + '&sz=64';
+    card.classList.add('is-visible');
+  }
+
+  function hideCard() {
+    tracking = false;
+    card.classList.remove('is-visible');
+  }
+
+  links.forEach(function(link) {
+    link.addEventListener('mouseenter', function(e) {
+      showCard(link);
+      targetX = curX = e.clientX;
+      targetY = curY = e.clientY;
+      place(curX, curY);
+      if (!reduceMotion) {
+        tracking = true;
+        if (!rafId) rafId = requestAnimationFrame(loop);
+      }
+    });
+
+    link.addEventListener('mousemove', function(e) {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      if (reduceMotion) {
+        curX = targetX;
+        curY = targetY;
+        place(curX, curY);
+      }
+    });
+
+    link.addEventListener('mouseleave', hideCard);
+
+    // Keyboard support — anchor the card just below the focused link
+    link.addEventListener('focus', function() {
+      showCard(link);
+      tracking = false;
+      var r = link.getBoundingClientRect();
+      var h = card.offsetHeight || 80;
+      var top = r.bottom + 8;
+      if (top + h + EDGE > window.innerHeight) top = r.top - h - 8;
+      card.style.left = Math.max(EDGE, r.left) + 'px';
+      card.style.top = Math.max(EDGE, top) + 'px';
+    });
+
+    link.addEventListener('blur', hideCard);
+  });
+}
+
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   if (page === 'home') {
@@ -1036,6 +1146,7 @@ function initPageHooks(page) {
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
   } else if (page === 'about') {
     initDropdowns();
+    initInspirationPreview();
   }
   // Show/hide home-only fixed elements
   var scrollHint = document.querySelector('.scroll-hint');
@@ -1248,4 +1359,10 @@ document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('spa-content')) return;
   initTimestamp();
   initLocalTime();
+});
+
+// Inspiration preview card - only on non-SPA pages
+document.addEventListener('DOMContentLoaded', function() {
+  if (document.getElementById('spa-content')) return;
+  initInspirationPreview();
 });
