@@ -289,28 +289,33 @@
   }
 
   .experience-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 3px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    column-gap: 12px;
+    row-gap: 3px;
     padding: 12px 0;
+    align-items: start;
   }
 
   .experience-row .exp-col:first-child {
     font-weight: 400;
-    flex-basis: 60%;
+    grid-column: 1;
+    grid-row: 1;
   }
 
   .experience-row .exp-col:nth-child(2) {
-    flex-basis: 60%;
-    order: 3;
+    grid-column: 1;
+    grid-row: 2;
   }
 
   .experience-row .exp-year {
+    grid-column: 2;
+    grid-row: 1 / -1;
     text-align: right;
-    flex-basis: auto;
-    order: 2;
+    align-self: start;
+    width: auto;
+    white-space: nowrap;
   }
 }
 
