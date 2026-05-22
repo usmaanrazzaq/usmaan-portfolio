@@ -11,7 +11,7 @@ body {
   margin: 15px;
   padding: 0;
   background-color: #ffffff;
-  font-family: 'Helvetica Neue', system-ui, sans-serif;
+  font-family: 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   color: #000000;
 }
@@ -307,8 +307,6 @@ html {
   width: 100%;
   max-width: min(1100px, 100%);
   margin: 1.5rem 0;
-  border-radius: 10px;
-  overflow: hidden;
   min-width: 0;
 }
 
@@ -316,6 +314,8 @@ html {
   margin: 0;
   width: 100%;
   min-width: 0;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 .cs-visual .visual-item img {
@@ -518,5 +518,80 @@ footer span {
 
   .cs-visual--row {
     grid-template-columns: 1fr;
+  }
+}
+
+/* ===== IMAGE LIGHTBOX OVERLAY ===== */
+.lightbox-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  cursor: zoom-out;
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-overlay img {
+  max-width: 90vw;
+  max-height: 85vh;
+  object-fit: contain;
+  border-radius: 4px;
+  transform: scale(0.95);
+  transition: transform 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lightbox-overlay.active img {
+  transform: scale(1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.lightbox-close::before,
+.lightbox-close::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 1.5px;
+  background: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.lightbox-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.lightbox-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.lightbox-close:hover::before,
+.lightbox-close:hover::after { opacity: 0.6; }
+
+.lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-overlay,
+  .lightbox-overlay img {
+    transition: none;
   }
 }

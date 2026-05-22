@@ -325,45 +325,58 @@ function initWorkDirectory() {
 
       const currentEntry = document.querySelector('.work-entry.active');
       const targetEntry = document.querySelector(`.work-entry[data-work="${targetWork}"]`);
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       workTitles.forEach(t => t.classList.remove('active'));
       this.classList.add('active');
 
-      if (currentEntry && targetEntry && currentEntry !== targetEntry) {
+      if (currentEntry && targetEntry && currentEntry !== targetEntry && !prefersReduced) {
         isSwitching = true;
 
+        // Phase 0 — capture heights before any class change. Delta math keeps the
+        // section's padding constant across the responsive breakpoints.
+        var startHeight = workSection ? workSection.offsetHeight : 0;
+        var endHeight = startHeight
+          - getWorkEntryHeight(currentEntry)
+          + getWorkEntryHeight(targetEntry);
+
         if (workSection) {
-          const stableHeight = Math.max(
-            getWorkEntryHeight(currentEntry),
-            getWorkEntryHeight(targetEntry)
-          );
-          workSection.style.minHeight = `${stableHeight}px`;
+          workSection.style.height = `${startHeight}px`;
           workSection.classList.add('is-switching');
         }
 
+        // Phase 1 — fade the current entry out (stays in normal flow).
         currentEntry.classList.remove('active');
-        currentEntry.classList.add('fading-out');
+        currentEntry.classList.add('is-leaving');
 
-        // Activate new entry from an explicit opacity:0 state so the crossfade is stable.
-        targetEntry.classList.add('active', 'entering');
-        activateEntryMedia(targetEntry);
-        // Reset carousel to first slide
-        var carousel = targetEntry.querySelector('[data-carousel]');
-        if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
-        targetEntry.offsetHeight;
-        targetEntry.classList.remove('entering');
-
-        // After the old entry finishes fading out, remove it from the grid
         setTimeout(() => {
-          currentEntry.classList.remove('fading-out');
+          // Phase 2 — current entry is fully out; bring the target entry in.
+          currentEntry.classList.remove('is-leaving');
           deactivateEntryMedia(currentEntry);
-          if (workSection) {
-            workSection.classList.remove('is-switching');
-            workSection.style.minHeight = '';
-          }
-          scheduleWorkScrollRefreshAfterSwitch();
-          isSwitching = false;
-        }, 380);
+
+          targetEntry.classList.add('active', 'entering');
+          activateEntryMedia(targetEntry);
+          var carousel = targetEntry.querySelector('[data-carousel]');
+          if (carousel && carousel._carouselGoTo) carousel._carouselGoTo(0, true);
+          targetEntry.offsetHeight;
+
+          // Ease the section height to the target alongside the fade-in.
+          if (workSection) workSection.style.height = `${endHeight}px`;
+
+          requestAnimationFrame(() => {
+            targetEntry.classList.remove('entering');
+          });
+
+          // Phase 3 — cleanup once the fade-in + height transition settle.
+          setTimeout(() => {
+            if (workSection) {
+              workSection.classList.remove('is-switching');
+              workSection.style.height = '';
+            }
+            scheduleWorkScrollRefreshAfterSwitch();
+            isSwitching = false;
+          }, 300);
+        }, 200);
 
       } else if (targetEntry) {
         workEntries.forEach(entry => {

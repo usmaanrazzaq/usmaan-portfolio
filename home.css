@@ -191,7 +191,8 @@
 }
 
 .work-section.is-switching {
-  overflow: hidden;
+  overflow: clip;
+  transition: height 0.25s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 /* Work Directory (sticky sidebar) */
@@ -347,7 +348,7 @@ button.work-title {
   padding: 0 var(--home-column-pad-x);
   box-sizing: border-box;
   opacity: 0;
-  transition: opacity 0.36s cubic-bezier(0.33, 1, 0.68, 1);
+  transition: opacity 0.26s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .work-entry.active {
@@ -363,17 +364,15 @@ button.work-title {
   opacity: 0;
 }
 
-.work-entry.fading-out {
+.work-entry.is-leaving {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  position: absolute;
-  top: 14px;
-  left: 50%;
-  transform: translateX(-50%);
-  pointer-events: none;
+  position: relative;
   z-index: 1;
+  pointer-events: none;
   opacity: 0;
+  transition: opacity 0.18s cubic-bezier(0.33, 1, 0.68, 1);
 }
 
 .work-entry > .work-meta,
@@ -399,20 +398,6 @@ button.work-title {
 .work-entry.active > .cs-section,
 .work-entry.active > .cs-visual {
   opacity: 1;
-}
-
-.work-entry.fading-out > .work-meta,
-.work-entry.fading-out > .work-overview,
-.work-entry.fading-out > .work-visuals,
-.work-entry.fading-out > .cs-header,
-.work-entry.fading-out > .cs-subtitle,
-.work-entry.fading-out > .cs-hero-visual,
-.work-entry.fading-out > .cs-metadata,
-.work-entry.fading-out > .cs-section,
-.work-entry.fading-out > .cs-visual {
-  opacity: 1;
-  transition: none;
-  transition-delay: 0s;
 }
 
 .work-entry--casestudy > .cs-subtitle,
@@ -1446,6 +1431,10 @@ a.work-link:hover .link-arrow {
 
   .work-entry {
     transition-duration: 0.01s !important;
+  }
+
+  .work-section.is-switching {
+    transition: none !important;
   }
 
   .index-link,

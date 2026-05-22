@@ -32,10 +32,11 @@ window.addEventListener('load', function() {
 
 // Initialize scroll animations and interactive components
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof initScrollAnimations === 'function') initScrollAnimations();
+    if (typeof initScrollAnimations === 'function') initScrollAnimations({ heroParallax: false });
     if (typeof initImageCompare === 'function') initImageCompare();
     if (typeof initStatCounters === 'function') initStatCounters();
     if (typeof initAnnotatedImages === 'function') initAnnotatedImages();
+    if (typeof initLightbox === 'function') initLightbox();
 });
 
 // Directory scrolling functionality
