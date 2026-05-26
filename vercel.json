@@ -3,27 +3,27 @@
   "rewrites": [
     {
       "source": "/about",
-      "destination": "/index.html"
+      "destination": "/index"
     },
     {
       "source": "/about/",
-      "destination": "/index.html"
+      "destination": "/index"
     },
     {
       "source": "/contact",
-      "destination": "/index.html"
+      "destination": "/index"
     },
     {
       "source": "/contact/",
-      "destination": "/index.html"
+      "destination": "/index"
     },
     {
       "source": "/projects",
-      "destination": "/index.html"
+      "destination": "/index"
     },
     {
       "source": "/projects/",
-      "destination": "/index.html"
+      "destination": "/index"
     }
   ]
 }
