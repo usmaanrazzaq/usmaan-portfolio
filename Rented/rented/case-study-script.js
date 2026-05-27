@@ -111,7 +111,7 @@ function openLightbox(container) {
     const img = container.querySelector('img');
     const overlay = document.getElementById('lightbox');
     const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = img.src;
+    lightboxImg.src = img.currentSrc || img.src;
     lightboxImg.alt = img.alt;
     overlay.classList.add('active');
     document.body.style.overflow = 'hidden';
