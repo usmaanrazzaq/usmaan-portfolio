@@ -555,15 +555,17 @@ a.work-link:hover .link-arrow {
   align-items: center;
   justify-content: center;
   gap: 5px;
-  padding: 5px 15px;
-  border-radius: 50px;
+  padding: 3px 10px;
+  border-radius: 15px;
   border: 1px solid transparent;
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: 15px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: 300;
+  font-size: 12px;
   line-height: normal;
+  letter-spacing: 0;
   white-space: nowrap;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .cs-badge--case-study {
@@ -585,13 +587,13 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-badge--case-study .cs-badge__icon {
-  width: 15px;
-  height: 20px;
+  width: 11px;
+  height: 15px;
 }
 
 .cs-badge--project .cs-badge__icon {
-  width: 18px;
-  height: 18px;
+  width: 10px;
+  height: 10px;
 }
 
 .cs-subtitle {
