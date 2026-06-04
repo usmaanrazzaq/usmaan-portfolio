@@ -553,20 +553,45 @@ a.work-link:hover .link-arrow {
 .cs-badge {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 5px;
-  padding: 3px 10px;
-  border-radius: 15px;
-  background: rgba(118, 118, 118, 0.15);
-  border: 1px solid rgba(118, 118, 118, 0.1);
+  padding: 5px 15px;
+  border-radius: 50px;
+  border: 1px solid transparent;
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 12px;
-  color: #767676;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: normal;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.cs-badge svg {
+.cs-badge--case-study {
+  background: rgba(53, 104, 179, 0.25);
+  border-color: rgba(53, 104, 179, 0.5);
+  color: #3568b3;
+}
+
+.cs-badge--project {
+  background: rgba(138, 56, 245, 0.15);
+  border-color: rgba(138, 56, 245, 0.5);
+  color: #8a38f5;
+}
+
+.cs-badge__icon {
+  display: block;
   flex-shrink: 0;
+  object-fit: contain;
+}
+
+.cs-badge--case-study .cs-badge__icon {
+  width: 15px;
+  height: 20px;
+}
+
+.cs-badge--project .cs-badge__icon {
+  width: 18px;
+  height: 18px;
 }
 
 .cs-subtitle {
