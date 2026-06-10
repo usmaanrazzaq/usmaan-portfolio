@@ -21,7 +21,7 @@
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
     <link rel="stylesheet" href="styles.css?v=20260228">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260521-workfix">
+    <link rel="stylesheet" href="home.css?v=20260609-charts">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260521-revert" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
@@ -449,6 +449,62 @@
                     <p>My time with the National Muslim Youth Association concluded in November 2025.</p>
                 </div>
                 <div class="cs-visual cs-visual--chart">
+                    <div class="chart-card" data-chart="nmya-visitors">
+                        <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing returning visitors growing 10 to 15 percent and page views increasing 15 percent after launch">
+                            <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                            <text x="48" y="44" text-anchor="end" class="chart-label">+15%</text>
+                            <text x="48" y="114" text-anchor="end" class="chart-label">+10%</text>
+                            <text x="48" y="184" text-anchor="end" class="chart-label">+5%</text>
+                            <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                            <defs>
+                                <linearGradient id="chartGradientViews" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                                </linearGradient>
+                                <linearGradient id="chartGradientVisitors" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#5BA88C" stop-opacity="0.15"/>
+                                    <stop offset="100%" stop-color="#5BA88C" stop-opacity="0.02"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart-area" d="M80,236 L152,215 L224,187 L296,152 L368,110 L440,68 L490,40 L490,250 L80,250 Z" fill="url(#chartGradientViews)"/>
+                            <path class="chart-area" d="M80,243 L152,229 L224,208 L296,180 L368,145 L440,110 L490,82 L490,250 L80,250 Z" fill="url(#chartGradientVisitors)"/>
+                            <polyline class="chart-line" points="80,243 152,229 224,208 296,180 368,145 440,110 490,82" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <polyline class="chart-line" points="80,236 152,215 224,187 296,152 368,110 440,68 490,40" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <g class="chart-dots">
+                                <circle cx="80" cy="243" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="152" cy="229" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="224" cy="208" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="296" cy="180" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="368" cy="145" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="440" cy="110" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="490" cy="82" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                            </g>
+                            <g class="chart-dots">
+                                <circle cx="80" cy="236" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="152" cy="215" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="224" cy="187" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="296" cy="152" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="440" cy="68" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            </g>
+                            <line x1="84" y1="56" x2="106" y2="56" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round"/>
+                            <text x="112" y="60" class="chart-label">Page views</text>
+                            <line x1="84" y1="76" x2="106" y2="76" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round"/>
+                            <text x="112" y="80" class="chart-label">Returning visitors</text>
+                            <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                            <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                            <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                            <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                            <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                            <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                            <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+                            <text x="275" y="308" text-anchor="middle" class="chart-caption">Returning visitors &amp; page views post-launch (2024)</text>
+                        </svg>
+                    </div>
                     <div class="chart-card" data-chart="nmya-engagement">
                         <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
                             <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
@@ -707,8 +763,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script src="shared/interactive-components.js?v=20260504-chart"></script>
-    <script src="main.js?v=20260521-workfix"></script>
+    <script src="shared/interactive-components.js?v=20260609-charts"></script>
+    <script src="main.js?v=20260609-charts"></script>
 </body>
 
 </html>
