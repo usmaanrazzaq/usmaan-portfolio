@@ -721,19 +721,21 @@ function initCarousels() {
 
 // ===== CHART ANIMATION =====
 function initChartAnimation(chart) {
-  var line = chart.querySelector('.chart-line');
-  if (!line) return;
+  var lines = chart.querySelectorAll('.chart-line');
+  if (!lines.length) return;
 
-  // Measure the polyline length and set the CSS variable
-  var length = 0;
-  try {
-    length = line.getTotalLength();
-  } catch (e) {
-    length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
-  }
-  line.style.setProperty('--chart-length', length);
-  line.style.strokeDasharray = length;
-  line.style.strokeDashoffset = length;
+  // Measure each polyline length and set the CSS variable
+  lines.forEach(function(line) {
+    var length = 0;
+    try {
+      length = line.getTotalLength();
+    } catch (e) {
+      length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
+    }
+    line.style.setProperty('--chart-length', length);
+    line.style.strokeDasharray = length;
+    line.style.strokeDashoffset = length;
+  });
 
   // Force reflow so the browser registers the initial state
   chart.offsetHeight;

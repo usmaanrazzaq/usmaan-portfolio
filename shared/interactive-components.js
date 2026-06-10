@@ -214,18 +214,20 @@ function initAnnotatedImages() {
 // Measures polyline length, sets CSS vars, then adds .chart-animated to trigger CSS transitions.
 // Called from carousel goTo() on homepage, and via ScrollTrigger on case study pages.
 function initChartAnimation(chart) {
-  var line = chart.querySelector('.chart-line');
-  if (!line) return;
+  var lines = chart.querySelectorAll('.chart-line');
+  if (!lines.length) return;
 
-  var length = 0;
-  try {
-    length = line.getTotalLength();
-  } catch (e) {
-    length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
-  }
-  line.style.setProperty('--chart-length', length);
-  line.style.strokeDasharray = length;
-  line.style.strokeDashoffset = length;
+  lines.forEach(function(line) {
+    var length = 0;
+    try {
+      length = line.getTotalLength();
+    } catch (e) {
+      length = parseFloat(line.style.getPropertyValue('--chart-length')) || 1000;
+    }
+    line.style.setProperty('--chart-length', length);
+    line.style.strokeDasharray = length;
+    line.style.strokeDashoffset = length;
+  });
 
   // Force reflow so the browser registers the initial state
   chart.offsetHeight;
