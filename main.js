@@ -445,10 +445,17 @@ function initTimestamp() {
   // Availability indicator removed in v6 layout — no-op
 }
 
-// ===== LOCAL TIME =====
+// ===== LOCAL TIME + LIVING STATUS MODULE =====
+// SPA-safe: initLocalTime runs on every home init, so clear any prior interval
+// before starting a new one — otherwise intervals stack and the pulse multi-fires.
+var _localTimeInterval = null;
+
 function initLocalTime() {
   const el = document.getElementById('local-time');
   if (!el) return;
+
+  const live = document.querySelector('.hero-live');
+  const dayNight = document.querySelector('.hero-daynight');
 
   let prev = '';
 
@@ -472,10 +479,30 @@ function initLocalTime() {
     }).join('');
 
     prev = now;
+
+    // Day/night glyph — reflect the current New York hour (24h).
+    if (dayNight) {
+      const h = parseInt(new Date().toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        hour: 'numeric',
+        hour12: false,
+      }), 10);
+      const isDay = h >= 7 && h < 19;
+      dayNight.classList.toggle('is-day', isDay);
+      dayNight.classList.toggle('is-night', !isDay);
+    }
+
+    // Live pulse — restart the beat in sync with the tick (reflow trick).
+    if (live) {
+      live.classList.remove('is-beating');
+      void live.offsetWidth;
+      live.classList.add('is-beating');
+    }
   }
 
   update();
-  setInterval(update, 1000);
+  clearInterval(_localTimeInterval);
+  _localTimeInterval = setInterval(update, 1000);
 }
 
 // ===== IMAGE LIGHTBOX =====
@@ -744,210 +771,67 @@ function initChartAnimation(chart) {
   chart.classList.add('chart-animated');
 }
 
-// ===== PRODUCT DESIGNER CURSOR + BLUEPRINT ANIMATION =====
+// ===== PRODUCT DESIGNER CARET + SELECTION ANIMATION =====
+// A single blinking I-beam caret sweeps across "Product Designer", growing a
+// selection tint behind it, rests selected, then rewinds — on a loop.
+// Robust by construction: two persistent elements (already in the static HTML,
+// so the SPA cache can't accumulate stale nodes), percentage-based geometry that
+// self-aligns to the text, and ONE repeating timeline to kill on cleanup.
+var _pdTimeline = null;
+
 function initProductDesignerAnimation() {
   if (typeof gsap === 'undefined') return;
 
-  var highlight = document.querySelector('.pd-highlight');
-  var cursorsContainer = document.querySelector('.pd-cursors');
-  if (!highlight || !cursorsContainer) return;
+  var wrap = document.querySelector('.pd-highlight-wrap');
+  var selection = document.querySelector('.pd-selection');
+  var caret = document.querySelector('.pd-caret');
+  if (!wrap || !selection || !caret) return;
 
-  // Clear any stale cursor children left over from the SPA cache before starting fresh.
-  cursorsContainer.innerHTML = '';
-  highlight.classList.remove('blueprint-active', 'selected');
-
-  var isDestroyed = false;
-
-  // Figma-style cursor colors
-  // [0] purple = the one that highlights/selects text
-  // [1] green = the one that clicks
-  // [2] orange-red, [3] blue = background cursors
-  var cursorColors = ['#7B61FF', '#0FA958', '#F24822', '#1ABCFE'];
-
-  function cursorSVG(color) {
-    return '<svg viewBox="0 0 14 18" fill="none" xmlns="http://www.w3.org/2000/svg">' +
-      '<path d="M0.5 0.5L13 10.5H6.5L3.5 17.5L0.5 0.5Z" fill="' + color + '" stroke="' + color + '" stroke-width="0.5" stroke-linejoin="round"/>' +
-      '</svg>';
+  // Idempotent: tear down any prior run before re-arming (handles SPA re-entry).
+  if (_pdTimeline) {
+    _pdTimeline.kill();
+    _pdTimeline = null;
   }
+  gsap.set([selection, caret], { clearProps: 'all' });
+  wrap.classList.remove('is-sweeping');
+  wrap.classList.add('pd-anim-on');
 
-  function runSequence(isFirstRun) {
-    if (isDestroyed) return;
+  var tl = gsap.timeline({
+    repeat: -1,
+    repeatDelay: 0.9,
+    delay: 1.2,
+    defaults: { ease: 'power2.inOut' }
+  });
+  _pdTimeline = tl;
 
-    // Create cursor elements fresh each cycle
-    var cursorEls = [];
-    cursorColors.forEach(function(color) {
-      var el = document.createElement('div');
-      el.className = 'pd-cursor';
-      el.innerHTML = cursorSVG(color);
-      cursorsContainer.appendChild(el);
-      cursorEls.push(el);
-    });
+  // Reset to the start state at the top of every cycle.
+  tl.set(caret, { left: '0%' });
+  tl.set(selection, { scaleX: 0, transformOrigin: 'left center' });
 
-    // Create click pulse element (appears when green cursor clicks)
-    var clickPulse = document.createElement('div');
-    clickPulse.className = 'pd-cursor-click';
-    cursorsContainer.appendChild(clickPulse);
+  // Caret blinks at the start of the word for a beat.
+  tl.to({}, { duration: 0.6 });
 
-    // Positions
-    var entryPositions = [
-      { x: -70, y: -55 },
-      { x: 85, y: -45 },
-      { x: 95, y: 65 },
-      { x: -60, y: 70 }
-    ];
+  // Sweep: caret solid (via .is-sweeping) glides right while the tint grows.
+  tl.call(function() { wrap.classList.add('is-sweeping'); });
+  tl.to(caret, { left: '100%', duration: 0.7 });
+  tl.to(selection, { scaleX: 1, duration: 0.7 }, '<');
+  tl.call(function() { wrap.classList.remove('is-sweeping'); });
 
-    var hoverPositions = [
-      { x: -35, y: -20 },
-      { x: 45, y: -18 },
-      { x: 50, y: 25 },
-      { x: -30, y: 28 }
-    ];
+  // Hold fully selected — caret blinks at the end of the word.
+  tl.to({}, { duration: 3.0 });
 
-    var exitPositions = [
-      { x: -80, y: -65 },
-      { x: 100, y: -55 },
-      { x: 110, y: 75 },
-      { x: -75, y: 80 }
-    ];
+  // Rewind: tint retracts and caret returns to the start together.
+  tl.to(selection, { scaleX: 0, duration: 0.45, ease: 'power2.in' });
+  tl.to(caret, { left: '0%', duration: 0.4, ease: 'power2.in' }, '<0.1');
 
-    // The purple cursor drags across text (starts left of text, ends right)
-    var selectStart = { x: -40, y: 2 };
-    var selectEnd = { x: 42, y: 2 };
-
-    // The green cursor clicks on the text center
-    var clickTarget = { x: 5, y: 5 };
-
-    // Set initial positions
-    cursorEls.forEach(function(el, i) {
-      gsap.set(el, {
-        left: '50%',
-        top: '50%',
-        x: entryPositions[i].x,
-        y: entryPositions[i].y,
-        opacity: 0
-      });
-    });
-    gsap.set(clickPulse, { left: '50%', top: '50%', x: clickTarget.x, y: clickTarget.y, scale: 0, opacity: 0 });
-
-    // Reset text state
-    highlight.classList.remove('blueprint-active', 'selected');
-
-    var tl = gsap.timeline({ delay: isFirstRun ? 1.4 : 0 });
-
-    // --- Phase 1: Cursors float in ---
-    cursorEls.forEach(function(el, i) {
-      tl.to(el, {
-        x: hoverPositions[i].x,
-        y: hoverPositions[i].y,
-        opacity: 1,
-        duration: 0.6,
-        ease: 'expo.out'
-      }, i * 0.1);
-    });
-
-    // --- Phase 2: Purple cursor drags across text to select it ---
-    // Move purple cursor to start of text
-    tl.to(cursorEls[0], {
-      x: selectStart.x,
-      y: selectStart.y,
-      duration: 0.4,
-      ease: 'power2.inOut'
-    }, '>+0.3');
-
-    // Start the highlight as purple begins dragging
-    tl.call(function() {
-      highlight.classList.add('selected');
-    });
-
-    // Purple cursor drags to end of text (the selection gesture)
-    tl.to(cursorEls[0], {
-      x: selectEnd.x,
-      y: selectEnd.y,
-      duration: 0.6,
-      ease: 'power1.inOut'
-    });
-
-    // --- Phase 3: Green cursor moves in and clicks ---
-    // Brief pause so selection is visible
-    tl.to(cursorEls[1], {
-      x: clickTarget.x,
-      y: clickTarget.y,
-      duration: 0.4,
-      ease: 'power2.out'
-    }, '>+0.3');
-
-    // Click effect — small cursor bounce + pulse ring
-    tl.to(cursorEls[1], {
-      scale: 0.85,
-      duration: 0.08,
-      ease: 'power2.in'
-    });
-    tl.to(clickPulse, {
-      scale: 2.5,
-      opacity: 0.6,
-      duration: 0.15,
-      ease: 'power1.out'
-    }, '<');
-    tl.to(cursorEls[1], {
-      scale: 1,
-      duration: 0.12,
-      ease: 'power2.out'
-    });
-    tl.to(clickPulse, {
-      scale: 4,
-      opacity: 0,
-      duration: 0.3,
-      ease: 'power1.out'
-    }, '<');
-
-    // --- Phase 4: Click triggers wireframe transformation ---
-    tl.call(function() {
-      highlight.classList.remove('selected');
-      highlight.classList.add('blueprint-active');
-    });
-
-    // --- Phase 5: All cursors exit the frame ---
-    tl.addLabel('exit', '>+0.2');
-    cursorEls.forEach(function(el, i) {
-      tl.to(el, {
-        x: exitPositions[i].x,
-        y: exitPositions[i].y,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.in'
-      }, 'exit+=' + (i * 0.08));
-    });
-
-    // --- Phase 6: Hold wireframe visible, then reset and loop ---
-    tl.call(function() {
-      // Clean up cursor elements
-      cursorEls.forEach(function(el) { el.remove(); });
-      clickPulse.remove();
-
-      // Wait a few seconds, then restart
-      if (!isDestroyed) {
-        gsap.delayedCall(5, function() {
-          if (!isDestroyed) {
-            highlight.classList.remove('blueprint-active');
-            // Small pause before restarting so the text returns to normal
-            gsap.delayedCall(0.8, function() {
-              if (!isDestroyed) runSequence(false);
-            });
-          }
-        });
-      }
-    }, null, '>+0.3');
-  }
-
-  // Kick off the first run
-  runSequence(true);
-
-  // Store cleanup for SPA navigation
+  // Cleanup for SPA navigation.
   window._pdAnimationCleanup = function() {
-    isDestroyed = true;
-    gsap.killTweensOf(cursorsContainer.children);
-    cursorsContainer.innerHTML = '';
-    highlight.classList.remove('blueprint-active', 'selected');
+    if (_pdTimeline) {
+      _pdTimeline.kill();
+      _pdTimeline = null;
+    }
+    gsap.set([selection, caret], { clearProps: 'all' });
+    wrap.classList.remove('pd-anim-on', 'is-sweeping');
     window._pdAnimationCleanup = null;
   };
 }
@@ -976,7 +860,7 @@ function initHomeScrollAnimations() {
       });
     }
 
-    // Product Designer cursor + blueprint animation
+    // Product Designer caret + selection animation
     initProductDesignerAnimation();
 
     // Work section scroll reveal
