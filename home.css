@@ -37,6 +37,58 @@
   align-self: flex-start;
 }
 
+/* Live status dot — cobalt LED that beats once per second, in sync with the clock.
+   JS re-triggers the beat each tick via the .is-beating class (reflow restart). */
+.hero-live {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2f5bea;
+  flex-shrink: 0;
+  position: relative;
+}
+
+.hero-live::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: #2f5bea;
+  opacity: 0;
+}
+
+.hero-live.is-beating::after {
+  animation: hero-live-beat 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes hero-live-beat {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(2.6); opacity: 0; }
+  100% { transform: scale(2.6); opacity: 0; }
+}
+
+/* Day/night glyph — reflects current New York time; JS toggles is-day / is-night. */
+.hero-daynight {
+  display: inline-flex;
+  align-items: center;
+  color: #767676;
+  flex-shrink: 0;
+  margin-left: 2px;
+}
+
+.hero-daynight svg {
+  display: none;
+  transition: opacity 0.4s ease;
+}
+
+.hero-daynight.is-day .dn-sun {
+  display: block;
+}
+
+.hero-daynight.is-night .dn-moon {
+  display: block;
+}
+
 /* Full column width: avoids shrink-to-fit wrap glitches after the PD highlight. */
 .hero-bio-text {
   width: 100%;
@@ -155,18 +207,21 @@
 .connect-links a[aria-label="Instagram"] { --icon-glow: rgba(228, 64, 95, 0.5); }
 .connect-links a[aria-label="GitHub"] { --icon-glow: rgba(23, 21, 21, 0.35); }
 .connect-links a[aria-label="X (Twitter)"] { --icon-glow: rgba(0, 0, 0, 0.35); }
+.connect-links a[aria-label="Resume"] { --icon-glow: rgba(43, 43, 43, 0.35); }
 
 @media (hover: hover) {
   .connect-links a[aria-label="LinkedIn"]:hover { color: #0A66C2; }
   .connect-links a[aria-label="Instagram"]:hover { color: #E4405F; }
   .connect-links a[aria-label="GitHub"]:hover { color: #171515; }
   .connect-links a[aria-label="X (Twitter)"]:hover { color: #000000; }
+  .connect-links a[aria-label="Resume"]:hover { color: #000000; }
 }
 
 .connect-links a[aria-label="LinkedIn"]:focus-visible { color: #0A66C2; }
 .connect-links a[aria-label="Instagram"]:focus-visible { color: #E4405F; }
 .connect-links a[aria-label="GitHub"]:focus-visible { color: #171515; }
 .connect-links a[aria-label="X (Twitter)"]:focus-visible { color: #000000; }
+.connect-links a[aria-label="Resume"]:focus-visible { color: #000000; }
 .connect-links a:focus-visible::after { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
 
 /* Hero Divider */
@@ -1068,89 +1123,67 @@ a.work-link:hover .link-arrow {
 .lightbox-close:hover::before,
 .lightbox-close:hover::after { opacity: 0.6; }
 
-/* ===== PRODUCT DESIGNER ANIMATION ===== */
 /* Keeps "a Product Designer" on the same line — the &nbsp; alone wasn't reliable
    across the inline span boundary, so the engine was splitting after "…a". */
 .pd-bind {
   white-space: nowrap;
 }
 
+/* inline-block gives a clean box exactly the text width, so the caret
+   (left: 0 → 100%) and the selection (inset: 0) self-align to the glyphs. */
 .pd-highlight-wrap {
   position: relative;
-  display: inline;
+  display: inline-block;
+  vertical-align: baseline;
   line-height: inherit;
 }
 
 .pd-highlight {
-  transition: color 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              background-color 0.3s ease,
-              -webkit-text-stroke-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  border-radius: 2px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Selection highlight — mimics Figma's blue text selection */
-.pd-highlight.selected {
-  background-color: rgba(30, 107, 184, 0.15);
-  color: #2b2b2b;
-}
-
-/* Blueprint wireframe state — activated by "click" */
-.pd-highlight.blueprint-active {
-  color: transparent;
-  -webkit-text-stroke: 1px #1e6bb8;
-  background-color: transparent;
-  background-image:
-    linear-gradient(rgba(30, 107, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(30, 107, 184, 0.06) 1px, transparent 1px);
-  background-size: 8px 8px;
-  -webkit-background-clip: text;
-  background-clip: text;
-}
-
-/* Click pulse effect on cursor */
-.pd-cursor-click {
+/* Text-selection tint — grows behind the words as the caret sweeps across */
+.pd-selection {
   position: absolute;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(30, 107, 184, 0.3);
-  transform: scale(0);
+  inset: 0;
+  background: rgba(47, 91, 234, 0.12);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 0;
   pointer-events: none;
 }
 
-@supports not (-webkit-text-stroke: 1px #1e6bb8) {
-  .pd-highlight.blueprint-active {
-    color: rgba(30, 107, 184, 0.3);
-    text-shadow: 0 0 1px #1e6bb8;
-    background-image: none;
-  }
-}
-
-.pd-cursors {
+/* Blinking I-beam caret — hidden by default so the no-JS / reduced-motion
+   fallback is just plain text. JS adds .pd-anim-on to reveal + blink it. */
+.pd-caret {
   position: absolute;
   top: 50%;
-  left: 50%;
-  /* Fixed footprint — % height against small inline-blocks caused stray line-gap in WebKit/Blink */
-  width: min(288px, 55vw);
-  height: min(148px, 22vh);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  z-index: 2;
-}
-
-.pd-cursor {
-  position: absolute;
+  left: 0;
+  width: 2px;
+  height: 1.05em;
+  transform: translate(-1px, -50%);
+  background: #2f5bea;
+  border-radius: 1px;
   opacity: 0;
-  will-change: transform, opacity;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  z-index: 2;
+  pointer-events: none;
 }
 
-.pd-cursor svg {
-  width: 14px;
-  height: 18px;
-  flex-shrink: 0;
+@keyframes pd-caret-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+.pd-anim-on .pd-caret {
+  animation: pd-caret-blink 1.06s steps(1) infinite;
+}
+
+/* Solid (no blink) while the caret is moving across the text */
+.pd-anim-on.is-sweeping .pd-caret {
+  animation: none;
+  opacity: 1;
 }
 
 
@@ -1287,16 +1320,6 @@ a.work-link:hover .link-arrow {
 
 /* ===== RESPONSIVE — MOBILE (768px) ===== */
 @media (max-width: 768px) {
-  .pd-cursors {
-    width: min(240px, 58vw);
-    height: min(128px, 20vh);
-  }
-
-  .pd-cursor svg {
-    width: 12px;
-    height: 15px;
-  }
-
   main.new-homepage {
     padding-left: 12px;
     padding-right: 12px;
@@ -1410,10 +1433,6 @@ a.work-link:hover .link-arrow {
 
 /* ===== SMALL MOBILE (480px) ===== */
 @media (max-width: 480px) {
-  .pd-cursors {
-    display: none;
-  }
-
   .hero-bio-text p {
     font-size: 14px;
   }
@@ -1425,14 +1444,9 @@ a.work-link:hover .link-arrow {
 
 /* ===== REDUCED MOTION ===== */
 @media (prefers-reduced-motion: reduce) {
-  .pd-cursors {
-    display: none !important;
-  }
-
-  .pd-highlight.blueprint-active {
-    color: #1e6bb8 !important;
-    -webkit-text-stroke: none !important;
-    background-image: none !important;
+  /* Live dot rests static — avoids a 0.01s flicker from the global duration override. */
+  .hero-live.is-beating::after {
+    animation: none;
   }
 
   .connect-links a,
