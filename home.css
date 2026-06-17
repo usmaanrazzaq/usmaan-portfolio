@@ -635,6 +635,18 @@ a.work-link:hover .link-arrow {
   color: #8a38f5;
 }
 
+.cs-badge--client-work {
+  background: rgba(102, 118, 97, 0.25);
+  border-color: rgba(102, 118, 97, 0.5);
+  color: #667661;
+}
+
+.cs-badge--founder {
+  background: rgba(109, 104, 111, 0.25);
+  border-color: #6d686f;
+  color: #6d686f;
+}
+
 .cs-badge__icon {
   display: block;
   flex-shrink: 0;
@@ -649,6 +661,16 @@ a.work-link:hover .link-arrow {
 .cs-badge--project .cs-badge__icon {
   width: 10px;
   height: 10px;
+}
+
+.cs-badge--client-work .cs-badge__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.cs-badge--founder .cs-badge__icon {
+  width: 11px;
+  height: 15px;
 }
 
 .cs-subtitle {
@@ -1516,24 +1538,18 @@ a.work-link:hover .link-arrow {
     font-size: 18px;
   }
 
-  /* NMYA + OTRS: title on first row; badge + View Website on second row */
+  /* NMYA + OTRS: keep the badge inline with the title; wrap only when it can't fit */
   .work-entry--casestudy[data-work="nmya"] .cs-header,
   .work-entry--casestudy[data-work="otrs"] .cs-header {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 12px;
+    flex-wrap: wrap;
     row-gap: 10px;
   }
 
   .work-entry--casestudy[data-work="nmya"] .cs-header-left,
   .work-entry--casestudy[data-work="otrs"] .cs-header-left {
-    display: contents;
-  }
-
-  .work-entry--casestudy[data-work="nmya"] .cs-title,
-  .work-entry--casestudy[data-work="otrs"] .cs-title {
-    grid-column: 1 / -1;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    row-gap: 10px;
   }
 
   .cs-subtitle {
