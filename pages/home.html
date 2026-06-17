@@ -242,13 +242,48 @@
         </div>
         <div class="cs-section">
             <h3 class="cs-section-heading">Outcome</h3>
-            <p>Handoff included an interactive prototype, a design system and component library, and annotated core flows. We aligned on onboarding, profiles, and PDPs. The outstanding ask was a simpler explore surface with filter and sort for mixed inventory. Build paused when engineering reprioritized.</p>
-            <p>What I'd push further:</p>
-            <ul>
-                <li>More user sessions on browse and filter — 3 participants validated direction, not enough to settle mixed-inventory filtering.</li>
-                <li>Bring the lister experience to the same fidelity as the renter experience.</li>
-                <li>Build out trust infrastructure — ratings, verification, transaction history.</li>
-            </ul>
+            <p>The delivered handoff included 25-30 screens, a reusable component library, annotated flows, and an interactive prototype the team could run on their own devices. The engineering team noted the level of thought put into the UI and how the design translated their goals into something easy to browse and use.</p>
+            <p>The onboarding flow was the clearest point of differentiation. Hygglo's verification process drew App Store complaints about failed checks and long wait times. Craigslist skips trust infrastructure entirely. Rented landed deliberately between them: two to three steps, immediate verification, instant access, with an account system that gives the platform a trust foundation that scales.</p>
+            <p>Build paused when engineering reprioritized. The work sharpened how I think about onboarding that earns trust without friction, and browse that holds up across inventory that has nothing in common.</p>
+        </div>
+        <div class="cs-visual cs-visual--outcome">
+            <div class="outcome-card">
+                <div class="outcome-stats">
+                    <div class="outcome-stat">
+                        <span class="outcome-stat__figure">25–30</span>
+                        <span class="outcome-stat__label">Screens delivered at handoff</span>
+                    </div>
+                    <div class="outcome-stat">
+                        <span class="outcome-stat__figure">2–3</span>
+                        <span class="outcome-stat__label">Steps to a verified account</span>
+                    </div>
+                    <div class="outcome-stat">
+                        <span class="outcome-stat__figure">2</span>
+                        <span class="outcome-stat__label">Rounds of comparative research</span>
+                    </div>
+                    <div class="outcome-stat">
+                        <span class="outcome-stat__figure">3</span>
+                        <span class="outcome-stat__label">Behavioral patterns that shaped the design</span>
+                    </div>
+                </div>
+                <div class="outcome-compare">
+                    <span class="outcome-compare__heading">Onboarding to first browse</span>
+                    <div class="outcome-compare__row">
+                        <div class="outcome-compare__item outcome-compare__item--rented">
+                            <span class="outcome-compare__name">Rented</span>
+                            <span class="outcome-compare__value">2–3 steps · instant verification</span>
+                        </div>
+                        <div class="outcome-compare__item">
+                            <span class="outcome-compare__name">Hygglo</span>
+                            <span class="outcome-compare__value">Multi-step · delayed checks</span>
+                        </div>
+                        <div class="outcome-compare__item">
+                            <span class="outcome-compare__name">Craigslist</span>
+                            <span class="outcome-compare__value">No verification</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="cs-visual">
             <figure class="visual-item">
@@ -412,9 +447,67 @@
         </div>
         <div class="cs-section">
             <h3 class="cs-section-heading">Outcome</h3>
-            <p>The final version launched in June 2024. After a few months, traffic increased by ~30% as users became familiar with the site. Youth visitors rose due to the interactive sections on various pages. Parents and teachers found it much easier to navigate. I continue to manage, enhance, and maintain the website.</p>
+            <p>The redesigned site launched June 2024 on Webflow, migrated from a WordPress installation with recurring malware, broken plugins, and scattered account access. Webflow's built-in security infrastructure resolved the vulnerability cycle that had periodically taken the site offline.</p>
+            <p>Within months of launch, traffic increased by 30%, returning visitors grew by 10-15%, and page views rose by 15%, tracked through Webflow analytics and compared against the WordPress baseline. The navigation redesign was the primary driver. Focus group observation showed that critical pages required 5-6 clicks on the old site, with important links continuously buried behind expanding dropdown menus and new content. The redesign brought priority destinations forward and cut that to 2-3 clicks.</p>
+            <p>My time with the National Muslim Youth Association concluded in November 2025.</p>
         </div>
         <div class="cs-visual cs-visual--chart">
+            <div class="chart-card" data-chart="nmya-visitors">
+                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing returning visitors growing 10 to 15 percent and page views increasing 15 percent after launch">
+                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                    <text x="48" y="44" text-anchor="end" class="chart-label">+15%</text>
+                    <text x="48" y="114" text-anchor="end" class="chart-label">+10%</text>
+                    <text x="48" y="184" text-anchor="end" class="chart-label">+5%</text>
+                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                    <defs>
+                        <linearGradient id="chartGradientViews" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                        </linearGradient>
+                        <linearGradient id="chartGradientVisitors" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#5BA88C" stop-opacity="0.15"/>
+                            <stop offset="100%" stop-color="#5BA88C" stop-opacity="0.02"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="chart-area" d="M80,236 L152,215 L224,187 L296,152 L368,110 L440,68 L490,40 L490,250 L80,250 Z" fill="url(#chartGradientViews)"/>
+                    <path class="chart-area" d="M80,243 L152,229 L224,208 L296,180 L368,145 L440,110 L490,82 L490,250 L80,250 Z" fill="url(#chartGradientVisitors)"/>
+                    <polyline class="chart-line" points="80,243 152,229 224,208 296,180 368,145 440,110 490,82" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <polyline class="chart-line" points="80,236 152,215 224,187 296,152 368,110 440,68 490,40" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="243" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="152" cy="229" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="224" cy="208" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="296" cy="180" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="368" cy="145" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="440" cy="110" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="490" cy="82" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                    </g>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="236" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="152" cy="215" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="224" cy="187" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="296" cy="152" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="440" cy="68" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                    </g>
+                    <line x1="84" y1="56" x2="106" y2="56" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="112" y="60" class="chart-label">Page views</text>
+                    <line x1="84" y1="76" x2="106" y2="76" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="112" y="80" class="chart-label">Returning visitors</text>
+                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Returning visitors &amp; page views post-launch (2024)</text>
+                </svg>
+            </div>
             <div class="chart-card" data-chart="nmya-engagement">
                 <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
                     <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
