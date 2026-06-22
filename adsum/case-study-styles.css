@@ -110,8 +110,8 @@ html {
 
 .project-title h1 {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: clamp(1.25rem, 2.5vw, 1.25rem);
+  font-weight: 500;
+  font-size: 18px;
   color: #8d8383;
   margin-bottom: 0.5rem;
   text-align: left;
@@ -120,7 +120,7 @@ html {
 .project-subtitle h2 {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: 18px;
   color: #000000;
   line-height: 1.2;
   margin-bottom: 1rem;
@@ -264,7 +264,7 @@ html {
 .section-header h2 {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 1.25rem;
+  font-size: 18px;
   color: #000000;
   text-decoration: underline;
   text-underline-offset: 2px;
@@ -286,8 +286,8 @@ html {
 
 .section-content p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 200;
-  font-size: 0.9375rem;
+  font-weight: 400;
+  font-size: 16px;
   color: #000000;
   line-height: 1.5;
   padding-bottom: 10px;
@@ -526,6 +526,12 @@ footer span {
     margin-bottom: 2rem;
   }
   
+  .project-title h1,
+  .project-subtitle h2,
+  .section-header h2 {
+    font-size: 16px;
+  }
+
   .section-header h2 {
     margin-bottom: 1.5rem;
   }
