@@ -137,8 +137,8 @@
 /* Bio Text */
 .hero-bio-text p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 16px;
   line-height: 1.4;
   margin: 0;
   color: #2b2b2b;
@@ -599,7 +599,7 @@ a.work-link:hover .link-arrow {
 .cs-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -676,7 +676,7 @@ a.work-link:hover .link-arrow {
 .cs-subtitle {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 18px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -1451,6 +1451,13 @@ a.work-link:hover .link-arrow {
 }
 
 /* ===== RESPONSIVE — MOBILE (768px) ===== */
+@media (max-width: 1024px) {
+  .cs-title,
+  .cs-subtitle {
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   main.new-homepage {
     padding-left: 12px;
@@ -1535,7 +1542,7 @@ a.work-link:hover .link-arrow {
   }
 
   .cs-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   /* NMYA + OTRS: keep the badge inline with the title; wrap only when it can't fit */
