@@ -599,7 +599,7 @@ a.work-link:hover .link-arrow {
 .cs-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -624,27 +624,27 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-badge--case-study {
-  background: rgba(53, 104, 179, 0.25);
-  border-color: rgba(53, 104, 179, 0.5);
-  color: #3568b3;
+  background: rgba(143, 177, 203, 0.25);
+  border-color: #8fb1cb;
+  color: #8fb1cb;
 }
 
 .cs-badge--project {
-  background: rgba(138, 56, 245, 0.15);
-  border-color: rgba(138, 56, 245, 0.5);
-  color: #8a38f5;
+  background: rgba(158, 176, 113, 0.25);
+  border-color: #9eb071;
+  color: #9eb071;
 }
 
 .cs-badge--client-work {
-  background: rgba(102, 118, 97, 0.25);
-  border-color: rgba(102, 118, 97, 0.5);
-  color: #667661;
+  background: rgba(238, 133, 59, 0.25);
+  border-color: #ee853b;
+  color: #ee853b;
 }
 
 .cs-badge--founder {
-  background: rgba(109, 104, 111, 0.25);
-  border-color: #6d686f;
-  color: #6d686f;
+  background: rgba(162, 35, 24, 0.25);
+  border-color: #a22318;
+  color: #a22318;
 }
 
 .cs-badge__icon {
@@ -676,7 +676,7 @@ a.work-link:hover .link-arrow {
 .cs-subtitle {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -746,7 +746,7 @@ a.work-link:hover .link-arrow {
 .cs-section-heading {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   text-decoration: underline;
   margin: 0;
