@@ -539,7 +539,7 @@ function initLightbox() {
     const img = e.target.closest('.visual-item img');
     if (img) {
       e.preventDefault();
-      open(img.src, img.alt);
+      open(img.currentSrc || img.src, img.alt);
     }
   });
 
@@ -549,7 +549,7 @@ function initLightbox() {
       const img = e.target.closest('.visual-item img');
       if (img) {
         e.preventDefault();
-        open(img.src, img.alt);
+        open(img.currentSrc || img.src, img.alt);
       }
     }
   });
