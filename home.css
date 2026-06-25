@@ -819,6 +819,15 @@ a.work-link:hover .link-arrow {
   object-fit: cover;
 }
 
+/* Square mockup pair — keeps full phone screens visible (no 16/10 crop). */
+.cs-visual--pair-square .visual-item {
+  aspect-ratio: 1 / 1;
+}
+
+.cs-visual--pair-square .visual-item img {
+  object-fit: cover;
+}
+
 @media (hover: hover) {
   .cs-visual .visual-item img:hover {
     opacity: 0.85;
@@ -1232,70 +1241,6 @@ a.work-link:hover .link-arrow {
 .lightbox-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
 .lightbox-close:hover::before,
 .lightbox-close:hover::after { opacity: 0.6; }
-
-/* Keeps "a Product Designer" on the same line — the &nbsp; alone wasn't reliable
-   across the inline span boundary, so the engine was splitting after "…a". */
-.pd-bind {
-  white-space: nowrap;
-}
-
-/* inline-block gives a clean box exactly the text width, so the caret
-   (left: 0 → 100%) and the selection (inset: 0) self-align to the glyphs. */
-.pd-highlight-wrap {
-  position: relative;
-  display: inline-block;
-  vertical-align: baseline;
-  line-height: inherit;
-}
-
-.pd-highlight {
-  position: relative;
-  z-index: 1;
-}
-
-/* Text-selection tint — grows behind the words as the caret sweeps across */
-.pd-selection {
-  position: absolute;
-  inset: 0;
-  background: rgba(47, 91, 234, 0.12);
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: left center;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Blinking I-beam caret — hidden by default so the no-JS / reduced-motion
-   fallback is just plain text. JS adds .pd-anim-on to reveal + blink it. */
-.pd-caret {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  width: 2px;
-  height: 1.05em;
-  transform: translate(-1px, -50%);
-  background: #2f5bea;
-  border-radius: 1px;
-  opacity: 0;
-  z-index: 2;
-  pointer-events: none;
-}
-
-@keyframes pd-caret-blink {
-  0%, 49% { opacity: 1; }
-  50%, 100% { opacity: 0; }
-}
-
-.pd-anim-on .pd-caret {
-  animation: pd-caret-blink 1.06s steps(1) infinite;
-}
-
-/* Solid (no blink) while the caret is moving across the text */
-.pd-anim-on.is-sweeping .pd-caret {
-  animation: none;
-  opacity: 1;
-}
-
 
 /* ===== RESPONSIVE — TABLET (1120px) ===== */
 @media (max-width: 1120px) {

@@ -772,70 +772,6 @@ function initChartAnimation(chart) {
 }
 
 // ===== PRODUCT DESIGNER CARET + SELECTION ANIMATION =====
-// A single blinking I-beam caret sweeps across "Product Designer", growing a
-// selection tint behind it, rests selected, then rewinds — on a loop.
-// Robust by construction: two persistent elements (already in the static HTML,
-// so the SPA cache can't accumulate stale nodes), percentage-based geometry that
-// self-aligns to the text, and ONE repeating timeline to kill on cleanup.
-var _pdTimeline = null;
-
-function initProductDesignerAnimation() {
-  if (typeof gsap === 'undefined') return;
-
-  var wrap = document.querySelector('.pd-highlight-wrap');
-  var selection = document.querySelector('.pd-selection');
-  var caret = document.querySelector('.pd-caret');
-  if (!wrap || !selection || !caret) return;
-
-  // Idempotent: tear down any prior run before re-arming (handles SPA re-entry).
-  if (_pdTimeline) {
-    _pdTimeline.kill();
-    _pdTimeline = null;
-  }
-  gsap.set([selection, caret], { clearProps: 'all' });
-  wrap.classList.remove('is-sweeping');
-  wrap.classList.add('pd-anim-on');
-
-  var tl = gsap.timeline({
-    repeat: -1,
-    repeatDelay: 0.9,
-    delay: 1.2,
-    defaults: { ease: 'power2.inOut' }
-  });
-  _pdTimeline = tl;
-
-  // Reset to the start state at the top of every cycle.
-  tl.set(caret, { left: '0%' });
-  tl.set(selection, { scaleX: 0, transformOrigin: 'left center' });
-
-  // Caret blinks at the start of the word for a beat.
-  tl.to({}, { duration: 0.6 });
-
-  // Sweep: caret solid (via .is-sweeping) glides right while the tint grows.
-  tl.call(function() { wrap.classList.add('is-sweeping'); });
-  tl.to(caret, { left: '100%', duration: 0.7 });
-  tl.to(selection, { scaleX: 1, duration: 0.7 }, '<');
-  tl.call(function() { wrap.classList.remove('is-sweeping'); });
-
-  // Hold fully selected — caret blinks at the end of the word.
-  tl.to({}, { duration: 3.0 });
-
-  // Rewind: tint retracts and caret returns to the start together.
-  tl.to(selection, { scaleX: 0, duration: 0.45, ease: 'power2.in' });
-  tl.to(caret, { left: '0%', duration: 0.4, ease: 'power2.in' }, '<0.1');
-
-  // Cleanup for SPA navigation.
-  window._pdAnimationCleanup = function() {
-    if (_pdTimeline) {
-      _pdTimeline.kill();
-      _pdTimeline = null;
-    }
-    gsap.set([selection, caret], { clearProps: 'all' });
-    wrap.classList.remove('pd-anim-on', 'is-sweeping');
-    window._pdAnimationCleanup = null;
-  };
-}
-
 // ===== HOMEPAGE SCROLL ANIMATIONS =====
 function initHomeScrollAnimations() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
@@ -860,9 +796,6 @@ function initHomeScrollAnimations() {
       });
     }
 
-    // Product Designer caret + selection animation
-    initProductDesignerAnimation();
-
     // Work section scroll reveal
     var workSection = document.querySelector('.work-section');
     if (workSection) {
@@ -884,7 +817,6 @@ function initHomeScrollAnimations() {
 
     // Cleanup on SPA page swap
     return function() {
-      if (window._pdAnimationCleanup) window._pdAnimationCleanup();
       ScrollTrigger.getAll().forEach(function(t) { t.kill(); });
     };
   });
