@@ -222,15 +222,15 @@
 }
 
 .project-mosaic__type-tag--client {
-  color: #14532d;
-  background-color: rgba(209, 250, 229, 0.92);
-  border-color: rgba(52, 211, 153, 0.42);
+  color: #ee853b;
+  background-color: rgba(238, 133, 59, 0.25);
+  border-color: #ee853b;
 }
 
 .project-mosaic__type-tag--project {
-  color: #8a38f5;
-  background-color: rgba(138, 56, 245, 0.15);
-  border-color: rgba(138, 56, 245, 0.15);
+  color: #9eb071;
+  background-color: rgba(158, 176, 113, 0.25);
+  border-color: #9eb071;
 }
 
 .project-mosaic__type-tag--project .project-mosaic__type-tag-icon {

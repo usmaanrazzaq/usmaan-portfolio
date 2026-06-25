@@ -29,8 +29,8 @@
 
 .about-bio p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
+  font-weight: 400;
+  font-size: 16px;
   line-height: 1.6;
   color: #000000;
   margin: 0;
@@ -145,7 +145,7 @@
   font-size: 14px;
   color: #000000;
   text-decoration: none;
-  padding: 4px 0;
+  padding: 2px 8px;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -159,9 +159,10 @@
 .inspiration-link::after {
   content: '';
   position: absolute;
-  left: 0;
+  left: 8px;
+  right: 8px;
   bottom: 2px;
-  width: 100%;
+  width: auto;
   height: 1.5px;
   background-color: currentColor;
   transform: scaleX(0);
@@ -321,7 +322,7 @@
 
 @media (max-width: 480px) {
   .about-bio p {
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .experience-header .exp-col,

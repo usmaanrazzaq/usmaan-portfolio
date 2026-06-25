@@ -137,8 +137,8 @@
 /* Bio Text */
 .hero-bio-text p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 500;
-  font-size: 20px;
+  font-weight: 400;
+  font-size: 16px;
   line-height: 1.4;
   margin: 0;
   color: #2b2b2b;
@@ -599,7 +599,7 @@ a.work-link:hover .link-arrow {
 .cs-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -624,15 +624,27 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-badge--case-study {
-  background: rgba(53, 104, 179, 0.25);
-  border-color: rgba(53, 104, 179, 0.5);
-  color: #3568b3;
+  background: rgba(143, 177, 203, 0.25);
+  border-color: #8fb1cb;
+  color: #8fb1cb;
 }
 
 .cs-badge--project {
-  background: rgba(138, 56, 245, 0.15);
-  border-color: rgba(138, 56, 245, 0.5);
-  color: #8a38f5;
+  background: rgba(158, 176, 113, 0.25);
+  border-color: #9eb071;
+  color: #9eb071;
+}
+
+.cs-badge--client-work {
+  background: rgba(238, 133, 59, 0.25);
+  border-color: #ee853b;
+  color: #ee853b;
+}
+
+.cs-badge--founder {
+  background: rgba(162, 35, 24, 0.25);
+  border-color: #a22318;
+  color: #a22318;
 }
 
 .cs-badge__icon {
@@ -651,10 +663,20 @@ a.work-link:hover .link-arrow {
   height: 10px;
 }
 
+.cs-badge--client-work .cs-badge__icon {
+  width: 12px;
+  height: 12px;
+}
+
+.cs-badge--founder .cs-badge__icon {
+  width: 11px;
+  height: 15px;
+}
+
 .cs-subtitle {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 20px;
+  font-size: 16px;
   color: #000;
   margin: 0;
   line-height: normal;
@@ -724,7 +746,7 @@ a.work-link:hover .link-arrow {
 .cs-section-heading {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 16px;
   color: #000;
   text-decoration: underline;
   margin: 0;
@@ -1374,6 +1396,13 @@ a.work-link:hover .link-arrow {
 }
 
 /* ===== RESPONSIVE — MOBILE (768px) ===== */
+@media (max-width: 1024px) {
+  .cs-title,
+  .cs-subtitle {
+    font-size: 16px;
+  }
+}
+
 @media (max-width: 768px) {
   main.new-homepage {
     padding-left: 12px;
@@ -1458,27 +1487,21 @@ a.work-link:hover .link-arrow {
   }
 
   .cs-title {
-    font-size: 18px;
+    font-size: 16px;
   }
 
-  /* NMYA + OTRS: title on first row; badge + View Website on second row */
+  /* NMYA + OTRS: keep the badge inline with the title; wrap only when it can't fit */
   .work-entry--casestudy[data-work="nmya"] .cs-header,
   .work-entry--casestudy[data-work="otrs"] .cs-header {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    align-items: center;
-    column-gap: 12px;
+    flex-wrap: wrap;
     row-gap: 10px;
   }
 
   .work-entry--casestudy[data-work="nmya"] .cs-header-left,
   .work-entry--casestudy[data-work="otrs"] .cs-header-left {
-    display: contents;
-  }
-
-  .work-entry--casestudy[data-work="nmya"] .cs-title,
-  .work-entry--casestudy[data-work="otrs"] .cs-title {
-    grid-column: 1 / -1;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    row-gap: 10px;
   }
 
   .cs-subtitle {
