@@ -1,7 +1,7 @@
 /* ===== HOMEPAGE V6 STYLES ===== */
 
 :root {
-  --home-column-max: 786px;
+  --home-column-max: 700px;
   --home-column-pad-x: 10px;
   --home-visual-max: 1100px;
 }
@@ -504,7 +504,7 @@ button.work-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 16px;
-  max-width: 766px;
+  max-width: 680px;
   color: #2b2b2b;
   line-height: normal;
   margin: 0;
@@ -736,7 +736,7 @@ a.work-link:hover .link-arrow {
 
 /* Case study content sections */
 .cs-section {
-  max-width: 766px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -755,7 +755,7 @@ a.work-link:hover .link-arrow {
 
 .cs-section p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   color: #000;
   line-height: 1.5;
@@ -769,7 +769,7 @@ a.work-link:hover .link-arrow {
 .cs-section ol,
 .cs-section ul {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   color: #000;
   line-height: 1.5;
@@ -848,6 +848,27 @@ a.work-link:hover .link-arrow {
 
 .cs-visual--pair-square .visual-item img {
   object-fit: cover;
+}
+
+/* Placeholder slots for visuals awaiting final assets */
+.cs-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b3b3b3;
+}
+
+.cs-placeholder--hero {
+  aspect-ratio: 16 / 9;
 }
 
 @media (hover: hover) {

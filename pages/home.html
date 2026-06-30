@@ -45,7 +45,7 @@
             </button>
             <button type="button" class="work-title" data-work="image-library">
                 <span class="active-indicator"></span>
-                <span class="title-text">Reference Library</span>
+                <span class="title-text">WCM Connect App</span>
             </button>
             <button type="button" class="work-title" data-work="otrs">
                 <span class="active-indicator"></span>
@@ -684,19 +684,18 @@
     <article class="work-entry work-entry--casestudy" data-work="image-library">
         <div class="cs-header">
             <div class="cs-header-left">
-                <h2 class="cs-title">Reference Library</h2>
+                <h2 class="cs-title">WCM Connect App</h2>
                 <span class="cs-badge cs-badge--project"><img class="cs-badge__icon" src="images/icons/project.svg" width="10" height="10" alt="" aria-hidden="true">Project</span>
             </div>
-            <a href="https://rrrreference-library.vercel.app/" target="_blank" rel="noopener noreferrer" class="work-link">View Website <svg class="link-arrow" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
         </div>
-        <p class="cs-subtitle">A browseable archive for curated visual reference and inspiration.</p>
-        <div class="cs-hero-visual cs-hero-visual--video">
-            <video data-src="video/Image-Library.mov" muted loop playsinline preload="none" aria-label="Image Library website — archive grid and detail views"></video>
+        <p class="cs-subtitle">Improving the patient experience through a clearer onboarding, dashboard, and appointment scheduling experience.</p>
+        <div class="cs-hero-visual">
+            <div class="cs-placeholder cs-placeholder--hero">Dashboard Redesign</div>
         </div>
         <div class="cs-metadata">
             <div class="cs-meta-col">
                 <span class="cs-meta-label">Role</span>
-                <span class="cs-meta-value">Designer & Developer</span>
+                <span class="cs-meta-value">Designer</span>
             </div>
             <div class="cs-meta-col">
                 <span class="cs-meta-label">Timeline</span>
@@ -705,50 +704,120 @@
             <div class="cs-meta-col">
                 <span class="cs-meta-label">Scope</span>
                 <span class="cs-meta-value">UI Design</span>
-                <span class="cs-meta-value">Front-end build</span>
-                <span class="cs-meta-value">Content structure</span>
+                <span class="cs-meta-value">Research</span>
             </div>
             <div class="cs-meta-col">
                 <span class="cs-meta-label">Collaborators</span>
                 <span class="cs-meta-value">Independent</span>
             </div>
             <div class="cs-meta-col">
-                <span class="cs-meta-label">Figma</span>
-                <span class="cs-meta-value">Cursor</span>
-                <span class="cs-meta-value">Claude Code</span>
+                <span class="cs-meta-label">Tools</span>
+                <span class="cs-meta-value">Figma</span>
             </div>
         </div>
         <div class="cs-section">
             <h3 class="cs-section-heading">Overview</h3>
-            <p>A personal archive for reference imagery I return to: work I admire, compositions I want to study, and visual cues that shape my own practice. The site wraps the collection in a quiet, archive-style UI that's quick to scan and easy to grow.</p>
+            <p>Healthcare applications should help patients feel informed and in control—not overwhelmed. While reviewing WCM Connect's App Store reviews, I noticed recurring complaints around authentication friction, confusing navigation, and difficulty accessing important health information. Rather than redesigning the entire application, I focused on the moments that shape a patient's first impression and everyday experience.</p>
+            <p>This case study explores how thoughtful interaction design, clearer information hierarchy, and better system feedback can reduce friction throughout the patient journey.</p>
         </div>
         <div class="cs-section">
-            <h3 class="cs-section-heading">Design & build</h3>
-            <p>The project began in Figma, where I worked out the layout hierarchy, type, spacing, and the small system of components that holds the grid together. From there I built it out in HTML, CSS, and JavaScript, with the collection driven by a single <code>images.json</code> file so adding new work is a one-line change. The pacing is deliberate: tight grids where browsing benefits from density, generous space where a single image deserves to stand on its own.</p>
+            <h3 class="cs-section-heading">Problem</h3>
+            <p>Patients rely on WCM Connect to manage appointments, medications, and communicate with their care team, yet many users reported struggling with basic tasks. Through App Store review analysis, three themes consistently appeared.</p>
+            <ul class="cs-list">
+                <li><strong>Authentication friction</strong> — Users experienced repeated login issues, confusing verification flows, and unclear error messages.</li>
+                <li><strong>Difficult navigation</strong> — Important information such as medications, appointments, and messages required too many steps to access.</li>
+                <li><strong>Limited feedback</strong> — The app often left users uncertain whether actions had completed successfully.</li>
+            </ul>
         </div>
         <div class="cs-visual">
             <figure class="visual-item">
-                <img src="images/Image-Library-Judd.png" alt="Image Library - Judd" loading="lazy" decoding="async">
-                <figcaption>Image Library - Judd</figcaption>
+                <div class="cs-placeholder">Problem visual</div>
             </figure>
         </div>
         <div class="cs-section">
-            <h3 class="cs-section-heading">Filter Feature</h3>
-            <p>Each image is tagged by medium in <code>images.json</code>, which populates the filter dropdown automatically. As the library grows and new tags appear, the filters update with it. No manual upkeep, no dead options.</p>
+            <h3 class="cs-section-heading">Research</h3>
+            <p>Rather than making assumptions, I began by analyzing publicly available App Store reviews. Recurring themes included:</p>
+            <ul class="cs-list">
+                <li>Login failures</li>
+                <li>Password reset frustration</li>
+                <li>Confusing onboarding</li>
+                <li>Slow access to appointments</li>
+                <li>Difficult messaging experience</li>
+                <li>Unclear dashboard organization</li>
+            </ul>
+            <p>These reviews helped prioritize the redesign around the highest-impact usability issues.</p>
         </div>
         <div class="cs-visual cs-visual--split">
             <figure class="visual-item">
-                <img src="images/Image-Library-Filter-SS.png" alt="Image Library Filter" loading="lazy" decoding="async">
-                <figcaption>Image Library Filter UI</figcaption>
+                <div class="cs-placeholder">Display</div>
             </figure>
             <figure class="visual-item">
-                <video data-src="video/Image-Library-Filter.mov" poster="images/Image-Library-Filter.png" muted loop playsinline preload="none" aria-label="Image Library — filter demo"></video>
-                <figcaption>Image Library Filter in motion</figcaption>
+                <div class="cs-placeholder">Display</div>
             </figure>
         </div>
         <div class="cs-section">
-            <h3 class="cs-section-heading">Reflection</h3>
-            <p>Working with Cursor and Claude Code alongside Figma changed the rhythm of the project. Figma still anchors the thinking, the layout decisions and the system, but smaller refinements and one-off ideas now move straight from thought to working code. It's made the gap between "what if it did this" and seeing it on screen shorter than it's ever been, and it's quietly shifted how I scope personal work: less precious about the first draft, more willing to try things.</p>
+            <h3 class="cs-section-heading">Goals</h3>
+            <p>The redesign focused on three objectives.</p>
+            <ul class="cs-list">
+                <li><strong>Simplify onboarding</strong> — Reduce unnecessary cognitive load while maintaining patient trust.</li>
+                <li><strong>Improve dashboard usability</strong> — Help patients immediately find the information they need.</li>
+                <li><strong>Make scheduling easier</strong> — Reduce friction when booking appointments.</li>
+            </ul>
+        </div>
+        <div class="cs-section">
+            <h3 class="cs-section-heading">Design Principles</h3>
+            <ul class="cs-list">
+                <li><strong>Clarity over complexity</strong> — Every screen should communicate one primary action.</li>
+                <li><strong>Accessible healthcare</strong> — Typography, spacing, and color contrast were designed for patients of varying ages and technical experience.</li>
+                <li><strong>Build confidence</strong> — Every interaction should reassure patients that the system is working.</li>
+            </ul>
+        </div>
+        <div class="cs-section">
+            <h3 class="cs-section-heading">Solutions</h3>
+            <p>The redesign focused on improving three high-impact areas of the patient experience:</p>
+            <ul class="cs-list">
+                <li><strong>Onboarding</strong> — Simplified authentication, clearer hierarchy, and improved system feedback to reduce first-time friction.</li>
+                <li><strong>Dashboard</strong> — Reorganized information around patients' most common tasks, making appointments, medications, and test results easier to access.</li>
+                <li><strong>Appointment Scheduling</strong> — Streamlined booking with a clearer step-by-step flow, simplified provider selection, and more reassuring confirmation states.</li>
+            </ul>
+        </div>
+        <div class="cs-visual">
+            <figure class="visual-item">
+                <div class="cs-placeholder">Solutions visual</div>
+            </figure>
+        </div>
+        <div class="cs-section">
+            <h3 class="cs-section-heading">Accessibility</h3>
+            <p>Healthcare products serve users with a wide range of technical abilities. The redesign emphasizes:</p>
+            <ul class="cs-list">
+                <li>Larger touch targets</li>
+                <li>Improved typography hierarchy</li>
+                <li>Higher color contrast</li>
+                <li>Clearer labels</li>
+                <li>Reduced cognitive load</li>
+                <li>Consistent spacing throughout the interface</li>
+            </ul>
+        </div>
+        <div class="cs-section">
+            <h3 class="cs-section-heading">Design Systems</h3>
+            <p>To maintain consistency, I established a small component system including:</p>
+            <ul class="cs-list">
+                <li>Buttons</li>
+                <li>Form fields</li>
+                <li>Cards</li>
+                <li>Status indicators</li>
+                <li>Navigation components</li>
+                <li>Appointment cards</li>
+                <li>Message previews</li>
+            </ul>
+            <p>This improves scalability for future product development.</p>
+        </div>
+        <div class="cs-section">
+            <h3 class="cs-section-heading">Outcome &amp; Reflection</h3>
+            <p>This redesign explored how thoughtful UX improvements can make healthcare feel more approachable and less overwhelming. Rather than introducing new features, the focus was on improving the experience patients already rely on every day.</p>
+            <p>By simplifying onboarding, reorganizing the dashboard around high-priority tasks, and streamlining appointment scheduling, the redesign reduces friction while helping patients access important information with greater confidence. Clearer visual hierarchy, consistent system feedback, and accessible interface patterns contribute to an experience that feels more intuitive and reassuring.</p>
+            <p>Working on this project reinforced an important lesson: designing for healthcare isn't just about creating clean interfaces—it's about reducing uncertainty. Patients often interact with healthcare products during stressful or time-sensitive moments, making clarity and trust just as important as functionality.</p>
+            <p>This project strengthened my ability to translate qualitative user feedback into meaningful product decisions, balancing user needs, accessibility, and business constraints to create a more thoughtful patient experience.</p>
         </div>
     </article>
     </article> 
