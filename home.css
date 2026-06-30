@@ -1,7 +1,7 @@
 /* ===== HOMEPAGE V6 STYLES ===== */
 
 :root {
-  --home-column-max: 786px;
+  --home-column-max: 700px;
   --home-column-pad-x: 10px;
   --home-visual-max: 1100px;
 }
@@ -504,7 +504,7 @@ button.work-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
   font-size: 16px;
-  max-width: 766px;
+  max-width: 680px;
   color: #2b2b2b;
   line-height: normal;
   margin: 0;
@@ -736,7 +736,7 @@ a.work-link:hover .link-arrow {
 
 /* Case study content sections */
 .cs-section {
-  max-width: 766px;
+  max-width: 680px;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -755,7 +755,7 @@ a.work-link:hover .link-arrow {
 
 .cs-section p {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   color: #000;
   line-height: 1.5;
@@ -769,7 +769,7 @@ a.work-link:hover .link-arrow {
 .cs-section ol,
 .cs-section ul {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   color: #000;
   line-height: 1.5;
@@ -848,6 +848,27 @@ a.work-link:hover .link-arrow {
 
 .cs-visual--pair-square .visual-item img {
   object-fit: cover;
+}
+
+/* Placeholder slots for visuals awaiting final assets */
+.cs-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f5f5;
+  border-radius: 10px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #b3b3b3;
+}
+
+.cs-placeholder--hero {
+  aspect-ratio: 16 / 9;
 }
 
 @media (hover: hover) {
@@ -1011,6 +1032,11 @@ a.work-link:hover .link-arrow {
 }
 
 .cs-visual--chart .chart-card {
+  border-radius: 12px;
+  aspect-ratio: 16 / 10;
+}
+
+.cs-visual--chart .globe-card {
   border-radius: 12px;
   aspect-ratio: 16 / 10;
 }
@@ -1643,21 +1669,121 @@ a.work-link:hover .link-arrow {
 .chart-card.chart-animated .chart-dots circle:nth-child(6) { transition-delay: 1.15s; }
 .chart-card.chart-animated .chart-dots circle:nth-child(7) { transition-delay: 1.3s; }
 
+/* ===== Globe Reach Card ===== */
+.globe-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  aspect-ratio: 16 / 10;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.globe-map {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.globe-label {
+  font-family: inherit;
+  font-size: 11px;
+  fill: #666;
+  font-weight: 400;
+}
+
+.globe-sphere {
+  opacity: 0;
+  transform-origin: 260px 148px;
+  transform: scale(0.94);
+}
+
+.globe-card.globe-animated .globe-sphere {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.globe-marker--origin,
+.globe-marker--dest {
+  opacity: 0;
+}
+
+.globe-marker-dot {
+  transform: scale(0);
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.globe-card.globe-animated .globe-marker--origin,
+.globe-card.globe-animated .globe-marker--dest {
+  opacity: 1;
+}
+
+.globe-card.globe-animated .globe-marker-dot {
+  transform: scale(1);
+}
+
+.globe-marker-pulse {
+  opacity: 0;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+.globe-card.globe-flowing .globe-marker-pulse {
+  opacity: 0.35;
+  animation: globeDotPulse 2.4s ease-out infinite;
+}
+
+.globe-card.globe-flowing .globe-marker--origin .globe-marker-pulse {
+  animation-delay: 0s;
+}
+
+.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(2) .globe-marker-pulse {
+  animation-delay: 0.3s;
+}
+
+.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(3) .globe-marker-pulse {
+  animation-delay: 0.6s;
+}
+
+.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(4) .globe-marker-pulse {
+  animation-delay: 0.9s;
+}
+
+@keyframes globeDotPulse {
+  0% { transform: scale(1); opacity: 0.35; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .chart-line { stroke-dasharray: none; stroke-dashoffset: 0; }
   .chart-area { opacity: 1; }
   .chart-dots circle { transform: scale(1); }
+
+  .globe-sphere { opacity: 1; transform: none; }
+  .globe-marker--origin,
+  .globe-marker--dest { opacity: 1; }
+  .globe-marker-dot { transform: scale(1); }
+  .globe-marker-pulse { opacity: 0.35; animation: none; }
 }
 
 @media (max-width: 768px) {
   .chart-card { padding: clamp(1rem, 3vw, 1.5rem); }
+  .globe-card { padding: clamp(1rem, 3vw, 1.5rem); }
   .chart-label { font-size: 10px; }
+  .globe-label { font-size: 10px; }
   .chart-caption { font-size: 10px; }
 }
 
 @media (max-width: 480px) {
   .chart-card { padding: 1rem; aspect-ratio: 4 / 3; }
+  .globe-card { padding: 1rem; aspect-ratio: 4 / 3; }
   .chart-label { font-size: 9px; }
+  .globe-label { font-size: 9px; }
   .chart-caption { font-size: 9px; }
 }
 

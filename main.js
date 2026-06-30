@@ -262,6 +262,7 @@ function scheduleWorkScrollRefreshAfterSwitch() {
     workSwitchScrollRefreshTimer = null;
     ScrollTrigger.refresh();
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+    if (typeof initGlobeReachScrollTriggers === 'function') initGlobeReachScrollTriggers();
   }, 400);
 }
 
@@ -374,6 +375,9 @@ function initWorkDirectory() {
               workSection.style.height = '';
             }
             scheduleWorkScrollRefreshAfterSwitch();
+            if (targetWork === 'otrs' && typeof tryInitGlobeInEntry === 'function') {
+              setTimeout(function() { tryInitGlobeInEntry(targetEntry); }, 450);
+            }
             isSwitching = false;
           }, 300);
         }, 200);
@@ -386,6 +390,9 @@ function initWorkDirectory() {
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
         scheduleWorkScrollRefreshAfterSwitch();
+        if (targetWork === 'otrs' && typeof tryInitGlobeInEntry === 'function') {
+          setTimeout(function() { tryInitGlobeInEntry(targetEntry); }, 450);
+        }
         var carousel2 = targetEntry.querySelector('[data-carousel]');
         if (carousel2 && carousel2._carouselGoTo) carousel2._carouselGoTo(0, true);
       }
@@ -975,6 +982,7 @@ function initPageHooks(page) {
     if (typeof initPhoneMockup === 'function') initPhoneMockup();
     if (typeof initResearchFindings === 'function') initResearchFindings();
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
+    if (typeof initGlobeReachScrollTriggers === 'function') initGlobeReachScrollTriggers();
   } else if (page === 'about') {
     initDropdowns();
     initInspirationPreview();

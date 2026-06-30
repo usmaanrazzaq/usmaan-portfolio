@@ -266,6 +266,91 @@ function initChartScrollTriggers() {
 }
 
 
+// --- Globe Reach Animation (shared) ---
+function initGlobeReachAnimation(globe) {
+  if (!globe || globe.classList.contains('globe-animated')) return;
+
+  var sphere = globe.querySelector('.globe-sphere');
+  var markers = globe.querySelectorAll('.globe-marker');
+  var dots = globe.querySelectorAll('.globe-marker-dot');
+  if (!sphere || typeof gsap === 'undefined') return;
+
+  gsap.set(sphere, { opacity: 0, scale: 0.94, transformOrigin: '260px 148px' });
+  gsap.set(markers, { opacity: 0 });
+  gsap.set(dots, { scale: 0, transformOrigin: 'center center' });
+
+  globe.classList.add('globe-animated');
+
+  var tl = gsap.timeline({
+    onComplete: function() {
+      globe.classList.add('globe-flowing');
+    }
+  });
+
+  tl.to(sphere, { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' });
+  tl.to(markers, { opacity: 1, duration: 0.4, stagger: 0.12, ease: 'power2.out' }, 0.35);
+  tl.to(dots, { scale: 1, duration: 0.35, stagger: 0.1, ease: 'back.out(2)' }, 0.5);
+}
+
+function tryInitGlobeInEntry(entry) {
+  if (!entry) return;
+  var globe = entry.querySelector('[data-globe-reach]');
+  if (!globe || globe.classList.contains('globe-animated')) return;
+  if (!globe.offsetParent && globe.getClientRects().length === 0) return;
+
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.refresh();
+  }
+
+  var rect = globe.getBoundingClientRect();
+  if (rect.top <= window.innerHeight * 0.85 && rect.bottom > 0) {
+    initGlobeReachAnimation(globe);
+  }
+}
+
+function initGlobeReachScrollTriggers() {
+  var globes = document.querySelectorAll('[data-globe-reach]');
+  if (!globes.length) return;
+
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+
+    var mm = gsap.matchMedia();
+    mm.add('(prefers-reduced-motion: no-preference)', function() {
+      globes.forEach(function(globe) {
+        if (globe._globeScrollTriggerInit || globe.classList.contains('globe-animated')) return;
+        if (!globe.offsetParent && globe.getClientRects().length === 0) return;
+        globe._globeScrollTriggerInit = true;
+
+        ScrollTrigger.create({
+          trigger: globe,
+          start: 'top 85%',
+          once: true,
+          onEnter: function() {
+            initGlobeReachAnimation(globe);
+          }
+        });
+      });
+
+      return function() {};
+    });
+
+    mm.add('(prefers-reduced-motion: reduce)', function() {
+      globes.forEach(function(globe) {
+        globe.classList.add('globe-animated', 'globe-flowing');
+        globe.querySelectorAll('.globe-marker').forEach(function(el) {
+          el.style.opacity = '1';
+        });
+        globe.querySelectorAll('.globe-marker-dot').forEach(function(el) {
+          el.style.transform = 'scale(1)';
+        });
+      });
+      return function() {};
+    });
+  }
+}
+
+
 // --- Competitive Analysis Animated Map ---
 function initCompetitiveAnalysis() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
