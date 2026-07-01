@@ -549,6 +549,166 @@
 }
 
 
+/* --- Pain Point Chart --- */
+.cs-visual--pain-points {
+  background: #f8f8f8;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.pain-chart {
+  padding: clamp(1.25rem, 3vw, 2rem) clamp(1rem, 3vw, 2.5rem) clamp(1rem, 2vw, 1.5rem);
+}
+
+.pain-chart__header {
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+}
+
+.pain-chart__eyebrow {
+  display: block;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+.pain-chart__intro {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #767676;
+  margin: 0;
+}
+
+.pain-chart__rows {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2.5vw, 1.35rem);
+}
+
+.pain-chart__row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pain-chart__row-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pain-chart__index {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.pain-chart__label {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #2b2b2b;
+  line-height: 1.3;
+}
+
+.pain-chart__track {
+  width: 100%;
+  height: 10px;
+  background: #ebebeb;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.pain-chart__fill {
+  width: var(--pain-width, 0%);
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #b31b1b 0%, #d4453d 100%);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+
+.pain-chart__row[data-pain="2"] .pain-chart__fill {
+  background: linear-gradient(90deg, #c45a1a 0%, #e8782d 100%);
+}
+
+.pain-chart__row[data-pain="3"] .pain-chart__fill {
+  background: linear-gradient(90deg, #5c5c5c 0%, #8a8a8a 100%);
+}
+
+.pain-chart.pain-chart--animated .pain-chart__fill {
+  transform: scaleX(1);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.pain-chart.pain-chart--animated .pain-chart__row[data-pain="1"] .pain-chart__fill { transition-delay: 0.1s; }
+.pain-chart.pain-chart--animated .pain-chart__row[data-pain="2"] .pain-chart__fill { transition-delay: 0.25s; }
+.pain-chart.pain-chart--animated .pain-chart__row[data-pain="3"] .pain-chart__fill { transition-delay: 0.4s; }
+
+.pain-chart__detail {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #767676;
+  margin: 0;
+  max-width: 52ch;
+}
+
+.pain-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 8px 10px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+@media (hover: hover) {
+  .cs-visual--pain-points:hover .pain-caption {
+    opacity: 1;
+  }
+}
+
+@media (hover: none) {
+  .pain-caption {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pain-chart__fill {
+    transform: scaleX(1) !important;
+    transition: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .pain-chart__label {
+    font-size: 13px;
+  }
+
+  .pain-chart__detail {
+    font-size: 11px;
+  }
+}
+
+
 /* --- Design Evolution Stepper --- */
 [data-design-evolution] {
   background: #f8f8f8;
