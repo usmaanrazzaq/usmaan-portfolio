@@ -263,6 +263,7 @@ function scheduleWorkScrollRefreshAfterSwitch() {
     ScrollTrigger.refresh();
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
     if (typeof initGlobeReachScrollTriggers === 'function') initGlobeReachScrollTriggers();
+    if (typeof initPainPointCharts === 'function') initPainPointCharts();
   }, 400);
 }
 
@@ -983,6 +984,7 @@ function initPageHooks(page) {
     if (typeof initResearchFindings === 'function') initResearchFindings();
     if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
     if (typeof initGlobeReachScrollTriggers === 'function') initGlobeReachScrollTriggers();
+    if (typeof initPainPointCharts === 'function') initPainPointCharts();
   } else if (page === 'about') {
     initDropdowns();
     initInspirationPreview();

@@ -769,7 +769,7 @@
         </div>
         <p class="cs-subtitle">Improving the patient experience through a clearer onboarding, dashboard, and appointment scheduling experience.</p>
         <div class="cs-hero-visual">
-            <div class="cs-placeholder cs-placeholder--hero">Dashboard Redesign</div>
+            <img src="images/WCM-Main-Display@3x.jpg" srcset="images/WCM-Main-Display@3x.jpg 2200w" sizes="(max-width: 1120px) 100vw, 1100px" width="2200" height="1491" alt="WCM Connect app splash screen and patient dashboard redesign" loading="eager">
         </div>
         <div class="cs-metadata">
             <div class="cs-meta-col">
@@ -808,48 +808,52 @@
                 <li><strong>Limited feedback</strong> — The app often left users uncertain whether actions had completed successfully.</li>
             </ul>
         </div>
-        <div class="cs-visual">
-            <figure class="visual-item">
-                <div class="cs-placeholder">Problem visual</div>
-            </figure>
+        <div class="cs-visual cs-visual--pain-points" data-pain-points>
+            <div class="pain-chart">
+                <div class="pain-chart__header">
+                    <span class="pain-chart__eyebrow">App Store review analysis</span>
+                    <p class="pain-chart__intro">Three themes consistently appeared across user feedback.</p>
+                </div>
+                <div class="pain-chart__rows" role="list" aria-label="Recurring pain points from App Store reviews">
+                    <div class="pain-chart__row" role="listitem" data-pain="1">
+                        <div class="pain-chart__row-head">
+                            <span class="pain-chart__index">01</span>
+                            <span class="pain-chart__label">Authentication friction</span>
+                        </div>
+                        <div class="pain-chart__track" aria-hidden="true">
+                            <div class="pain-chart__fill" style="--pain-width: 90%"></div>
+                        </div>
+                        <p class="pain-chart__detail">Repeated login issues, confusing verification flows, and unclear error messages.</p>
+                    </div>
+                    <div class="pain-chart__row" role="listitem" data-pain="2">
+                        <div class="pain-chart__row-head">
+                            <span class="pain-chart__index">02</span>
+                            <span class="pain-chart__label">Difficult navigation</span>
+                        </div>
+                        <div class="pain-chart__track" aria-hidden="true">
+                            <div class="pain-chart__fill" style="--pain-width: 90%"></div>
+                        </div>
+                        <p class="pain-chart__detail">Medications, appointments, and messages required too many steps to access.</p>
+                    </div>
+                    <div class="pain-chart__row" role="listitem" data-pain="3">
+                        <div class="pain-chart__row-head">
+                            <span class="pain-chart__index">03</span>
+                            <span class="pain-chart__label">Limited feedback</span>
+                        </div>
+                        <div class="pain-chart__track" aria-hidden="true">
+                            <div class="pain-chart__fill" style="--pain-width: 90%"></div>
+                        </div>
+                        <p class="pain-chart__detail">Users were often uncertain whether actions had completed successfully.</p>
+                    </div>
+                </div>
+            </div>
+            <figcaption class="pain-caption">Pain point themes</figcaption>
         </div>
         <div class="cs-section">
-            <h3 class="cs-section-heading">Research</h3>
-            <p>Rather than making assumptions, I began by analyzing publicly available App Store reviews. Recurring themes included:</p>
-            <ul class="cs-list">
-                <li>Login failures</li>
-                <li>Password reset frustration</li>
-                <li>Confusing onboarding</li>
-                <li>Slow access to appointments</li>
-                <li>Difficult messaging experience</li>
-                <li>Unclear dashboard organization</li>
-            </ul>
-            <p>These reviews helped prioritize the redesign around the highest-impact usability issues.</p>
-        </div>
-        <div class="cs-visual cs-visual--split">
-            <figure class="visual-item">
-                <div class="cs-placeholder">Display</div>
-            </figure>
-            <figure class="visual-item">
-                <div class="cs-placeholder">Display</div>
-            </figure>
-        </div>
-        <div class="cs-section">
-            <h3 class="cs-section-heading">Goals</h3>
-            <p>The redesign focused on three objectives.</p>
-            <ul class="cs-list">
-                <li><strong>Simplify onboarding</strong> — Reduce unnecessary cognitive load while maintaining patient trust.</li>
-                <li><strong>Improve dashboard usability</strong> — Help patients immediately find the information they need.</li>
-                <li><strong>Make scheduling easier</strong> — Reduce friction when booking appointments.</li>
-            </ul>
-        </div>
-        <div class="cs-section">
-            <h3 class="cs-section-heading">Design Principles</h3>
-            <ul class="cs-list">
-                <li><strong>Clarity over complexity</strong> — Every screen should communicate one primary action.</li>
-                <li><strong>Accessible healthcare</strong> — Typography, spacing, and color contrast were designed for patients of varying ages and technical experience.</li>
-                <li><strong>Build confidence</strong> — Every interaction should reassure patients that the system is working.</li>
-            </ul>
+            <h3 class="cs-section-heading">Research & Direction</h3>
+            <p>I began with publicly available App Store reviews rather than assumptions. Login failures, password reset frustration, confusing onboarding, slow appointment access, difficult messaging, and unclear dashboard organization showed where patients struggled most.</p>
+            <p>That analysis shaped three redesign goals: <strong>simplify onboarding</strong> without sacrificing trust, <strong>improve dashboard usability</strong> so key information is immediate, and <strong>make scheduling easier</strong> end to end.</p>
+            <p>Three principles guided every screen — <strong>clarity over complexity</strong> (one primary action per view), <strong>accessible healthcare</strong> (type, spacing, and contrast for all ages and technical comfort), and <strong>building confidence</strong> through clear system feedback.</p>
         </div>
         <div class="cs-section">
             <h3 class="cs-section-heading">Solutions</h3>
@@ -862,7 +866,7 @@
         </div>
         <div class="cs-visual">
             <figure class="visual-item">
-                <div class="cs-placeholder">Solutions visual</div>
+                <img src="images/Solutions-Display@3x.jpg" srcset="images/Solutions-Display@3x.jpg 2200w" sizes="(max-width: 1120px) 100vw, 1100px" width="2200" height="1491" alt="WCM Connect app flow showing login, terms acceptance, dashboard, appointment booking, and medication details" loading="lazy">
             </figure>
         </div>
         <div class="cs-section">
@@ -890,6 +894,20 @@
                 <li>Message previews</li>
             </ul>
             <p>This improves scalability for future product development.</p>
+        </div>
+        <div class="cs-visual cs-visual--grid">
+            <figure class="visual-item">
+                <img src="images/WCM-Dashboard-Card.jpg" alt="WCM Connect upcoming appointment card component" loading="lazy">
+            </figure>
+            <figure class="visual-item">
+                <img src="images/WCM-Appointment-Components.jpg" alt="WCM Connect date and time picker component" loading="lazy">
+            </figure>
+            <figure class="visual-item">
+                <img src="images/WCM-Navigation-Components.jpg" alt="WCM Connect quick action pills and bottom navigation bar" loading="lazy">
+            </figure>
+            <figure class="visual-item">
+                <img src="images/WCM-Chat-Component.jpg" alt="WCM Connect care team messaging conversation component" loading="lazy">
+            </figure>
         </div>
         <div class="cs-section">
             <h3 class="cs-section-heading">Outcome &amp; Reflection</h3>

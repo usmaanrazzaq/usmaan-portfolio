@@ -918,3 +918,32 @@ function initResearchFindings() {
     return function() {};
   });
 }
+
+
+// --- Pain Point Chart ---
+function initPainPointCharts() {
+  var charts = document.querySelectorAll('[data-pain-points] .pain-chart');
+  if (!charts.length) return;
+
+  charts.forEach(function(chart) {
+    if (chart._painChartInit || chart.classList.contains('pain-chart--animated')) return;
+    if (!chart.offsetParent && chart.getClientRects().length === 0) return;
+
+    var runAnimation = function() {
+      if (chart.classList.contains('pain-chart--animated')) return;
+      chart.classList.add('pain-chart--animated');
+    };
+
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+      chart._painChartInit = true;
+      ScrollTrigger.create({
+        trigger: chart.closest('[data-pain-points]') || chart,
+        start: 'top 80%',
+        once: true,
+        onEnter: runAnimation
+      });
+    } else {
+      runAnimation();
+    }
+  });
+}
