@@ -1711,57 +1711,23 @@ a.work-link:hover .link-arrow {
   transform: scale(1);
 }
 
-.globe-marker--origin,
-.globe-marker--dest {
+/* Markers start hidden only when JS/GSAP is present to reveal & animate them,
+   so they stay visible if the scripts ever fail to load. Dots and pulse rings
+   are animated via their SVG `r` attribute in JS (see initGlobeReachAnimation) —
+   no CSS transforms, which avoids the transform-origin/transform-box issues that
+   mispositioned the rings on Safari/iOS. */
+.globe-js .globe-marker--origin,
+.globe-js .globe-marker--dest {
   opacity: 0;
 }
 
-.globe-marker-dot {
-  transform: scale(0);
-  transform-origin: center;
-  transform-box: fill-box;
+.globe-js .globe-marker-pulse {
+  opacity: 0;
 }
 
 .globe-card.globe-animated .globe-marker--origin,
 .globe-card.globe-animated .globe-marker--dest {
   opacity: 1;
-}
-
-.globe-card.globe-animated .globe-marker-dot {
-  transform: scale(1);
-}
-
-.globe-marker-pulse {
-  opacity: 0;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-
-.globe-card.globe-flowing .globe-marker-pulse {
-  opacity: 0.35;
-  animation: globeDotPulse 2.4s ease-out infinite;
-}
-
-.globe-card.globe-flowing .globe-marker--origin .globe-marker-pulse {
-  animation-delay: 0s;
-}
-
-.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(2) .globe-marker-pulse {
-  animation-delay: 0.3s;
-}
-
-.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(3) .globe-marker-pulse {
-  animation-delay: 0.6s;
-}
-
-.globe-card.globe-flowing .globe-markers .globe-marker--dest:nth-child(4) .globe-marker-pulse {
-  animation-delay: 0.9s;
-}
-
-@keyframes globeDotPulse {
-  0% { transform: scale(1); opacity: 0.35; }
-  70% { transform: scale(2.2); opacity: 0; }
-  100% { transform: scale(2.2); opacity: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1772,8 +1738,8 @@ a.work-link:hover .link-arrow {
   .globe-sphere { opacity: 1; transform: none; }
   .globe-marker--origin,
   .globe-marker--dest { opacity: 1; }
-  .globe-marker-dot { transform: scale(1); }
-  .globe-marker-pulse { opacity: 0.35; animation: none; }
+  /* Dots render at their authored radius; no pulsing under reduced motion. */
+  .globe-marker-pulse { opacity: 0; }
 }
 
 @media (max-width: 768px) {
