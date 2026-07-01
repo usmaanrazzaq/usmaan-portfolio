@@ -267,29 +267,65 @@ function initChartScrollTriggers() {
 
 
 // --- Globe Reach Animation (shared) ---
+// Markers are animated via the SVG `r` attribute (not CSS/GSAP transforms) so that
+// each dot/ring grows around its own (cx, cy). This avoids the transform-origin /
+// transform-box conflicts that mispositioned the pulse rings on Safari/iOS.
 function initGlobeReachAnimation(globe) {
   if (!globe || globe.classList.contains('globe-animated')) return;
 
   var sphere = globe.querySelector('.globe-sphere');
   var markers = globe.querySelectorAll('.globe-marker');
   var dots = globe.querySelectorAll('.globe-marker-dot');
+  var pulses = globe.querySelectorAll('.globe-marker-pulse');
   if (!sphere || typeof gsap === 'undefined') return;
+
+  // Cache each dot's authored radius so the entrance grows to the right size.
+  var dotRadii = [];
+  dots.forEach(function(dot) {
+    dotRadii.push(parseFloat(dot.getAttribute('r')) || 5);
+  });
 
   gsap.set(sphere, { opacity: 0, scale: 0.94, transformOrigin: '260px 148px' });
   gsap.set(markers, { opacity: 0 });
-  gsap.set(dots, { scale: 0, transformOrigin: 'center center' });
+  gsap.set(dots, { attr: { r: 0 }, opacity: 1 });
+  gsap.set(pulses, { opacity: 0 });
 
   globe.classList.add('globe-animated');
 
   var tl = gsap.timeline({
     onComplete: function() {
-      globe.classList.add('globe-flowing');
+      startGlobePulse(pulses);
     }
   });
 
   tl.to(sphere, { opacity: 1, scale: 1, duration: 0.7, ease: 'power2.out' });
   tl.to(markers, { opacity: 1, duration: 0.4, stagger: 0.12, ease: 'power2.out' }, 0.35);
-  tl.to(dots, { scale: 1, duration: 0.35, stagger: 0.1, ease: 'back.out(2)' }, 0.5);
+  tl.to(dots, {
+    attr: { r: function(i) { return dotRadii[i]; } },
+    duration: 0.35,
+    stagger: 0.1,
+    ease: 'back.out(2)'
+  }, 0.5);
+}
+
+// Continuous pulse: expand each ring's radius from its base to ~2.6x while fading out,
+// looping forever. Staggered per marker so the rings ripple in sequence.
+function startGlobePulse(pulses) {
+  if (!pulses || !pulses.length || typeof gsap === 'undefined') return;
+  pulses.forEach(function(pulse, i) {
+    var base = parseFloat(pulse.getAttribute('r')) || 5;
+    gsap.fromTo(pulse,
+      { attr: { r: base }, opacity: 0.35 },
+      {
+        attr: { r: base * 2.6 },
+        opacity: 0,
+        duration: 2.4,
+        ease: 'power1.out',
+        repeat: -1,
+        delay: i * 0.3
+      }
+    );
+  });
 }
 
 function tryInitGlobeInEntry(entry) {
@@ -315,6 +351,10 @@ function initGlobeReachScrollTriggers() {
   if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
 
+    // Marker hidden-initial states only apply once GSAP is present to reveal them,
+    // so markers stay visible if the scripts ever fail to load.
+    globes.forEach(function(globe) { globe.classList.add('globe-js'); });
+
     var mm = gsap.matchMedia();
     mm.add('(prefers-reduced-motion: no-preference)', function() {
       globes.forEach(function(globe) {
@@ -337,12 +377,13 @@ function initGlobeReachScrollTriggers() {
 
     mm.add('(prefers-reduced-motion: reduce)', function() {
       globes.forEach(function(globe) {
-        globe.classList.add('globe-animated', 'globe-flowing');
+        globe.classList.add('globe-animated');
+        // Show markers statically at their authored radius; no pulsing.
         globe.querySelectorAll('.globe-marker').forEach(function(el) {
           el.style.opacity = '1';
         });
-        globe.querySelectorAll('.globe-marker-dot').forEach(function(el) {
-          el.style.transform = 'scale(1)';
+        globe.querySelectorAll('.globe-marker-pulse').forEach(function(el) {
+          el.style.opacity = '0';
         });
       });
       return function() {};
