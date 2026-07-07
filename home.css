@@ -984,6 +984,10 @@ a.work-link:hover .link-arrow {
   margin-bottom: 14px;
 }
 
+.outcome-card > .outcome-compare__heading {
+  margin-bottom: clamp(1rem, 2vw, 1.25rem);
+}
+
 .outcome-compare__row {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
