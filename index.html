@@ -914,44 +914,41 @@
                     </ul>
                 </div>
                 <div class="cs-visual cs-visual--pain-points" data-pain-points>
-                    <div class="pain-chart">
-                        <div class="pain-chart__header">
+                    <figure class="pain-chart pain-chart--pie">
+                        <figcaption class="pain-chart__header">
                             <span class="pain-chart__eyebrow">App Store review analysis</span>
-                            <p class="pain-chart__intro">Three themes consistently appeared across user feedback.</p>
+                            <p class="pain-chart__intro">Share of recurring complaints by theme. Proportions are illustrative.</p>
+                        </figcaption>
+                        <div class="pain-pie">
+                            <div class="pain-pie__graphic" role="img" aria-label="Share of App Store review complaints by theme: Authentication friction 45%, Difficult navigation 35%, Limited feedback 20%.">
+                                <div class="pain-pie__disc" style="--seg-1: 45%; --seg-2: 80%;"></div>
+                                <div class="pain-pie__center" aria-hidden="true">
+                                    <span class="pain-pie__center-num">3</span>
+                                    <span class="pain-pie__center-label">themes</span>
+                                </div>
+                            </div>
+                            <ul class="pain-pie__legend" role="list">
+                                <li class="pain-pie__legend-item" data-pain="1">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Authentication friction</span>
+                                    <span class="pain-pie__legend-value">45%</span>
+                                    <p class="pain-pie__legend-detail">Repeated login issues, confusing verification flows, and unclear error messages.</p>
+                                </li>
+                                <li class="pain-pie__legend-item" data-pain="2">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Difficult navigation</span>
+                                    <span class="pain-pie__legend-value">35%</span>
+                                    <p class="pain-pie__legend-detail">Medications, appointments, and messages required too many steps to access.</p>
+                                </li>
+                                <li class="pain-pie__legend-item" data-pain="3">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Limited feedback</span>
+                                    <span class="pain-pie__legend-value">20%</span>
+                                    <p class="pain-pie__legend-detail">Users were often uncertain whether actions had completed successfully.</p>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="pain-chart__rows" role="list" aria-label="Recurring pain points from App Store reviews">
-                            <div class="pain-chart__row" role="listitem" data-pain="1">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">01</span>
-                                    <span class="pain-chart__label">Authentication friction</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Repeated login issues, confusing verification flows, and unclear error messages.</p>
-                            </div>
-                            <div class="pain-chart__row" role="listitem" data-pain="2">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">02</span>
-                                    <span class="pain-chart__label">Difficult navigation</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Medications, appointments, and messages required too many steps to access.</p>
-                            </div>
-                            <div class="pain-chart__row" role="listitem" data-pain="3">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">03</span>
-                                    <span class="pain-chart__label">Limited feedback</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Users were often uncertain whether actions had completed successfully.</p>
-                            </div>
-                        </div>
-                    </div>
+                    </figure>
                     <figcaption class="pain-caption">Pain point themes</figcaption>
                 </div>
                 <div class="cs-section">
