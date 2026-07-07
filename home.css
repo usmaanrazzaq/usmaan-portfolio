@@ -797,6 +797,33 @@ a.work-link:hover .link-arrow {
   margin-top: 10px;
 }
 
+.cs-visual--carousel {
+  overflow: visible;
+}
+
+.cs-visual--carousel .carousel-slide {
+  aspect-ratio: unset;
+  height: clamp(360px, 46vw, 480px);
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cs-visual--carousel .carousel-slide .visual-item {
+  height: 100%;
+  max-height: 100%;
+}
+
+.cs-visual--carousel .carousel-slide .visual-item img {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  background-color: #ffffff;
+}
+
 .cs-visual .visual-item {
   margin: 0;
   width: 100%;
@@ -1463,6 +1490,10 @@ a.work-link:hover .link-arrow {
   .cs-visual--split,
   .cs-visual--grid {
     grid-template-columns: 1fr;
+  }
+
+  .cs-visual--carousel .carousel-slide {
+    height: clamp(320px, 82vw, 440px);
   }
 
   .work-title .title-text {
