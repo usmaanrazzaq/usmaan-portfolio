@@ -392,7 +392,7 @@ function initGlobeReachScrollTriggers() {
 }
 
 
-// --- Competitive Analysis Animated Map ---
+// --- Competitive Analysis Matrix ---
 function initCompetitiveAnalysis() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
@@ -403,30 +403,22 @@ function initCompetitiveAnalysis() {
 
   mm.add('(prefers-reduced-motion: no-preference)', function() {
     containers.forEach(function(container) {
-      var svg = container.querySelector('.comp-map__svg');
-      var dots = container.querySelectorAll('.comp-map__dot');
-      var names = container.querySelectorAll('.comp-map__name');
-      var zone = container.querySelector('.comp-map__zone');
-      var zoneRect = zone ? zone.querySelector('rect') : null;
-      var zoneLabel = zone ? zone.querySelector('.comp-map__zone-label') : null;
+      var header = container.querySelector('.comp-matrix__header');
+      var rows = container.querySelectorAll('.comp-matrix__row');
+      var rentedRow = container.querySelector('.comp-matrix__row--rented');
+      var competitorRows = container.querySelectorAll('.comp-matrix__row:not(.comp-matrix__row--rented)');
       var gapCards = container.querySelectorAll('.comp-gap-card');
 
-      if (!svg || !dots.length) return;
+      if (!header || !rows.length) return;
 
-      // Set initial states — dots start at center of chart, invisible
-      dots.forEach(function(dot) {
-        gsap.set(dot, {
-          attr: { transform: 'translate(300, 220)' },
-          opacity: 0
-        });
-        var circle = dot.querySelector('circle');
-        var label = dot.querySelector('.comp-map__dot-label');
-        if (circle) gsap.set(circle, { scale: 0, transformOrigin: 'center center' });
-        if (label) gsap.set(label, { opacity: 0 });
-      });
+      gsap.set(header, { opacity: 0, y: 8 });
+      gsap.set(competitorRows, { opacity: 0, y: 10 });
+      if (rentedRow) gsap.set(rentedRow, { opacity: 0, y: 10 });
 
-      // Gap cards start hidden
-      gsap.set(gapCards, { opacity: 0, y: 15 });
+      var isStacked = window.matchMedia('(max-width: 768px)').matches;
+      gsap.set(gapCards, isStacked
+        ? { opacity: 0, y: 15, x: 0 }
+        : { opacity: 0, x: 16, y: 0 });
 
       ScrollTrigger.create({
         trigger: container,
@@ -435,92 +427,42 @@ function initCompetitiveAnalysis() {
         onEnter: function() {
           var tl = gsap.timeline();
 
-          // Phase 1: Axis lines draw in
-          var axes = container.querySelectorAll('.comp-map__axis');
-          if (axes.length) {
-            axes.forEach(function(axis) {
-              var length = 0;
-              try {
-                length = axis.getTotalLength();
-              } catch (e) {
-                return;
-              }
-              gsap.set(axis, {
-                strokeDasharray: length,
-                strokeDashoffset: length
-              });
-            });
-            tl.to(axes, {
-              strokeDashoffset: 0,
-              duration: 0.6,
-              ease: 'power2.out',
-              stagger: 0.1
-            });
-          }
-
-          // Phase 2: Competitor dots fly out from center to their positions
-          dots.forEach(function(dot, i) {
-            var targetX = parseFloat(dot.getAttribute('data-x'));
-            var targetY = parseFloat(dot.getAttribute('data-y'));
-            var circle = dot.querySelector('circle');
-            var label = dot.querySelector('.comp-map__dot-label');
-
-            tl.to(dot, {
-              attr: { transform: 'translate(' + targetX + ', ' + targetY + ')' },
-              opacity: 1,
-              duration: 0.55,
-              ease: 'expo.out'
-            }, i === 0 ? '-=0.1' : '-=0.35');
-
-            if (circle) {
-              tl.to(circle, {
-                scale: 1,
-                duration: 0.4,
-                ease: 'back.out(1.4)'
-              }, '<');
-            }
-
-            if (label) {
-              tl.to(label, {
-                opacity: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-              }, '<+=0.15');
-            }
+          // Phase 1: Header fades in
+          tl.to(header, {
+            opacity: 1,
+            y: 0,
+            duration: 0.4,
+            ease: 'power2.out'
           });
 
-          // Phase 3: Name labels fade in
-          tl.to(names, {
+          // Phase 2: Competitor rows stagger in
+          tl.to(competitorRows, {
             opacity: 1,
+            y: 0,
             duration: 0.4,
-            ease: 'power2.out',
-            stagger: 0.06
-          }, '-=0.2');
+            ease: 'expo.out',
+            stagger: 0.07
+          }, '-=0.15');
 
-          // Phase 4: Opportunity zone appears
-          if (zoneRect) {
-            tl.to(zoneRect, {
-              opacity: 0.8,
+          // Phase 3: Rented row emphasizes last
+          if (rentedRow) {
+            tl.to(rentedRow, {
+              opacity: 1,
+              y: 0,
               duration: 0.5,
-              ease: 'power2.out'
+              ease: 'expo.out'
             }, '-=0.1');
           }
-          if (zoneLabel) {
-            tl.to(zoneLabel, {
-              opacity: 1,
-              duration: 0.4,
-              ease: 'power2.out'
-            }, '-=0.3');
-          }
 
-          // Phase 5: Gap cards stagger in
+          // Phase 4: Gap cards stagger in
           tl.to(gapCards, {
             opacity: 1,
+            x: 0,
             y: 0,
             duration: 0.5,
             ease: 'expo.out',
             stagger: 0.12
-          }, '-=0.1');
+          }, '-=0.2');
         }
       });
     });
@@ -531,29 +473,21 @@ function initCompetitiveAnalysis() {
   // Reduced motion: show everything immediately
   mm.add('(prefers-reduced-motion: reduce)', function() {
     containers.forEach(function(container) {
-      var dots = container.querySelectorAll('.comp-map__dot');
-      var names = container.querySelectorAll('.comp-map__name');
-      var zoneRect = container.querySelector('.comp-map__zone rect');
-      var zoneLabel = container.querySelector('.comp-map__zone-label');
+      var header = container.querySelector('.comp-matrix__header');
+      var rows = container.querySelectorAll('.comp-matrix__row');
       var gapCards = container.querySelectorAll('.comp-gap-card');
 
-      dots.forEach(function(dot) {
-        var targetX = parseFloat(dot.getAttribute('data-x'));
-        var targetY = parseFloat(dot.getAttribute('data-y'));
-        dot.setAttribute('transform', 'translate(' + targetX + ', ' + targetY + ')');
-        dot.style.opacity = '1';
-        var circle = dot.querySelector('circle');
-        var label = dot.querySelector('.comp-map__dot-label');
-        if (circle) circle.style.transform = 'scale(1)';
-        if (label) label.style.opacity = '1';
+      if (header) {
+        header.style.opacity = '1';
+        header.style.transform = 'none';
+      }
+      rows.forEach(function(row) {
+        row.style.opacity = '1';
+        row.style.transform = 'none';
       });
-
-      names.forEach(function(n) { n.style.opacity = '1'; });
-      if (zoneRect) zoneRect.style.opacity = '0.8';
-      if (zoneLabel) zoneLabel.style.opacity = '1';
       gapCards.forEach(function(card) {
         card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
+        card.style.transform = 'none';
       });
     });
 
