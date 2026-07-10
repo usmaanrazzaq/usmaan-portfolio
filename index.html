@@ -21,7 +21,7 @@
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
     <link rel="stylesheet" href="styles.css?v=20260228">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260630-globe-simple">
+    <link rel="stylesheet" href="home.css?v=20260707-adsum-metrics-slider">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260621-type" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
@@ -150,59 +150,55 @@
                     </ol>
                 </div>
                 <div class="cs-visual cs-visual--competitive" data-competitive-analysis>
-                    <div class="comp-map">
-                        <svg class="comp-map__svg" viewBox="0 0 600 440" fill="none" xmlns="http://www.w3.org/2000/svg"
-                             role="img" aria-label="Competitive positioning map comparing five P2P rental platforms across trust-verification and role-flexibility axes. An opportunity zone in the upper-right quadrant shows where Rented aims to position.">
-                            <!-- Axis lines -->
-                            <line class="comp-map__axis" x1="80" y1="220" x2="570" y2="220" stroke="#e5e5e5" stroke-width="1"/>
-                            <line class="comp-map__axis" x1="300" y1="30" x2="300" y2="410" stroke="#e5e5e5" stroke-width="1"/>
-
-                            <!-- Axis labels -->
-                            <text x="570" y="238" text-anchor="end" class="comp-map__axis-label">High Role Flexibility</text>
-                            <text x="85" y="238" text-anchor="start" class="comp-map__axis-label">Low Role Flexibility</text>
-                            <text x="300" y="24" text-anchor="middle" class="comp-map__axis-label">High Trust</text>
-                            <text x="300" y="428" text-anchor="middle" class="comp-map__axis-label">Low Trust</text>
-
-                            <!-- Opportunity zone -->
-                            <g class="comp-map__zone">
-                                <rect x="380" y="60" width="150" height="120" rx="12"
-                                      fill="none" stroke="#0FA958" stroke-width="2" stroke-dasharray="6 4" opacity="0"/>
-                                <text x="455" y="190" text-anchor="middle" class="comp-map__zone-label" opacity="0">Rented's Target</text>
-                            </g>
-
-                            <!-- Competitor dots -->
-                            <g class="comp-map__competitors">
-                                <g class="comp-map__dot" data-name="Hygglo" data-x="180" data-y="80">
-                                    <circle r="20" fill="#28A065"/>
-                                    <text y="5" text-anchor="middle" class="comp-map__dot-label">H</text>
-                                </g>
-                                <g class="comp-map__dot" data-name="Facebook Marketplace" data-x="340" data-y="250">
-                                    <circle r="20" fill="#1877F2"/>
-                                    <text y="5" text-anchor="middle" class="comp-map__dot-label">FB</text>
-                                </g>
-                                <g class="comp-map__dot" data-name="Craigslist" data-x="160" data-y="360">
-                                    <circle r="20" fill="#7B3FA0"/>
-                                    <text y="5" text-anchor="middle" class="comp-map__dot-label">CL</text>
-                                </g>
-                                <g class="comp-map__dot" data-name="OfferUp" data-x="240" data-y="280">
-                                    <circle r="20" fill="#0EA5A0"/>
-                                    <text y="5" text-anchor="middle" class="comp-map__dot-label">OU</text>
-                                </g>
-                                <g class="comp-map__dot" data-name="Yoodlize" data-x="320" data-y="160">
-                                    <circle r="20" fill="#E68A2E"/>
-                                    <text y="5" text-anchor="middle" class="comp-map__dot-label">YZ</text>
-                                </g>
-                            </g>
-
-                            <!-- Competitor name labels -->
-                            <g class="comp-map__names">
-                                <text x="180" y="110" text-anchor="middle" class="comp-map__name" opacity="0">Hygglo</text>
-                                <text x="340" y="280" text-anchor="middle" class="comp-map__name" opacity="0">FB Marketplace</text>
-                                <text x="160" y="390" text-anchor="middle" class="comp-map__name" opacity="0">Craigslist</text>
-                                <text x="240" y="310" text-anchor="middle" class="comp-map__name" opacity="0">OfferUp</text>
-                                <text x="320" y="190" text-anchor="middle" class="comp-map__name" opacity="0">Yoodlize</text>
-                            </g>
-                        </svg>
+                    <div class="comp-matrix">
+                        <table class="comp-matrix__table" aria-label="Competitive comparison of P2P rental platforms across trust balance, role switching, and browse clarity">
+                            <thead>
+                                <tr class="comp-matrix__header">
+                                    <th scope="col">Platform</th>
+                                    <th scope="col">Trust balance</th>
+                                    <th scope="col">Role switching</th>
+                                    <th scope="col">Browse clarity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="comp-matrix__row" data-platform="Hygglo">
+                                    <th scope="row">Hygglo</th>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                </tr>
+                                <tr class="comp-matrix__row" data-platform="FB Marketplace">
+                                    <th scope="row">FB Marketplace</th>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                </tr>
+                                <tr class="comp-matrix__row" data-platform="Craigslist">
+                                    <th scope="row">Craigslist</th>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                </tr>
+                                <tr class="comp-matrix__row" data-platform="OfferUp">
+                                    <th scope="row">OfferUp</th>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                    <td><span class="comp-status comp-status--weak" title="Weak">—</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                </tr>
+                                <tr class="comp-matrix__row" data-platform="Yoodlize">
+                                    <th scope="row">Yoodlize</th>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                    <td><span class="comp-status comp-status--partial" title="Partial">~</span></td>
+                                </tr>
+                                <tr class="comp-matrix__row comp-matrix__row--rented" data-platform="Rented">
+                                    <th scope="row">Rented</th>
+                                    <td><span class="comp-status comp-status--strong" title="Strong">✓</span></td>
+                                    <td><span class="comp-status comp-status--strong" title="Strong">✓</span></td>
+                                    <td><span class="comp-status comp-status--strong" title="Strong">✓</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <div class="comp-gaps">
@@ -230,6 +226,14 @@
                     </div>
 
                     <figcaption class="comp-caption">Competitive Analysis</figcaption>
+                </div>
+                <div class="cs-visual cs-visual--split cs-visual--pair-square">
+                    <figure class="visual-item">
+                        <img src="images/Rented-Suggestions-Tabs.webp" alt="Rented search screen with category suggestion tags — Hand Tools, Audio Equipment, Kitchen Appliances, Tents & Events Spaces — above the search input" loading="lazy">
+                    </figure>
+                    <figure class="visual-item">
+                        <img src="images/Rented-Category-Tags.webp" alt="Rented browse results for painting equipment with a Best Match section and Close By and Best Price filters above the catalog" loading="lazy">
+                    </figure>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Research</h3>
@@ -281,14 +285,6 @@
                         <li>Suggestion tags above the search input. Not from user requests — from competitive design reference and a judgment call about whitespace and search friction. Round 2 participants used the tags more than direct text input.</li>
                     </ul>
                     <p>The unresolved piece — filter and sort across mixed inventory — was the surface I wanted more time on. A drill and a tent need filters that share almost nothing.</p>
-                </div>
-                <div class="cs-visual cs-visual--split cs-visual--pair-square">
-                    <figure class="visual-item">
-                        <img src="images/Rented-Suggestions-Tabs.webp" alt="Rented search screen with category suggestion tags — Hand Tools, Audio Equipment, Kitchen Appliances, Tents & Events Spaces — above the search input" loading="lazy">
-                    </figure>
-                    <figure class="visual-item">
-                        <img src="images/Rented-Category-Tags.webp" alt="Rented browse results for painting equipment with a Best Match section and Close By and Best Price filters above the catalog" loading="lazy">
-                    </figure>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Outcome</h3>
@@ -786,21 +782,129 @@
                     <h3 class="cs-section-heading">Size Filter</h3>
                     <p>I built a size filter feature from scratch for the collection pages that surfaces only in-stock sizes, so customers see what's actually available instead of landing on sold-out options. It cut wasted clicks and helped shoppers find their size faster.</p>
                 </div>
+                <div class="cs-visual cs-visual--chart">
+                    <div class="chart-card" data-chart="adsum-soldout-clicks">
+                        <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing a 35 percent reduction in clicks to sold-out variants after the size filter launched">
+                            <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                            <text x="48" y="44" text-anchor="end" class="chart-label">35%</text>
+                            <text x="48" y="114" text-anchor="end" class="chart-label">25%</text>
+                            <text x="48" y="184" text-anchor="end" class="chart-label">15%</text>
+                            <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                            <defs>
+                                <linearGradient id="adsumSoldoutGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart-area" d="M80,248 L152,236 L224,210 L296,168 L368,110 L440,62 L490,40 L490,250 L80,250 Z" fill="url(#adsumSoldoutGradient)"/>
+                            <polyline class="chart-line" points="80,248 152,236 224,210 296,168 368,110 440,62 490,40" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <g class="chart-dots">
+                                <circle cx="80" cy="248" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="152" cy="236" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="224" cy="210" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="296" cy="168" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                                <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            </g>
+                            <text x="80" y="278" text-anchor="middle" class="chart-label">Launch</text>
+                            <text x="224" y="278" text-anchor="middle" class="chart-label">Wk 2</text>
+                            <text x="368" y="278" text-anchor="middle" class="chart-label">Wk 4</text>
+                            <text x="490" y="278" text-anchor="middle" class="chart-label">Wk 6</text>
+                            <text x="275" y="308" text-anchor="middle" class="chart-caption">Reduction in clicks to sold-out variants</text>
+                        </svg>
+                    </div>
+                    <div class="chart-card" data-chart="adsum-sizes-hidden">
+                        <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing sold-out sizes hidden from the filter reaching 100 percent coverage across collection pages">
+                            <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                            <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                            <text x="48" y="44" text-anchor="end" class="chart-label">100%</text>
+                            <text x="48" y="114" text-anchor="end" class="chart-label">70%</text>
+                            <text x="48" y="184" text-anchor="end" class="chart-label">40%</text>
+                            <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                            <defs>
+                                <linearGradient id="adsumHiddenGradient" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#5BA88C" stop-opacity="0.25"/>
+                                    <stop offset="100%" stop-color="#5BA88C" stop-opacity="0.02"/>
+                                </linearGradient>
+                            </defs>
+                            <path class="chart-area" d="M80,248 L152,220 L224,160 L296,95 L368,55 L440,42 L490,40 L490,250 L80,250 Z" fill="url(#adsumHiddenGradient)"/>
+                            <polyline class="chart-line" points="80,248 152,220 224,160 296,95 368,55 440,42 490,40" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                            <g class="chart-dots">
+                                <circle cx="80" cy="248" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="152" cy="220" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="224" cy="160" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="296" cy="95" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="368" cy="55" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="440" cy="42" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                                <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                            </g>
+                            <text x="80" y="278" text-anchor="middle" class="chart-label">Launch</text>
+                            <text x="224" y="278" text-anchor="middle" class="chart-label">Wk 2</text>
+                            <text x="368" y="278" text-anchor="middle" class="chart-label">Wk 4</text>
+                            <text x="490" y="278" text-anchor="middle" class="chart-label">Wk 6</text>
+                            <text x="275" y="308" text-anchor="middle" class="chart-caption">Sold-out sizes hidden from filter</text>
+                        </svg>
+                    </div>
+                </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Additional Work</h3>
                     <p>Beyond web design, I have created graphic designs for the brand's email announcements — including Black Friday and Cyber Monday campaigns — and assist with ongoing marketing outreach and social media content.</p>
                 </div>
-                <div class="cs-visual">
-                    <figure class="visual-item visual-item--contain">
-                        <img src="images/IG Posts.jpg" alt="Campaigns & IG Posts" loading="lazy">
-                        <figcaption>Campaigns & IG Posts</figcaption>
-                    </figure>
+                <div class="cs-visual cs-visual--carousel">
+                    <div class="carousel" data-carousel>
+                        <div class="carousel-track">
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-Holiday-Shipping.webp" alt="Holiday Shipping Guide" loading="lazy">
+                                    <figcaption>Holiday Shipping Guide</figcaption>
+                                </figure>
+                            </div>
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-Boxing-Day.webp" alt="Boxing Day Sale" loading="lazy">
+                                    <figcaption>Boxing Day Sale</figcaption>
+                                </figure>
+                            </div>
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-Cyber-Monday.webp" alt="Cyber Monday" loading="lazy">
+                                    <figcaption>Cyber Monday</figcaption>
+                                </figure>
+                            </div>
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-Black-Friday.webp" alt="Black Friday Sale" loading="lazy">
+                                    <figcaption>Black Friday Sale</figcaption>
+                                </figure>
+                            </div>
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-ELAC.webp" alt="Adsum x ELAC" loading="lazy">
+                                    <figcaption>Adsum x ELAC</figcaption>
+                                </figure>
+                            </div>
+                            <div class="carousel-slide">
+                                <figure class="visual-item visual-item--contain">
+                                    <img src="images/Adsum-Campaign-Workshop.webp" alt="Workshop Scene" loading="lazy">
+                                    <figcaption>Workshop Scene</figcaption>
+                                </figure>
+                            </div>
+                        </div>
+                        <div class="carousel-dots" aria-label="Campaign navigation"></div>
+                    </div>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Outcome</h3>
                     <p>Working directly in Shopify alongside the founder, I design and ship collection pages on an ongoing cadence — from new releases to seasonal sales. The size filter I built from scratch surfaces only in-stock sizes, cutting wasted clicks and helping customers find what's actually available instead of landing on sold-out options.</p>
                     <p>To sharpen the product experience, I reworked the page layout so dense supporting details — the size chart, product details, and shipping &amp; return policies — collapse into accordion dropdowns. That keeps the core product description front and center and shortens the path from viewing an item to adding it to cart and completing checkout.</p>
                     <p>Beyond the site, my work across email campaigns, Instagram posts, and ongoing website updates has helped drive sales and deepen customer engagement — keeping the storefront and outreach moving in sync.</p>
+                    <p>I design and execute email campaigns for product launches and seasonal cycles, currently achieving a 43.8% open rate against a ~33% e-commerce industry average.</p>
                 </div>
             </article>
 
@@ -853,44 +957,41 @@
                     </ul>
                 </div>
                 <div class="cs-visual cs-visual--pain-points" data-pain-points>
-                    <div class="pain-chart">
-                        <div class="pain-chart__header">
+                    <figure class="pain-chart pain-chart--pie">
+                        <figcaption class="pain-chart__header">
                             <span class="pain-chart__eyebrow">App Store review analysis</span>
-                            <p class="pain-chart__intro">Three themes consistently appeared across user feedback.</p>
+                            <p class="pain-chart__intro">Share of recurring complaints by theme. Proportions are illustrative.</p>
+                        </figcaption>
+                        <div class="pain-pie">
+                            <div class="pain-pie__graphic" role="img" aria-label="Share of App Store review complaints by theme: Authentication friction 45%, Difficult navigation 35%, Limited feedback 20%.">
+                                <div class="pain-pie__disc" style="--seg-1: 45%; --seg-2: 80%;"></div>
+                                <div class="pain-pie__center" aria-hidden="true">
+                                    <span class="pain-pie__center-num">3</span>
+                                    <span class="pain-pie__center-label">themes</span>
+                                </div>
+                            </div>
+                            <ul class="pain-pie__legend" role="list">
+                                <li class="pain-pie__legend-item" data-pain="1">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Authentication friction</span>
+                                    <span class="pain-pie__legend-value">45%</span>
+                                    <p class="pain-pie__legend-detail">Repeated login issues, confusing verification flows, and unclear error messages.</p>
+                                </li>
+                                <li class="pain-pie__legend-item" data-pain="2">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Difficult navigation</span>
+                                    <span class="pain-pie__legend-value">35%</span>
+                                    <p class="pain-pie__legend-detail">Medications, appointments, and messages required too many steps to access.</p>
+                                </li>
+                                <li class="pain-pie__legend-item" data-pain="3">
+                                    <span class="pain-pie__swatch" aria-hidden="true"></span>
+                                    <span class="pain-pie__legend-label">Limited feedback</span>
+                                    <span class="pain-pie__legend-value">20%</span>
+                                    <p class="pain-pie__legend-detail">Users were often uncertain whether actions had completed successfully.</p>
+                                </li>
+                            </ul>
                         </div>
-                        <div class="pain-chart__rows" role="list" aria-label="Recurring pain points from App Store reviews">
-                            <div class="pain-chart__row" role="listitem" data-pain="1">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">01</span>
-                                    <span class="pain-chart__label">Authentication friction</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Repeated login issues, confusing verification flows, and unclear error messages.</p>
-                            </div>
-                            <div class="pain-chart__row" role="listitem" data-pain="2">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">02</span>
-                                    <span class="pain-chart__label">Difficult navigation</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Medications, appointments, and messages required too many steps to access.</p>
-                            </div>
-                            <div class="pain-chart__row" role="listitem" data-pain="3">
-                                <div class="pain-chart__row-head">
-                                    <span class="pain-chart__index">03</span>
-                                    <span class="pain-chart__label">Limited feedback</span>
-                                </div>
-                                <div class="pain-chart__track" aria-hidden="true">
-                                    <div class="pain-chart__fill" style="--pain-width: 90%"></div>
-                                </div>
-                                <p class="pain-chart__detail">Users were often uncertain whether actions had completed successfully.</p>
-                            </div>
-                        </div>
-                    </div>
+                    </figure>
                     <figcaption class="pain-caption">Pain point themes</figcaption>
                 </div>
                 <div class="cs-section">
@@ -982,7 +1083,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script src="shared/interactive-components.js?v=20260630-pain-chart"></script>
+    <script src="shared/interactive-components.js?v=20260701-globe-fix"></script>
     <script src="main.js?v=20260630-globe-simple"></script>
 </body>
 
