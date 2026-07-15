@@ -252,6 +252,45 @@ function deactivateEntryMedia(entry) {
   });
 }
 
+// ===== CASE-STUDY VISUAL SCROLL REVEALS =====
+// Restrained rise-in for .cs-visual blocks as they scroll into view. Motion is
+// reserved for the work itself — text/hero stay stable. Visuals already in view
+// on load/switch are shown immediately so nothing flashes.
+var csRevealObserver = null;
+
+function initCaseStudyReveals() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
+
+  csRevealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.remove('cs-reveal-hidden');
+        csRevealObserver.unobserve(entry.target);
+      }
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.04 });
+
+  setupCaseStudyReveals(document.querySelector('.work-entry.active'));
+}
+
+function setupCaseStudyReveals(scope) {
+  if (!scope || !csRevealObserver) return;
+  var vh = window.innerHeight || document.documentElement.clientHeight;
+  var visuals = scope.querySelectorAll(':scope > .cs-visual');
+  visuals.forEach(function(v) {
+    var rect = v.getBoundingClientRect();
+    // Already in (or near) view on entry — reveal immediately, no animation.
+    if (rect.top < vh * 0.9) {
+      v.classList.remove('cs-reveal-hidden');
+      csRevealObserver.unobserve(v);
+    } else {
+      v.classList.add('cs-reveal-hidden');
+      csRevealObserver.observe(v);
+    }
+  });
+}
+
 // One debounced refresh after work switches — avoids double ScrollTrigger
 // recalculation (rAF + timeout) that caused visible jitter / scroll snap.
 var workSwitchScrollRefreshTimer = null;
@@ -376,6 +415,7 @@ function initWorkDirectory() {
               workSection.style.height = '';
             }
             scheduleWorkScrollRefreshAfterSwitch();
+            setupCaseStudyReveals(targetEntry);
             if (targetWork === 'otrs' && typeof tryInitGlobeInEntry === 'function') {
               setTimeout(function() { tryInitGlobeInEntry(targetEntry); }, 450);
             }
@@ -391,6 +431,7 @@ function initWorkDirectory() {
         targetEntry.classList.add('active');
         activateEntryMedia(targetEntry);
         scheduleWorkScrollRefreshAfterSwitch();
+        setupCaseStudyReveals(targetEntry);
         if (targetWork === 'otrs' && typeof tryInitGlobeInEntry === 'function') {
           setTimeout(function() { tryInitGlobeInEntry(targetEntry); }, 450);
         }
@@ -836,6 +877,7 @@ function initScrollHint() {
   if (!btn) return;
 
   var workSection = document.querySelector('.work-section');
+  var topBlur = document.querySelector('.top-blur');
 
   btn.addEventListener('click', function() {
     if (workSection) {
@@ -844,11 +886,19 @@ function initScrollHint() {
   });
 
   var hidden = false;
+  var blurOn = false;
   function onScroll() {
     var atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 20);
     if (atBottom !== hidden) {
       hidden = atBottom;
       btn.classList.toggle('hidden', hidden);
+    }
+    // Top bleed only once content is actually scrolling under the nav —
+    // otherwise it blurs the hero timestamp at rest.
+    var shouldBlur = window.scrollY > 24;
+    if (topBlur && shouldBlur !== blurOn) {
+      blurOn = shouldBlur;
+      topBlur.classList.toggle('is-visible', blurOn);
     }
   }
 
@@ -976,6 +1026,7 @@ function initPageHooks(page) {
     initLightbox();
     initCarousels();
     initHomeScrollAnimations();
+    initCaseStudyReveals();
     initScrollHint();
     if (typeof initStatCounters === 'function') initStatCounters();
     if (typeof initCompetitiveAnalysis === 'function') initCompetitiveAnalysis();
@@ -992,8 +1043,10 @@ function initPageHooks(page) {
   // Show/hide home-only fixed elements
   var scrollHint = document.querySelector('.scroll-hint');
   var bottomBlur = document.querySelector('.bottom-blur');
+  var topBlur = document.querySelector('.top-blur');
   if (scrollHint) scrollHint.style.display = page === 'home' ? '' : 'none';
   if (bottomBlur) bottomBlur.style.display = page === 'home' ? '' : 'none';
+  if (topBlur) topBlur.style.display = page === 'home' ? '' : 'none';
 
   // Initialize GSAP hover effects for all pages that need them
   initHoverEffects(page);

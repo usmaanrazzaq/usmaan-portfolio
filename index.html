@@ -21,7 +21,7 @@
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
     <link rel="stylesheet" href="styles.css?v=20260228">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260713-adsum-product-videos-2">
+    <link rel="stylesheet" href="home.css?v=20260714-motion-bleed-2">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260621-type" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
@@ -265,34 +265,6 @@
                         <li>Suggestion tags above the search input. Not from user requests — from competitive design reference and a judgment call about whitespace and search friction. Round 2 participants used the tags more than direct text input.</li>
                     </ul>
                     <p>The unresolved piece — filter and sort across mixed inventory — was the surface I wanted more time on. A drill and a tent need filters that share almost nothing.</p>
-                </div>
-                <div class="cs-visual" data-design-evolution>
-                    <div class="evolution-tabs" role="tablist" aria-label="Design stage">
-                        <button class="evolution-tab active" role="tab" aria-selected="true" aria-controls="evo-panel-0" id="evo-tab-0" data-index="0">Wireframes</button>
-                        <button class="evolution-tab" role="tab" aria-selected="false" aria-controls="evo-panel-1" id="evo-tab-1" data-index="1">Early Mocks</button>
-                        <span class="evolution-tab-indicator" aria-hidden="true"></span>
-                    </div>
-                    <div class="evolution-viewport">
-                        <div class="evolution-stage active" role="tabpanel" id="evo-panel-0" aria-labelledby="evo-tab-0">
-                            <img src="images/Rented-Wireframes-Updated.jpg" alt="Rented wireframe screens showing onboarding, login, search, and browse layouts" loading="lazy">
-                        </div>
-                        <div class="evolution-stage" role="tabpanel" id="evo-panel-1" aria-labelledby="evo-tab-1">
-                            <img src="images/Rented-Early-Mocks-Updated.jpg" alt="Rented early mockups showing sign-in, onboarding, category prompt, and browse screens" loading="lazy">
-                        </div>
-                        <button class="evolution-arrow evolution-arrow--prev" type="button" aria-label="Previous stage" disabled>
-                            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 2.5L4.5 7L9 11.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <button class="evolution-arrow evolution-arrow--next" type="button" aria-label="Next stage">
-                            <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 2.5L9.5 7L5 11.5" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
-                    <div class="evolution-footer">
-                        <span class="evolution-counter" aria-live="polite">1 / 2</span>
-                    </div>
-                    <div class="evolution-captions">
-                        <p class="evolution-caption active" data-stage="0">Conventional auth flow, basic search, simple profile — identifying what needed to change.</p>
-                        <p class="evolution-caption" data-stage="1">Google SSO, category prompt, profile tabs taking shape — testing structural decisions.</p>
-                    </div>
                 </div>
                 <div class="cs-section">
                     <h3 class="cs-section-heading">Outcome</h3>
@@ -934,10 +906,10 @@
                 <div class="cs-header">
                     <div class="cs-header-left">
                         <h2 class="cs-title">WCM Connect App</h2>
-                        <span class="cs-badge cs-badge--project"><img class="cs-badge__icon" src="images/icons/project.svg" width="10" height="10" alt="" aria-hidden="true">Project</span>
+                        <span class="cs-badge cs-badge--project"><img class="cs-badge__icon" src="images/icons/project.svg" width="10" height="10" alt="" aria-hidden="true">Concept</span>
                     </div>
                 </div>
-                <p class="cs-subtitle">Improving the patient experience through a clearer onboarding, dashboard, and appointment scheduling experience.</p>
+                <p class="cs-subtitle">A self-initiated concept redesign — reworking an existing patient app's onboarding, dashboard, and scheduling from its public App Store reviews.</p>
                 <div class="cs-hero-visual">
                     <img src="images/WCM-Main-Display@3x.jpg" srcset="images/WCM-Main-Display@3x.jpg 2200w" sizes="(max-width: 1120px) 100vw, 1100px" width="2200" height="1491" alt="WCM Connect app splash screen and patient dashboard redesign" loading="eager">
                 </div>
@@ -1093,6 +1065,9 @@
         <img src="" alt="Enlarged view">
     </div>
 
+    <!-- Top blur — content bleeds under the nav as it scrolls up -->
+    <div class="top-blur"></div>
+
     <!-- Bottom blur -->
     <div class="bottom-blur"></div>
 
@@ -1106,7 +1081,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="shared/interactive-components.js?v=20260701-globe-fix"></script>
-    <script src="main.js?v=20260630-globe-simple"></script>
+    <script src="main.js?v=20260714-motion-bleed-2"></script>
 </body>
 
 </html>

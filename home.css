@@ -460,6 +460,30 @@ button.work-title {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Scroll-reveal for case-study visuals — a restrained rise as the work enters
+   view. Motion is reserved for the work itself; text and hero stay stable so
+   nothing flashes when switching projects. JS (initCaseStudyReveals) adds
+   .cs-reveal-hidden only to visuals still below the fold. */
+.work-entry--casestudy > .cs-visual {
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-entry.active > .cs-visual.cs-reveal-hidden {
+  opacity: 0;
+  transform: translateY(24px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .work-entry--casestudy > .cs-visual {
+    transition: none;
+  }
+  .work-entry.active > .cs-visual.cs-reveal-hidden {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 .work-entry.measuring {
   display: flex;
   flex-direction: column;
@@ -599,10 +623,11 @@ a.work-link:hover .link-arrow {
 .cs-title {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 24px;
+  letter-spacing: -0.01em;
   color: #000;
   margin: 0;
-  line-height: normal;
+  line-height: 1.15;
 }
 
 .cs-badge {
@@ -675,11 +700,12 @@ a.work-link:hover .link-arrow {
 
 .cs-subtitle {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #000;
+  font-weight: 400;
+  font-size: 17px;
+  color: #555;
   margin: 0;
-  line-height: normal;
+  line-height: 1.4;
+  max-width: 620px;
 }
 
 .cs-hero-visual {
@@ -739,18 +765,33 @@ a.work-link:hover .link-arrow {
   max-width: 680px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 14px;
+  margin-top: 44px;
 }
 
 .cs-section-heading {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 500;
-  font-size: 16px;
-  color: #000;
-  text-decoration: underline;
-  margin: 0;
-  line-height: normal;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #6e6e6e;
+  text-decoration: none;
+  margin: 0 0 2px;
+  line-height: 1.2;
+}
+
+/* Numbered narrative spine — each case study counts its own beats */
+.work-entry--casestudy {
+  counter-reset: cs-beat;
+}
+
+.cs-section-heading::before {
+  counter-increment: cs-beat;
+  content: counter(cs-beat, decimal-leading-zero);
+  margin-right: 12px;
+  color: #b8b8b8;
+  font-variant-numeric: tabular-nums;
 }
 
 .cs-section p {
@@ -794,7 +835,7 @@ a.work-link:hover .link-arrow {
   margin-right: calc((100% - var(--home-visual-max)) / 2);
   border-radius: 10px;
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 24px;
 }
 
 .cs-visual--carousel {
@@ -961,8 +1002,10 @@ a.work-link:hover .link-arrow {
 }
 
 .outcome-card {
-  background: #f8f8f8;
-  border-radius: 12px;
+  background: #fff;
+  border: 0.5px solid #e6e6e6;
+  border-top: 1.5px solid #1a1a1a;
+  border-radius: 10px;
   padding: clamp(1.5rem, 3.5vw, 2.5rem);
   box-sizing: border-box;
 }
@@ -1032,8 +1075,8 @@ a.work-link:hover .link-arrow {
 }
 
 .outcome-compare__item--rented {
-  border-color: #0FA958;
-  background: rgba(15, 169, 88, 0.05);
+  border-color: #1a1a1a;
+  background: #fafafa;
 }
 
 .outcome-compare__name {
@@ -1044,7 +1087,8 @@ a.work-link:hover .link-arrow {
 }
 
 .outcome-compare__item--rented .outcome-compare__name {
-  color: #0a7d41;
+  color: #000;
+  font-weight: 600;
 }
 
 .outcome-compare__value {
@@ -1458,7 +1502,10 @@ a.work-link:hover .link-arrow {
 
 /* ===== RESPONSIVE — MOBILE (768px) ===== */
 @media (max-width: 1024px) {
-  .cs-title,
+  .cs-title {
+    font-size: 22px;
+  }
+
   .cs-subtitle {
     font-size: 16px;
   }
@@ -1549,11 +1596,11 @@ a.work-link:hover .link-arrow {
   }
 
   .cs-section-heading {
-    font-size: 16px;
+    font-size: 11px;
   }
 
   .cs-title {
-    font-size: 16px;
+    font-size: 20px;
   }
 
   /* NMYA + OTRS: keep the badge inline with the title; wrap only when it can't fit */
@@ -1835,6 +1882,31 @@ a.work-link:hover .link-arrow {
   z-index: 90;
 }
 
+/* Top blur — sits just under the fixed nav (z 9999) so content dissolves
+   into a soft blur as it scrolls up, instead of hard-cutting at the hairline.
+   Mirror of .bottom-blur, flipped: opaque/strongest near the nav, fading down.
+   Hidden at rest (would blur the hero timestamp); fades in once scrolled. */
+.top-blur {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.15) 30%, rgba(255, 255, 255, 0.45) 60%, rgba(255, 255, 255, 0.85) 100%);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, black 45%);
+  mask-image: linear-gradient(to top, transparent 0%, black 45%);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  pointer-events: none;
+  z-index: 90;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.top-blur.is-visible {
+  opacity: 1;
+}
+
 /* ===== SCROLL-DOWN HINT ===== */
 .scroll-hint {
   position: fixed;
@@ -1889,5 +1961,9 @@ a.work-link:hover .link-arrow {
   }
   .bottom-blur {
     height: 40px;
+  }
+  .top-blur {
+    top: 52px;
+    height: 44px;
   }
 }
