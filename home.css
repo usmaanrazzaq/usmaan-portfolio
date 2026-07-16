@@ -1629,6 +1629,15 @@ a.work-link:hover .link-arrow {
     max-width: 100%;
   }
 
+  .hero-bio-text p {
+    font-size: 16px;
+  }
+
+  .connect-links a svg {
+    width: 16px;
+    height: 16px;
+  }
+
   .hero-scroll-cue {
     bottom: 20px;
   }
