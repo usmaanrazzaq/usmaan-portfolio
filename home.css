@@ -6,11 +6,15 @@
   --home-visual-max: 1100px;
 }
 
-/* ===== HERO INTRO — Single-column centered ===== */
+/* ===== HERO INTRO — Full-viewport centered ===== */
 .hero-intro {
-  display: block;
-  padding: 14px 20px 16px;
-  border-bottom: 0.5px solid #b5b5b5;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  min-height: calc(100dvh - 70px);
+  padding: 72px 25px 120px;
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -19,29 +23,45 @@
 .hero-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  max-width: var(--home-column-max);
-  margin: 0 auto;
-  padding: 0 var(--home-column-pad-x);
+  align-items: flex-start;
+  max-width: 807px;
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 .hero-timestamp {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  right: 25px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  justify-content: space-between;
+  gap: 8px;
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 300;
-  font-size: 12px;
+  font-size: 16px;
   color: #767676;
-  margin-bottom: 12px;
-  align-self: flex-start;
+  margin-bottom: 0;
+}
+
+.hero-timestamp__location,
+.hero-timestamp__time {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hero-timestamp__time {
+  gap: 10px;
 }
 
 /* Live status dot — cobalt LED that beats once per second, in sync with the clock.
    JS re-triggers the beat each tick via the .is-beating class (reflow restart). */
 .hero-live {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #2f5bea;
   flex-shrink: 0;
@@ -78,6 +98,8 @@
 
 .hero-daynight svg {
   display: none;
+  width: 16px;
+  height: 16px;
   transition: opacity 0.4s ease;
 }
 
@@ -100,10 +122,6 @@
 
 .location-city {
   white-space: nowrap;
-}
-
-.location-separator {
-  opacity: 0.4;
 }
 
 .local-time {
@@ -138,7 +156,7 @@
 .hero-bio-text p {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
-  font-size: 16px;
+  font-size: clamp(20px, 2.2vw, 32px);
   line-height: 1.4;
   margin: 0;
   color: #2b2b2b;
@@ -175,6 +193,12 @@
     color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
     transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.connect-links a svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
 }
 
 .connect-links a::after {
@@ -224,11 +248,83 @@
 .connect-links a[aria-label="Resume"]:focus-visible { color: #000000; }
 .connect-links a:focus-visible::after { opacity: 0.6; transform: translate(-50%, -50%) scale(1); }
 
+/* Hero scroll cue — bottom-centered “Scroll to view work” + bouncing arrow */
+.hero-scroll-cue {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: #2b2b2b;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.hero-scroll-cue.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.hero-scroll-cue__label {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.4;
+  color: #2b2b2b;
+  white-space: nowrap;
+}
+
+.hero-scroll-cue__arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  background: #eaeaea;
+  color: #000000;
+  flex-shrink: 0;
+  animation: hero-scroll-cue-bounce 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
+}
+
+.hero-scroll-cue:hover .hero-scroll-cue__arrow {
+  background: #e0e0e0;
+}
+
+.hero-scroll-cue:focus-visible {
+  outline: none;
+}
+
+.hero-scroll-cue:focus-visible .hero-scroll-cue__arrow {
+  outline: 2px solid #2b2b2b;
+  outline-offset: 3px;
+}
+
+@keyframes hero-scroll-cue-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-scroll-cue__arrow {
+    animation: none;
+  }
+}
+
 /* Hero Divider */
 .hero-divider {
   width: 100%;
   height: 0.5px;
   background-color: #b5b5b5;
+  border: none;
   margin: 0;
 }
 
@@ -1518,15 +1614,27 @@ a.work-link:hover .link-arrow {
   }
 
   .hero-intro {
-    padding: 10px 0 14px;
+    min-height: calc(100dvh - 70px);
+    padding: 16px 12px 100px;
+  }
+
+  .hero-timestamp {
+    left: 12px;
+    right: 12px;
+    top: 16px;
   }
 
   .hero-content {
     padding: 0;
+    max-width: 100%;
   }
 
-  .hero-bio-text p {
-    font-size: 16px;
+  .hero-scroll-cue {
+    bottom: 20px;
+  }
+
+  .hero-scroll-cue__label {
+    font-size: 14px;
   }
 
   .work-section {
@@ -1624,10 +1732,6 @@ a.work-link:hover .link-arrow {
 
 /* ===== SMALL MOBILE (480px) ===== */
 @media (max-width: 480px) {
-  .hero-bio-text p {
-    font-size: 14px;
-  }
-
   .work-title .title-text {
     font-size: 11px;
   }
@@ -1867,6 +1971,7 @@ a.work-link:hover .link-arrow {
 }
 
 /* ===== BOTTOM BLUR ===== */
+/* Hidden in the hero so it doesn’t wash out the scroll cue; fades in once past hero. */
 .bottom-blur {
   position: fixed;
   bottom: 0;
@@ -1880,6 +1985,12 @@ a.work-link:hover .link-arrow {
   -webkit-backdrop-filter: blur(4px);
   pointer-events: none;
   z-index: 90;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bottom-blur.is-visible {
+  opacity: 1;
 }
 
 /* Top blur — sits just under the fixed nav (z 9999) so content dissolves
@@ -1907,58 +2018,7 @@ a.work-link:hover .link-arrow {
   opacity: 1;
 }
 
-/* ===== SCROLL-DOWN HINT ===== */
-.scroll-hint {
-  position: fixed;
-  bottom: 28px;
-  right: 24px;
-  z-index: 91;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border: none;
-  background: none;
-  color: #71717a;
-  cursor: pointer;
-  padding: 0;
-  border-radius: 50%;
-  opacity: 1;
-  transition: opacity 0.4s ease, color 0.2s ease, transform 0.2s ease;
-  animation: scroll-hint-bounce 2s cubic-bezier(0.36, 0.07, 0.19, 0.97) infinite;
-}
-
-.scroll-hint:hover {
-  color: #2b2b2b;
-  transform: translateY(2px);
-}
-
-.scroll-hint.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-@keyframes scroll-hint-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(6px); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-hint { animation: none; }
-}
-
 @media (max-width: 768px) {
-  .scroll-hint {
-    bottom: 20px;
-    right: 16px;
-    width: 32px;
-    height: 32px;
-  }
-  .scroll-hint svg {
-    width: 16px;
-    height: 16px;
-  }
   .bottom-blur {
     height: 40px;
   }

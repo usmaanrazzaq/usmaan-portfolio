@@ -873,11 +873,13 @@ function initHomeScrollAnimations() {
 
 // ===== SCROLL-DOWN HINT =====
 function initScrollHint() {
-  var btn = document.querySelector('.scroll-hint');
+  var btn = document.querySelector('.hero-scroll-cue');
   if (!btn) return;
 
   var workSection = document.querySelector('.work-section');
+  var heroIntro = document.querySelector('.hero-intro');
   var topBlur = document.querySelector('.top-blur');
+  var bottomBlur = document.querySelector('.bottom-blur');
 
   btn.addEventListener('click', function() {
     if (workSection) {
@@ -885,20 +887,27 @@ function initScrollHint() {
     }
   });
 
-  var hidden = false;
-  var blurOn = false;
+  var cueHidden = false;
+  var topBlurOn = false;
+  var bottomBlurOn = false;
   function onScroll() {
-    var atBottom = (window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 20);
-    if (atBottom !== hidden) {
-      hidden = atBottom;
-      btn.classList.toggle('hidden', hidden);
+    var heroHeight = heroIntro ? heroIntro.offsetHeight : window.innerHeight;
+    var pastHero = window.scrollY > heroHeight * 0.45;
+    if (pastHero !== cueHidden) {
+      cueHidden = pastHero;
+      btn.classList.toggle('hidden', cueHidden);
+    }
+    // Bottom bleed only once past the hero — otherwise it washes out the scroll cue.
+    if (bottomBlur && pastHero !== bottomBlurOn) {
+      bottomBlurOn = pastHero;
+      bottomBlur.classList.toggle('is-visible', bottomBlurOn);
     }
     // Top bleed only once content is actually scrolling under the nav —
     // otherwise it blurs the hero timestamp at rest.
-    var shouldBlur = window.scrollY > 24;
-    if (topBlur && shouldBlur !== blurOn) {
-      blurOn = shouldBlur;
-      topBlur.classList.toggle('is-visible', blurOn);
+    var shouldTopBlur = window.scrollY > 24;
+    if (topBlur && shouldTopBlur !== topBlurOn) {
+      topBlurOn = shouldTopBlur;
+      topBlur.classList.toggle('is-visible', topBlurOn);
     }
   }
 
@@ -1041,7 +1050,7 @@ function initPageHooks(page) {
     initInspirationPreview();
   }
   // Show/hide home-only fixed elements
-  var scrollHint = document.querySelector('.scroll-hint');
+  var scrollHint = document.querySelector('.hero-scroll-cue');
   var bottomBlur = document.querySelector('.bottom-blur');
   var topBlur = document.querySelector('.top-blur');
   if (scrollHint) scrollHint.style.display = page === 'home' ? '' : 'none';
