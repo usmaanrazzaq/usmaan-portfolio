@@ -6,6 +6,8 @@ function onDomReady(fn) {
   fn();
 }
 
+document.body.classList.toggle('home-route', window.location.pathname === '/');
+
 function loadNav() {
   const navContainer = document.getElementById('nav-container');
   if (!navContainer) return;
@@ -1027,24 +1029,16 @@ function initInspirationPreview() {
 
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
+  const isHome = page === 'home';
+  document.body.classList.toggle('home-route', isHome);
+  const navContainer = document.getElementById('nav-container');
+  if (navContainer) {
+    navContainer.hidden = isHome;
+    navContainer.setAttribute('aria-hidden', isHome ? 'true' : 'false');
+  }
+
   if (page === 'home') {
-    initHomeTabs();
-    initWorkDirectory();
-    initTimestamp();
     initLocalTime();
-    initLightbox();
-    initCarousels();
-    initHomeScrollAnimations();
-    initCaseStudyReveals();
-    initScrollHint();
-    if (typeof initStatCounters === 'function') initStatCounters();
-    if (typeof initCompetitiveAnalysis === 'function') initCompetitiveAnalysis();
-    if (typeof initDesignEvolution === 'function') initDesignEvolution();
-    if (typeof initPhoneMockup === 'function') initPhoneMockup();
-    if (typeof initResearchFindings === 'function') initResearchFindings();
-    if (typeof initChartScrollTriggers === 'function') initChartScrollTriggers();
-    if (typeof initGlobeReachScrollTriggers === 'function') initGlobeReachScrollTriggers();
-    if (typeof initPainPointCharts === 'function') initPainPointCharts();
   } else if (page === 'about') {
     initDropdowns();
     initInspirationPreview();
@@ -1057,8 +1051,7 @@ function initPageHooks(page) {
   if (bottomBlur) bottomBlur.style.display = page === 'home' ? '' : 'none';
   if (topBlur) topBlur.style.display = page === 'home' ? '' : 'none';
 
-  // Initialize GSAP hover effects for all pages that need them
-  initHoverEffects(page);
+  if (page !== 'home') initHoverEffects(page);
 }
 
 // ===== SPA ROUTER =====
@@ -1075,7 +1068,7 @@ function initPageHooks(page) {
   };
 
   const titles = {
-    'home': 'Usmaan Razzaq Portfolio',
+    'home': 'Usmaan Razzaq — Product Designer',
     'projects': 'Projects | Usmaan Razzaq',
     'about': 'About | Usmaan Razzaq',
     'contact': 'Contact | Usmaan Razzaq'
