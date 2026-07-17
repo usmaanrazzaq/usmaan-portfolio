@@ -198,7 +198,8 @@ body.home-route .lightbox-overlay {
   margin-top: 40px;
 }
 
-.paper-home__tabs a {
+.paper-home__tabs a,
+.paper-home__tabs span {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -366,7 +367,8 @@ body.home-route .lightbox-overlay {
     display: none;
   }
 
-  .paper-home__tabs a {
+  .paper-home__tabs a,
+  .paper-home__tabs span {
     min-width: 88px;
     min-height: 44px;
   }
