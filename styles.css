@@ -24,9 +24,20 @@
   }
 }
 
-/* SPA transition */
+/* Cross-document page transitions (case studies ↔ home / other pages) */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.45s;
+  animation-timing-function: var(--ease-out-expo);
+}
+
+/* SPA transition (fallback when View Transitions API is unavailable) */
 #spa-content {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.35s var(--ease-out-expo);
 }
 #spa-content.spa-fade-out {
   opacity: 0;
@@ -41,11 +52,42 @@ body {
   font-family: 'Helvetica Neue', sans-serif;
   line-height: 1.5;
   opacity: 0;
-  transition: opacity 0.6s ease-in-out;
+  transition: opacity 0.45s var(--ease-out-expo);
 }
 
 body.loaded {
   opacity: 1;
+}
+
+/* Avoid blank snapshots / double-fades during view transitions */
+html:active-view-transition body {
+  opacity: 1;
+  transition: none;
+}
+
+html.page-exit body {
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+
+  #spa-content {
+    transition: none;
+  }
+
+  html.page-exit body {
+    transition: none;
+    opacity: 1;
+  }
 }
 
 /* Fluid root font size to scale content smoothly near 800px */
