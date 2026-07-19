@@ -501,6 +501,93 @@ function initTimestamp() {
 // before starting a new one — otherwise intervals stack and the pulse multi-fires.
 var _localTimeInterval = null;
 
+var _homeCaseObserver = null;
+var _homeNavAbort = null;
+
+function initHomeNavMenu() {
+  const nav = document.querySelector('.paper-home__nav');
+  const toggle = document.querySelector('.paper-home__nav-toggle');
+  const label = document.querySelector('.paper-home__nav-toggle-label');
+  const menu = document.querySelector('.paper-home__tabs');
+  if (!nav || !toggle || !menu) return;
+
+  if (_homeNavAbort) {
+    _homeNavAbort.abort();
+    _homeNavAbort = null;
+  }
+  _homeNavAbort = new AbortController();
+  const signal = _homeNavAbort.signal;
+
+  const active = menu.querySelector('.is-active, [aria-current="page"]');
+  if (label && active) {
+    label.textContent = active.textContent.trim();
+  }
+
+  function setOpen(open) {
+    nav.classList.toggle('is-open', open);
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+  }
+
+  setOpen(false);
+
+  toggle.addEventListener('click', function(e) {
+    e.stopPropagation();
+    setOpen(!nav.classList.contains('is-open'));
+  }, { signal: signal });
+
+  document.addEventListener('click', function(e) {
+    if (!nav.contains(e.target)) setOpen(false);
+  }, { signal: signal });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') setOpen(false);
+  }, { signal: signal });
+
+  menu.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      setOpen(false);
+    }, { signal: signal });
+  });
+}
+
+function initHomeStack() {
+  const cases = document.querySelectorAll('.paper-home__stack .paper-home__case');
+  if (!cases.length) return;
+
+  if (_homeCaseObserver) {
+    _homeCaseObserver.disconnect();
+    _homeCaseObserver = null;
+  }
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || typeof IntersectionObserver === 'undefined') {
+    cases.forEach(function(el) {
+      el.classList.add('is-visible');
+    });
+    return;
+  }
+
+  _homeCaseObserver = new IntersectionObserver(
+    function(entries, observer) {
+      entries.forEach(function(entry) {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      });
+    },
+    {
+      root: null,
+      threshold: 0.18,
+      rootMargin: '0px 0px -8% 0px',
+    }
+  );
+
+  cases.forEach(function(el) {
+    _homeCaseObserver.observe(el);
+  });
+}
+
 function initLocalTime() {
   const el = document.getElementById('local-time');
   if (!el) return;
@@ -1039,6 +1126,8 @@ function initPageHooks(page) {
 
   if (page === 'home') {
     initLocalTime();
+    initHomeStack();
+    initHomeNavMenu();
   } else if (page === 'about') {
     initDropdowns();
     initInspirationPreview();
@@ -1111,44 +1200,67 @@ function initPageHooks(page) {
       });
   }
 
-  // Swap content with fade transition
-  function swapContent(page, html) {
-    return new Promise(function(resolve) {
-      isTransitioning = true;
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
 
-      // Fade out
+  function applyPageContent(page, html) {
+    spaContent.innerHTML = html;
+    spaContent.className = mainClasses[page] || '';
+    spaContent.id = 'spa-content';
+    spaContent.setAttribute('data-page', page);
+    document.title = titles[page] || 'Usmaan Razzaq Portfolio';
+    window.scrollTo(0, 0);
+    initPageHooks(page);
+  }
+
+  // Swap content with View Transition when available, else opacity fade
+  function swapContent(page, html) {
+    isTransitioning = true;
+
+    if (typeof document.startViewTransition === 'function' && !prefersReducedMotion()) {
+      var transition = document.startViewTransition(function() {
+        applyPageContent(page, html);
+      });
+
+      return transition.finished.then(function() {
+        isTransitioning = false;
+      }).catch(function() {
+        isTransitioning = false;
+      });
+    }
+
+    return new Promise(function(resolve) {
       spaContent.classList.add('spa-fade-out');
 
       setTimeout(function() {
-        // Swap HTML
-        spaContent.innerHTML = html;
-
-        // Update main element class
-        spaContent.className = mainClasses[page] || '';
-        spaContent.id = 'spa-content';
-        spaContent.setAttribute('data-page', page);
-
-        // Update title
-        document.title = titles[page] || 'Usmaan Razzaq Portfolio';
-
-        // Scroll to top
-        window.scrollTo(0, 0);
-
-        // Run page init hooks
-        initPageHooks(page);
-
-        // Force reflow before fade in
+        applyPageContent(page, html);
         spaContent.offsetHeight;
-
-        // Fade in (remove the class — CSS transition handles the rest)
         spaContent.classList.remove('spa-fade-out');
 
         setTimeout(function() {
           isTransitioning = false;
           resolve();
-        }, 200);
-      }, 200);
+        }, 350);
+      }, 280);
     });
+  }
+
+  function supportsCrossDocumentViewTransitions() {
+    // Same-document API is a good proxy; unsupported browsers get the JS exit fade.
+    return typeof document.startViewTransition === 'function';
+  }
+
+  function navigateWithExitFade(href) {
+    if (prefersReducedMotion() || supportsCrossDocumentViewTransitions()) {
+      window.location.href = href;
+      return;
+    }
+
+    document.documentElement.classList.add('page-exit');
+    window.setTimeout(function() {
+      window.location.href = href;
+    }, 280);
   }
 
   // Navigate to a SPA route
@@ -1190,24 +1302,47 @@ function initPageHooks(page) {
     }
   });
 
-  // Intercept clicks on nav links
+  // Intercept clicks on nav links + case-study / internal page exits
   document.addEventListener('click', function(e) {
-    // Find the closest <a> tag
+    if (e.defaultPrevented) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
     var link = e.target.closest('a');
     if (!link) return;
 
     var href = link.getAttribute('href');
     if (!href) return;
 
-    // Skip external links, mailto, tel, hash-only, target=_blank
+    // Skip external links, mailto, tel, hash-only, downloads, new tabs
     if (link.target === '_blank') return;
-    if (href.startsWith('http') || href.startsWith('mailto:') || href.startsWith('tel:') || href === '#') return;
+    if (link.hasAttribute('download')) return;
+    if (href.startsWith('mailto:') || href.startsWith('tel:') || href === '#') return;
+    if (href.startsWith('http') && link.hostname !== window.location.hostname) return;
 
-    // Check if this is a SPA route
-    var page = getPage(href);
+    // Hash links on the same page
+    if (href.charAt(0) === '#') return;
+
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (err) {
+      return;
+    }
+    if (url.origin !== window.location.origin) return;
+
+    // SPA routes stay in-shell
+    var page = getPage(url.pathname);
     if (page) {
       e.preventDefault();
-      navigateTo(href);
+      navigateTo(url.pathname);
+      return;
+    }
+
+    // Full page navigations (case studies, archive, etc.)
+    // View Transitions handle supporting browsers; others get a short exit fade.
+    if (!supportsCrossDocumentViewTransitions() && !prefersReducedMotion()) {
+      e.preventDefault();
+      navigateWithExitFade(url.href);
     }
   });
 
@@ -1235,6 +1370,53 @@ function initPageHooks(page) {
 
   // Pre-cache the home partial from current DOM (so going back to home is instant)
   cache.set('home', spaContent.innerHTML);
+})();
+
+// ===== Full-page exit transitions (case studies and other non-SPA shells) =====
+(function initFullPageTransitions() {
+  // SPA shell already intercepts same-origin navigations in the router above
+  if (document.getElementById('spa-content')) return;
+
+  function prefersReducedMotion() {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  }
+
+  function supportsViewTransitions() {
+    return typeof document.startViewTransition === 'function';
+  }
+
+  document.addEventListener('click', function(e) {
+    if (e.defaultPrevented) return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    var link = e.target.closest('a');
+    if (!link) return;
+
+    var href = link.getAttribute('href');
+    if (!href) return;
+    if (link.target === '_blank') return;
+    if (link.hasAttribute('download')) return;
+    if (href.startsWith('mailto:') || href.startsWith('tel:') || href === '#') return;
+    if (href.charAt(0) === '#') return;
+
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (err) {
+      return;
+    }
+    if (url.origin !== window.location.origin) return;
+    if (url.href === window.location.href) return;
+
+    // Supporting browsers animate via @view-transition; others get a short fade-out
+    if (supportsViewTransitions() || prefersReducedMotion()) return;
+
+    e.preventDefault();
+    document.documentElement.classList.add('page-exit');
+    window.setTimeout(function() {
+      window.location.href = url.href;
+    }, 280);
+  });
 })();
 
 // ===== Initial page hooks for non-SPA pages =====

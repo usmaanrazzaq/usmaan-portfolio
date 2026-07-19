@@ -19,9 +19,9 @@
     <meta name="twitter:title" content="Usmaan Razzaq — Product Designer">
     <meta name="twitter:description" content="Portfolio of Usmaan Razzaq — Product Designer based in Queens, NY. Designing digital experiences that feel effortless.">
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
-    <link rel="stylesheet" href="styles.css?v=20260228">
+    <link rel="stylesheet" href="styles.css?v=20260718-page-fx">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260717-paper-home">
+    <link rel="stylesheet" href="home.css?v=20260718-nav-glass">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260621-type" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
@@ -41,21 +41,45 @@
     
     <main id="spa-content" class="new-homepage" data-page="home">
 <section class="paper-home" aria-labelledby="home-title">
-    <header class="paper-home__intro">
-        <img class="paper-home__mark" src="images/usmaan-urdu-mark.png" width="134" height="68" alt="Usmaan Razzaq in Urdu">
+    <div class="paper-home__pin">
+        <header class="paper-home__chrome">
+        <a class="paper-home__logo" href="/" aria-label="Usmaan Razzaq — Home">
+            <img src="images/usmaan-logo-mark.png" width="82" height="42" alt="">
+        </a>
 
-        <div class="paper-home__identity">
-            <h1 id="home-title">Usmaan Razzaq</h1>
-            <div class="paper-home__status" aria-label="Current location and local time">
-                <span class="hero-live" aria-hidden="true"></span>
-                <span>New York, NY</span>
-                <span class="paper-home__separator" aria-hidden="true">/</span>
-                <time class="local-time" id="local-time"></time>
-                <span class="hero-daynight" aria-hidden="true">
-                    <svg class="dn-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
-                    <svg class="dn-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
-                </span>
+        <nav class="paper-home__nav" aria-label="Portfolio sections">
+            <button
+                type="button"
+                class="paper-home__nav-toggle"
+                aria-expanded="false"
+                aria-controls="paper-home-menu"
+            >
+                <span class="paper-home__nav-toggle-label">Work</span>
+                <svg class="paper-home__nav-chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                    <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <div class="paper-home__tabs" id="paper-home-menu">
+                <a class="is-active" href="#work" aria-current="page">Work</a>
+                <a href="/projects/">Projects</a>
+                <a href="/about/">About</a>
+                <a href="/image-archive/">Inspiration</a>
             </div>
+        </nav>
+    </header>
+
+    <div class="paper-home__intro">
+        <h1 id="home-title" class="visually-hidden">Usmaan Razzaq</h1>
+
+        <div class="paper-home__status" aria-label="Current location and local time">
+            <span class="hero-live" aria-hidden="true"></span>
+            <span>New York, NY</span>
+            <span class="paper-home__separator" aria-hidden="true">/</span>
+            <time class="local-time" id="local-time"></time>
+            <span class="hero-daynight" aria-hidden="true">
+                <svg class="dn-sun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+                <svg class="dn-moon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+            </span>
         </div>
 
         <p class="paper-home__bio">I'm Usmaan, a product designer based in New York, NY. I own the process end-to-end — research, design, and shipped code — as the sole designer working directly with engineers and founders, across consumer products, non-profits, and e-commerce.</p>
@@ -67,52 +91,79 @@
             <a href="https://x.com/usmaanrzq" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
             <a href="Usmaan-Razzaq-Resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M7.2 20.4H16.8C17.463 20.4 18 19.863 18 19.2V7.697C18 7.379 17.874 7.074 17.648 6.848L14.752 3.951C14.526 3.726 14.221 3.6 13.903 3.6H7.2C6.537 3.6 6 4.137 6 4.8V19.2C6 19.863 6.537 20.4 7.2 20.4Z"/><path d="M14.4 13.2H9.6M14.4 16.8H9.6" stroke-linecap="round"/></svg></a>
         </nav>
+    </div>
 
-        <nav class="paper-home__tabs" aria-label="Portfolio sections">
-            <a class="is-active" href="#work" aria-current="page">Work</a>
-            <a href="/projects/">Projects</a>
-            <a href="/about/">About</a>
-            <a href="/image-archive/">Inspiration</a>
-        </nav>
-    </header>
+        <hr class="paper-home__divider" />
+    </div>
 
     <section class="paper-home__work" id="work" aria-label="Selected work">
-        <article class="project-overview">
-            <img class="project-overview__image" src="images/home-rented-overview.webp" width="722" height="488" alt="Three Rented mobile app screens for search, profile, and browse">
-            <div class="project-overview__content">
-                <div class="project-overview__heading">
-                    <h2>Rented</h2>
-                    <a href="/Rented/rented/">Read Case Study <span aria-hidden="true">↗</span></a>
-                </div>
-                <p class="project-overview__date">Nov 2024 - Feb 2025</p>
-                <h3>Designing a peer-to-peer rental experience for urban renters</h3>
-                <p>Led the UI design and developed a functioning prototype for a peer-to-peer rental app. I worked alongside a team of engineers and founders to bring their app's vision to life through design, research, and prototyping.</p>
-            </div>
-        </article>
-
-        <article class="project-overview">
-            <img class="project-overview__image" src="images/home-nmya-overview.webp" width="722" height="488" alt="National Muslim Youth Association website displayed on a desktop monitor" loading="lazy">
-            <div class="project-overview__content">
-                <div class="project-overview__heading">
-                    <h2>National Muslim Youth Association</h2>
-                    <div class="project-overview__links">
-                        <a href="https://atfal-website.vercel.app/" target="_blank" rel="noopener noreferrer">View website <span aria-hidden="true">↗</span></a>
-                        <a href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">Read Case Study <span aria-hidden="true">↗</span></a>
+        <div class="paper-home__stack">
+            <article class="paper-home__case" data-work="rented">
+                <div class="paper-home__case-copy">
+                    <div class="paper-home__case-meta">
+                        <h2>Rented</h2>
+                        <p class="paper-home__case-date">Nov 2024 - Feb 2025</p>
+                    </div>
+                    <h3>Designing a peer-to-peer rental experience for urban renters</h3>
+                    <p>Lead the UI design and developed a functioning prototype for a peer-to-peer rental app. I worked along a team of engineers / founders to bring their apps vision to life through Design, research, and prototyping.</p>
+                    <div class="paper-home__ctas">
+                        <a class="paper-home__cta" href="/Rented/rented/">
+                            Read Case Study
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
-                <p class="project-overview__date">Nov 2023 - Nov 2025</p>
-                <h3>Redesigning a non-profit website to better serve the Muslim youth community</h3>
-                <p>I led a redesign overhaul of the non-profit association's website. I worked alongside stakeholders to understand longstanding issues, goals, and user needs; conducted focus groups across different demographics; and used those findings to redesign and develop the site while proposing its migration from WordPress to Webflow.</p>
-            </div>
-        </article>
+
+                <a class="paper-home__case-media" href="/Rented/rented/" aria-label="Read Rented case study">
+                    <img src="images/home-rented-showcase.webp" width="906" height="612" alt="" role="presentation">
+                </a>
+            </article>
+
+            <hr class="paper-home__divider" />
+
+            <article class="paper-home__case" data-work="nmya">
+                <div class="paper-home__case-copy">
+                    <div class="paper-home__case-meta">
+                        <h2>National Muslim Youth Association</h2>
+                        <p class="paper-home__case-date">Nov 2023 - Nov 2025</p>
+                    </div>
+                    <h3>Redesigning a non-profit site to better serve Muslim youth.</h3>
+                    <p>I led a redesign overhaul of the nonprofit association’s website. I worked with stakeholders to better understand the longstanding issues, their goals for the website, and the problems they faced. I conducted user research through three to five focus groups with participants from different demographics, including age, roles, and knowledge levels. I used the feedback and research findings to redesign and develop the nonprofit’s website while proposing a migration from WordPress to Webflow.</p>
+                    <div class="paper-home__ctas">
+                        <a class="paper-home__cta" href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">
+                            Read Case Study
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                        <a class="paper-home__cta" href="https://atfal-website.vercel.app/" target="_blank" rel="noopener noreferrer">
+                            View Website
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <a class="paper-home__case-media" href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html" aria-label="Read National Muslim Youth Association case study">
+                    <img src="images/home-nmya-showcase.webp" width="906" height="612" alt="" role="presentation" loading="lazy">
+                </a>
+            </article>
+        </div>
     </section>
 </section>
+
     </main>
     
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="shared/interactive-components.js?v=20260701-globe-fix"></script>
-    <script src="main.js?v=20260717-paper-home"></script>
+    <script src="main.js?v=20260718-nav-glass"></script>
 </body>
 
 </html>
