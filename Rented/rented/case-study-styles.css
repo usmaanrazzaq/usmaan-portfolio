@@ -42,21 +42,74 @@ body.paper-cs-route #nav-container {
   padding: 70px 0 120px;
 }
 
+@property --metal-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes paper-cs-metal-spin {
+  to {
+    --metal-angle: 360deg;
+  }
+}
+
 .paper-cs__back {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  padding: 7px 14px 7px 10px;
+  border-radius: 100px;
+  border: 1px solid rgba(43, 43, 43, 0.18);
+  background: #fff;
   color: var(--cs-ink);
   font-size: 14px;
   line-height: 1.4;
   text-decoration: none;
-  transition: opacity 180ms ease;
+  isolation: isolate;
+  transition:
+    color 220ms ease,
+    border-color 220ms ease,
+    background-color 220ms ease;
+}
+
+.paper-cs__back::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  pointer-events: none;
+  background: conic-gradient(
+    from var(--metal-angle),
+    #8f8f8f 0deg,
+    #f4f4f4 45deg,
+    #6a6a6a 90deg,
+    #dedede 140deg,
+    #9b9b9b 180deg,
+    #ffffff 225deg,
+    #737373 280deg,
+    #ececec 320deg,
+    #8f8f8f 360deg
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 220ms ease;
+  z-index: 0;
 }
 
 .paper-cs__back svg {
+  position: relative;
+  z-index: 1;
   flex-shrink: 0;
   width: 18px;
   height: 18px;
+  transition: transform 220ms ease;
 }
 
 .paper-cs__header {
@@ -185,7 +238,17 @@ body.paper-cs-route #nav-container {
 
 @media (hover: hover) {
   .paper-cs__back:hover {
-    opacity: 0.7;
+    border-color: transparent;
+    background: #fafafa;
+  }
+
+  .paper-cs__back:hover::before {
+    opacity: 1;
+    animation: paper-cs-metal-spin 2.2s linear infinite;
+  }
+
+  .paper-cs__back:hover svg {
+    transform: translateX(-2px);
   }
 }
 
@@ -232,7 +295,10 @@ body.paper-cs-route #nav-container {
     scroll-behavior: auto;
   }
 
-  .paper-cs__back {
+  .paper-cs__back,
+  .paper-cs__back svg,
+  .paper-cs__back::before {
     transition: none;
+    animation: none;
   }
 }

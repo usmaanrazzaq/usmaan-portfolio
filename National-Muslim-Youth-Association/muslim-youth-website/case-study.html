@@ -1,289 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Muslim Youth Association - Case Study</title>
-    <link rel="stylesheet" href="case-study-styles.css">
+    <meta name="description" content="Case study: Redesigning a non-profit site to better serve Muslim youth.">
     <link rel="stylesheet" href="../../shared/page-transitions.css?v=20260718">
     <link rel="stylesheet" href="../../shared/interactive-components.css">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
-    <link rel="stylesheet" href="../../main.css">
+    <link rel="stylesheet" href="case-study-styles.css?v=20260719-paper-cs-metal-back">
 
     <link rel="icon" href="../../Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="../../iOS Icon.png" sizes="180x180">
 </head>
-<body>
-    <header id="nav-container" data-path="/nav.html"></header>
 
-    <main class="case-study-container">
-        <!-- Hero Section -->
-        <section id="hero" class="case-study-hero">
-            <div class="project-header">
-                <div class="project-title">
-                    <h1>National Muslim Youth Association</h1>
+<body class="paper-cs-route">
+    <header id="nav-container" data-path="/nav.html" aria-hidden="true" hidden></header>
+
+    <main class="paper-cs" aria-labelledby="cs-title">
+        <a class="paper-cs__back" href="/">
+            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                <path d="M12.6 16.2L7.2 10.8 12.6 5.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+
+        <header class="paper-cs__header">
+            <h1 id="cs-title">National Muslim Youth Association</h1>
+
+            <dl class="paper-cs__meta">
+                <div>
+                    <dt>Role</dt>
+                    <dd>UI Designer, Project Manager</dd>
                 </div>
-                <div class="project-subtitle">
-                    <h2>Redesigning a non-profit website to better serve the Muslim youth community</h2>
+                <div>
+                    <dt>Duration</dt>
+                    <dd>Nov 2023 - Nov 2025</dd>
                 </div>
-                <div class="project-tags">
-                    <div class="project-crumbs">
-                        <span class="crumb">UI/UX Design</span>
-                        <span class="crumb">Project Management</span>
-                        <span class="crumb">User Research</span>
-                    </div>
-                    <div class="timeline">
-                        <span>Nov 2023 - Present</span>
-                    </div>
+                <div>
+                    <dt>Scope</dt>
+                    <dd>UI/UX Design, Project Management, User Research</dd>
                 </div>
-            </div>
-            <div class="hero-video">
-                <div class="video-container">
-                    <video id="hero-video" autoplay muted loop playsinline preload="auto">
-                        <source src="../../video/Atfal-Website-Vid.mp4" type="video/mp4">
-                        <img src="../../images/Atfal-Website-Display.webp" alt="National Muslim Youth Association Website" />
-                    </video>
+                <div>
+                    <dt>Collaborators</dt>
+                    <dd>Stakeholders</dd>
                 </div>
+                <div>
+                    <dt>Tools</dt>
+                    <dd>Figma, Webflow</dd>
+                </div>
+            </dl>
+
+            <p class="paper-cs__lede">Redesigning a non-profit site to better serve Muslim youth.</p>
+        </header>
+
+        <section class="paper-cs__section" aria-labelledby="overview-heading">
+            <h2 id="overview-heading">Overview</h2>
+            <div class="paper-cs__body">
+                <p>The National Muslim Youth Association is a non-profit whose site hosts religious teachings, event materials, and program resources for youth members nationally. I was brought on to maintain the site, but after finding cluttered navigation, outdated content, and active malware, I proposed and led a full redesign instead.</p>
             </div>
         </section>
 
-        <!-- Content Section with Directory -->
-        <section class="content-section">
-            <div class="content-layout">
-                <!-- Directory Navigation -->
-                <nav class="content-directory">
-                    <div class="directory-header">
-                        <h3>Content</h3>
-                    </div>
-                    <ul class="directory-list">
-                        <li><a href="#overview" data-section="overview">Overview</a></li>
-                        <li><a href="#problem" data-section="problem">Problem</a></li>
-                        <li><a href="#user-research" data-section="user-research">Research</a></li>
-                        <li><a href="#wireframe" data-section="wireframe">Wireframe</a></li>
-                        <li><a href="#development" data-section="development">Development</a></li>
-                        <li><a href="#outcome" data-section="outcome">Outcome</a></li>
-                    </ul>
-                </nav>
+        <section class="paper-cs__section" aria-labelledby="outcome-heading">
+            <h2 id="outcome-heading">Outcome</h2>
+            <div class="paper-cs__body">
+                <p>The redesigned site launched June 2024 on Webflow, migrating off a WordPress install plagued by malware, broken plugins, and scattered account access — resolving the vulnerability cycle that had repeatedly taken the site offline. Within months, traffic rose 30%, returning visitors grew 10-15%, and page views rose 15% (vs. the WordPress baseline via Webflow analytics), driven mainly by a navigation redesign that cut critical-page access from 5-6 clicks to 2-3. My time with NMYA concluded in November 2025.</p>
+            </div>
+        </section>
 
-                <!-- Content Area -->
-                <div class="content-area">
-                    <!-- Overview Section -->
-                    <section id="overview" class="content-block">
-                        <div class="section-header">
-                            <h2>Overview</h2>
-                        </div>
-                        <div class="section-question">
-                            <h3>What is the National Muslim Youth Association?</h3>
-                        </div>
-                        <div class="section-content">
-                            <p>The National Muslim Youth Association is a non-profit whose website hosts religious teachings, event materials, and program resources visited by youth members nationally. I was brought on to maintain the site, but after assessing its state — cluttered navigation, outdated content, and active malware — I proposed and led a full redesign.</p>
-                        </div>
-                    </section>
+        <figure class="paper-cs__hero">
+            <video src="../../video/NMYA-Colored-Vid.mov" autoplay muted loop playsinline preload="metadata" poster="../../images/home-nmya-showcase.webp" aria-label="National Muslim Youth Association website showcase"></video>
+        </figure>
 
-                    <!-- Problem Section -->
-                    <section id="problem" class="content-block">
-                        <div class="problem-display">
-                            <div class="old-website-container">
-                                <img src="../../images/Old-NAA-UI 1 1.webp" alt="Old National Muslim Youth Website UI" class="old-website-image" loading="lazy" />
-                            </div>
-                            <div class="image-caption">
-                                <p>Old National Muslim Youth Website UI</p>
-                            </div>
-                        </div>
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Problem</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>Years of content updates without structural cleanup left the site hard to navigate. Parents couldn't find teaching materials. Youth skipped the site entirely. The WordPress build had malware issues that made maintenance risky. The site needed to be rebuilt from the ground up — new platform, new IA, new design system.</p>
-                            </div>
-                            <div class="UI comparison">
-                                <img src="../../images/Old-NAA-UI 1 1.webp" alt="Old NAA UI" class="UI-comparison-image" loading="lazy" />
-                                <img src="../../images/NAA-Display-Img.webp" alt="New NAA Display Image" class="UI-comparison-image" loading="lazy" />
-                            </div>
-                            <div class="image-caption">
-                                <p>Old NAA UI vs. New NAA Display Image</p>
-                            </div>
-                        </div>
-                    </section>
+        <div class="paper-cs__charts" aria-label="Post-launch growth charts">
+            <div class="chart-card" data-chart="nmya-visitors">
+                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing returning visitors growing 10 to 15 percent and page views increasing 15 percent after launch">
+                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                    <text x="48" y="44" text-anchor="end" class="chart-label">+15%</text>
+                    <text x="48" y="114" text-anchor="end" class="chart-label">+10%</text>
+                    <text x="48" y="184" text-anchor="end" class="chart-label">+5%</text>
+                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                    <defs>
+                        <linearGradient id="chartGradientViews" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                        </linearGradient>
+                        <linearGradient id="chartGradientVisitors" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#5BA88C" stop-opacity="0.15"/>
+                            <stop offset="100%" stop-color="#5BA88C" stop-opacity="0.02"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="chart-area" d="M80,236 L152,215 L224,187 L296,152 L368,110 L440,68 L490,40 L490,250 L80,250 Z" fill="url(#chartGradientViews)"/>
+                    <path class="chart-area" d="M80,243 L152,229 L224,208 L296,180 L368,145 L440,110 L490,82 L490,250 L80,250 Z" fill="url(#chartGradientVisitors)"/>
+                    <polyline class="chart-line" points="80,243 152,229 224,208 296,180 368,145 440,110 490,82" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <polyline class="chart-line" points="80,236 152,215 224,187 296,152 368,110 440,68 490,40" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="243" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="152" cy="229" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="224" cy="208" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="296" cy="180" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="368" cy="145" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="440" cy="110" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                        <circle cx="490" cy="82" r="4.5" fill="#fff" stroke="#5BA88C" stroke-width="2"/>
+                    </g>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="236" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="152" cy="215" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="224" cy="187" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="296" cy="152" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="440" cy="68" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                    </g>
+                    <line x1="84" y1="56" x2="106" y2="56" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="112" y="60" class="chart-label">Page views</text>
+                    <line x1="84" y1="76" x2="106" y2="76" stroke="#5BA88C" stroke-width="2.5" stroke-linecap="round"/>
+                    <text x="112" y="80" class="chart-label">Returning visitors</text>
+                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Returning visitors &amp; page views post-launch (2024)</text>
+                </svg>
+            </div>
 
-                    <!-- Wireframe Section -->
-                    <section id="wireframe" class="content-block">
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Wireframe</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>As the problems on the website were assessed, I began working on wireframe for the new website. I went through a process of researching and figuring out how to solve major pain points the users were facing the most with the website.</p>
-                            </div>
-                        </div>
-                        <div class="wireframe-display">
-                            <div class="wireframe-container">
-                                <div class="wireframe-grid">
-                                    <img src="../../images/NMYA-Homepage 1.webp" alt="NMYA Homepage Wireframe" class="wireframe-homepage" loading="lazy" />
-                                    <img src="../../images/NMYA-Style Guide 3.webp" alt="NMYA Style Guide" class="wireframe-style-guide" loading="lazy" />
-                                    <div class="logo-stack">
-                                        <img src="../../images/Atfal-Horizontal-Color 1.webp" alt="Atfal Logo Color On Dark" loading="lazy" />
-                                        <img src="../../images/Atfal-Horizontal-Color-OnDark 1.webp" alt="Atfal Logo Color" loading="lazy" />
-                                        <img src="../../images/Atfal-Horizontal-Grey 1.webp" alt="Atfal Logo Grey" loading="lazy" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="image-caption">
-                                <p>Wireframe of New National Muslim Youth Website UI</p>
-                            </div>
-                        </div>
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Development</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>Once the board approved the final wireframes, I began developing the site on Webflow. I started by incorporating the organization's logo colors and assets. I also introduced additional colors to enhance the interface design and add uniqueness to the youth website. During development, I prioritized accessibility, as most users access the site on various screen sizes, particularly mobile devices and tablets. Additionally, I considered users from diverse backgrounds and age groups.</p>
-                            </div>
-                        </div>
-                    </section>
+            <div class="chart-card" data-chart="nmya-engagement">
+                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
+                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
+                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
+                    <text x="48" y="44" text-anchor="end" class="chart-label">+35%</text>
+                    <text x="48" y="114" text-anchor="end" class="chart-label">+25%</text>
+                    <text x="48" y="184" text-anchor="end" class="chart-label">+15%</text>
+                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
+                    <defs>
+                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="chart-area" d="M80,240 L152,230 L224,205 L296,170 L368,110 L440,62 L490,48 L490,250 L80,250 Z" fill="url(#chartGradient)"/>
+                    <polyline class="chart-line" points="80,240 152,230 224,205 296,170 368,110 440,62 490,48" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="240" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="152" cy="230" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="224" cy="205" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="296" cy="170" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="490" cy="48" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                    </g>
+                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
+                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
+                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
+                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
+                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
+                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
+                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
+                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Engagement growth post-launch (2024)</text>
+                </svg>
+            </div>
+        </div>
 
-                    <!-- Development Section -->
-                    <section id="development" class="content-block">
-                        <!-- Content already included in wireframe section -->
-                    </section>
+        <div class="paper-cs__pair">
+            <figure class="paper-cs__shot">
+                <img src="../../images/nmya-al-bashir-detail.png" width="352" height="239" alt="Al-Bashir Magazine page with issue covers and View actions" loading="lazy">
+            </figure>
+            <figure class="paper-cs__shot">
+                <img src="../../images/nmya-search-detail.png" width="352" height="239" alt="Search bar and Quick Links section on the redesigned site" loading="lazy">
+            </figure>
+        </div>
 
-                    <!-- User Research Section -->
-                    <section id="user-research" class="content-block">
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>User Research</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>As I worked on developing the new Youth Website, I conducted user research groups. I collaborated with small focus groups, providing them with an early prototype of the website. This approach helped me understand how users navigated and interacted with the site. I also observed their usage of the old national youth website and compared their navigation with that of the prototype.</p>
-                            </div>
-                        </div>
-                        <div class="research-display">
-                            <div data-research-findings>
-                                <div class="research-findings__intro">
-                                    <p>Part of the user research, I asked a small group of users if they had any issues with the website. I also asked them if there were parts of the website they like, didn't work, would like to see more of. These were mainly based on the old website and were added into the final design of the new website.</p>
-                                </div>
-
-                                <section class="research-findings__group">
-                                    <h4 class="research-findings__group-name">Parents</h4>
-                                    <div class="research-findings__rows">
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Event announcements</span>
-                                            <p class="research-findings__desc">Parents found it difficult to stay up to date with events happening at their local mosque.</p>
-                                        </div>
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Navigating the website</span>
-                                            <p class="research-findings__desc">Majority of parents come from a background with a lack of knowledge in using technology, so they faced issues navigating pages and the website.</p>
-                                        </div>
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Finding essential materials</span>
-                                            <p class="research-findings__desc">Additional to the navigation issue, there was an issue with finding and accessing essential materials.</p>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section class="research-findings__group">
-                                    <h4 class="research-findings__group-name">Teachers</h4>
-                                    <div class="research-findings__rows">
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Locating teaching materials</span>
-                                            <p class="research-findings__desc">The teachers held classes every Saturday of every month and they needed. They faced a bit of issues trying to locate all of the presentations.</p>
-                                        </div>
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Inputting data for class</span>
-                                            <p class="research-findings__desc">Along with finding materials necessary to teach the class, teachers found difficulty inputting data in the national spreadsheets.</p>
-                                        </div>
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Navigating the website</span>
-                                            <p class="research-findings__desc">Similar to the parent, teachers were facing navigation issues.</p>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                <section class="research-findings__group">
-                                    <h4 class="research-findings__group-name">Youth</h4>
-                                    <div class="research-findings__rows">
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Engagement</span>
-                                            <p class="research-findings__desc">The youth did not engage with the website enough because they didn't find the website exciting.</p>
-                                        </div>
-                                        <div class="research-findings__row">
-                                            <span class="research-findings__label">Inaccessibility</span>
-                                            <p class="research-findings__desc">For a lot of the youth, they weren't able to access the website because most of them access through mobile. They experienced difficulty finding materials on mobile.</p>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                            <div class="image-caption">
-                                <p>User Research New National Muslim Youth Website</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Outcome Section -->
-                    <section id="outcome" class="content-block">
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Outcome</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>The final version of the new National Muslim Youth Association website launched in June 2024. After a few months of use, traffic increased by 30% as users became familiar with the site. The number of youth visitors rose due to the interactive sections on various pages. Parents and teachers found it much easier to navigate the website. I continue to manage, enhance, and maintain it.</p>
-                            </div>
-                            <div class="chart-card" data-chart="nmya-engagement">
-                                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Engagement growth chart showing 35% increase after website redesign launch">
-                                    <line x1="60" y1="40" x2="490" y2="40" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="110" x2="490" y2="110" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="180" x2="490" y2="180" stroke="#e5e5e5" stroke-width="1"/>
-                                    <line x1="60" y1="250" x2="490" y2="250" stroke="#e5e5e5" stroke-width="1"/>
-
-                                    <text x="48" y="44" text-anchor="end" class="chart-label">+35%</text>
-                                    <text x="48" y="114" text-anchor="end" class="chart-label">+25%</text>
-                                    <text x="48" y="184" text-anchor="end" class="chart-label">+15%</text>
-                                    <text x="48" y="254" text-anchor="end" class="chart-label">0%</text>
-
-                                    <defs>
-                                        <linearGradient id="chartGradient" x1="0" y1="0" x2="0" y2="1">
-                                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
-                                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
-                                        </linearGradient>
-                                    </defs>
-                                    <path class="chart-area" d="M80,240 L152,230 L224,205 L296,170 L368,110 L440,62 L490,48 L490,250 L80,250 Z" fill="url(#chartGradient)"/>
-
-                                    <polyline class="chart-line" points="80,240 152,230 224,205 296,170 368,110 440,62 490,48" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-
-                                    <g class="chart-dots">
-                                        <circle cx="80" cy="240" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="152" cy="230" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="224" cy="205" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="296" cy="170" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="368" cy="110" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="440" cy="62" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                        <circle cx="490" cy="48" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
-                                    </g>
-
-                                    <text x="80" y="278" text-anchor="middle" class="chart-label">Jan</text>
-                                    <text x="152" y="278" text-anchor="middle" class="chart-label">Mar</text>
-                                    <text x="224" y="278" text-anchor="middle" class="chart-label">May</text>
-                                    <text x="296" y="278" text-anchor="middle" class="chart-label">Jul</text>
-                                    <text x="368" y="278" text-anchor="middle" class="chart-label">Sep</text>
-                                    <text x="440" y="278" text-anchor="middle" class="chart-label">Nov</text>
-                                    <text x="490" y="278" text-anchor="middle" class="chart-label">Dec</text>
-
-                                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Engagement growth post-launch (2024)</text>
-                                </svg>
-                            </div>
-                        </div>
-                    </section>
+        <div class="paper-cs__split">
+            <section class="paper-cs__section" aria-labelledby="problem-heading">
+                <h2 id="problem-heading">Problem</h2>
+                <div class="paper-cs__body">
+                    <p>Years of content updates without structural cleanup left the site hard to navigate. Parents couldn't find teaching materials. Youth skipped the site entirely. The WordPress build had malware issues that made maintenance risky. The site needed to be rebuilt from the ground up — new platform, new IA, new design system.</p>
                 </div>
+            </section>
+
+            <section class="paper-cs__section" aria-labelledby="research-heading">
+                <h2 id="research-heading">User Research</h2>
+                <div class="paper-cs__body">
+                    <p>Alongside development, I ran small focus groups on an early prototype to understand how users navigated and interacted with the new site, and to compare their behavior against the old one.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="paper-cs__findings" data-research-findings>
+            <div class="research-findings__intro">
+                <span class="research-findings__eyebrow">Research insight map</span>
+                <p>Research groups revealed three recurring friction points: people needed clearer paths to updates, easier access to materials, and a mobile experience that felt more engaging.</p>
+            </div>
+
+            <div class="research-findings__map" aria-label="User research findings by audience group">
+                <section class="research-findings__group" aria-labelledby="research-parents">
+                    <div class="research-findings__group-header">
+                        <span class="research-findings__group-index">01</span>
+                        <h3 class="research-findings__group-name" id="research-parents">Parents</h3>
+                    </div>
+                    <div class="research-findings__rows">
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Event announcements</span>
+                            <p class="research-findings__desc">Parents found it difficult to stay up to date with events happening at their local mosque.</p>
+                        </div>
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Navigating the website</span>
+                            <p class="research-findings__desc">Many parents had limited technology experience, making page navigation feel unclear.</p>
+                        </div>
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Essential materials</span>
+                            <p class="research-findings__desc">Important resources were difficult to find and access from the old website structure.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="research-findings__group" aria-labelledby="research-teachers">
+                    <div class="research-findings__group-header">
+                        <span class="research-findings__group-index">02</span>
+                        <h3 class="research-findings__group-name" id="research-teachers">Teachers</h3>
+                    </div>
+                    <div class="research-findings__rows">
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Teaching materials</span>
+                            <p class="research-findings__desc">Teachers needed a faster way to locate presentations and class resources.</p>
+                        </div>
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Class data entry</span>
+                            <p class="research-findings__desc">Inputting class data into national spreadsheets was difficult alongside lesson prep.</p>
+                        </div>
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Navigation</span>
+                            <p class="research-findings__desc">Teachers also ran into the same navigation issues parents experienced.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="research-findings__group" aria-labelledby="research-youth">
+                    <div class="research-findings__group-header">
+                        <span class="research-findings__group-index">03</span>
+                        <h3 class="research-findings__group-name" id="research-youth">Youth</h3>
+                    </div>
+                    <div class="research-findings__rows">
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Engagement</span>
+                            <p class="research-findings__desc">Youth visitors did not find the old website exciting enough to return often.</p>
+                        </div>
+                        <div class="research-findings__row">
+                            <span class="research-findings__label">Mobile access</span>
+                            <p class="research-findings__desc">Many accessed the website on mobile, where key materials were harder to reach.</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="research-findings__connector" aria-hidden="true"></div>
+
+            <div class="research-findings__response">
+                <span class="research-findings__response-label">Design response</span>
+                <div class="research-findings__chips" aria-label="Design responses informed by user research">
+                    <span class="research-findings__chip">Clearer event pathways</span>
+                    <span class="research-findings__chip">Simplified navigation</span>
+                    <span class="research-findings__chip">Mobile-first access</span>
+                    <span class="research-findings__chip">More engaging content</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="paper-cs__pair">
+            <figure class="paper-cs__shot">
+                <img src="../../images/nmya-new-home-detail.png" width="352" height="238" alt="Redesigned National Muslim Youth Association homepage with Friday Sermon hero" loading="lazy">
+            </figure>
+            <figure class="paper-cs__shot">
+                <img src="../../images/nmya-old-home-detail.png" width="352" height="222" alt="Previous National Muslim Youth Association homepage before the redesign" loading="lazy">
+            </figure>
+        </div>
+
+        <section class="paper-cs__section" aria-labelledby="wireframe-heading">
+            <h2 id="wireframe-heading">Wireframe &amp; Development</h2>
+            <div class="paper-cs__body">
+                <p>I built wireframes addressing the major pain points users faced, and once the board approved them, developed the site on Webflow — incorporating the organization's logo colors and assets, introducing additional interface colors, and prioritizing accessibility across screen sizes, especially mobile and tablet.</p>
             </div>
         </section>
     </main>
 
+    <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged media" hidden>
+        <button type="button" class="lightbox-close" aria-label="Close lightbox"></button>
+        <div class="lightbox-stage">
+            <img id="lightbox-img" class="lightbox-img" alt="">
+            <div id="lightbox-chart" class="lightbox-chart" aria-hidden="true"></div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script src="../../shared/scroll-animations.js"></script>
     <script src="../../shared/interactive-components.js"></script>
-    <script src="case-study-script.js"></script>
+    <script src="case-study-script.js?v=20260719-lightbox"></script>
     <script src="../../main.js?v=20260718-page-fx"></script>
 </body>
+
 </html>
