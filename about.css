@@ -1,348 +1,178 @@
-/* ===== ABOUT PAGE STYLES ===== */
-#about-new {
-  padding: 0;
-  padding-left: 0;
-  padding-right: 0;
+/* About page — from Paper "About" artboard */
+
+.paper-about {
+  padding-bottom: 100px;
 }
 
-.about-layout {
+.paper-about__layout {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 60px;
-  max-width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
-/* Left Column */
-.about-left {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
-
-.about-bio {
-  display: flex;
-  flex-direction: column;
+  grid-template-columns: minmax(0, 536px) minmax(0, 537px);
   gap: 20px;
+  justify-content: center;
+  margin-top: 40px;
+  align-items: start;
 }
 
-.about-bio p {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 1.6;
-  color: #000000;
+.paper-about__photo {
   margin: 0;
-}
-
-.about-image {
-  width: 100%;
   overflow: hidden;
+  border-radius: 12px;
+  background: var(--home-media-bg);
+  line-height: 0;
 }
 
-.about-image img {
+.paper-about__photo img {
+  display: block;
   width: 100%;
-  max-height: 400px;
+  height: auto;
+  aspect-ratio: 536 / 317;
   object-fit: cover;
+  object-position: center;
   filter: grayscale(100%);
-  transition: filter 0.5s var(--ease-out-expo),
-              transform 0.5s var(--ease-out-expo);
 }
 
-@media (hover: hover) {
-  .about-image:hover img {
-    filter: grayscale(0%);
-    transform: scale(1.02);
-  }
-}
-
-.experience-row {
-  transition: background-color 0.2s ease;
-}
-
-@media (hover: hover) {
-  .experience-row:hover {
-    background-color: rgba(0, 0, 0, 0.015);
-  }
-}
-
-/* Right Column */
-.about-right {
+.paper-about__content {
   display: flex;
   flex-direction: column;
   gap: 40px;
-}
-
-/* Experience Section */
-.experience-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.experience-header {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 170px;
-  gap: 20px;
-  padding: 10px 0;
-  border-bottom: 0.5px solid #2b2b2b;
-}
-
-.experience-header .exp-col {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  color: #000000;
-}
-
-.experience-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr) 170px;
-  gap: 20px;
-  padding: 12px 0;
-  border-bottom: 0.5px solid #e5e5e5;
-}
-
-.experience-row .exp-col {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  color: #000000;
   min-width: 0;
 }
 
-.exp-year {
-  text-align: right;
-  width: 170px;
+.paper-about__bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4em;
 }
 
-/* Inspiration Section */
-.section-label {
-  font-family: 'Helvetica Neue', sans-serif;
+.paper-about__bio p {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--home-ink);
+}
+
+.paper-about__experience h2 {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
   font-weight: 500;
-  font-size: 14px;
-  color: #000000;
-  margin: 0 0 15px 0;
-  padding-bottom: 10px;
-  border-bottom: 0.5px solid #2b2b2b;
+  line-height: 1.4;
+  color: var(--home-ink);
 }
 
-.inspiration-section {
+.paper-about__jobs {
+  list-style: none;
+  margin: 40px 0 0;
+  padding: 0;
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
-.inspiration-links {
+.paper-about__job {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  align-items: flex-start;
+  gap: 10px;
 }
 
-.inspiration-link {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  color: #000000;
-  text-decoration: none;
-  padding: 2px 8px;
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  opacity: 0.82;
-  transition:
-    color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.inspiration-link::after {
-  content: '';
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 2px;
-  width: auto;
-  height: 1.5px;
-  background-color: currentColor;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.24s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.inspiration-link:hover {
-  opacity: 1;
-  transform: translateY(-1px);
-}
-
-.inspiration-link:hover::after,
-.inspiration-link:focus-visible::after {
-  transform: scaleX(1);
-}
-
-.inspiration-link:focus-visible {
-  opacity: 1;
-  outline: 2px solid currentColor;
-  outline-offset: 4px;
-  transform: translateY(-1px);
-}
-
-/* Inspiration hover preview card */
-.inspiration-preview {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9000;
-  width: 220px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 12px;
-  background-color: #ffffff;
-  border: 0.5px solid #2b2b2b;
-  border-radius: 6px;
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
-  pointer-events: none;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(6px) scale(0.95);
-  transform-origin: top left;
-  transition:
-    opacity 0.13s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s linear 0.2s;
-}
-
-.inspiration-preview.is-visible {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0) scale(1);
-  transition:
-    opacity 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.2s cubic-bezier(0.22, 1, 0.36, 1),
-    visibility 0s linear 0s;
-}
-
-.inspiration-preview-source {
+.paper-about__job-top {
   display: flex;
   align-items: center;
-  gap: 7px;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.inspiration-preview-favicon {
-  width: 16px;
-  height: 16px;
+.paper-about__company {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--home-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  text-underline-position: from-font;
+}
+
+.paper-about__company:hover {
+  opacity: 0.72;
+}
+
+.paper-about__company:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+.paper-about__dates {
   flex-shrink: 0;
-  object-fit: contain;
-}
-
-.inspiration-preview-domain {
-  font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 400;
-  font-size: 12px;
-  color: #767676;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--home-muted);
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-.inspiration-preview-title {
-  font-family: 'Helvetica Neue', sans-serif;
+.paper-about__role {
+  margin: 0;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
   font-weight: 400;
-  font-size: 13px;
-  line-height: 1.35;
-  color: #000000;
+  line-height: 1.4;
+  color: var(--home-ink);
 }
 
-/* Responsive Design for About Page */
-@media (max-width: 1024px) {
-  .about-layout {
-    gap: 40px;
-  }
-
-  .experience-header,
-  .experience-row {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) 150px;
-    gap: 15px;
+@media (max-width: 1100px) {
+  .paper-about__layout {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 24px;
   }
 }
 
 @media (max-width: 768px) {
-  .about-layout {
+  .paper-about {
+    padding-bottom: 72px;
+  }
+
+  .paper-about__layout {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 32px;
   }
 
-  .about-left {
-    order: 1;
+  .paper-about__content {
+    gap: 32px;
   }
 
-  .about-right {
-    order: 2;
+  .paper-about__jobs {
+    margin-top: 24px;
   }
 
-  .about-image {
-    max-width: 100%;
+  .paper-about__job-top {
+    align-items: flex-start;
+    flex-wrap: wrap;
   }
 
-  .experience-header {
-    display: none;
-  }
-
-  .experience-row {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    grid-template-rows: auto auto;
-    column-gap: 12px;
-    row-gap: 3px;
-    padding: 12px 0;
-    align-items: start;
-  }
-
-  .experience-row .exp-col:first-child {
-    font-weight: 400;
-    grid-column: 1;
-    grid-row: 1;
-  }
-
-  .experience-row .exp-col:nth-child(2) {
-    grid-column: 1;
-    grid-row: 2;
-  }
-
-  .experience-row .exp-year {
-    grid-column: 2;
-    grid-row: 1 / -1;
-    text-align: right;
-    align-self: start;
-    width: auto;
-    white-space: nowrap;
+  .paper-about__dates {
+    white-space: normal;
   }
 }
 
 @media (max-width: 480px) {
-  .about-bio p {
-    font-size: 14px;
+  .paper-about__company {
+    font-size: 15px;
   }
 
-  .experience-header .exp-col,
-  .experience-row .exp-col,
-  .inspiration-link {
+  .paper-about__dates,
+  .paper-about__role,
+  .paper-about__bio p {
     font-size: 13px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .inspiration-link,
-  .inspiration-link::after,
-  .about-image img,
-  .experience-row,
-  .inspiration-preview {
-    transition: none !important;
-  }
-
-  .inspiration-preview,
-  .inspiration-preview.is-visible {
-    transform: none !important;
+  .paper-about__company {
+    transition: none;
   }
 }

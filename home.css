@@ -47,7 +47,8 @@ html[data-theme="dark"] {
 }
 
 body.home-route,
-body.projects-route {
+body.projects-route,
+body.about-route {
   padding-top: 0;
   padding-bottom: 0;
   background: var(--home-bg);
@@ -56,6 +57,7 @@ body.projects-route {
 /* Match SPA shell: strip global main side padding so chrome aligns */
 body.home-route main,
 body.projects-route main,
+body.about-route main,
 .new-homepage {
   padding-left: 0;
   padding-right: 0;
@@ -65,7 +67,8 @@ body.home-route #nav-container,
 body.home-route .top-blur,
 body.home-route .bottom-blur,
 body.home-route .lightbox-overlay,
-body.projects-route #nav-container {
+body.projects-route #nav-container,
+body.about-route #nav-container {
   display: none;
 }
 

@@ -1,59 +1,97 @@
-<section id="about-new">
-    <div class="about-layout">
-        <!-- Left Column: Bio + Image -->
-        <div class="about-left">
-            <div class="about-bio">
+<section class="paper-home paper-about" aria-labelledby="about-title">
+    <div class="paper-home__pin">
+        <header class="paper-home__chrome">
+            <div class="paper-home__chrome-start">
+                <a class="paper-home__logo" href="/" aria-label="Usmaan Razzaq — Home">
+                    <img src="images/usmaan-logo-mark.png" width="82" height="42" alt="">
+                </a>
+
+                <nav class="paper-home__nav" aria-label="Portfolio sections">
+                    <button
+                        type="button"
+                        class="paper-home__nav-toggle"
+                        aria-expanded="false"
+                        aria-controls="paper-about-menu"
+                    >
+                        <span class="paper-home__nav-toggle-label">About</span>
+                        <svg class="paper-home__nav-chevron" width="12" height="12" viewBox="0 0 12 12" aria-hidden="true">
+                            <path d="M3 4.5L6 7.5L9 4.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <div class="paper-home__tabs" id="paper-about-menu">
+                        <a href="/">Work</a>
+                        <a href="/projects/">Projects</a>
+                        <a class="is-active" href="/about/" aria-current="page">About</a>
+                    </div>
+                </nav>
+            </div>
+
+            <button
+                type="button"
+                class="paper-home__theme"
+                aria-label="Switch to dark mode"
+                aria-pressed="false"
+            >
+                <svg class="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+                <svg class="theme-icon theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+            </button>
+        </header>
+    </div>
+
+    <h1 id="about-title" class="visually-hidden">About</h1>
+
+    <div class="paper-about__layout">
+        <figure class="paper-about__photo">
+            <img
+                src="images/About-Page-IMG.webp?v=20260721-paper"
+                width="2144"
+                height="1268"
+                alt="Usmaan sitting on a rock in a forest"
+                loading="eager"
+                decoding="async"
+            >
+        </figure>
+
+        <div class="paper-about__content">
+            <div class="paper-about__bio">
                 <p>I'm Usmaan, a Product Designer and Front-End Developer based in Queens, NY. I'm passionate about designing intuitive, user-centered experiences that solve real problems and feel natural to use. I studied Multimedia Programming and Web Design at Borough of Manhattan Community College, where I built a foundation that bridges design and code. I continuously sharpen my front-end skills through platforms like Scrimba. At the core of my work is a belief that great design isn't just about how something looks, but how it works and how it makes people feel.</p>
                 <p>I wouldn't be who I am without the inspiration of minds and creators like Dieter Rams, John Pawson, Donald Judd, Jony Ive, Dr. Abdus Salam, Anthony Bourdain, Jan Tschichold, Massimo Vignelli, Marcel Breuer, Alvar Aalto, Peter Märkli, and many more. Their work, ideas, and spirit have shaped the way I see the world — teaching me that design, culture, and curiosity are all part of the same pursuit of meaning.</p>
             </div>
-            <div class="about-image">
-                <img src="/images/About-Page-IMG.webp" alt="Usmaan Razzaq" loading="lazy">
-            </div>
-        </div>
 
-        <!-- Right Column: Experience, Inspiration -->
-        <div class="about-right">
-            <!-- Experience Section -->
-            <div class="experience-section">
-                <div class="experience-header">
-                    <span class="exp-col">Company</span>
-                    <span class="exp-col">Role</span>
-                    <span class="exp-col exp-year">Year</span>
-                </div>
-                <div class="experience-row">
-                    <span class="exp-col">On The Run Studio</span>
-                    <span class="exp-col">Founder, Product Design</span>
-                    <span class="exp-col exp-year">March 2021-Present</span>
-                </div>
-                <div class="experience-row">
-                    <span class="exp-col">Adsum NYC</span>
-                    <span class="exp-col">Web Design</span>
-                    <span class="exp-col exp-year">Nov 2025 - Present</span>
-                </div>
-                <div class="experience-row">
-                    <span class="exp-col">Rented</span>
-                    <span class="exp-col">UI Design & Prototyping</span>
-                    <span class="exp-col exp-year">Nov 2024 - Feb 2025</span>
-                </div>
-                <div class="experience-row">
-                    <span class="exp-col">National Muslim Youth Association</span>
-                    <span class="exp-col">Lead UI Designer</span>
-                    <span class="exp-col exp-year">Nov 2023 - Nov 2025</span>
-                </div>
-            </div>
+            <section class="paper-about__experience" aria-labelledby="experience-heading">
+                <h2 id="experience-heading">Experience</h2>
 
-            <!-- Inspiration Section -->
-            <div class="inspiration-section">
-                <h4 class="section-label">Inspiration</h4>
-                <div class="inspiration-links">
-                    <a href="https://linear.app/method/introduction" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="linear.app">Principles & Practices by Linear</a>
-                    <a href="https://resend.com/handbook/design/what-is-our-design-process" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="resend.com">What is our design process by Resend</a>
-                    <a href="https://hicarquitectura.com/2024/03/peter-markli-what-it-means-to-live-today/" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="hicarquitectura.com">What it means to live today by Peter Markli</a>
-                    <a href="https://bukinoshita.com/thoughts/on-principles" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="bukinoshita.com">On Principles by Bu Kinoshita</a>
-                    <a href="https://emilkowal.ski/ui/developing-taste" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="emilkowal.ski">Developing Taste by Emil Kowalski</a>
-                    <a href="https://linear.app/now/design-is-more-than-code" target="_blank" rel="noopener noreferrer" class="inspiration-link" data-preview-domain="linear.app">Design is more than code by Linear</a>
-                </div>
-            </div>
+                <ul class="paper-about__jobs">
+                    <li class="paper-about__job">
+                        <div class="paper-about__job-top">
+                            <a class="paper-about__company" href="/adsum/">Adsum NYC</a>
+                            <span class="paper-about__dates">Nov 2025 - Present</span>
+                        </div>
+                        <p class="paper-about__role">Product Designer</p>
+                    </li>
+                    <li class="paper-about__job">
+                        <div class="paper-about__job-top">
+                            <a class="paper-about__company" href="/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">On The Run Studio</a>
+                            <span class="paper-about__dates">Mar 2021 - Present</span>
+                        </div>
+                        <p class="paper-about__role">Founder &amp; Designer</p>
+                    </li>
+                    <li class="paper-about__job">
+                        <div class="paper-about__job-top">
+                            <a class="paper-about__company" href="/Rented/rented/">Rented</a>
+                            <span class="paper-about__dates">Nov 2024 - Feb 2025</span>
+                        </div>
+                        <p class="paper-about__role">Product Designer</p>
+                    </li>
+                    <li class="paper-about__job">
+                        <div class="paper-about__job-top">
+                            <a class="paper-about__company" href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">National Muslim Youth Association</a>
+                            <span class="paper-about__dates">Nov 2023 - Nov 2025</span>
+                        </div>
+                        <p class="paper-about__role">Lead UI Designer</p>
+                    </li>
+                </ul>
+            </section>
         </div>
     </div>
 </section>

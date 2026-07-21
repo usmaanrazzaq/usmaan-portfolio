@@ -112,6 +112,29 @@ html[data-theme="dark"] .paper-cs__carousel-slide figcaption {
   color: var(--cs-muted);
 }
 
-html[data-theme="dark"] .paper-cs__charts .chart-card {
+html[data-theme="dark"] .paper-cs__charts .chart-card,
+html[data-theme="dark"] .paper-cs__charts .globe-card {
   background: var(--cs-frame);
+}
+
+html[data-theme="dark"] .globe-outline {
+  stroke: #3a3a3a;
+  fill: #1a1a1a;
+}
+
+html[data-theme="dark"] .globe-latitude,
+html[data-theme="dark"] .globe-longitude {
+  stroke: #2e2e2e;
+}
+
+html[data-theme="dark"] .globe-land {
+  fill: #2c2c2c;
+}
+
+html[data-theme="dark"] .globe-label {
+  fill: var(--cs-muted);
+}
+
+html[data-theme="dark"] .globe-leader {
+  stroke: #444;
 }

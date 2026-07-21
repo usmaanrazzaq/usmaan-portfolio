@@ -11,6 +11,10 @@ document.body.classList.toggle(
   'projects-route',
   window.location.pathname === '/projects/' || window.location.pathname === '/projects'
 );
+document.body.classList.toggle(
+  'about-route',
+  window.location.pathname === '/about/' || window.location.pathname === '/about'
+);
 
 function loadNav() {
   const navContainer = document.getElementById('nav-container');
@@ -1151,9 +1155,11 @@ function initInspirationPreview() {
 function initPageHooks(page) {
   const isHome = page === 'home';
   const isProjects = page === 'projects';
-  const usePaperChrome = isHome || isProjects;
+  const isAbout = page === 'about';
+  const usePaperChrome = isHome || isProjects || isAbout;
   document.body.classList.toggle('home-route', isHome);
   document.body.classList.toggle('projects-route', isProjects);
+  document.body.classList.toggle('about-route', isAbout);
   const navContainer = document.getElementById('nav-container');
   if (navContainer) {
     navContainer.hidden = usePaperChrome;
@@ -1165,12 +1171,9 @@ function initPageHooks(page) {
     initHomeStack();
     initHomeNavMenu();
     initThemeToggle();
-  } else if (isProjects) {
+  } else if (isProjects || isAbout) {
     initHomeNavMenu();
     initThemeToggle();
-  } else if (page === 'about') {
-    initDropdowns();
-    initInspirationPreview();
   }
   // Show/hide home-only fixed elements
   var scrollHint = document.querySelector('.hero-scroll-cue');
@@ -1206,7 +1209,7 @@ function initPageHooks(page) {
   const mainClasses = {
     'home': 'new-homepage',
     'projects': 'new-homepage',
-    'about': '',
+    'about': 'new-homepage',
     'contact': 'contact-page'
   };
 

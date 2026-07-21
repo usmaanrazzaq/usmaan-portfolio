@@ -5,179 +5,206 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>On The Run Studio - Case Study</title>
-    <link rel="stylesheet" href="case-study-styles.css">
+    <meta name="description" content="Case study: Creating a brand and a design studio — On The Run Studio.">
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored === 'dark' || stored === 'light'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="stylesheet" href="case-study-styles.css?v=20260721-mobile-ui">
+    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260721-otrs">
+    <link rel="stylesheet" href="../../shared/interactive-components.css?v=20260721-otrs">
     <link rel="stylesheet" href="../../shared/page-transitions.css?v=20260718">
-    <link rel="stylesheet" href="../../shared/interactive-components.css">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
 
     <link rel="icon" href="../../Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="../../iOS Icon.png" sizes="180x180">
 </head>
 
-<body>
-    <header id="nav-container" data-path="/nav.html"></header>
+<body class="paper-cs-route">
+    <header id="nav-container" data-path="/nav.html" aria-hidden="true" hidden></header>
 
-    <main class="case-study-container">
-        <!-- Hero Section -->
-        <section id="hero" class="case-study-hero">
-            <div class="project-header">
-                <div class="project-title">
-                    <h1>On The Run Studio</h1>
+    <main class="paper-cs" aria-labelledby="cs-title">
+        <a class="paper-cs__back" href="/">
+            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                <path d="M12.6 16.2L7.2 10.8 12.6 5.4" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Back
+        </a>
+
+        <header class="paper-cs__header">
+            <h1 id="cs-title">On The Run Studio</h1>
+
+            <dl class="paper-cs__meta">
+                <div>
+                    <dt>Role</dt>
+                    <dd>Founder &amp; Designer</dd>
                 </div>
-                <div class="project-subtitle">
-                    <h2>Creating a brand and a Design Studio</h2>
+                <div>
+                    <dt>Duration</dt>
+                    <dd>Mar 2021 - Present</dd>
                 </div>
-                <div class="project-tags">
-                    <div class="project-crumbs">
-                        <span class="crumb">Founder</span>
-                        <span class="crumb">Product Design</span>
-                        <span class="crumb">Front-End Development</span>
-                    </div>
-                    <div class="timeline">
-                        <span>Mar 2021 - Present</span>
-                    </div>
+                <div>
+                    <dt>Scope</dt>
+                    <dd>Product Design, Front-End Development</dd>
                 </div>
-            </div>
-            <div class="hero-video">
-                <div class="video-container">
-                    <img src="../../images/OTRS-Display.webp" alt="On The Run Studio Mobile Display" />
+                <div>
+                    <dt>Platform</dt>
+                    <dd>Vercel</dd>
                 </div>
+                <div>
+                    <dt>Tools</dt>
+                    <dd>Figma, Cursor</dd>
+                </div>
+            </dl>
+
+            <p class="paper-cs__lede">Creating a brand and a Design Studio</p>
+        </header>
+
+        <section class="paper-cs__section" aria-labelledby="overview-heading">
+            <h2 id="overview-heading">Overview</h2>
+            <div class="paper-cs__body">
+                <p>On The Run Studio is a design studio that began as a personal project to curate and share images that inspired me and my work. Over time, the page grew and built a community of like-minded individuals who found inspiration in the posts. Along the way, I designed and produced products and merchandise inspired by these influences. On The Run Studio continues to share, inspire, and grow the community while connecting with brands and companies to assist in web design and development.</p>
             </div>
         </section>
 
-        <!-- Content Section with Directory -->
-        <section class="content-section">
-            <div class="content-layout">
-                <!-- Directory Navigation -->
-                <nav class="content-directory">
-                    <div class="directory-header">
-                        <h3>Content</h3>
-                    </div>
-                    <ul class="directory-list">
-                        <li><a href="#overview" data-section="overview">Overview</a></li>
-                        <li><a href="#problem" data-section="problem">Merchandise</a></li>
-                        <li><a href="#web-development" data-section="web-development">Web Development</a></li>
-                        <li><a href="#design-studio" data-section="design-studio">Design Studio</a></li>
-                       <!-- <li><a href="#outcome" data-section="outcome">Outcome</a></li> -->
-                    </ul>
-                </nav>
-
-                <!-- Content Area -->
-                <div class="content-area">
-                    <!-- Overview Section -->
-                    <section id="overview" class="content-block">
-                        <div class="section-header">
-                            <h2>Overview</h2>
-                        </div>
-                        <div class="section-question">
-                            <h3>What is On The Run Studio?</h3>
-                        </div>
-                        <div class="section-content">
-                            <p>On The Run Studio is a design studio that began as a personal project to curate and share
-                                images that inspired me and my work. Over time, the page grew and built a community of
-                                like-minded individuals who found inspiration in the posts. Along the way, I designed
-                                and produced products and merchandise inspired by these influences. On The Run Studio
-                                will continue to share, inspire, and grow the community while connecting with brands and
-                                companies to assist in web design and development.</p>
-                        </div>
-                    </section>
-
-                    <!-- Problem Section -->
-                    <section id="problem" class="content-block">
-                        <div class="problem-display">
-                            <div class="old-website-container">
-                                <img src="../../images/OTRS-Mobile-UI.webp" alt="On The Run Studio Mobile UI"
-                                    class="old-website-image" loading="lazy" />
-                            </div>
-                            <div class="image-caption">
-                                <p>On The Run Studio Mobile UI</p>
-                            </div>
-                        </div>
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Merchandise</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>For 2 and a half years, I designed and produced merchandise that was inspired and
-                                    influence by my upbringing and also the images I had curated. I started off with a
-                                    t-shirt and a mug. For the t-shirt, I created a design that was simple and clean,
-                                    The graphic was inspired by the Unisphere in Flushing, NY. For the mug, I placed the
-                                    early On The Run Studio logo on the front.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <div class="wireframe-display">
-                        <div class="wireframe-container">
-                            <div class="otrs-merch-grid">
-                                <div class="merch-item">
-                                    <img src="../../images/Unisphere Cap Card@2x.webp" alt="Unisphere Cap Card" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/Unisphere Cap@2x.webp" alt="Unisphere Cap" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/Frame@2x.webp" alt="Frame" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/World is Yours Tee@2x.webp" alt="World is Yours Tee" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/OTRS Logo@2x.webp" alt="OTRS Logo" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/OTRS Uniform Sweats@2x.webp" alt="OTRS Uniform Sweats" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/OTRS Logo@2x.webp" alt="OTRS Logo" loading="lazy" />
-                                </div>
-                                <div class="merch-item">
-                                    <img src="../../images/OTRS Closet Sale Graphic@2x.webp"
-                                        alt="OTRS Closet Sale Graphic" loading="lazy" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="image-caption">
-                            <p>On The Run Studio Products</p>
-                        </div>
-                    </div>
-                    <section id="web-development" class="content-block">
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Web Development</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>The On The Run Studio website was hosted on Shopify initially for the first year and a
-                                    half. The following year, I decided to redesign and host the website on Squarespace.
-                                    This version of the On The Run Studio website was used for another year and a half.
-                                    After that, I decided to redesign the website again but this time it was hosted on
-                                    Framer. This version of the website was used for a few months. Currently, the website is
-                                    being redesigned and developed by me. It is hosted on my own domain and is being
-                                    developed with HTML, CSS, and JavaScript.</p>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section id="design-studio" class="content-block">
-                        <div class="section-text">
-                            <div class="section-header">
-                                <h2>Design Studio</h2>
-                            </div>
-                            <div class="section-content">
-                                <p>On The Run Studio is continuing as a design agency to assist brands and companies to strategically design and develop their websites. The agency provides a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
-                            </div>
-                        </div>
-                    </section>
-                </div>
+        <section class="paper-cs__section" aria-labelledby="outcome-heading">
+            <h2 id="outcome-heading">Outcome</h2>
+            <div class="paper-cs__body">
+                <p>What started in March 2021 as a personal moodboard grew into a community of 5,000 followers within a year and a half. That growth extended beyond the page — limited-run merchandise I designed sold to community members as far as France, Spain, and the U.K., signaling reach well beyond a local audience. Rebuilding across Shopify, Squarespace, and Framer gave me firsthand fluency in the platforms brands actually use, turning On The Run Studio into the foundation for the full-service agency I run today, partnering with brands from concept through launch and maintenance.</p>
+            </div>
         </section>
+
+        <figure class="paper-cs__hero">
+            <video src="../../video/OTRS-Desktop-Display.mov" width="906" height="612" autoplay muted loop playsinline preload="metadata" aria-label="On The Run Studio website showcase"></video>
+        </figure>
+
+        <div class="paper-cs__charts" aria-label="Community growth and merchandise reach">
+            <div class="chart-card" data-chart="otrs-followers">
+                <svg class="line-chart" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Chart showing Instagram followers growing from 50 to 5,000 over 18 months">
+                    <line x1="60" y1="40" x2="490" y2="40" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>
+                    <line x1="60" y1="110" x2="490" y2="110" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>
+                    <line x1="60" y1="180" x2="490" y2="180" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>
+                    <line x1="60" y1="250" x2="490" y2="250" stroke="currentColor" stroke-opacity="0.12" stroke-width="1"/>
+                    <text x="48" y="44" text-anchor="end" class="chart-label">5K</text>
+                    <text x="48" y="114" text-anchor="end" class="chart-label">2.5K</text>
+                    <text x="48" y="184" text-anchor="end" class="chart-label">1K</text>
+                    <text x="48" y="254" text-anchor="end" class="chart-label">50</text>
+                    <defs>
+                        <linearGradient id="otrsChartGradient" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4A90D9" stop-opacity="0.25"/>
+                            <stop offset="100%" stop-color="#4A90D9" stop-opacity="0.02"/>
+                        </linearGradient>
+                    </defs>
+                    <path class="chart-area" d="M80,248 L152,245 L224,235 L296,212 L368,166 L440,90 L490,40 L490,250 L80,250 Z" fill="url(#otrsChartGradient)"/>
+                    <polyline class="chart-line" points="80,248 152,245 224,235 296,212 368,166 440,90 490,40" stroke="#4A90D9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    <g class="chart-dots">
+                        <circle cx="80" cy="248" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="152" cy="245" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="224" cy="235" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="296" cy="212" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="368" cy="166" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="440" cy="90" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                        <circle cx="490" cy="40" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                    </g>
+                    <text x="80" y="278" text-anchor="middle" class="chart-label">Mar '21</text>
+                    <text x="217" y="278" text-anchor="middle" class="chart-label">Sep '21</text>
+                    <text x="354" y="278" text-anchor="middle" class="chart-label">Mar '22</text>
+                    <text x="490" y="278" text-anchor="middle" class="chart-label">Sep '22</text>
+                    <text x="275" y="308" text-anchor="middle" class="chart-caption">Instagram followers growth (Mar 2021 – Sep 2022)</text>
+                </svg>
+            </div>
+
+            <div class="globe-card" data-globe-reach="otrs">
+                <svg class="globe-map" viewBox="0 0 520 320" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Globe showing merchandise reach from New York to the United Kingdom, France, and Spain">
+                    <g class="globe-sphere">
+                        <circle class="globe-outline" cx="260" cy="152" r="96" stroke="#dcdcdc" stroke-width="1.5" fill="#fcfcfc"/>
+                        <ellipse class="globe-latitude" cx="260" cy="152" rx="96" ry="30" stroke="#ededed" stroke-width="1"/>
+                        <ellipse class="globe-latitude" cx="260" cy="152" rx="96" ry="62" stroke="#ededed" stroke-width="1"/>
+                        <ellipse class="globe-longitude" cx="260" cy="152" rx="40" ry="96" stroke="#ededed" stroke-width="1"/>
+                        <ellipse class="globe-longitude" cx="260" cy="152" rx="72" ry="96" stroke="#ededed" stroke-width="1"/>
+                        <line class="globe-longitude" x1="260" y1="56" x2="260" y2="248" stroke="#ededed" stroke-width="1"/>
+                        <path class="globe-land" d="M172,124 C179,118 189,116 197,118 C205,119 210,121 215,127 C219,132 217,140 214,147 C212,153 210,159 206,163 C205,167 206,173 203,178 C201,182 198,179 198,173 C195,176 192,171 190,175 C188,182 186,190 183,195 C181,199 179,195 180,189 C181,182 178,175 174,169 C169,161 166,153 167,144 C168,135 169,129 172,124 Z" fill="#e9e9e9"/>
+                        <path class="globe-land" d="M232,110 C238,108 242,112 240,117 C238,122 232,121 230,116 C229,112 232,110 232,110 Z" fill="#e9e9e9"/>
+                        <path class="globe-land" d="M330,109 C337,110 336,118 340,124 C345,129 346,137 340,141 C336,143 333,140 330,143 C327,147 324,146 321,150 C318,154 320,160 315,161 C310,162 311,155 312,151 C310,148 312,143 317,142 C314,139 315,133 319,130 C322,125 324,117 328,112 C329,110 330,109 330,109 Z" fill="#e9e9e9"/>
+                        <path class="globe-land" d="M336,146 C339,147 340,152 338,156 C337,159 335,158 335,154 C334,150 334,147 336,146 Z" fill="#e9e9e9"/>
+                        <path class="globe-land" d="M304,116 C308,113 313,116 311,121 C310,127 303,126 301,122 C300,118 304,116 304,116 Z" fill="#e9e9e9"/>
+                        <path class="globe-land" d="M326,159 C338,156 350,159 352,166 C353,172 345,177 335,175 C327,173 322,166 326,161 Z" fill="#e9e9e9"/>
+                    </g>
+                    <g class="globe-arcs" stroke="#4A90D9" stroke-width="1.4" fill="none" stroke-linecap="round">
+                        <path class="globe-arc" d="M206,150 Q258,88 316,122"/>
+                        <path class="globe-arc" d="M206,150 Q264,92 328,138"/>
+                        <path class="globe-arc" d="M206,150 Q256,104 314,154"/>
+                    </g>
+                    <g class="globe-markers">
+                        <g class="globe-marker globe-marker--origin">
+                            <circle class="globe-marker-pulse" cx="206" cy="150" r="6" stroke="#4A90D9" stroke-width="1.5" fill="none"/>
+                            <circle class="globe-marker-dot" cx="206" cy="150" r="6" fill="#4A90D9"/>
+                            <text x="206" y="171" text-anchor="middle" class="globe-label globe-label--origin">New York</text>
+                        </g>
+                        <g class="globe-marker globe-marker--dest">
+                            <line class="globe-leader" x1="320" y1="122" x2="372" y2="118" stroke="#d6d6d6" stroke-width="1"/>
+                            <circle class="globe-marker-pulse" cx="316" cy="122" r="4.5" stroke="#4A90D9" stroke-width="1.5" fill="none"/>
+                            <circle class="globe-marker-dot" cx="316" cy="122" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            <text x="378" y="122" text-anchor="start" class="globe-label">U.K.</text>
+                        </g>
+                        <g class="globe-marker globe-marker--dest">
+                            <line class="globe-leader" x1="332" y1="138" x2="372" y2="141" stroke="#d6d6d6" stroke-width="1"/>
+                            <circle class="globe-marker-pulse" cx="328" cy="138" r="4.5" stroke="#4A90D9" stroke-width="1.5" fill="none"/>
+                            <circle class="globe-marker-dot" cx="328" cy="138" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            <text x="378" y="145" text-anchor="start" class="globe-label">France</text>
+                        </g>
+                        <g class="globe-marker globe-marker--dest">
+                            <line class="globe-leader" x1="318" y1="154" x2="372" y2="164" stroke="#d6d6d6" stroke-width="1"/>
+                            <circle class="globe-marker-pulse" cx="314" cy="154" r="4.5" stroke="#4A90D9" stroke-width="1.5" fill="none"/>
+                            <circle class="globe-marker-dot" cx="314" cy="154" r="4.5" fill="#fff" stroke="#4A90D9" stroke-width="2"/>
+                            <text x="378" y="168" text-anchor="start" class="globe-label">Spain</text>
+                        </g>
+                    </g>
+                    <text x="260" y="298" text-anchor="middle" class="chart-caption">Merchandise reach beyond New York</text>
+                </svg>
+            </div>
+        </div>
+
+        <section class="paper-cs__section" aria-labelledby="merchandise-heading">
+            <h2 id="merchandise-heading">Merchandise</h2>
+            <div class="paper-cs__body">
+                <p>For 2 and a half years, I designed and produced merchandise inspired by my upbringing and the images I had curated. I started off with a t-shirt and a mug. For the t-shirt, I created a design that was simple and clean — the graphic was inspired by the Unisphere in Flushing, NY. For the mug, I placed the early On The Run Studio logo on the front.</p>
+            </div>
+        </section>
+
+        <section class="paper-cs__section" aria-labelledby="studio-heading">
+            <h2 id="studio-heading">Design Studio</h2>
+            <div class="paper-cs__body">
+                <p>On The Run Studio is continuing as a design agency to assist brands and companies to strategically design and develop their websites. The agency provides a full-service design and development solution, from initial design to launch and ongoing maintenance.</p>
+            </div>
+        </section>
+
+        <figure class="paper-cs__shot paper-cs__shot--wide">
+            <img src="../../images/OTRS-Mobile-UI.webp" width="3300" height="1728" alt="On The Run Studio homepage and About pages on two mobile phones" loading="lazy">
+        </figure>
     </main>
+
+    <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged media" hidden>
+        <button type="button" class="lightbox-close" aria-label="Close lightbox"></button>
+        <div class="lightbox-stage">
+            <img id="lightbox-img" class="lightbox-img" alt="">
+            <div id="lightbox-chart" class="lightbox-chart" aria-hidden="true"></div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
-    <script src="../../shared/scroll-animations.js"></script>
-    <script src="../../shared/interactive-components.js"></script>
-    <script src="case-study-script.js"></script>
-    <script src="../../main.js?v=20260718-page-fx"></script>
+    <script src="../../shared/interactive-components.js?v=20260721-otrs"></script>
+    <script src="case-study-script.js?v=20260721-paper"></script>
+    <script src="../../main.js?v=20260720-theme"></script>
 </body>
 
 </html>
