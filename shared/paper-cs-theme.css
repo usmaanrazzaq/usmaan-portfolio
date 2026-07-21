@@ -9,6 +9,7 @@ html[data-theme="dark"] {
   --cs-surface: #242424;
   --cs-surface-hover: #2e2e2e;
   --cs-surface-active: #363636;
+  background-color: var(--cs-bg);
 }
 
 html[data-theme="dark"] body.paper-cs-route {

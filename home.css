@@ -15,6 +15,7 @@
   --home-gutter: 25px;
   --home-copy: 536px;
   --home-media: 906px;
+  background-color: var(--home-bg);
 }
 
 html[data-theme="dark"] {
@@ -30,6 +31,7 @@ html[data-theme="dark"] {
   --home-pill-stroke: rgba(255, 255, 255, 0.12);
   --home-divider: #2a2a2a;
   --home-media-bg: #1c1c1c;
+  background-color: var(--home-bg);
 }
 
 @property --metal-angle {

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Muslim Youth Association - Case Study</title>
     <meta name="description" content="Case study: Redesigning a non-profit site to better serve Muslim youth.">
+    <meta name="theme-color" content="#ffffff">
     <script>
       (function () {
         try {
@@ -13,8 +14,12 @@
           var theme = stored === 'dark' || stored === 'light'
             ? stored
             : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          var color = theme === 'dark' ? '#111111' : '#ffffff';
           document.documentElement.setAttribute('data-theme', theme);
           document.documentElement.style.colorScheme = theme;
+          document.documentElement.style.backgroundColor = color;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', color);
         } catch (e) {}
       })();
     </script>
@@ -22,7 +27,7 @@
     <link rel="stylesheet" href="../../shared/interactive-components.css">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
     <link rel="stylesheet" href="case-study-styles.css?v=20260720-theme">
-    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260720-3">
+    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260721-theme-chrome">
 
     <link rel="icon" href="../../Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="../../iOS Icon.png" sizes="180x180">
@@ -315,7 +320,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="../../shared/interactive-components.js"></script>
     <script src="case-study-script.js?v=20260719-lightbox"></script>
-    <script src="../../main.js?v=20260718-page-fx"></script>
+    <script src="../../main.js?v=20260721-theme-chrome"></script>
 </body>
 
 </html>
