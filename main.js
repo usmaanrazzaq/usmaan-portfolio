@@ -504,18 +504,21 @@ function applyTheme(theme) {
   });
 }
 
+// SPA-safe: bind once via delegation. Per-button data-theme-bound markers were
+// serialized into the home HTML cache, so returning to a cached page skipped
+// rebinding and left the toggle dead (new DOM nodes, no listeners).
+var _themeToggleBound = false;
+
 function initThemeToggle() {
   applyTheme(getPreferredTheme());
 
-  const buttons = document.querySelectorAll('.paper-home__theme');
-  if (!buttons.length) return;
+  if (_themeToggleBound) return;
+  _themeToggleBound = true;
 
-  buttons.forEach(function(btn) {
-    if (btn.dataset.themeBound === '1') return;
-    btn.dataset.themeBound = '1';
-    btn.addEventListener('click', function() {
-      applyTheme(getPreferredTheme() === 'dark' ? 'light' : 'dark');
-    });
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.paper-home__theme');
+    if (!btn) return;
+    applyTheme(getPreferredTheme() === 'dark' ? 'light' : 'dark');
   });
 }
 
@@ -1371,6 +1374,10 @@ function initPageHooks(page) {
   // Expose router globally for logo click handler
   window.spaRouter = { navigateTo: navigateTo };
 
+  // Pre-cache home from the initial DOM before init hooks mutate attributes
+  // (e.g. aria-pressed). Caching after init poisoned SPA restores.
+  cache.set('home', spaContent.innerHTML);
+
   // On initial load, detect the current route from URL (for htaccess fallback)
   var initialPage = getPage(window.location.pathname);
   if (initialPage && initialPage !== 'home') {
@@ -1389,9 +1396,6 @@ function initPageHooks(page) {
     // Home page — init hooks for initial content
     initPageHooks('home');
   }
-
-  // Pre-cache the home partial from current DOM (so going back to home is instant)
-  cache.set('home', spaContent.innerHTML);
 })();
 
 // ===== Full-page exit transitions (case studies and other non-SPA shells) =====
