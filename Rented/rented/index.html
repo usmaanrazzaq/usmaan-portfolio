@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rented - Case Study</title>
     <meta name="description" content="Case study: Designing a peer-to-peer rental experience for urban renters.">
+    <meta name="theme-color" content="#ffffff">
     <script>
       (function () {
         try {
@@ -13,13 +14,17 @@
           var theme = stored === 'dark' || stored === 'light'
             ? stored
             : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          var color = theme === 'dark' ? '#111111' : '#ffffff';
           document.documentElement.setAttribute('data-theme', theme);
           document.documentElement.style.colorScheme = theme;
+          document.documentElement.style.backgroundColor = color;
+          var meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.setAttribute('content', color);
         } catch (e) {}
       })();
     </script>
     <link rel="stylesheet" href="case-study-styles.css?v=20260720-theme">
-    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260720-3">
+    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260721-theme-chrome">
     <link rel="stylesheet" href="../../shared/page-transitions.css?v=20260718">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
 
@@ -120,7 +125,7 @@
         </section>
     </main>
 
-    <script src="../../main.js?v=20260718-page-fx"></script>
+    <script src="../../main.js?v=20260721-theme-chrome"></script>
 </body>
 
 </html>

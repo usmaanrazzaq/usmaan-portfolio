@@ -490,9 +490,24 @@ function getPreferredTheme() {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
+function syncBrowserChrome(theme) {
+  var color = theme === 'dark' ? '#111111' : '#ffffff';
+  document.documentElement.style.backgroundColor = color;
+
+  // Keep Safari/iOS status + toolbar chrome in sync with site theme
+  var meta = document.querySelector('meta[name="theme-color"]');
+  if (!meta) {
+    meta = document.createElement('meta');
+    meta.setAttribute('name', 'theme-color');
+    document.head.appendChild(meta);
+  }
+  meta.setAttribute('content', color);
+}
+
 function applyTheme(theme) {
   document.documentElement.setAttribute('data-theme', theme);
   document.documentElement.style.colorScheme = theme;
+  syncBrowserChrome(theme);
   try {
     localStorage.setItem('theme', theme);
   } catch (e) {}
