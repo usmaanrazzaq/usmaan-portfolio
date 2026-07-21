@@ -4,6 +4,10 @@
   --cs-ink: #2b2b2b;
   --cs-muted: #767676;
   --cs-frame: #ebe9e9;
+  --cs-bg: #ffffff;
+  --cs-surface: #ffffff;
+  --cs-surface-hover: #fafafa;
+  --cs-surface-active: #f5f5f5;
   --cs-column: 722px;
   --cs-gap-sm: 10px;
   --cs-gap-md: 40px;
@@ -24,7 +28,7 @@ html {
 body.paper-cs-route {
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: var(--cs-bg);
   color: var(--cs-ink);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -62,7 +66,7 @@ body.paper-cs-route #nav-container {
   padding: 7px 14px 7px 10px;
   border-radius: 100px;
   border: 1px solid rgba(43, 43, 43, 0.18);
-  background: #fff;
+  background: var(--cs-surface);
   color: var(--cs-ink);
   font-size: 14px;
   line-height: 1.4;
@@ -239,7 +243,7 @@ body.paper-cs-route #nav-container {
 @media (hover: hover) {
   .paper-cs__back:hover {
     border-color: transparent;
-    background: #fafafa;
+    background: var(--cs-surface-hover);
   }
 
   .paper-cs__back:hover::before {
@@ -265,6 +269,12 @@ body.paper-cs-route #nav-container {
   .paper-cs__pair {
     flex-direction: column;
     gap: 10px;
+  }
+
+  /* flex: 1 1 0 + overflow:hidden collapses height in a column flex */
+  .paper-cs__pair .paper-cs__shot {
+    flex: none;
+    width: 100%;
   }
 }
 

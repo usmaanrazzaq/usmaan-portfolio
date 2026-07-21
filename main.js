@@ -7,6 +7,10 @@ function onDomReady(fn) {
 }
 
 document.body.classList.toggle('home-route', window.location.pathname === '/');
+document.body.classList.toggle(
+  'projects-route',
+  window.location.pathname === '/projects/' || window.location.pathname === '/projects'
+);
 
 function loadNav() {
   const navContainer = document.getElementById('nav-container');
@@ -181,40 +185,12 @@ function initHoverEffects(page) {
   mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", function() {
 
     if (page === 'projects') {
-      // Project card 3D tilt
-      var cards = document.querySelectorAll('.project-card');
-
-      cards.forEach(function(card) {
-        var xTo = gsap.quickTo(card, "rotateY", { duration: 0.3, ease: "power2.out" });
-        var yTo = gsap.quickTo(card, "rotateX", { duration: 0.3, ease: "power2.out" });
-
-        card.style.transformStyle = "preserve-3d";
-        card.style.perspective = "800px";
-        // Wrap in a perspective container
-        card.parentElement.style.perspective = "800px";
-
-        card.addEventListener("mousemove", function(e) {
-          var rect = card.getBoundingClientRect();
-          var x = (e.clientX - rect.left) / rect.width - 0.5;  // -0.5 to 0.5
-          var y = (e.clientY - rect.top) / rect.height - 0.5;
-          xTo(x * 4);   // max 2 degrees
-          yTo(-y * 4);  // max 2 degrees
-        });
-
-        card.addEventListener("mouseleave", function() {
-          xTo(0);
-          yTo(0);
-        });
-      });
-
-      // Staggered card entry animation
-      gsap.from(".project-card", {
-        y: 20,
+      gsap.from('.paper-projects__item', {
+        y: 16,
         opacity: 0,
-        stagger: 0.08,
-        duration: 0.5,
-        ease: "expo.out",
-        clearProps: "all"
+        duration: 0.55,
+        ease: 'expo.out',
+        clearProps: 'all'
       });
     }
 
@@ -503,6 +479,45 @@ var _localTimeInterval = null;
 
 var _homeCaseObserver = null;
 var _homeNavAbort = null;
+
+function getPreferredTheme() {
+  const attr = document.documentElement.getAttribute('data-theme');
+  if (attr === 'dark' || attr === 'light') return attr;
+  try {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') return stored;
+  } catch (e) {}
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function applyTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.documentElement.style.colorScheme = theme;
+  try {
+    localStorage.setItem('theme', theme);
+  } catch (e) {}
+
+  document.querySelectorAll('.paper-home__theme').forEach(function(btn) {
+    const isDark = theme === 'dark';
+    btn.setAttribute('aria-pressed', isDark ? 'true' : 'false');
+    btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+  });
+}
+
+function initThemeToggle() {
+  applyTheme(getPreferredTheme());
+
+  const buttons = document.querySelectorAll('.paper-home__theme');
+  if (!buttons.length) return;
+
+  buttons.forEach(function(btn) {
+    if (btn.dataset.themeBound === '1') return;
+    btn.dataset.themeBound = '1';
+    btn.addEventListener('click', function() {
+      applyTheme(getPreferredTheme() === 'dark' ? 'light' : 'dark');
+    });
+  });
+}
 
 function initHomeNavMenu() {
   const nav = document.querySelector('.paper-home__nav');
@@ -1117,17 +1132,24 @@ function initInspirationPreview() {
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   const isHome = page === 'home';
+  const isProjects = page === 'projects';
+  const usePaperChrome = isHome || isProjects;
   document.body.classList.toggle('home-route', isHome);
+  document.body.classList.toggle('projects-route', isProjects);
   const navContainer = document.getElementById('nav-container');
   if (navContainer) {
-    navContainer.hidden = isHome;
-    navContainer.setAttribute('aria-hidden', isHome ? 'true' : 'false');
+    navContainer.hidden = usePaperChrome;
+    navContainer.setAttribute('aria-hidden', usePaperChrome ? 'true' : 'false');
   }
 
-  if (page === 'home') {
+  if (isHome) {
     initLocalTime();
     initHomeStack();
     initHomeNavMenu();
+    initThemeToggle();
+  } else if (isProjects) {
+    initHomeNavMenu();
+    initThemeToggle();
   } else if (page === 'about') {
     initDropdowns();
     initInspirationPreview();
@@ -1165,7 +1187,7 @@ function initPageHooks(page) {
 
   const mainClasses = {
     'home': 'new-homepage',
-    'projects': '',
+    'projects': 'new-homepage',
     'about': '',
     'contact': 'contact-page'
   };
@@ -1423,6 +1445,10 @@ function initPageHooks(page) {
 // Work Directory - only runs on non-SPA pages (SPA handles this via initPageHooks)
 document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('spa-content')) return; // SPA handles this
+  if (document.body.classList.contains('projects-route') || document.querySelector('.paper-home__nav')) {
+    initHomeNavMenu();
+  }
+  initThemeToggle();
   initWorkDirectory();
 });
 

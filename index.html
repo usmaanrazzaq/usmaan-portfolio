@@ -19,13 +19,25 @@
     <meta name="twitter:title" content="Usmaan Razzaq — Product Designer">
     <meta name="twitter:description" content="Portfolio of Usmaan Razzaq — Product Designer based in Queens, NY. Designing digital experiences that feel effortless.">
     <meta name="twitter:image" content="https://usmaanrazzaq.design/iOS%20Icon.png">
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored === 'dark' || stored === 'light'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
     <link rel="stylesheet" href="styles.css?v=20260718-page-fx">
     <link rel="stylesheet" href="nav.css?v=20260216"> 
-    <link rel="stylesheet" href="home.css?v=20260719-nav-metal">
+    <link rel="stylesheet" href="home.css?v=20260720-nav-updating-size">
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="about.css?v=20260621-type" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="projects/projects.css?v=20260511-bibz-crumbs-type" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="projects/projects.css?v=20260720-paper" media="print" onload="this.media='all'">
 
     <link rel="icon" href="/Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="/iOS Icon.png" sizes="180x180">
@@ -43,6 +55,7 @@
 <section class="paper-home" aria-labelledby="home-title">
     <div class="paper-home__pin">
         <header class="paper-home__chrome">
+        <div class="paper-home__chrome-start">
         <a class="paper-home__logo" href="/" aria-label="Usmaan Razzaq — Home">
             <img src="images/usmaan-logo-mark.png" width="82" height="42" alt="">
         </a>
@@ -62,10 +75,21 @@
             <div class="paper-home__tabs" id="paper-home-menu">
                 <a class="is-active" href="#work" aria-current="page">Work</a>
                 <a href="/projects/">Projects</a>
-                <a href="/about/">About</a>
-                <a href="/image-archive/">Inspiration</a>
+                <a class="is-updating" href="/about/"><span class="paper-home__tab-label">About</span><span class="paper-home__tab-status" aria-hidden="true">Updating...</span></a>
+                <a class="is-updating" href="/image-archive/"><span class="paper-home__tab-label">Inspiration</span><span class="paper-home__tab-status" aria-hidden="true">Updating...</span></a>
             </div>
         </nav>
+        </div>
+
+        <button
+            type="button"
+            class="paper-home__theme"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+        >
+            <svg class="theme-icon theme-icon--sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M19 5l-1.5 1.5M6.5 17.5L5 19"/></svg>
+            <svg class="theme-icon theme-icon--moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>
+        </button>
     </header>
 
     <div class="paper-home__intro">
@@ -89,7 +113,7 @@
             <a href="https://www.instagram.com/usmaanrzq" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12s.014 3.668.072 4.948c.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24s3.668-.014 4.948-.072c4.354-.2 6.782-2.618 6.979-6.98C23.986 15.668 24 15.259 24 12s-.014-3.667-.072-4.947C23.732 2.699 21.311.273 16.949.073 15.668.014 15.259 0 12 0zm0 5.838A6.162 6.162 0 1012 18.162 6.162 6.162 0 0012 5.838zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
             <a href="https://github.com/usmaanrazzaq" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297 24 5.67 18.627.297 12 .297z"/></svg></a>
             <a href="https://x.com/usmaanrzq" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-            <a href="Usmaan-Razzaq-Resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="Resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M7.2 20.4H16.8C17.463 20.4 18 19.863 18 19.2V7.697C18 7.379 17.874 7.074 17.648 6.848L14.752 3.951C14.526 3.726 14.221 3.6 13.903 3.6H7.2C6.537 3.6 6 4.137 6 4.8V19.2C6 19.863 6.537 20.4 7.2 20.4Z"/><path d="M14.4 13.2H9.6M14.4 16.8H9.6" stroke-linecap="round"/></svg></a>
+            <a href="Usmaan-Razzaq-Resume.pdf?v=20260720-1201" target="_blank" rel="noopener noreferrer" aria-label="Resume"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path d="M7.2 20.4H16.8C17.463 20.4 18 19.863 18 19.2V7.697C18 7.379 17.874 7.074 17.648 6.848L14.752 3.951C14.526 3.726 14.221 3.6 13.903 3.6H7.2C6.537 3.6 6 4.137 6 4.8V19.2C6 19.863 6.537 20.4 7.2 20.4Z"/><path d="M14.4 13.2H9.6M14.4 16.8H9.6" stroke-linecap="round"/></svg></a>
         </nav>
     </div>
 
@@ -101,10 +125,10 @@
             <article class="paper-home__case" data-work="rented">
                 <div class="paper-home__case-copy">
                     <div class="paper-home__case-meta">
-                        <h2>Rented</h2>
+                        <h2><a href="/Rented/rented/">Rented</a></h2>
                         <p class="paper-home__case-date">Nov 2024 - Feb 2025</p>
                     </div>
-                    <h3>Designing a peer-to-peer rental experience for urban renters</h3>
+                    <h3><a href="/Rented/rented/">Designing a peer-to-peer rental experience for urban renters</a></h3>
                     <p>Lead the UI design and developed a functioning prototype for a peer-to-peer rental app. I worked along a team of engineers / founders to bring their apps vision to life through Design, research, and prototyping.</p>
                     <div class="paper-home__ctas">
                         <a class="paper-home__cta" href="/Rented/rented/">
@@ -127,10 +151,10 @@
             <article class="paper-home__case" data-work="nmya">
                 <div class="paper-home__case-copy">
                     <div class="paper-home__case-meta">
-                        <h2>National Muslim Youth Association</h2>
+                        <h2><a href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">National Muslim Youth Association</a></h2>
                         <p class="paper-home__case-date">Nov 2023 - Nov 2025</p>
                     </div>
-                    <h3>Redesigning a non-profit site to better serve Muslim youth.</h3>
+                    <h3><a href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">Redesigning a non-profit site to better serve Muslim youth.</a></h3>
                     <p>I led a redesign overhaul of the nonprofit association’s website. I worked with stakeholders to better understand the longstanding issues, their goals for the website, and the problems they faced. I conducted user research through three to five focus groups with participants from different demographics, including age, roles, and knowledge levels. I used the feedback and research findings to redesign and develop the nonprofit’s website while proposing a migration from WordPress to Webflow.</p>
                     <div class="paper-home__ctas">
                         <a class="paper-home__cta" href="/National-Muslim-Youth-Association/muslim-youth-website/case-study.html">
@@ -154,6 +178,84 @@
                     <img src="images/home-nmya-showcase.webp" width="906" height="612" alt="" role="presentation" loading="lazy">
                 </a>
             </article>
+
+            <hr class="paper-home__divider" />
+
+            <article class="paper-home__case" data-work="adsum">
+                <div class="paper-home__case-copy">
+                    <div class="paper-home__case-meta">
+                        <h2><a href="/adsum/">Adsum NYC</a></h2>
+                        <p class="paper-home__case-date">Nov 2025 - Present</p>
+                    </div>
+                    <h3><a href="/adsum/">Product design &amp; Marketing for a Brooklyn-based brand.</a></h3>
+                    <p>A Brooklyn clothing brand's shoppers kept landing on sold-out sizes. A custom size filter cut clicks to unavailable products by 35%.</p>
+                    <div class="paper-home__ctas">
+                        <a class="paper-home__cta" href="/adsum/">
+                            Read Case Study
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <a class="paper-home__case-media" href="/adsum/" aria-label="Read Adsum NYC case study">
+                    <video src="video/Adsum-SS26-Vid.mov" width="906" height="612" autoplay muted loop playsinline preload="metadata" aria-label="Adsum NYC SS26 product and landing page showcase"></video>
+                </a>
+            </article>
+
+            <hr class="paper-home__divider" />
+
+            <article class="paper-home__case" data-work="otrs">
+                <div class="paper-home__case-copy">
+                    <div class="paper-home__case-meta">
+                        <h2><a href="/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">On The Run Studio</a></h2>
+                        <p class="paper-home__case-date">Mar 2021 - Present</p>
+                    </div>
+                    <h3><a href="/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">Creating a brand and a Design Studio.</a></h3>
+                    <p>What started as a visual reference account grew into a 5,000+ community of designers, studios, and brands — then a merch line, then a full design studio. Community insight now drives every client engagement.</p>
+                    <div class="paper-home__ctas">
+                        <a class="paper-home__cta" href="/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html">
+                            Read Case Study
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <a class="paper-home__case-media" href="/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html" aria-label="Read On The Run Studio case study">
+                    <video src="video/OTRS-Desktop-Display.mov" width="906" height="612" autoplay muted loop playsinline preload="metadata" aria-label="On The Run Studio website showcase"></video>
+                </a>
+            </article>
+
+            <hr class="paper-home__divider" />
+
+            <article class="paper-home__case" data-work="wcm">
+                <div class="paper-home__case-copy">
+                    <div class="paper-home__case-meta">
+                        <h2><a href="/WCM-Connect/">WCM Connect App</a></h2>
+                        <p class="paper-home__case-date">Personal Project</p>
+                    </div>
+                    <h3><a href="/WCM-Connect/">A self-initiated concept redesign of an existing patient app's onboarding, dashboard, and scheduling, based on public App Store reviews.</a></h3>
+                    <p>WCM Connect App is a self-initiated concept redesign I did of an existing app on the app store. I researched the problems and issues real users were facing through reviews on the app store, online discussions, and feedback. I focused on redesigning and improving the onboarding, dashboard, and scheduling.</p>
+                    <div class="paper-home__ctas">
+                        <a class="paper-home__cta" href="/WCM-Connect/">
+                            Read Case Study
+                            <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
+                                <path d="M15.302 6.3L6.302 15.3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M8.102 6.3L15.302 6.3V13.5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <a class="paper-home__case-media" href="/WCM-Connect/" aria-label="Read WCM Connect App case study">
+                    <img src="images/home-wcm-showcase.webp?v=20260720-2144" width="906" height="612" alt="" role="presentation" loading="lazy">
+                </a>
+            </article>
         </div>
     </section>
 </section>
@@ -163,7 +265,7 @@
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="shared/interactive-components.js?v=20260701-globe-fix"></script>
-    <script src="main.js?v=20260718-nav-glass"></script>
+    <script src="main.js?v=20260720-projects-mainpad"></script>
 </body>
 
 </html>

@@ -6,10 +6,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National Muslim Youth Association - Case Study</title>
     <meta name="description" content="Case study: Redesigning a non-profit site to better serve Muslim youth.">
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var theme = stored === 'dark' || stored === 'light'
+            ? stored
+            : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+          document.documentElement.setAttribute('data-theme', theme);
+          document.documentElement.style.colorScheme = theme;
+        } catch (e) {}
+      })();
+    </script>
     <link rel="stylesheet" href="../../shared/page-transitions.css?v=20260718">
     <link rel="stylesheet" href="../../shared/interactive-components.css">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
-    <link rel="stylesheet" href="case-study-styles.css?v=20260719-paper-cs-metal-back">
+    <link rel="stylesheet" href="case-study-styles.css?v=20260720-theme">
+    <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260720-3">
 
     <link rel="icon" href="../../Favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="../../iOS Icon.png" sizes="180x180">
@@ -179,21 +192,19 @@
             </figure>
         </div>
 
-        <div class="paper-cs__split">
-            <section class="paper-cs__section" aria-labelledby="problem-heading">
-                <h2 id="problem-heading">Problem</h2>
-                <div class="paper-cs__body">
-                    <p>Years of content updates without structural cleanup left the site hard to navigate. Parents couldn't find teaching materials. Youth skipped the site entirely. The WordPress build had malware issues that made maintenance risky. The site needed to be rebuilt from the ground up — new platform, new IA, new design system.</p>
-                </div>
-            </section>
+        <section class="paper-cs__section" aria-labelledby="problem-heading">
+            <h2 id="problem-heading">Problem</h2>
+            <div class="paper-cs__body">
+                <p>Years of content updates without structural cleanup left the site hard to navigate. Parents couldn't find teaching materials. Youth skipped the site entirely. The WordPress build had malware issues that made maintenance risky. The site needed to be rebuilt from the ground up — new platform, new IA, new design system.</p>
+            </div>
+        </section>
 
-            <section class="paper-cs__section" aria-labelledby="research-heading">
-                <h2 id="research-heading">User Research</h2>
-                <div class="paper-cs__body">
-                    <p>Alongside development, I ran small focus groups on an early prototype to understand how users navigated and interacted with the new site, and to compare their behavior against the old one.</p>
-                </div>
-            </section>
-        </div>
+        <section class="paper-cs__section" aria-labelledby="research-heading">
+            <h2 id="research-heading">User Research</h2>
+            <div class="paper-cs__body">
+                <p>Alongside development, I ran small focus groups on an early prototype to understand how users navigated and interacted with the new site, and to compare their behavior against the old one.</p>
+            </div>
+        </section>
 
         <div class="paper-cs__findings" data-research-findings>
             <div class="research-findings__intro">

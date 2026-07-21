@@ -4,6 +4,10 @@
   --cs-ink: #2b2b2b;
   --cs-muted: #767676;
   --cs-frame: #ebe9e9;
+  --cs-bg: #ffffff;
+  --cs-surface: #ffffff;
+  --cs-surface-hover: #fafafa;
+  --cs-surface-active: #f5f5f5;
   --cs-column: 722px;
   --cs-gap-sm: 10px;
   --cs-gap-md: 40px;
@@ -24,7 +28,7 @@ html {
 body.paper-cs-route {
   margin: 0;
   padding: 0;
-  background: #fff;
+  background: var(--cs-bg);
   color: var(--cs-ink);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
@@ -62,7 +66,7 @@ body.paper-cs-route #nav-container {
   padding: 7px 14px 7px 10px;
   border-radius: 100px;
   border: 1px solid rgba(43, 43, 43, 0.18);
-  background: #fff;
+  background: var(--cs-surface);
   color: var(--cs-ink);
   font-size: 14px;
   line-height: 1.4;
@@ -216,7 +220,7 @@ body.paper-cs-route #nav-container {
 
 .paper-cs__charts {
   display: flex;
-  gap: 18px;
+  gap: 10px;
   margin-top: var(--cs-gap-md);
 }
 
@@ -226,17 +230,6 @@ body.paper-cs-route #nav-container {
   background: var(--cs-frame);
   border-radius: 12px;
   padding: clamp(0.85rem, 2vw, 1.25rem);
-}
-
-.paper-cs__split {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-top: var(--cs-gap-md);
-}
-
-.paper-cs__split .paper-cs__section {
-  margin-top: 0;
 }
 
 .paper-cs__shot--wide {
@@ -249,8 +242,8 @@ body.paper-cs-route #nav-container {
 
 .paper-cs__pair {
   display: flex;
-  gap: 18px;
-  margin-top: var(--cs-gap-md);
+  gap: 10px;
+  margin-top: var(--cs-gap-sm);
 }
 
 .paper-cs__pair .paper-cs__shot {
@@ -306,7 +299,7 @@ body.paper-cs-route #nav-container {
 }
 
 .paper-cs__findings .research-findings__group {
-  background: #fff;
+  background: var(--cs-surface);
   border: 0;
   border-radius: 10px;
   padding: 18px 16px;
@@ -338,6 +331,7 @@ body.paper-cs-route #nav-container {
   font-size: 16px;
   font-weight: 500;
   letter-spacing: 0;
+  color: var(--cs-ink);
 }
 
 .paper-cs__findings .research-findings__rows {
@@ -583,7 +577,7 @@ body.paper-cs-route #nav-container {
 @media (hover: hover) {
   .paper-cs__back:hover {
     border-color: transparent;
-    background: #fafafa;
+    background: var(--cs-surface-hover);
   }
 
   .paper-cs__back:hover::before {
@@ -606,15 +600,17 @@ body.paper-cs-route #nav-container {
     margin-top: 32px;
   }
 
-  .paper-cs__split {
-    grid-template-columns: 1fr;
-    gap: var(--cs-gap-md);
-  }
-
   .paper-cs__charts,
   .paper-cs__pair {
     flex-direction: column;
     gap: 10px;
+  }
+
+  /* flex: 1 1 0 + overflow:hidden collapses height in a column flex */
+  .paper-cs__charts .chart-card,
+  .paper-cs__pair .paper-cs__shot {
+    flex: none;
+    width: 100%;
   }
 
   .paper-cs__findings {
