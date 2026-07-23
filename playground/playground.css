@@ -1,4 +1,4 @@
-/* Projects page — from Paper "Projects" artboard */
+/* Playground page — from Paper "Projects" artboard */
 
 .paper-projects {
   width: min(1512px, 100%);
@@ -81,7 +81,7 @@ html[data-theme="dark"] .paper-projects__media {
   background: #1c1c1c;
 }
 
-body.projects-route {
+body.playground-route {
   background: var(--home-bg, #ffffff);
 }
 
