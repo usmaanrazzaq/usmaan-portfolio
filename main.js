@@ -8,8 +8,8 @@ function onDomReady(fn) {
 
 document.body.classList.toggle('home-route', window.location.pathname === '/');
 document.body.classList.toggle(
-  'projects-route',
-  window.location.pathname === '/projects/' || window.location.pathname === '/projects'
+  'playground-route',
+  window.location.pathname === '/playground/' || window.location.pathname === '/playground'
 );
 document.body.classList.toggle(
   'about-route',
@@ -46,7 +46,7 @@ function loadNav() {
             <span class="hamburger-line" aria-hidden="true"></span>
           </button>
           <ul id="nav-menu" class="nav-menu" data-state="closed">
-            <li><a href="/projects/">Projects</a></li>
+            <li><a href="/playground/">Playground</a></li>
             <li><a href="/about/">About</a></li>
             <li><a href="/contact/">Contact</a></li>
           </ul>
@@ -188,7 +188,7 @@ function initHoverEffects(page) {
 
   mm.add("(hover: hover) and (prefers-reduced-motion: no-preference)", function() {
 
-    if (page === 'projects') {
+    if (page === 'playground') {
       gsap.from('.paper-projects__item', {
         y: 16,
         opacity: 0,
@@ -1154,11 +1154,11 @@ function initInspirationPreview() {
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   const isHome = page === 'home';
-  const isProjects = page === 'projects';
+  const isPlayground = page === 'playground';
   const isAbout = page === 'about';
-  const usePaperChrome = isHome || isProjects || isAbout;
+  const usePaperChrome = isHome || isPlayground || isAbout;
   document.body.classList.toggle('home-route', isHome);
-  document.body.classList.toggle('projects-route', isProjects);
+  document.body.classList.toggle('playground-route', isPlayground);
   document.body.classList.toggle('about-route', isAbout);
   const navContainer = document.getElementById('nav-container');
   if (navContainer) {
@@ -1171,7 +1171,7 @@ function initPageHooks(page) {
     initHomeStack();
     initHomeNavMenu();
     initThemeToggle();
-  } else if (isProjects || isAbout) {
+  } else if (isPlayground || isAbout) {
     initHomeNavMenu();
     initThemeToggle();
   }
@@ -1194,21 +1194,21 @@ function initPageHooks(page) {
 
   const routes = {
     '/': 'home',
-    '/projects/': 'projects',
+    '/playground/': 'playground',
     '/about/': 'about',
     '/contact/': 'contact'
   };
 
   const titles = {
     'home': 'Usmaan Razzaq — Product Designer',
-    'projects': 'Projects | Usmaan Razzaq',
+    'playground': 'Playground | Usmaan Razzaq',
     'about': 'About | Usmaan Razzaq',
     'contact': 'Contact | Usmaan Razzaq'
   };
 
   const mainClasses = {
     'home': 'new-homepage',
-    'projects': 'new-homepage',
+    'playground': 'new-homepage',
     'about': 'new-homepage',
     'contact': 'contact-page'
   };
@@ -1467,7 +1467,7 @@ function initPageHooks(page) {
 // Work Directory - only runs on non-SPA pages (SPA handles this via initPageHooks)
 document.addEventListener('DOMContentLoaded', function() {
   if (document.getElementById('spa-content')) return; // SPA handles this
-  if (document.body.classList.contains('projects-route') || document.querySelector('.paper-home__nav')) {
+  if (document.body.classList.contains('playground-route') || document.querySelector('.paper-home__nav')) {
     initHomeNavMenu();
   }
   initThemeToggle();

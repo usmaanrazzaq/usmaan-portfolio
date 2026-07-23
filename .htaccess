@@ -2,7 +2,10 @@
 RewriteEngine On
 
 # SPA routes - serve index.html for main nav pages
-RewriteRule ^(projects|about|contact)/?$ /index.html [L]
+RewriteRule ^(playground|about|contact)/?$ /index.html [L]
+
+# Redirect legacy /projects URLs to /playground
+RewriteRule ^projects/?$ /playground/ [R=301,L]
 
 # Remove .html extension from URLs
 RewriteCond %{REQUEST_FILENAME} !-d
