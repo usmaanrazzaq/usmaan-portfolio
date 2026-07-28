@@ -1,5 +1,17 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/projects",
+      "destination": "/playground",
+      "permanent": true
+    },
+    {
+      "source": "/projects/",
+      "destination": "/playground/",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/about",
@@ -18,11 +30,11 @@
       "destination": "/index"
     },
     {
-      "source": "/projects",
+      "source": "/playground",
       "destination": "/index"
     },
     {
-      "source": "/projects/",
+      "source": "/playground/",
       "destination": "/index"
     }
   ]
