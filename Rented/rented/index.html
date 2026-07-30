@@ -24,6 +24,7 @@
       })();
     </script>
     <link rel="stylesheet" href="case-study-styles.css?v=20260720-theme">
+    <link rel="stylesheet" href="rented-prototype.css?v=20260730">
     <link rel="stylesheet" href="../../shared/paper-cs-theme.css?v=20260721-theme-chrome">
     <link rel="stylesheet" href="../../shared/page-transitions.css?v=20260718">
     <link rel="stylesheet" href="../../nav.css?v=20260216">
@@ -86,9 +87,241 @@
             </div>
         </section>
 
-        <figure class="paper-cs__hero">
-            <img src="../../images/home-rented-showcase.webp" width="722" height="488" alt="Three Rented mobile screens for search, profile, and browse">
-        </figure>
+        <div class="paper-cs__proto rp" data-rp>
+            <p class="rp__label"><span class="rp__label-dot" aria-hidden="true"></span>Interactive prototype</p>
+            <button class="rp__reset" type="button" data-rp-reset hidden>Reset</button>
+
+            <div class="rp__stage">
+              <div class="rp__fit">
+                <div class="rp__phone">
+                    <div class="rp__screens">
+
+                        <section class="rp__screen rp__screen--home is-active" data-rp-screen="home" aria-label="Rented home screen">
+                            <div class="rp-home__bar">
+                                <button class="rp-icon-btn rp-home__account" type="button" data-rp-go="account" aria-label="Open account">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10.25" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                        <circle cx="12" cy="9.6" r="3" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                        <path d="M5.9 19.4a6.6 6.6 0 0 1 12.2 0" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <p class="rp-home__prompt">What are you renting today?</p>
+
+                            <div class="rp-home__foot">
+                                <ul class="rp-home__chips">
+                                    <li style="--i:0"><button class="rp-chip" type="button">Hand Tools</button></li>
+                                    <li style="--i:1"><button class="rp-chip" type="button">Audio Equipment</button></li>
+                                    <li style="--i:2"><button class="rp-chip" type="button" data-rp-go="product">Painting Equipment</button></li>
+                                    <li style="--i:3"><button class="rp-chip" type="button">Tents &amp; Events Spaces</button></li>
+                                </ul>
+
+                                <div class="rp-search">
+                                    <span class="rp-search__text" data-rp-query>Search for a product</span>
+                                    <svg class="rp-search__mic" viewBox="0 0 24 24" aria-hidden="true">
+                                        <rect x="9.25" y="3" width="5.5" height="10" rx="2.75" fill="none" stroke="currentColor" stroke-width="1.4"/>
+                                        <path d="M5.75 11a6.25 6.25 0 0 0 12.5 0M12 17.25V21" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                                    </svg>
+                                    <span class="rp-search__go" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24">
+                                            <circle cx="12" cy="12" r="8.4" fill="none" stroke="currentColor" stroke-width="1.5"/>
+                                            <path d="M12 16V8.6M8.6 12L12 8.4 15.4 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="rp__screen rp__screen--product" data-rp-screen="product" aria-label="Rented search results" hidden>
+                            <div class="rp-prod__bar">
+                                <div class="rp-field">
+                                    <span class="rp-field__text">Painting Equipment</span>
+                                    <button class="rp-field__clear" type="button" data-rp-back aria-label="Clear search">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                                <button class="rp-cancel" type="button" data-rp-back>Cancel</button>
+                            </div>
+
+                            <div class="rp-prod__scroll">
+                                <article class="rp-listing rp-listing--best" style="--i:0">
+                                    <ul class="rp-tags">
+                                        <li class="rp-tag rp-tag--match">Best Match</li>
+                                        <li class="rp-tag rp-tag--near">Close By</li>
+                                        <li class="rp-tag rp-tag--price">Best Price</li>
+                                    </ul>
+                                    <div class="rp-listing__body">
+                                        <img class="rp-listing__photo" src="../../images/rented-proto/easel.webp" width="340" height="375" alt="Beechwood painting easel set up outdoors with a palette and brushes" loading="lazy">
+                                        <div class="rp-listing__copy">
+                                            <h3>Painting easel<br>and stand</h3>
+                                            <p>Sturdy beechwood easel that fits canvases up to 48". Adjustable height, tilting top, and built-in brush tray. Folds flat for storage. Perfect for weekend painters and art students.</p>
+                                            <p class="rp-listing__price">Daily : $12 / Weekly: $60</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="rp-listing" style="--i:1">
+                                    <div class="rp-listing__body">
+                                        <img class="rp-listing__photo" src="../../images/rented-proto/sprayer.webp" width="340" height="384" alt="Flat lay of house painting supplies including rollers, trays, and brushes" loading="lazy">
+                                        <div class="rp-listing__copy">
+                                            <h3>House Painting<br>Equipment</h3>
+                                            <p>High-output sprayer for walls, fences, decks, and ceilings. Handles latex, oil-based paints, and stains with a smooth finish. Includes 25-ft hose and adjustable tip.</p>
+                                            <p class="rp-listing__price">Daily : $15 / Weekly: $75</p>
+                                        </div>
+                                    </div>
+                                </article>
+
+                                <article class="rp-listing" style="--i:2">
+                                    <div class="rp-listing__body">
+                                        <img class="rp-listing__photo" src="../../images/rented-proto/ladder.webp" width="340" height="368" alt="Crates of painting supplies beside a yellow bucket and ladder" loading="lazy">
+                                        <div class="rp-listing__copy">
+                                            <h3>House Painting<br>Equipment</h3>
+                                            <p>OSHA-rated aluminum ladder (300 lb capacity) with non-slip feet, paired with an adjustable platform for comfortable high-reach work. Ideal for two-story exteriors and stairwells.</p>
+                                            <p class="rp-listing__price">Daily : $15 / Weekly: $60</p>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+
+                            <div class="rp-prod__dock">
+                                <button class="rp-dock" type="button">
+                                    <span>Sort
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M8 4.5v15M8 19.5L4.8 16.3M16 19.5v-15M16 4.5l3.2 3.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </span>
+                                    <i aria-hidden="true"></i>
+                                    <span>Filter
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M4 7h16M6.5 12h11M10 17h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                        </svg>
+                                    </span>
+                                </button>
+                            </div>
+                        </section>
+
+                        <section class="rp__screen rp__screen--account" data-rp-screen="account" aria-label="Rented account screen" hidden>
+                            <div class="rp-acct__scroll">
+                                <div class="rp-acct__bar">
+                                    <button class="rp-icon-btn" type="button" data-rp-back aria-label="Back to home">
+                                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                                            <path d="M20 12H4.5M10.5 5.5L4 12l6.5 6.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <span class="rp-acct__more" aria-hidden="true">
+                                        <svg viewBox="0 0 24 24">
+                                            <circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/>
+                                        </svg>
+                                    </span>
+                                </div>
+
+                                <div class="rp-acct__head">
+                                    <span class="rp-acct__avatar" aria-hidden="true"></span>
+                                    <span class="rp-pill rp-pill--soft">Edit Profile</span>
+                                </div>
+
+                                <h3 class="rp-acct__name">John Smith
+                                    <span class="rp-stars" role="img" aria-label="Rated 4 out of 5">
+                                        <svg viewBox="0 0 24 24" class="is-on"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                                        <svg viewBox="0 0 24 24" class="is-on"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                                        <svg viewBox="0 0 24 24" class="is-on"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                                        <svg viewBox="0 0 24 24" class="is-on"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z"/></svg>
+                                        <svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.4-5.8-3-5.8 3 1.1-6.4L2.6 9.4l6.5-.9z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                                    </span>
+                                </h3>
+                                <p class="rp-acct__url">Johnsmith.rented.com</p>
+                                <p class="rp-acct__stats"><span>1.9k Followers</span><span>150 Following</span></p>
+
+                                <div class="rp-acct__actions">
+                                    <span class="rp-pill rp-pill--primary">View Earnings</span>
+                                    <span class="rp-pill rp-pill--soft">Share Profile</span>
+                                </div>
+
+                                <div class="rp-tabs" role="tablist" aria-label="Profile sections" data-rp-tabs>
+                                    <span class="rp-tabs__thumb" aria-hidden="true"></span>
+                                    <button class="rp-tabs__btn" type="button" role="tab" id="rp-tab-listed" aria-controls="rp-panel-listed" aria-selected="true">Listed</button>
+                                    <button class="rp-tabs__btn" type="button" role="tab" id="rp-tab-history" aria-controls="rp-panel-history" aria-selected="false" tabindex="-1">History</button>
+                                    <button class="rp-tabs__btn" type="button" role="tab" id="rp-tab-review" aria-controls="rp-panel-review" aria-selected="false" tabindex="-1">Review</button>
+                                </div>
+
+                                <div class="rp-panel is-active" id="rp-panel-listed" role="tabpanel" aria-labelledby="rp-tab-listed">
+                                    <ul class="rp-grid">
+                                        <li style="--i:0">
+                                            <img src="../../images/rented-proto/studio.webp" width="400" height="389" alt="Home recording studio with monitors, keyboard, and guitars" loading="lazy">
+                                            <span>Studio Equipment</span>
+                                        </li>
+                                        <li style="--i:1">
+                                            <img src="../../images/rented-proto/easel-field.webp" width="400" height="389" alt="Painting easel with a palette set up in an open field" loading="lazy">
+                                            <span>Painting Equipment</span>
+                                        </li>
+                                        <li style="--i:2">
+                                            <img src="../../images/rented-proto/mower.webp" width="400" height="430" alt="Zero-turn riding lawn mower parked on grass" loading="lazy">
+                                            <span>Lawn Mower</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="rp-panel" id="rp-panel-history" role="tabpanel" aria-labelledby="rp-tab-history" hidden>
+                                    <ul class="rp-rows">
+                                        <li style="--i:0">
+                                            <img src="../../images/rented-proto/easel-field.webp" width="400" height="389" alt="" loading="lazy">
+                                            <div>
+                                                <h4>Painting Equipment</h4>
+                                                <p>Lent to Maya R. &middot; Mar 2 - 6</p>
+                                            </div>
+                                            <span class="rp-amount">$60</span>
+                                        </li>
+                                        <li style="--i:1">
+                                            <img src="../../images/rented-proto/studio.webp" width="400" height="389" alt="" loading="lazy">
+                                            <div>
+                                                <h4>Studio Equipment</h4>
+                                                <p>Lent to Devon K. &middot; Feb 14 - 16</p>
+                                            </div>
+                                            <span class="rp-amount">$180</span>
+                                        </li>
+                                        <li style="--i:2">
+                                            <img src="../../images/rented-proto/mower.webp" width="400" height="430" alt="" loading="lazy">
+                                            <div>
+                                                <h4>Lawn Mower</h4>
+                                                <p>Lent to Priya S. &middot; Jan 28</p>
+                                            </div>
+                                            <span class="rp-amount">$25</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="rp-panel" id="rp-panel-review" role="tabpanel" aria-labelledby="rp-tab-review" hidden>
+                                    <ul class="rp-reviews">
+                                        <li style="--i:0">
+                                            <span class="rp-review__who">Maya R.</span>
+                                            <span class="rp-review__score" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                            <p>Easel was in great shape and John met me halfway across town. Would rent again.</p>
+                                        </li>
+                                        <li style="--i:1">
+                                            <span class="rp-review__who">Devon K.</span>
+                                            <span class="rp-review__score" aria-label="4 out of 5">&#9733;&#9733;&#9733;&#9733;&#9734;</span>
+                                            <p>Studio setup was exactly as pictured. Clear instructions for pickup and drop-off.</p>
+                                        </li>
+                                        <li style="--i:2">
+                                            <span class="rp-review__who">Priya S.</span>
+                                            <span class="rp-review__score" aria-label="5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                                            <p>Quick replies and a fair price. Made borrowing the mower completely painless.</p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+
+                    </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="rp__sr" aria-live="polite" data-rp-live></p>
+        </div>
 
         <section class="paper-cs__section" aria-labelledby="problem-heading">
             <h2 id="problem-heading">Problem</h2>
@@ -126,6 +359,7 @@
     </main>
 
     <script src="../../main.js?v=20260721-theme-chrome"></script>
+    <script src="rented-prototype.js?v=20260730"></script>
 </body>
 
 </html>
