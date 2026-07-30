@@ -43,6 +43,10 @@
   overflow: hidden;
   border-radius: 12px;
   background: var(--cs-frame);
+
+  /* Band above the device kept clear for the label and reset. Only narrow
+     screens need one; everywhere else the chrome overlays the empty margin. */
+  --rp-chrome: 0px;
 }
 
 .paper-cs__proto > noscript img {
@@ -1084,13 +1088,26 @@ html[data-theme="dark"] .rp__phone {
 @media (max-width: 768px) {
   .paper-cs__proto {
     aspect-ratio: auto;
-    height: min(74vh, 560px);
+    height: calc(min(74vh, 560px) + var(--rp-chrome));
+  }
+}
+
+/* Under this width the fitted device is narrow enough that the overlaid label
+   and reset land on its screen, so the stage starts below them instead. The
+   host grows by the same band, which keeps the device its full size. */
+@media (max-width: 640px) {
+  .paper-cs__proto {
+    --rp-chrome: 34px;
+  }
+
+  .paper-cs__proto .rp__stage {
+    top: var(--rp-chrome);
   }
 }
 
 @media (max-width: 480px) {
   .paper-cs__proto {
-    height: min(72vh, 500px);
+    height: calc(min(72vh, 500px) + var(--rp-chrome));
   }
 
   .rp__label {

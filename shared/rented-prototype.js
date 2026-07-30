@@ -64,6 +64,7 @@
     var tapEl = root.querySelector('[data-rp-tap]');
     var prodScroll = root.querySelector('.rp-prod__scroll');
     var acctScroll = root.querySelector('.rp-acct__scroll');
+    var stage = root.querySelector('.rp__stage') || root;
 
     var screens = {};
     Array.prototype.forEach.call(root.querySelectorAll('[data-rp-screen]'), function (el) {
@@ -93,11 +94,13 @@
       });
     }
 
-    /* ---------- fit the 390x844 device to the host ---------- */
+    /* ---------- fit the 390x844 device to the stage ---------- */
 
+    // The stage, not the host: on narrow screens CSS pulls it clear of the
+    // label and reset instead of letting them sit over the device.
     function fit() {
-      var w = root.clientWidth - GUTTER;
-      var h = root.clientHeight - GUTTER;
+      var w = stage.clientWidth - GUTTER;
+      var h = stage.clientHeight - GUTTER;
       if (w <= 0 || h <= 0) return;
       var scale = Math.min(h / PHONE_H, w / PHONE_W);
       root.style.setProperty('--rp-scale', Math.min(Math.max(scale, MIN_SCALE), 1).toFixed(4));
@@ -105,7 +108,7 @@
 
     if (global.ResizeObserver) {
       var ro = new ResizeObserver(fit);
-      ro.observe(root);
+      ro.observe(stage);
       teardown.push(function () { ro.disconnect(); });
     } else {
       on(global, 'resize', fit);
