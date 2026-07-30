@@ -45,6 +45,13 @@
   animation: rp-pulse 2.4s ease-in-out infinite;
 }
 
+/* The dot reads as a "playing" light, so it settles once the visitor is
+   driving. */
+.paper-cs__proto[data-rp-mode="manual"] .rp__label-dot {
+  opacity: 0.5;
+  animation: none;
+}
+
 @keyframes rp-pulse {
   0%,
   100% {
@@ -129,6 +136,42 @@
   position: absolute;
   inset: 0;
   clip-path: inset(0 round 46px);
+}
+
+/* Marks each simulated tap while the demo drives the device. Sits in the
+   phone's own coordinate space, so it scales with the device. */
+.rp__tap {
+  position: absolute;
+  z-index: 20;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.rp__tap.is-on {
+  animation: rp-tap 640ms cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+@keyframes rp-tap {
+  0% {
+    opacity: 0;
+    background: rgba(76, 129, 241, 0.3);
+    box-shadow: 0 0 0 0 rgba(76, 129, 241, 0.4);
+    transform: scale(0.35);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(0.62);
+  }
+  100% {
+    opacity: 0;
+    background: rgba(76, 129, 241, 0);
+    box-shadow: 0 0 0 11px rgba(76, 129, 241, 0);
+    transform: scale(1.3);
+  }
 }
 
 .rp__screen {
@@ -1015,8 +1058,15 @@ html[data-theme="dark"] .rp__phone {
 
   .rp-listing--best,
   .rp__label-dot,
+  .rp__tap,
   .rp.is-untouched .rp-chip[data-rp-go] {
     animation: none;
+  }
+
+  /* The demo never runs here, so the chip that navigates carries the only
+     affordance — a static ring rather than a pulse. */
+  .rp.is-untouched .rp-chip[data-rp-go] {
+    box-shadow: 0 0 0 2px rgba(76, 129, 241, 0.4);
   }
 
   .rp__phone *,
