@@ -1166,6 +1166,12 @@ function initPageHooks(page) {
     navContainer.setAttribute('aria-hidden', usePaperChrome ? 'true' : 'false');
   }
 
+  // Mounts embedded prototypes and sweeps any left detached by the last swap.
+  // Guarded because the first call runs while main.js is still parsing, before
+  // the widget script has loaded; that pass is covered by its own DOM-ready
+  // init, and mounting is idempotent.
+  if (window.RentedPrototype) window.RentedPrototype.init();
+
   if (isHome) {
     initLocalTime();
     initHomeStack();

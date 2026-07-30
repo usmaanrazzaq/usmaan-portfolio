@@ -1,14 +1,14 @@
-/* Rented interactive prototype — replaces the static hero image on the case study.
-   The phone is authored at true iOS dimensions (390x844) and fitted to the
-   container with transform: scale(--rp-scale), which the script keeps in sync. */
+/* Rented interactive prototype. The phone is authored at true iOS dimensions
+   (390x844) and fitted to its host with transform: scale(--rp-scale), which the
+   script keeps in sync.
 
-.paper-cs__proto {
+   Two hosts embed it: the case study, where it is fully interactive, and the
+   homepage case card, where it is a decorative self-running showcase. */
+
+.rp {
   position: relative;
-  margin-top: var(--cs-gap-md);
-  aspect-ratio: 722 / 640;
-  overflow: hidden;
-  border-radius: 12px;
-  background: var(--cs-frame);
+  width: 100%;
+  height: 100%;
 
   --rp-blue: #4c81f1;
   --rp-blue-deep: #4d81e7;
@@ -20,6 +20,41 @@
   --rp-dur: 420ms;
   --rp-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --rp-pop: cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+/* ---------- case study host ---------- */
+
+.paper-cs__proto {
+  position: relative;
+  margin-top: var(--cs-gap-md);
+  aspect-ratio: 722 / 640;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-frame);
+}
+
+.paper-cs__proto > noscript img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- homepage card host ----------
+   Sized from the same 906/612 ratio the card's img and video use, so dropping
+   this in leaves the card's height untouched. The card is a link, so the
+   showcase is inert and every click falls through to the case study. */
+
+.rp--showcase {
+  height: auto;
+  aspect-ratio: 906 / 612;
+  pointer-events: none;
+}
+
+.rp--showcase .rp__label,
+.rp--showcase .rp__reset,
+.rp--showcase .rp__sr {
+  display: none;
 }
 
 /* ---------- container chrome ---------- */
@@ -47,7 +82,7 @@
 
 /* The dot reads as a "playing" light, so it settles once the visitor is
    driving. */
-.paper-cs__proto[data-rp-mode="manual"] .rp__label-dot {
+.rp[data-rp-mode="manual"] .rp__label-dot {
   opacity: 0.5;
   animation: none;
 }
@@ -1052,7 +1087,7 @@ html[data-theme="dark"] .rp__phone {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .paper-cs__proto {
+  .rp {
     --rp-dur: 1ms;
   }
 
