@@ -10,6 +10,12 @@
   width: 100%;
   height: 100%;
 
+  /* Insulated from whatever the host sets: the homepage card zeroes
+     line-height to close the gap under its image, which would otherwise
+     collapse every text run in here. These match the case study's body. */
+  font-size: 14px;
+  line-height: 1.4;
+
   --rp-blue: #4c81f1;
   --rp-blue-deep: #4d81e7;
   --rp-ink: #111111;
@@ -20,6 +26,12 @@
   --rp-dur: 420ms;
   --rp-ease: cubic-bezier(0.32, 0.72, 0, 1);
   --rp-pop: cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.rp *,
+.rp *::before,
+.rp *::after {
+  box-sizing: border-box;
 }
 
 /* ---------- case study host ---------- */
@@ -405,6 +417,9 @@
 }
 
 .rp-chip {
+  /* Explicit, because the showcase swaps these buttons for spans. */
+  display: inline-flex;
+  align-items: center;
   padding: 9px 16px;
   border: 0;
   border-radius: 100px;
@@ -858,6 +873,11 @@
 .rp-tabs__btn {
   position: relative;
   z-index: 1;
+  /* Explicit centring rather than the button UA default, because the showcase
+     swaps these for spans. */
+  display: flex;
+  align-items: center;
+  justify-content: center;
   height: 30px;
   padding: 0;
   border: 0;
