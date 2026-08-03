@@ -1,135 +1,141 @@
-// Test if script is loading
-console.log('=== SCRIPT LOADED ===');
+function bootRentedCaseStudy() {
+  if (typeof initChartScrollTriggers === 'function') {
+    initChartScrollTriggers();
+  }
+  initPaperCsLightbox();
+}
 
-// Wait for page to load completely
-window.addEventListener('load', function() {
-    console.log('=== PAGE LOADED ===');
+function initPaperCsLightbox() {
+  var overlay = document.getElementById('lightbox');
+  if (!overlay) return;
 
-    // Find elements
-    const toggle = document.querySelector('.nav-toggle');
-    const navBar = document.querySelector('.nav-bar');
-    const navList = document.querySelector('.nav-bar ul');
+  var imgEl = document.getElementById('lightbox-img');
+  var chartEl = document.getElementById('lightbox-chart');
+  var closeBtn = overlay.querySelector('.lightbox-close');
+  var lastFocus = null;
+  var chartSelector = '.paper-cs__charts .chart-card';
 
-    console.log('Toggle button:', toggle);
-    console.log('Nav bar:', navBar);
-    console.log('Nav list:', navList);
+  document.querySelectorAll(chartSelector).forEach(function (card) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    var label = card.querySelector('svg') && card.querySelector('svg').getAttribute('aria-label');
+    card.setAttribute('aria-label', (label || 'Chart') + ' — enlarge');
+    card.classList.add('paper-cs__zoomable');
+  });
 
-    if (toggle) {
-        console.log('Adding click listener to toggle button');
-
-        toggle.addEventListener('click', function(e) {
-            console.log('=== BUTTON CLICKED ===');
-
-            if (navBar) {
-                navBar.classList.toggle('expanded');
-                console.log('Toggled expanded class - current classes:', navBar.className);
-            }
-        });
-    } else {
-        console.log('❌ Toggle button not found!');
-    }
-});
-
-// Initialize scroll animations and interactive components
-document.addEventListener('DOMContentLoaded', function() {
-    if (typeof initScrollAnimations === 'function') initScrollAnimations();
-    if (typeof initImageCompare === 'function') initImageCompare();
-    if (typeof initStatCounters === 'function') initStatCounters();
-    if (typeof initAnnotatedImages === 'function') initAnnotatedImages();
-});
-
-// Directory scrolling functionality
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('=== DOM LOADED ===');
-
-    const directoryLinks = document.querySelectorAll('.directory-list a');
-    const sections = document.querySelectorAll('.content-block');
-
-    console.log('Found directory links:', directoryLinks.length);
-    console.log('Found sections:', sections.length);
-
-    // Smooth scroll to section when directory link is clicked
-    directoryLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // Remove active class from all links
-            directoryLinks.forEach(l => l.classList.remove('active'));
-
-            // Add active class to clicked link
-            this.classList.add('active');
-
-            // Get target section
-            const targetId = this.getAttribute('href').substring(1);
-            const targetSection = document.getElementById(targetId);
-
-            if (targetSection) {
-                // Calculate offset for sticky navigation
-                const offset = 100;
-                const targetPosition = targetSection.offsetTop - offset;
-
-                // Smooth scroll to target
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        });
+  function rewriteSvgIds(svg) {
+    var idMap = {};
+    svg.querySelectorAll('[id]').forEach(function (node) {
+      var oldId = node.id;
+      var newId = 'lb-' + oldId + '-' + Math.random().toString(36).slice(2, 7);
+      idMap[oldId] = newId;
+      node.id = newId;
     });
 
-    // Update active link based on scroll position
-    function updateActiveLink() {
-        let current = '';
-
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;
-            const sectionHeight = section.offsetHeight;
-
-            if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
+    svg.querySelectorAll('*').forEach(function (node) {
+      ['fill', 'stroke', 'filter', 'clip-path', 'mask'].forEach(function (attr) {
+        var value = node.getAttribute(attr);
+        if (!value || value.indexOf('url(#') === -1) return;
+        Object.keys(idMap).forEach(function (oldId) {
+          value = value.split('url(#' + oldId + ')').join('url(#' + idMap[oldId] + ')');
         });
+        node.setAttribute(attr, value);
+      });
+    });
 
-        // Update active states
-        directoryLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    }
+    return svg;
+  }
 
-    // Listen for scroll events
-    window.addEventListener('scroll', updateActiveLink);
-
-    // Set initial active state
-    updateActiveLink();
-});
-
-// Lightbox
-function openLightbox(container) {
-    const img = container.querySelector('img');
-    const overlay = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightbox-img');
-    lightboxImg.src = img.src;
-    lightboxImg.alt = img.alt;
-    overlay.classList.add('active');
+  function showOverlay() {
+    lastFocus = document.activeElement;
+    overlay.hidden = false;
+    requestAnimationFrame(function () {
+      overlay.classList.add('active');
+    });
     document.body.style.overflow = 'hidden';
-}
+    if (closeBtn) closeBtn.focus();
+  }
 
-function closeLightbox(e) {
-    if (e.target.classList.contains('lightbox-img')) return;
-    const overlay = document.getElementById('lightbox');
+  function closeOverlay() {
     overlay.classList.remove('active');
     document.body.style.overflow = '';
+    window.setTimeout(function () {
+      overlay.hidden = true;
+      if (chartEl) {
+        chartEl.innerHTML = '';
+        chartEl.hidden = true;
+      }
+      if (imgEl) {
+        imgEl.removeAttribute('src');
+        imgEl.hidden = true;
+      }
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    }, 280);
+  }
+
+  function openChart(card) {
+    var svg = card.querySelector('svg');
+    if (!svg || !chartEl) return;
+
+    if (imgEl) {
+      imgEl.removeAttribute('src');
+      imgEl.alt = '';
+      imgEl.hidden = true;
+    }
+    chartEl.hidden = false;
+    chartEl.innerHTML = '';
+
+    var clone = rewriteSvgIds(svg.cloneNode(true));
+    clone.removeAttribute('aria-label');
+    clone.classList.add('chart-animated');
+    clone.querySelectorAll('.chart-line').forEach(function (line) {
+      line.style.strokeDasharray = 'none';
+      line.style.strokeDashoffset = '0';
+    });
+
+    var shell = document.createElement('div');
+    shell.className = 'chart-card lightbox-chart-card chart-animated';
+    shell.appendChild(clone);
+    chartEl.appendChild(shell);
+    showOverlay();
+  }
+
+  document.addEventListener('click', function (e) {
+    var chart = e.target.closest(chartSelector);
+    if (chart) {
+      e.preventDefault();
+      openChart(chart);
+    }
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) {
+      closeOverlay();
+      return;
+    }
+    var chart = e.target.closest(chartSelector);
+    if (chart && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      openChart(chart);
+    }
+  });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      closeOverlay();
+    });
+  }
+
+  overlay.addEventListener('click', function (e) {
+    if (e.target === overlay || e.target.classList.contains('lightbox-stage')) {
+      closeOverlay();
+    }
+  });
 }
 
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const overlay = document.getElementById('lightbox');
-        if (overlay && overlay.classList.contains('active')) {
-            overlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-    }
-});
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootRentedCaseStudy);
+} else {
+  bootRentedCaseStudy();
+}
