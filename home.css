@@ -854,8 +854,11 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   background: var(--home-media-bg);
 }
 
-.paper-home__case-media img,
-.paper-home__case-media video {
+/* Direct children only: the Rented card mounts the prototype into this host,
+   and a descendant selector would reshape every photo inside the device to the
+   card's own 906/612 ratio. */
+.paper-home__case-media > img,
+.paper-home__case-media > video {
   display: block;
   width: 100%;
   height: auto;
@@ -864,7 +867,7 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   object-position: center top;
 }
 
-.paper-home__case-media video {
+.paper-home__case-media > video {
   background: var(--home-media-bg);
 }
 
