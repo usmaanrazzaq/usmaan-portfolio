@@ -1,6 +1,5 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false,
   "redirects": [
     {
       "source": "/projects",
@@ -9,32 +8,26 @@
     },
     {
       "source": "/projects/",
-      "destination": "/playground",
+      "destination": "/playground/",
       "permanent": true
-    },
-    {
-      "source": "/rented/rented/",
-      "destination": "/rented/rented",
-      "permanent": false
-    },
-    {
-      "source": "/wcm-connect/",
-      "destination": "/wcm-connect",
-      "permanent": false
     }
   ],
   "rewrites": [
     {
       "source": "/rented",
-      "destination": "/Rented/rented"
+      "destination": "/Rented/rented/index.html"
     },
     {
       "source": "/rented/",
-      "destination": "/Rented/rented"
+      "destination": "/Rented/rented/index.html"
     },
     {
       "source": "/rented/rented",
-      "destination": "/Rented/rented"
+      "destination": "/Rented/rented/index.html"
+    },
+    {
+      "source": "/rented/rented/",
+      "destination": "/Rented/rented/index.html"
     },
     {
       "source": "/rented/:path*",
@@ -46,7 +39,11 @@
     },
     {
       "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study",
-      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study"
+      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
+    },
+    {
+      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study/",
+      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
     },
     {
       "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study.html",
@@ -58,7 +55,11 @@
     },
     {
       "source": "/wcm-connect",
-      "destination": "/WCM-Connect"
+      "destination": "/WCM-Connect/index.html"
+    },
+    {
+      "source": "/wcm-connect/",
+      "destination": "/WCM-Connect/index.html"
     },
     {
       "source": "/wcm-connect/:path*",
