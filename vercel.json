@@ -1,5 +1,6 @@
 {
   "cleanUrls": true,
+  "trailingSlash": false,
   "redirects": [
     {
       "source": "/projects",
@@ -8,8 +9,18 @@
     },
     {
       "source": "/projects/",
-      "destination": "/playground/",
+      "destination": "/playground",
       "permanent": true
+    },
+    {
+      "source": "/rented/rented/",
+      "destination": "/rented/rented",
+      "permanent": false
+    },
+    {
+      "source": "/wcm-connect/",
+      "destination": "/wcm-connect",
+      "permanent": false
     }
   ],
   "rewrites": [
@@ -19,7 +30,11 @@
     },
     {
       "source": "/rented/",
-      "destination": "/Rented/rented/"
+      "destination": "/Rented/rented"
+    },
+    {
+      "source": "/rented/rented",
+      "destination": "/Rented/rented"
     },
     {
       "source": "/rented/:path*",
@@ -44,10 +59,6 @@
     {
       "source": "/wcm-connect",
       "destination": "/WCM-Connect"
-    },
-    {
-      "source": "/wcm-connect/",
-      "destination": "/WCM-Connect/"
     },
     {
       "source": "/wcm-connect/:path*",
