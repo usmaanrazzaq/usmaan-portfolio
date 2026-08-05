@@ -10,61 +10,44 @@
       "source": "/projects/",
       "destination": "/playground/",
       "permanent": true
+    },
+    {
+      "source": "/Rented/:path*",
+      "destination": "/rented/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/WCM-Connect",
+      "destination": "/wcm-connect",
+      "permanent": true
+    },
+    {
+      "source": "/WCM-Connect/:path*",
+      "destination": "/wcm-connect/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study",
+      "destination": "/on-the-run-studio/on-the-run-studio/otrs-case-study",
+      "permanent": true
+    },
+    {
+      "source": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html",
+      "destination": "/on-the-run-studio/on-the-run-studio/otrs-case-study",
+      "permanent": true
+    },
+    {
+      "source": "/On-The-Run-Studio/:path*",
+      "destination": "/on-the-run-studio/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/National-Muslim-Youth-Association/:path*",
+      "destination": "/national-muslim-youth-association/:path*",
+      "permanent": true
     }
   ],
   "rewrites": [
-    {
-      "source": "/rented",
-      "destination": "/Rented/rented/index.html"
-    },
-    {
-      "source": "/rented/",
-      "destination": "/Rented/rented/index.html"
-    },
-    {
-      "source": "/rented/rented",
-      "destination": "/Rented/rented/index.html"
-    },
-    {
-      "source": "/rented/rented/",
-      "destination": "/Rented/rented/index.html"
-    },
-    {
-      "source": "/rented/:path*",
-      "destination": "/Rented/:path*"
-    },
-    {
-      "source": "/national-muslim-youth-association/:path*",
-      "destination": "/National-Muslim-Youth-Association/:path*"
-    },
-    {
-      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study",
-      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
-    },
-    {
-      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study/",
-      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
-    },
-    {
-      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study.html",
-      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
-    },
-    {
-      "source": "/on-the-run-studio/:path*",
-      "destination": "/On-The-Run-Studio/:path*"
-    },
-    {
-      "source": "/wcm-connect",
-      "destination": "/WCM-Connect/index.html"
-    },
-    {
-      "source": "/wcm-connect/",
-      "destination": "/WCM-Connect/index.html"
-    },
-    {
-      "source": "/wcm-connect/:path*",
-      "destination": "/WCM-Connect/:path*"
-    },
     {
       "source": "/about",
       "destination": "/index"
