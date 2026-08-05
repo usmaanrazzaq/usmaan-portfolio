@@ -2,6 +2,9 @@ function bootAdsumCaseStudy() {
   if (typeof initChartScrollTriggers === 'function') {
     initChartScrollTriggers();
   }
+  if (typeof initMetricUnderlineScrollTriggers === 'function') {
+    initMetricUnderlineScrollTriggers();
+  }
   initPaperCsLightbox();
   initPaperCsCarousel();
 }
