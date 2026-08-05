@@ -42,7 +42,7 @@
     <link rel="stylesheet" href="shared/interactive-components.css">
     <link rel="stylesheet" href="shared/rented-prototype.css?v=20260730">
     <link rel="stylesheet" href="about.css?v=20260721-gap40" media="print" onload="this.media='all'">
-    <link rel="stylesheet" href="Contact/contact.css?v=20260228" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="Contact/contact.css?v=20260805-modal" media="print" onload="this.media='all'">
     <link rel="stylesheet" href="playground/playground.css?v=20260728-transparent" media="print" onload="this.media='all'">
 
     <link rel="icon" href="/Favicon.png" sizes="48x48">
@@ -82,6 +82,7 @@
                 <a class="is-active" href="#work" aria-current="page">Work</a>
                 <a href="/playground/">Playground</a>
                 <a href="/about/">About</a>
+                <a href="/contact/" data-contact-open>Contact</a>
             </div>
         </nav>
         </div>
@@ -280,11 +281,78 @@
 </section>
 
     </main>
+
+    <div
+        class="contact-modal"
+        id="contact-modal"
+        hidden
+        aria-hidden="true"
+    >
+        <div class="contact-modal__backdrop" data-contact-close tabindex="-1"></div>
+        <div
+            class="contact-modal__dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-modal-title"
+            tabindex="-1"
+        >
+            <h2 id="contact-modal-title" class="contact-modal__title">
+                Have a project in mind? Lets work together
+            </h2>
+            <p class="contact-modal__lede">
+                Helping startups and businesses design, build, and refine digital experiences through product design, web development, and consulting.
+            </p>
+            <form
+                class="contact-modal__form"
+                action="https://api.web3forms.com/submit"
+                method="POST"
+                novalidate
+            >
+                <input type="hidden" name="access_key" value="dc134a61-3136-4985-a5f9-c0f336201417">
+                <input type="hidden" name="subject" value="New contact from your portfolio">
+                <input type="checkbox" name="botcheck" class="contact-modal__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+                <label class="visually-hidden" for="contact-modal-name">Full Name</label>
+                <input
+                    id="contact-modal-name"
+                    type="text"
+                    name="name"
+                    class="contact-modal__input"
+                    placeholder="Full Name"
+                    autocomplete="name"
+                    required
+                >
+
+                <label class="visually-hidden" for="contact-modal-email">Email</label>
+                <input
+                    id="contact-modal-email"
+                    type="email"
+                    name="email"
+                    class="contact-modal__input"
+                    placeholder="Email"
+                    autocomplete="email"
+                    required
+                >
+
+                <label class="visually-hidden" for="contact-modal-message">Message</label>
+                <textarea
+                    id="contact-modal-message"
+                    name="message"
+                    class="contact-modal__textarea"
+                    placeholder="Message"
+                    required
+                ></textarea>
+
+                <button type="submit" class="contact-modal__submit">Submit</button>
+                <p class="contact-modal__status" role="status" aria-live="polite" hidden></p>
+            </form>
+        </div>
+    </div>
     
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3/dist/ScrollTrigger.min.js"></script>
     <script src="shared/interactive-components.js?v=20260701-globe-fix"></script>
-    <script src="main.js?v=20260721-otrs-about"></script>
+    <script src="main.js?v=20260805-contact-modal"></script>
     <script src="shared/rented-prototype.js?v=20260730"></script>
 </body>
 

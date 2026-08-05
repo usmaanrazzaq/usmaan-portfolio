@@ -1151,6 +1151,272 @@ function initInspirationPreview() {
   });
 }
 
+// ===== Contact modal (Paper: Contact form) =====
+const CONTACT_MODAL_HTML = `
+<div class="contact-modal" id="contact-modal" hidden aria-hidden="true">
+  <div class="contact-modal__backdrop" data-contact-close tabindex="-1"></div>
+  <div class="contact-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="contact-modal-title" tabindex="-1">
+    <h2 id="contact-modal-title" class="contact-modal__title">Have a project in mind? Lets work together</h2>
+    <p class="contact-modal__lede">Helping startups and businesses design, build, and refine digital experiences through product design, web development, and consulting.</p>
+    <form class="contact-modal__form" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="access_key" value="dc134a61-3136-4985-a5f9-c0f336201417">
+      <input type="hidden" name="subject" value="New contact from your portfolio">
+      <input type="checkbox" name="botcheck" class="contact-modal__honeypot" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="visually-hidden" for="contact-modal-name">Full Name</label>
+      <input id="contact-modal-name" type="text" name="name" class="contact-modal__input" placeholder="Full Name" autocomplete="name" required>
+      <label class="visually-hidden" for="contact-modal-email">Email</label>
+      <input id="contact-modal-email" type="email" name="email" class="contact-modal__input" placeholder="Email" autocomplete="email" required>
+      <label class="visually-hidden" for="contact-modal-message">Message</label>
+      <textarea id="contact-modal-message" name="message" class="contact-modal__textarea" placeholder="Message" required></textarea>
+      <button type="submit" class="contact-modal__submit">Submit</button>
+      <p class="contact-modal__status" role="status" aria-live="polite" hidden></p>
+    </form>
+  </div>
+</div>`;
+
+let _contactModalAbort = null;
+let _contactModalLastFocus = null;
+let _contactModalOpenedViaRoute = false;
+let _contactModalPrevTitle = '';
+
+function ensureContactModalStyles() {
+  if (document.querySelector('link[data-contact-modal-css]')) return;
+  const existing = Array.from(document.querySelectorAll('link[rel="stylesheet"]')).some(function(link) {
+    return (link.getAttribute('href') || '').indexOf('Contact/contact.css') !== -1;
+  });
+  if (existing) return;
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = '/Contact/contact.css?v=20260805-modal';
+  link.setAttribute('data-contact-modal-css', 'true');
+  document.head.appendChild(link);
+}
+
+function ensureContactModal() {
+  ensureContactModalStyles();
+  let modal = document.getElementById('contact-modal');
+  if (!modal) {
+    document.body.insertAdjacentHTML('beforeend', CONTACT_MODAL_HTML);
+    modal = document.getElementById('contact-modal');
+  }
+  return modal;
+}
+
+function setContactModalStatus(message, type) {
+  const status = document.querySelector('#contact-modal .contact-modal__status');
+  if (!status) return;
+  if (!message) {
+    status.hidden = true;
+    status.textContent = '';
+    status.classList.remove('is-error', 'is-success');
+    return;
+  }
+  status.hidden = false;
+  status.textContent = message;
+  status.classList.toggle('is-error', type === 'error');
+  status.classList.toggle('is-success', type === 'success');
+}
+
+function openContactModal(options) {
+  options = options || {};
+  const modal = ensureContactModal();
+  if (!modal || modal.classList.contains('is-open')) return;
+
+  _contactModalLastFocus = document.activeElement;
+  _contactModalOpenedViaRoute = !!options.fromRoute;
+  _contactModalPrevTitle = document.title;
+  document.title = 'Contact | Usmaan Razzaq';
+
+  modal.hidden = false;
+  modal.setAttribute('aria-hidden', 'false');
+  document.body.classList.add('contact-modal-open');
+
+  // Force reflow so the open transition runs
+  void modal.offsetWidth;
+  modal.classList.add('is-open');
+
+  if (options.pushState) {
+    const path = window.location.pathname;
+    const alreadyContact =
+      path === '/contact/' || path === '/contact' || path === '/Contact/' || path === '/Contact';
+    if (!alreadyContact) {
+      history.pushState({ contactModal: true }, '', '/contact/');
+      _contactModalOpenedViaRoute = true;
+    }
+  }
+
+  const dialog = modal.querySelector('.contact-modal__dialog');
+  const firstField = modal.querySelector('.contact-modal__input');
+  window.setTimeout(function() {
+    if (firstField) firstField.focus();
+    else if (dialog) dialog.focus();
+  }, 40);
+}
+
+function closeContactModal(options) {
+  options = options || {};
+  const modal = document.getElementById('contact-modal');
+  if (!modal || modal.hidden) return;
+
+  modal.classList.remove('is-open');
+  document.body.classList.remove('contact-modal-open');
+
+  const shouldRestoreHistory =
+    options.restoreHistory !== false && _contactModalOpenedViaRoute;
+
+  const finish = function() {
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+    setContactModalStatus('');
+    const form = modal.querySelector('.contact-modal__form');
+    if (form && !options.keepForm) form.reset();
+
+    if (shouldRestoreHistory) {
+      const path = window.location.pathname;
+      const onContact =
+        path === '/contact/' || path === '/contact' || path === '/Contact/' || path === '/Contact';
+      _contactModalOpenedViaRoute = false;
+      if (onContact) {
+        const spaEl = document.getElementById('spa-content');
+        const spaPage = spaEl ? spaEl.getAttribute('data-page') : null;
+        const restorePath =
+          spaPage === 'about' ? '/about/' :
+          spaPage === 'playground' ? '/playground/' :
+          document.body.classList.contains('about-route') ? '/about/' :
+          document.body.classList.contains('playground-route') ? '/playground/' :
+          '/';
+        history.replaceState({}, '', restorePath);
+      }
+    } else {
+      _contactModalOpenedViaRoute = false;
+    }
+
+    if (_contactModalPrevTitle) {
+      document.title = _contactModalPrevTitle;
+      _contactModalPrevTitle = '';
+    }
+
+    if (_contactModalLastFocus && typeof _contactModalLastFocus.focus === 'function') {
+      _contactModalLastFocus.focus();
+    }
+    _contactModalLastFocus = null;
+  };
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion) {
+    finish();
+    return;
+  }
+
+  window.setTimeout(finish, 220);
+}
+
+function initContactModal() {
+  ensureContactModal();
+
+  if (_contactModalAbort) {
+    _contactModalAbort.abort();
+    _contactModalAbort = null;
+  }
+  _contactModalAbort = new AbortController();
+  const signal = _contactModalAbort.signal;
+
+  document.addEventListener('click', function(e) {
+    if (e.defaultPrevented) return;
+
+    const openTrigger = e.target.closest('[data-contact-open], a[href="/contact/"], a[href="/contact"], a[href="/Contact/"], a[href="/Contact"]');
+    if (openTrigger) {
+      // Allow modified clicks / new tabs to keep default navigation
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (openTrigger.target === '_blank') return;
+      e.preventDefault();
+      openContactModal({ pushState: true });
+      return;
+    }
+
+    if (e.target.closest('[data-contact-close]')) {
+      closeContactModal();
+    }
+  }, { signal: signal });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key !== 'Escape') return;
+    const modal = document.getElementById('contact-modal');
+    if (modal && !modal.hidden) {
+      e.preventDefault();
+      closeContactModal();
+    }
+  }, { signal: signal });
+
+  document.addEventListener('submit', function(e) {
+    const form = e.target.closest('#contact-modal .contact-modal__form');
+    if (!form) return;
+    e.preventDefault();
+
+    const submitBtn = form.querySelector('.contact-modal__submit');
+    const honeypot = form.querySelector('[name="botcheck"]');
+    if (honeypot && honeypot.checked) return;
+
+    const name = (form.querySelector('[name="name"]') || {}).value || '';
+    const email = (form.querySelector('[name="email"]') || {}).value || '';
+    const message = (form.querySelector('[name="message"]') || {}).value || '';
+
+    if (!name.trim() || !email.trim() || !message.trim()) {
+      setContactModalStatus('Please fill out all fields.', 'error');
+      return;
+    }
+
+    setContactModalStatus('');
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+    }
+
+    const payload = {
+      access_key: form.querySelector('[name="access_key"]').value,
+      subject: form.querySelector('[name="subject"]').value,
+      name: name.trim(),
+      email: email.trim(),
+      message: message.trim(),
+      from_name: name.trim(),
+    };
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+      .then(function(res) {
+        return res.json().then(function(data) {
+          return { ok: res.ok, data: data };
+        });
+      })
+      .then(function(result) {
+        if (!result.ok || !result.data || result.data.success === false) {
+          throw new Error((result.data && result.data.message) || 'Something went wrong.');
+        }
+        form.reset();
+        setContactModalStatus("Thanks — I'll get back to you soon.", 'success');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+        }
+      })
+      .catch(function(err) {
+        setContactModalStatus(err.message || 'Unable to send. Please try again.', 'error');
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit';
+        }
+      });
+  }, { signal: signal });
+}
+
+onDomReady(initContactModal);
+
 // Run page-specific init hooks based on current page
 function initPageHooks(page) {
   const isHome = page === 'home';
@@ -1321,6 +1587,12 @@ function initPageHooks(page) {
     var page = routes[normalized];
     if (!page) return;
 
+    // Contact opens as an overlay modal over the current page
+    if (page === 'contact') {
+      openContactModal({ pushState: pushState, fromRoute: true });
+      return;
+    }
+
     // Don't navigate if already on this page
     if (spaContent.getAttribute('data-page') === page) return;
 
@@ -1341,6 +1613,19 @@ function initPageHooks(page) {
   window.addEventListener('popstate', function(e) {
     var path = window.location.pathname;
     var page = getPage(path);
+    var modal = document.getElementById('contact-modal');
+    var modalOpen = modal && !modal.hidden;
+
+    // Closing contact modal via browser back
+    if (modalOpen && page !== 'contact') {
+      closeContactModal({ restoreHistory: false });
+    }
+
+    // Opening contact modal via browser forward / deep link restore
+    if (page === 'contact') {
+      openContactModal({ pushState: false, fromRoute: true });
+      return;
+    }
 
     if (page) {
       fetchPartial(page).then(function(html) {
@@ -1396,7 +1681,11 @@ function initPageHooks(page) {
   });
 
   // Expose router globally for logo click handler
-  window.spaRouter = { navigateTo: navigateTo };
+  window.spaRouter = {
+    navigateTo: navigateTo,
+    openContactModal: openContactModal,
+    closeContactModal: closeContactModal,
+  };
 
   // Pre-cache home from the initial DOM before init hooks mutate attributes
   // (e.g. aria-pressed). Caching after init poisoned SPA restores.
@@ -1404,7 +1693,11 @@ function initPageHooks(page) {
 
   // On initial load, detect the current route from URL (for htaccess fallback)
   var initialPage = getPage(window.location.pathname);
-  if (initialPage && initialPage !== 'home') {
+  if (initialPage === 'contact') {
+    // Deep link: keep home underneath and open the contact modal
+    initPageHooks('home');
+    openContactModal({ pushState: false, fromRoute: true });
+  } else if (initialPage && initialPage !== 'home') {
     // We landed on a SPA route via htaccess — load the correct partial
     fetchPartial(initialPage).then(function(html) {
       spaContent.innerHTML = html;
