@@ -635,13 +635,14 @@ body.contact-modal-open {
 
 @media (max-width: 768px) {
     .contact-modal {
-        padding: 16px;
-        align-items: flex-end;
+        /* Sit a bit above center so the form clears the browser chrome */
+        align-items: center;
+        padding: 16px 16px max(72px, env(safe-area-inset-bottom, 0px) + 56px);
     }
 
     .contact-modal__dialog {
         width: 100%;
-        max-height: min(90vh, 640px);
+        max-height: min(78vh, 640px);
         overflow-y: auto;
     }
 }

@@ -1187,7 +1187,7 @@ function ensureContactModalStyles() {
   if (existing) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/Contact/contact.css?v=20260805-modal';
+  link.href = '/Contact/contact.css?v=20260805-modal-up';
   link.setAttribute('data-contact-modal-css', 'true');
   document.head.appendChild(link);
 }
