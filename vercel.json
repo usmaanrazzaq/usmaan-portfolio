@@ -14,6 +14,46 @@
   ],
   "rewrites": [
     {
+      "source": "/rented",
+      "destination": "/Rented/rented"
+    },
+    {
+      "source": "/rented/",
+      "destination": "/Rented/rented/"
+    },
+    {
+      "source": "/rented/:path*",
+      "destination": "/Rented/:path*"
+    },
+    {
+      "source": "/national-muslim-youth-association/:path*",
+      "destination": "/National-Muslim-Youth-Association/:path*"
+    },
+    {
+      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study",
+      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study"
+    },
+    {
+      "source": "/on-the-run-studio/on-the-run-studio/otrs-case-study.html",
+      "destination": "/On-The-Run-Studio/on-the-run-studio/OTRS-Case-Study.html"
+    },
+    {
+      "source": "/on-the-run-studio/:path*",
+      "destination": "/On-The-Run-Studio/:path*"
+    },
+    {
+      "source": "/wcm-connect",
+      "destination": "/WCM-Connect"
+    },
+    {
+      "source": "/wcm-connect/",
+      "destination": "/WCM-Connect/"
+    },
+    {
+      "source": "/wcm-connect/:path*",
+      "destination": "/WCM-Connect/:path*"
+    },
+    {
       "source": "/about",
       "destination": "/index"
     },
