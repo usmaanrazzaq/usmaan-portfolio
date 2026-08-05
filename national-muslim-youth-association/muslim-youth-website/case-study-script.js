@@ -2,6 +2,9 @@ function bootNmyaCaseStudy() {
   if (typeof initChartScrollTriggers === 'function') {
     initChartScrollTriggers();
   }
+  if (typeof initMetricUnderlineScrollTriggers === 'function') {
+    initMetricUnderlineScrollTriggers();
+  }
   if (typeof initResearchFindings === 'function') {
     initResearchFindings();
   }

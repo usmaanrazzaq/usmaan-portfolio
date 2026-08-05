@@ -266,6 +266,39 @@ function initChartScrollTriggers() {
 }
 
 
+// --- Outcome metric underline draw ---
+function initMetricUnderlineScrollTriggers() {
+  var metrics = document.querySelectorAll('.paper-cs__metric');
+  if (!metrics.length) return;
+
+  var prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function underlineAll() {
+    metrics.forEach(function(el) {
+      el.classList.add('metric-underlined');
+    });
+  }
+
+  if (prefersReducedMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+    underlineAll();
+    return;
+  }
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  var triggerEl = metrics[0].closest('.paper-cs__section') || metrics[0];
+  if (triggerEl._metricUnderlineInit) return;
+  triggerEl._metricUnderlineInit = true;
+
+  ScrollTrigger.create({
+    trigger: triggerEl,
+    start: 'top 85%',
+    once: true,
+    onEnter: underlineAll
+  });
+}
+
+
 // --- Globe Reach Animation (shared) ---
 // Markers are animated via the SVG `r` attribute (not CSS/GSAP transforms) so that
 // each dot/ring grows around its own (cx, cy). This avoids the transform-origin /

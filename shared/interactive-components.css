@@ -1565,3 +1565,44 @@
     text-align: center;
   }
 }
+
+/* --- Outcome metric underline draw (jagged blue) --- */
+.paper-cs__metric {
+  --metric-underline: #4A90D9;
+  position: relative;
+  display: inline;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  padding-bottom: 4px;
+}
+
+.paper-cs__metric::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 5px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5' fill='none'%3E%3Cpath d='M0 2.5 L2.5 0.75 L5 2.5 L7.5 4.25 L10 2.5' stroke='%234A90D9' stroke-width='1.15' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: repeat-x;
+  background-position: left center;
+  background-size: 10px 5px;
+  /* Reveal left→right without distorting the zigzag */
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+
+.paper-cs__metric.metric-underlined::after {
+  clip-path: inset(0 0 0 0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-cs__metric::after {
+    transition: none;
+  }
+
+  .paper-cs__metric.metric-underlined::after {
+    clip-path: inset(0 0 0 0);
+  }
+}
