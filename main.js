@@ -1178,6 +1178,7 @@ let _contactModalAbort = null;
 let _contactModalLastFocus = null;
 let _contactModalOpenedViaRoute = false;
 let _contactModalPrevTitle = '';
+let _contactModalViewportBound = false;
 
 function ensureContactModalStyles() {
   if (document.querySelector('link[data-contact-modal-css]')) return;
@@ -1187,9 +1188,73 @@ function ensureContactModalStyles() {
   if (existing) return;
   const link = document.createElement('link');
   link.rel = 'stylesheet';
-  link.href = '/Contact/contact.css?v=20260805-modal-up';
+  link.href = '/Contact/contact.css?v=20260809-mobile-fit';
   link.setAttribute('data-contact-modal-css', 'true');
   document.head.appendChild(link);
+}
+
+/**
+ * Keep the contact modal inside the visible viewport on iOS/Android when the
+ * soft keyboard opens. Layout viewport units (vh/dvh) often do not shrink with
+ * the keyboard; visualViewport does.
+ */
+function syncContactModalViewport() {
+  const modal = document.getElementById('contact-modal');
+  if (!modal || modal.hidden || !modal.classList.contains('is-open')) return;
+
+  const vv = window.visualViewport;
+  if (!vv) {
+    modal.style.top = '';
+    modal.style.right = '';
+    modal.style.bottom = '';
+    modal.style.left = '';
+    modal.style.width = '';
+    modal.style.height = '';
+    modal.classList.toggle('is-compact', window.innerHeight <= 560);
+    return;
+  }
+
+  const top = Math.max(0, vv.offsetTop || 0);
+  const left = Math.max(0, vv.offsetLeft || 0);
+  modal.style.top = top + 'px';
+  modal.style.left = left + 'px';
+  modal.style.right = 'auto';
+  modal.style.bottom = 'auto';
+  modal.style.width = Math.max(0, vv.width) + 'px';
+  modal.style.height = Math.max(0, vv.height) + 'px';
+  modal.classList.toggle('is-compact', vv.height <= 560);
+
+  const active = document.activeElement;
+  if (
+    active &&
+    modal.contains(active) &&
+    (active.matches('input, textarea, select, button') || active.isContentEditable)
+  ) {
+    try {
+      active.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    } catch (err) {
+      active.scrollIntoView(false);
+    }
+  }
+}
+
+function bindContactModalViewport() {
+  if (_contactModalViewportBound || !window.visualViewport) return;
+  _contactModalViewportBound = true;
+  window.visualViewport.addEventListener('resize', syncContactModalViewport);
+  window.visualViewport.addEventListener('scroll', syncContactModalViewport);
+}
+
+function clearContactModalViewport() {
+  const modal = document.getElementById('contact-modal');
+  if (!modal) return;
+  modal.style.top = '';
+  modal.style.right = '';
+  modal.style.bottom = '';
+  modal.style.left = '';
+  modal.style.width = '';
+  modal.style.height = '';
+  modal.classList.remove('is-compact');
 }
 
 function ensureContactModal() {
@@ -1234,6 +1299,8 @@ function openContactModal(options) {
   // Force reflow so the open transition runs
   void modal.offsetWidth;
   modal.classList.add('is-open');
+  bindContactModalViewport();
+  syncContactModalViewport();
 
   if (options.pushState) {
     const path = window.location.pathname;
@@ -1250,6 +1317,7 @@ function openContactModal(options) {
   window.setTimeout(function() {
     if (firstField) firstField.focus();
     else if (dialog) dialog.focus();
+    syncContactModalViewport();
   }, 40);
 }
 
@@ -1260,6 +1328,7 @@ function closeContactModal(options) {
 
   modal.classList.remove('is-open');
   document.body.classList.remove('contact-modal-open');
+  clearContactModalViewport();
 
   const shouldRestoreHistory =
     options.restoreHistory !== false && _contactModalOpenedViaRoute;
@@ -1267,6 +1336,7 @@ function closeContactModal(options) {
   const finish = function() {
     modal.hidden = true;
     modal.setAttribute('aria-hidden', 'true');
+    clearContactModalViewport();
     setContactModalStatus('');
     const form = modal.querySelector('.contact-modal__form');
     if (form && !options.keepForm) form.reset();
