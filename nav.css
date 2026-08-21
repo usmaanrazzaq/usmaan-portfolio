@@ -26,14 +26,13 @@
 .nav-bar ul li span {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
   position: relative;
   display: inline-flex;
   align-items: center;
-  opacity: 0.82;
+  opacity: 1;
   transition:
     color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
@@ -238,9 +237,8 @@
 
   .nav-bar .nav-menu li a {
     color: #2b2b2b;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-family: 'Helvetica Neue', sans-serif;
-    font-variation-settings: "wght" 400;
   }
 
   .nav-bar .nav-menu li a:hover,
@@ -249,7 +247,7 @@
   }
 
   .logo {
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     font-family: 'Helvetica Neue', sans-serif;
     font-variation-settings: "wght" 700;

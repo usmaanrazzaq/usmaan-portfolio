@@ -12,12 +12,12 @@ body {
   padding: 0;
   background-color: #ffffff;
   font-family: 'Helvetica Neue', sans-serif;
-  line-height: 1.5;
+  line-height: 1.55;
   color: #000000;
 }
 
 html {
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: 16px;
   scroll-behavior: smooth;
 }
 
@@ -41,7 +41,7 @@ html {
 .nav-bar ul li a {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 1rem;
   position: relative;
   transition: color 0.3s ease, transform 0.3s ease;
@@ -111,8 +111,8 @@ html {
 .project-title h1 {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 18px;
-  color: #8d8383;
+  font-size: 20px;
+  color: #5c5c5c;
   margin-bottom: 0.5rem;
   text-align: left;
 }
@@ -143,17 +143,17 @@ html {
 
 .crumb {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 0.875rem;
-  color: #8d8383;
+  color: #5c5c5c;
   text-align: left;
 }
 
 .timeline span {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 200;
+  font-weight: 400;
   font-size: 0.875rem;
-  color: #8d8383;
+  color: #5c5c5c;
   text-align: left;
 }
 
@@ -226,14 +226,14 @@ html {
   padding: 0.3125rem 0.46875rem;
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 400;
-  font-size: 0.8125rem;
-  color: #8d8383;
+  font-size: 0.875rem;
+  color: #5c5c5c;
   text-decoration: none;
   transition: all 0.3s ease;
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
-  text-decoration-color: #8d8383;
+  text-decoration-color: #5c5c5c;
 }
 
 .directory-list a:hover,
@@ -275,7 +275,7 @@ html {
 .section-question h3 {
   font-family: 'Helvetica Neue', sans-serif;
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 1.125rem;
   color: #000000;
   padding-top: 10px;
 }
@@ -289,7 +289,7 @@ html {
   font-weight: 400;
   font-size: 16px;
   color: #000000;
-  line-height: 1.5;
+  line-height: 1.55;
   padding-bottom: 10px;
   padding-top: 10px;
 }
@@ -338,7 +338,7 @@ footer {
 }
 
 footer span {
-  font-size: 0.875rem;
+  font-size: 1rem;
   font-weight: 400;
   color: #2b2b2b;
 }
@@ -408,7 +408,6 @@ footer span {
     margin-bottom: 2rem;
   }
   
-  .project-title h1,
   .project-subtitle h2,
   .section-header h2 {
     font-size: 16px;
@@ -474,7 +473,7 @@ footer span {
 
   .nav-bar ul li a {
     color: #2b2b2b;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-family: 'Helvetica Neue', sans-serif;
     font-weight: 400;
   }

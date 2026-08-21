@@ -29,10 +29,10 @@
     margin: 0;
     padding: 0 5px;
     font-family: "Helvetica Neue", sans-serif;
-    font-weight: 300;
+    font-weight: 400;
     font-size: 14px;
-    line-height: normal;
-    color: #767676;
+    line-height: 1.4;
+    color: #5c5c5c;
 }
 
 .notes-content {
@@ -40,8 +40,8 @@
     padding: 0 5px;
     font-family: "Helvetica Neue", sans-serif;
     font-weight: 400;
-    font-size: 15px;
-    line-height: normal;
+    font-size: 16px;
+    line-height: 1.55;
     color: #000000;
 }
 
@@ -70,8 +70,8 @@
     }
 
     .notes-content {
-        font-size: 15px;
-        line-height: 1.45;
+        font-size: 16px;
+        line-height: 1.55;
     }
 }
 
@@ -92,12 +92,16 @@
     }
 
     .notes-title {
-        font-size: 17px;
+        font-size: 18px;
     }
 
-    .notes-date,
-    .notes-content {
+    .notes-date {
         font-size: 14px;
+        font-weight: 400;
+    }
+
+    .notes-content {
+        font-size: 16px;
         font-weight: 400;
     }
 }

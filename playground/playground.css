@@ -6,8 +6,8 @@
   padding: 28px var(--home-gutter, 25px) 80px;
   box-sizing: border-box;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.55;
   color: var(--home-ink, #2b2b2b);
   background: var(--home-bg, #ffffff);
 }
@@ -75,26 +75,26 @@ html[data-theme="dark"] .paper-projects__media--phone {
 .paper-projects__title {
   margin: 0;
   color: var(--home-ink, #2b2b2b);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.4;
   min-width: 0;
 }
 
 .paper-projects__type {
   flex-shrink: 0;
-  color: var(--home-muted, #767676);
+  color: var(--home-muted, #5c5c5c);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.4;
 }
 
 .paper-projects__desc {
   margin: 0;
   color: var(--home-ink, #2b2b2b);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
   width: fit-content;
   max-width: 100%;
 }
