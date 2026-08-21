@@ -2,7 +2,7 @@
 
 :root {
   --home-ink: #2b2b2b;
-  --home-muted: #767676;
+  --home-muted: #5c5c5c;
   --home-bg: #ffffff;
   --home-surface: #ffffff;
   --home-surface-hover: #fafafa;
@@ -21,7 +21,7 @@
 html[data-theme="dark"] {
   color-scheme: dark;
   --home-ink: #f0f0f0;
-  --home-muted: #9a9a9a;
+  --home-muted: #b8b8b8;
   --home-bg: #111111;
   --home-surface: #1a1a1a;
   --home-surface-hover: #242424;
@@ -85,8 +85,8 @@ body.about-route #nav-container {
   padding: 28px var(--home-gutter) 80px;
   box-sizing: border-box;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.55;
 }
 
 .paper-home__pin {
@@ -387,9 +387,9 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   margin: 0;
   padding: 0;
   color: var(--home-muted);
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1.2;
+  line-height: 1.4;
   letter-spacing: 0.01em;
   text-align: center;
   white-space: nowrap;
@@ -426,8 +426,8 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   gap: 6px;
   margin-bottom: 12px;
   color: var(--home-muted);
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 400;
   line-height: 1.5;
   white-space: nowrap;
 }
@@ -509,9 +509,9 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   margin: 0;
   max-width: 100%;
   color: var(--home-ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .paper-home__socials {
@@ -739,9 +739,16 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   margin: 0;
   color: var(--home-ink);
   font-family: inherit;
-  font-size: 16px;
   font-weight: 500;
   line-height: 1.4;
+}
+
+.paper-home__case-copy h2 {
+  font-size: 20px;
+}
+
+.paper-home__case-copy h3 {
+  font-size: 18px;
 }
 
 .paper-home__case-copy h2 a,
@@ -758,7 +765,7 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   margin: 0;
   color: var(--home-muted);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.4;
   white-space: nowrap;
   flex-shrink: 0;
@@ -768,9 +775,9 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   margin: 0;
   max-width: 100%;
   color: var(--home-ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .paper-home__ctas {
@@ -852,6 +859,149 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   overflow: hidden;
   line-height: 0;
   background: var(--home-media-bg);
+}
+
+.paper-home__case[data-work="rented"] .paper-home__case-media,
+.paper-home__case[data-work="nmya"] .paper-home__case-media,
+.paper-home__case[data-work="adsum"] .paper-home__case-media,
+.paper-home__case[data-work="otrs"] .paper-home__case-media {
+  position: relative;
+  isolation: isolate;
+}
+
+.paper-home__case[data-work="rented"] .paper-home__case-media {
+  background:
+    linear-gradient(160deg, #4d80e659 0%, #4d80e640 34%, #4d80e626 62%, transparent 88%),
+    var(--home-media-bg);
+}
+
+.paper-home__case[data-work="nmya"] .paper-home__case-media {
+  background:
+    linear-gradient(160deg, #66776159 0%, #66776140 34%, #66776126 62%, transparent 88%),
+    var(--home-media-bg);
+}
+
+.paper-home__case[data-work="adsum"] .paper-home__case-media {
+  --adsum-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M0%200h906v612H0zM52%2070h801a10%2010%200%200%201%2010%2010v451a10%2010%200%200%201-10%2010H52a10%2010%200%200%201-10-10V80a10%2010%200%200%201%2010-10zM362%20538h181v74H362z%22%2F%3E%3C%2Fsvg%3E");
+  background:
+    linear-gradient(160deg, #2b2b2b59 0%, #2b2b2b40 34%, #2b2b2b26 62%, transparent 88%),
+    var(--home-media-bg);
+}
+
+.paper-home__case[data-work="otrs"] .paper-home__case-media {
+  --otrs-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M0%200h906v612H0zM52%2070h801a10%2010%200%200%201%2010%2010v451a10%2010%200%200%201-10%2010H52a10%2010%200%200%201-10-10V80a10%2010%200%200%201%2010-10zM361%20538h182v74H361z%22%2F%3E%3C%2Fsvg%3E");
+  background:
+    linear-gradient(160deg, #887f7a59 0%, #887f7a40 34%, #887f7a26 62%, transparent 88%),
+    var(--home-media-bg);
+}
+
+.paper-home__case[data-work="rented"] .paper-home__case-media::after,
+.paper-home__case[data-work="nmya"] .paper-home__case-media::after,
+.paper-home__case[data-work="adsum"] .paper-home__case-media::after,
+.paper-home__case[data-work="otrs"] .paper-home__case-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+/* Adsum footage is opaque and full-bleed, so the wash has to sit on the
+   baked-in gray field around the monitor — not behind the video, and not
+   over the screen. */
+.paper-home__case[data-work="adsum"] .paper-home__case-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(160deg, #2b2b2b40 0%, #2b2b2b26 34%, #2b2b2b14 62%, transparent 88%);
+  -webkit-mask-image: var(--adsum-wash-mask);
+  mask-image: var(--adsum-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.paper-home__case[data-work="adsum"] .paper-home__case-media::after {
+  z-index: 3;
+  -webkit-mask-image: var(--adsum-wash-mask);
+  mask-image: var(--adsum-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+/* OTRS display sits on a black field, so the taupe wash is painted around
+   the monitor — same container treatment as NMYA, without covering the screen. */
+.paper-home__case[data-work="otrs"] .paper-home__case-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background:
+    linear-gradient(160deg, #887f7a59 0%, #887f7a40 34%, #887f7a26 62%, transparent 88%),
+    var(--home-media-bg);
+  -webkit-mask-image: var(--otrs-wash-mask);
+  mask-image: var(--otrs-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.paper-home__case[data-work="otrs"] .paper-home__case-media::after {
+  z-index: 3;
+  -webkit-mask-image: var(--otrs-wash-mask);
+  mask-image: var(--otrs-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.paper-home__case[data-work="rented"] .paper-home__case-media > *,
+.paper-home__case[data-work="nmya"] .paper-home__case-media > *,
+.paper-home__case[data-work="adsum"] .paper-home__case-media > *,
+.paper-home__case[data-work="otrs"] .paper-home__case-media > * {
+  position: relative;
+  z-index: 1;
+}
+
+html[data-theme="dark"] .paper-home__case[data-work="rented"] .paper-home__case-media::after,
+html[data-theme="dark"] .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
+html[data-theme="dark"] .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
+html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-media::after {
+  opacity: 0.22;
+  mix-blend-mode: soft-light;
+}
+
+.paper-home__case-stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 906 / 612;
+}
+
+.paper-home__case[data-work="nmya"] .paper-home__case-stage video,
+.paper-home__case[data-work="adsum"] .paper-home__case-stage video,
+.paper-home__case[data-work="otrs"] .paper-home__case-stage video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 906 / 612;
+  object-fit: cover;
+  object-position: center top;
+  background: transparent;
 }
 
 /* Direct children only: the Rented card mounts the prototype into this host,

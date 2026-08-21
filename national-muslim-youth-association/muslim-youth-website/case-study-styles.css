@@ -2,7 +2,7 @@
 
 :root {
   --cs-ink: #2b2b2b;
-  --cs-muted: #767676;
+  --cs-muted: #5c5c5c;
   --cs-frame: #ebe9e9;
   --cs-bg: #ffffff;
   --cs-surface: #ffffff;
@@ -31,8 +31,8 @@ body.paper-cs-route {
   background: var(--cs-bg);
   color: var(--cs-ink);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
+  font-size: 16px;
+  line-height: 1.55;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -123,7 +123,7 @@ body.paper-cs-route #nav-container {
 .paper-cs__header h1 {
   margin: 0;
   color: var(--cs-ink);
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 500;
   line-height: 1.4;
 }
@@ -143,7 +143,7 @@ body.paper-cs-route #nav-container {
 .paper-cs__meta dt {
   color: var(--cs-muted);
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.4;
 }
 
@@ -158,7 +158,7 @@ body.paper-cs-route #nav-container {
 .paper-cs__lede {
   margin: var(--cs-gap-md) 0 0;
   color: var(--cs-ink);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
 }
@@ -170,7 +170,7 @@ body.paper-cs-route #nav-container {
 .paper-cs__section h2 {
   margin: 0;
   color: var(--cs-ink);
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
 }
@@ -182,9 +182,9 @@ body.paper-cs-route #nav-container {
 .paper-cs__body p {
   margin: 0;
   color: var(--cs-ink);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 .paper-cs__hero,
@@ -278,7 +278,7 @@ body.paper-cs-route #nav-container {
 }
 
 .paper-cs__findings .research-findings__eyebrow {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.04em;
   color: var(--cs-muted);
@@ -286,9 +286,9 @@ body.paper-cs-route #nav-container {
 }
 
 .paper-cs__findings .research-findings__intro p {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
   color: var(--cs-ink);
 }
 
@@ -322,13 +322,13 @@ body.paper-cs-route #nav-container {
   border-radius: 0;
   background: transparent;
   color: var(--cs-muted);
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   letter-spacing: 0.02em;
 }
 
 .paper-cs__findings .research-findings__group-name {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   letter-spacing: 0;
   color: var(--cs-ink);
@@ -353,7 +353,7 @@ body.paper-cs-route #nav-container {
 }
 
 .paper-cs__findings .research-findings__label {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: var(--cs-ink);
   gap: 6px;
@@ -366,9 +366,9 @@ body.paper-cs-route #nav-container {
 }
 
 .paper-cs__findings .research-findings__desc {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
   color: var(--cs-muted);
   margin-top: 4px;
 }
@@ -395,7 +395,7 @@ body.paper-cs-route #nav-container {
 
 .paper-cs__findings .research-findings__response-label {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -411,7 +411,7 @@ body.paper-cs-route #nav-container {
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   padding: 7px 12px;
   color: #fff;

@@ -47,16 +47,16 @@
 .paper-about__bio p {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
   color: var(--home-ink);
 }
 
 .paper-about__experience h2 {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
   color: var(--home-ink);
@@ -86,7 +86,7 @@
 
 .paper-about__company {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
   color: var(--home-ink);
@@ -109,7 +109,7 @@
   flex-shrink: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.4;
   color: var(--home-muted);
   white-space: nowrap;
@@ -118,9 +118,9 @@
 .paper-about__role {
   margin: 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.55;
   color: var(--home-ink);
 }
 
@@ -156,18 +156,6 @@
 
   .paper-about__dates {
     white-space: normal;
-  }
-}
-
-@media (max-width: 480px) {
-  .paper-about__company {
-    font-size: 15px;
-  }
-
-  .paper-about__dates,
-  .paper-about__role,
-  .paper-about__bio p {
-    font-size: 13px;
   }
 }
 

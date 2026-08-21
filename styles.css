@@ -50,7 +50,7 @@ body {
   padding-bottom: 60px;
   background-color: #ffffff;
   font-family: 'Helvetica Neue', sans-serif;
-  line-height: 1.5;
+  line-height: 1.55;
   opacity: 0;
   transition: opacity 0.45s var(--ease-out-expo);
 }
@@ -90,9 +90,9 @@ html.page-exit body {
   }
 }
 
-/* Fluid root font size to scale content smoothly near 800px */
+/* Fluid root font size */
 html {
-  font-size: clamp(14px, 1.1vw, 16px);
+  font-size: 16px;
 }
 
 /* Page container */
@@ -152,7 +152,7 @@ main {
   color: white;
   font-size: 0.75rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
 }
 
 .hero-bio {
@@ -318,7 +318,7 @@ main {
   color: #2b2b2b;
   font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   transition: color 0.3s ease, transform 0.3s ease;
   position: relative;
   }
@@ -358,7 +358,7 @@ footer span {
   font-size: 0.875rem;
   font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
 }
 
 /* Availability */
@@ -380,7 +380,7 @@ footer span {
   vertical-align: middle;
   cursor: default;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
 }
 
 /* Pulse animation */
@@ -480,18 +480,18 @@ footer span {
 
 .work-date {
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   color: #2b2b2b;
   white-space: nowrap;
 }
 
 .catchy-title h4 {
   font-size: clamp(0.875rem, 0.9vw, 1rem);
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #2b2b2b;
 }
 
@@ -502,7 +502,7 @@ footer span {
 .work-desc p {
   font-size: 0.875rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   font-weight: 200;
   color: #2b2b2b;
   line-height: 1.5;
@@ -519,7 +519,7 @@ footer span {
 .work-crumbs span {
   font-size: 0.875rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   font-weight: 200;
   color: #2b2b2b;
 }
@@ -534,8 +534,8 @@ footer span {
 .work-links a {
   font-size: 0.875rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
-  font-weight: 300;
+  font-variation-settings: "wght" 400;
+  font-weight: 400;
   color: #2b2b2b;
   position: relative;
   text-decoration: none;
@@ -622,7 +622,7 @@ footer span {
   font-weight: 500;
   font-size: 0.875rem;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #2b2b2b;
   margin: 0;
 }
@@ -664,9 +664,9 @@ footer span {
 
 .projects-description p {
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #252525;
   line-height: 1.5;
   width: 450px;
@@ -674,18 +674,18 @@ footer span {
 
 .project-item p {
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
   color: #706f6e;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
 }
 
 .project-item p a {
   text-decoration: none;
   color: #2b2b2b;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300; 
+  font-variation-settings: "wght" 400; 
   transition: color 0.3s ease, transform 0.3s ease;
   font-size: 0.875rem;
   position: relative;
@@ -975,9 +975,9 @@ footer span {
 
 .project-subtitle {
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #252525;
   margin-bottom: 3rem;
   line-height: 1.5;
@@ -1006,9 +1006,9 @@ footer span {
 .tag {
   color: #2b2b2b;
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
 }
 
 /* Project Metadata */
@@ -1043,9 +1043,9 @@ footer span {
 
 .meta-item p {
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #2b2b2b;
   text-align: center;
   width: 100%;
@@ -1095,9 +1095,9 @@ footer span {
 
 .content-section p {
   font-size: 0.875rem;
-  font-weight: 300;
+  font-weight: 400;
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   color: #2b2b2b;
   line-height: 1.5;
   margin-bottom: 1.5rem;
@@ -1488,9 +1488,9 @@ footer span {
 
 .playground-description {
   font-family: 'Helvetica Neue', sans-serif;
-  font-variation-settings: "wght" 300;
+  font-variation-settings: "wght" 400;
   font-size: 1rem;
-  font-weight: 300;
+  font-weight: 400;
   color: #252525;
   line-height: 1.5;
   margin: 0;
@@ -1670,7 +1670,7 @@ footer span {
   }
   
   .project-tags .tag {
-    font-size: 13px;
+    font-size: 14px;
     padding: 8px;
   }
   
@@ -1822,7 +1822,7 @@ footer span {
   .skill-item,
   .tool-item,
   .inspiration-item {
-    font-size: 13px;
+    font-size: 14px;
     padding: 8px;
   }
 }
@@ -1882,9 +1882,9 @@ footer span {
 
 .sandbox-description {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.5;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
   color: #000000;
   margin: 0;
   width: 600px;
@@ -1956,9 +1956,9 @@ footer span {
 
 .sandbox-tag {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
-  color: #767676;
+  color: #5c5c5c;
   line-height: 1.4;
 }
 
@@ -1973,7 +1973,7 @@ footer span {
 
 .sandbox-card-desc {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   font-size: 16px;
   color: #000000;
   line-height: 1.5;
@@ -2021,8 +2021,8 @@ footer span {
   }
   
   .sandbox-description {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.55;
   }
   
   .sandbox-card {
@@ -2038,14 +2038,14 @@ footer span {
   }
   
   .sandbox-card-desc {
-    font-size: 14px;
+    font-size: 16px;
     max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
   .sandbox-description {
-    font-size: 13px;
+    font-size: 16px;
   }
   
   .sandbox-card {
@@ -2057,11 +2057,11 @@ footer span {
   }
   
   .sandbox-tag {
-    font-size: 13px;
+    font-size: 14px;
   }
   
   .sandbox-card-desc {
-    font-size: 13px;
+    font-size: 16px;
   }
 }
 

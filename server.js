@@ -4,33 +4,40 @@ const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const ROOT = path.join(__dirname);
+const root = path.join(__dirname);
 
-// Serve static files from the project root
-app.use(express.static(ROOT));
+function isInsideRoot(filePath) {
+  const resolved = path.resolve(filePath);
+  return resolved === root || resolved.startsWith(root + path.sep);
+}
 
-// Resolve a candidate path only if it stays inside the project root.
-function safeFile(candidate) {
-  const resolved = path.resolve(candidate);
-  if (!resolved.startsWith(ROOT + path.sep) && resolved !== ROOT) return null;
+function existingFile(filePath) {
+  if (!isInsideRoot(filePath)) return null;
   try {
-    if (fs.existsSync(resolved) && fs.statSync(resolved).isFile()) return resolved;
-  } catch (_) {
-    /* ignore */
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) return filePath;
+  } catch (err) {
+    return null;
   }
   return null;
 }
 
-// Mimic Vercel cleanUrls: try path.html before SPA fallback.
-// Without this, /…/case-study and /…/otrs-case-study fall through to index.html.
+// Serve static files from the project root
+app.use(express.static(root));
+
+// Clean URLs: /path/to/page → path/to/page.html (same as Vercel cleanUrls / .htaccess)
 app.get('*', (req, res) => {
   const urlPath = decodeURIComponent(req.path);
-  const htmlFile = safeFile(path.join(ROOT, urlPath + '.html'));
-  if (htmlFile) {
-    return res.sendFile(htmlFile);
+  const relative = urlPath.replace(/^\/+|\/+$/g, '');
+
+  if (relative && !path.extname(relative)) {
+    const htmlFile = existingFile(path.join(root, relative + '.html'));
+    if (htmlFile) return res.sendFile(htmlFile);
+
+    const indexFile = existingFile(path.join(root, relative, 'index.html'));
+    if (indexFile) return res.sendFile(indexFile);
   }
 
-  res.sendFile(path.join(ROOT, 'index.html'));
+  res.sendFile(path.join(root, 'index.html'));
 });
 
 app.listen(PORT, '0.0.0.0', () => {

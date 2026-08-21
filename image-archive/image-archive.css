@@ -17,9 +17,9 @@
 
 .archive-description {
   font-family: 'Helvetica Neue', sans-serif;
-  font-weight: 300;
-  font-size: 14px;
-  line-height: 1.5;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
   color: #000000;
   margin: 0;
 }
@@ -93,8 +93,8 @@
   }
 
   .archive-description {
-    font-size: 14px;
-    line-height: 1.5;
+    font-size: 16px;
+    line-height: 1.55;
   }
 
   .archive-divider {
@@ -129,10 +129,6 @@
 
 /* Small Mobile */
 @media (max-width: 480px) {
-  .archive-description {
-    font-size: 13px;
-  }
-
   .archive-grid {
     gap: 12px;
   }
