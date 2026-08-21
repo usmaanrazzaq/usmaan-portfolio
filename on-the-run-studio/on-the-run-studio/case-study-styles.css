@@ -192,6 +192,7 @@ body.paper-cs-route #nav-container {
   margin: 0;
   overflow: hidden;
   border-radius: 12px;
+  clip-path: inset(0 round 12px);
   background: var(--cs-frame);
   line-height: 0;
 }
