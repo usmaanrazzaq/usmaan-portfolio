@@ -2,6 +2,9 @@ function bootOtrsCaseStudy() {
   if (typeof initChartScrollTriggers === 'function') {
     initChartScrollTriggers();
   }
+  if (typeof initMetricUnderlineScrollTriggers === 'function') {
+    initMetricUnderlineScrollTriggers();
+  }
   if (typeof initGlobeReachScrollTriggers === 'function') {
     initGlobeReachScrollTriggers();
   }
