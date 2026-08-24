@@ -1,0 +1,40 @@
+<div class="wp" data-wp>
+    <p class="wp__label"><span class="wp__label-dot" aria-hidden="true"></span><span data-wp-label>Auto-playing</span></p>
+    <p class="wp__sr" data-wp-live aria-live="off"></p>
+
+    <div class="wp__stage">
+        <div class="wp__fit">
+            <div class="wp__phone">
+                <div class="wp__tap" data-wp-tap></div>
+                <div class="wp__screens">
+                    <section class="wp__screen wp__screen--dashboard is-active" data-wp-screen="dashboard" aria-label="WCM Connect dashboard">
+                        <img src="/images/wcm-screen-dashboard.webp" width="470" height="1024" alt="" draggable="false">
+                        <button class="wp__hot wp__hot--meds" type="button" data-wp-go="medications" aria-label="Medications"></button>
+                        <button class="wp__hot wp__hot--sched" type="button" data-wp-go="appointments" aria-label="Schedule Visit"></button>
+                    </section>
+
+                    <section class="wp__screen wp__screen--tabs" data-wp-screen="tabs" aria-label="WCM Connect sections" hidden>
+                        <img class="wp__chrome wp__chrome--status" src="/images/wcm-chrome-status.webp" width="470" height="100" alt="" draggable="false">
+                        <div class="wp-tabs" role="tablist" aria-label="Patient sections" data-wp-tabs data-tab="medications">
+                            <button class="wp-tabs__btn" type="button" role="tab" data-wp-tab="medications" aria-selected="true">Medications</button>
+                            <button class="wp-tabs__btn" type="button" role="tab" data-wp-tab="results" aria-selected="false" tabindex="-1">Test Results</button>
+                            <button class="wp-tabs__btn" type="button" role="tab" data-wp-tab="appointments" aria-selected="false" tabindex="-1">Schedule Visit</button>
+                        </div>
+                        <div class="wp__tab-stage">
+                            <div class="wp__tab-panel is-active" data-wp-panel="medications" role="tabpanel">
+                                <img src="/images/wcm-tab-medications.webp" width="470" height="695" alt="" draggable="false">
+                            </div>
+                            <div class="wp__tab-panel" data-wp-panel="appointments" role="tabpanel" hidden>
+                                <img src="/images/wcm-tab-appointments.webp" width="470" height="695" alt="" draggable="false">
+                            </div>
+                        </div>
+                        <div class="wp__chrome wp__chrome--nav">
+                            <img src="/images/wcm-chrome-nav.webp" width="470" height="174" alt="" draggable="false">
+                            <button class="wp__hot wp__hot--home" type="button" data-wp-go="dashboard" aria-label="Home"></button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

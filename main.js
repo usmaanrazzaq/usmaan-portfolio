@@ -6,6 +6,39 @@ function onDomReady(fn) {
   fn();
 }
 
+// Vercel Web Analytics (`@vercel/analytics`). There is no bundler, so this
+// mirrors inject(): load /_vercel/insights/script.js and queue events.
+function injectVercelAnalytics() {
+  window.va = window.va || function () {
+    (window.vaq = window.vaq || []).push(arguments);
+  };
+
+  var src = '/_vercel/insights/script.js';
+  if (document.querySelector('script[src*="' + src + '"]')) return;
+
+  var script = document.createElement('script');
+  script.defer = true;
+  script.src = src;
+  script.dataset.sdkn = '@vercel/analytics';
+  script.dataset.sdkv = '2.0.1';
+  script.onerror = function () {
+    var host = location.hostname;
+    if (host === 'localhost' || host === '127.0.0.1') return;
+    console.log('[Vercel Web Analytics] Failed to load. Enable Web Analytics in the Vercel dashboard and redeploy. https://vercel.com/docs/analytics/quickstart');
+  };
+  document.head.appendChild(script);
+}
+
+function trackVercelPageview() {
+  if (typeof window.va !== 'function') return;
+  window.va('pageview', {
+    path: window.location.pathname,
+    route: window.location.pathname
+  });
+}
+
+injectVercelAnalytics();
+
 document.body.classList.toggle('home-route', window.location.pathname === '/');
 document.body.classList.toggle(
   'playground-route',
@@ -1286,6 +1319,7 @@ function closeContactModal(options) {
           document.body.classList.contains('playground-route') ? '/playground/' :
           '/';
         history.replaceState({}, '', restorePath);
+        trackVercelPageview();
       }
     } else {
       _contactModalOpenedViaRoute = false;

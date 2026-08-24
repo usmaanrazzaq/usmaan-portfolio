@@ -1,0 +1,385 @@
+/* WCM Connect self-running phone. The device is authored at 390x844 and
+   fitted with transform: scale(--wp-scale). Two hosts embed it: the case
+   study hero, and the homepage case card (decorative, inside a link). */
+
+.wp {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.4;
+
+  --wp-blue: #4d80e6;
+  --wp-dur: 420ms;
+  --wp-ease: cubic-bezier(0.32, 0.72, 0, 1);
+  --wp-pop: cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+.wp *,
+.wp *::before,
+.wp *::after {
+  box-sizing: border-box;
+}
+
+/* ---------- case study host ---------- */
+
+.paper-cs__proto[data-wcm-embed] {
+  position: relative;
+  margin-top: var(--cs-gap-md);
+  aspect-ratio: 722 / 640;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--cs-frame);
+  --wp-chrome: 0px;
+}
+
+.paper-cs__proto[data-wcm-embed] > noscript img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ---------- homepage card host ---------- */
+
+.wp--showcase {
+  height: auto;
+  aspect-ratio: 906 / 612;
+  pointer-events: none;
+}
+
+.wp--showcase .wp__label,
+.wp--showcase .wp__sr {
+  display: none;
+}
+
+/* ---------- chrome ---------- */
+
+.wp__label {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin: 0;
+  color: var(--cs-muted);
+  font-size: 12px;
+}
+
+.wp__label-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--wp-blue);
+  animation: wp-pulse 2.4s ease-in-out infinite;
+}
+
+.wp[data-wp-mode="manual"] .wp__label-dot {
+  opacity: 0.5;
+  animation: none;
+}
+
+@keyframes wp-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.wp__sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- device ---------- */
+
+.wp__stage {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+}
+
+.wp__fit {
+  width: calc(390px * var(--wp-scale, 0.71));
+  height: calc(844px * var(--wp-scale, 0.71));
+}
+
+.wp__phone {
+  position: relative;
+  width: 390px;
+  height: 844px;
+  transform-origin: top left;
+  overflow: hidden;
+  border-radius: 46px;
+  background: #f6f4f1;
+  box-shadow:
+    0 24px 60px rgba(17, 17, 17, 0.14),
+    0 3px 10px rgba(17, 17, 17, 0.07);
+  transform: scale(var(--wp-scale, 0.71));
+}
+
+.wp__screens {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(0 round 46px);
+}
+
+.wp__tap {
+  position: absolute;
+  z-index: 20;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.wp__tap.is-on {
+  animation: wp-tap 640ms cubic-bezier(0.22, 0.9, 0.3, 1);
+}
+
+@keyframes wp-tap {
+  0% {
+    opacity: 0;
+    background: rgba(77, 128, 230, 0.3);
+    box-shadow: 0 0 0 0 rgba(77, 128, 230, 0.4);
+    transform: scale(0.35);
+  }
+  22% {
+    opacity: 1;
+    transform: scale(0.62);
+  }
+  100% {
+    opacity: 0;
+    background: rgba(77, 128, 230, 0);
+    box-shadow: 0 0 0 11px rgba(77, 128, 230, 0);
+    transform: scale(1.3);
+  }
+}
+
+.wp__screen {
+  position: absolute;
+  inset: 0;
+  background: #f6f4f1;
+}
+
+.wp__screen[hidden] {
+  display: none;
+}
+
+.wp__screen.is-active {
+  z-index: 1;
+}
+
+.wp__screen img {
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.wp__screen--dashboard img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Fixed chrome + tab bar; only the panel under the tabs swaps.
+   The dock floats over the panel, same as the source screens. */
+.wp__screen--tabs {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+}
+
+.wp__chrome--status {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.wp__chrome--status img,
+.wp__chrome--nav img {
+  width: 100%;
+  height: auto;
+}
+
+.wp__chrome--nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+}
+
+.wp-tabs {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 16px 12px;
+  background: #fff;
+}
+
+.wp-tabs__btn {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 100px;
+  background: #eeece9;
+  color: #1a1a1a;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.wp-tabs__btn[aria-selected="true"] {
+  background: #e0ddd9;
+  font-weight: 600;
+}
+
+.wp-tabs__btn[data-wp-tab="results"] {
+  cursor: default;
+}
+
+.wp__tab-stage {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  background: #fff;
+}
+
+.wp__tab-panel {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 240ms ease,
+    visibility 240ms ease;
+}
+
+.wp__tab-panel.is-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+}
+
+.wp__tab-panel[hidden] {
+  display: block;
+}
+
+.wp__tab-panel img {
+  width: 100%;
+  height: auto;
+}
+
+/* Invisible targets over the dashboard pills and the home icon. */
+.wp__hot {
+  position: absolute;
+  z-index: 6;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.wp__screen--dashboard .wp__hot--meds,
+.wp__screen--dashboard .wp__hot--sched {
+  top: 18%;
+  height: 5.4%;
+}
+
+.wp__hot--meds {
+  left: 4.5%;
+  width: 30%;
+}
+
+.wp__hot--sched {
+  left: 63%;
+  width: 33%;
+}
+
+.wp__hot--home {
+  left: 22%;
+  top: 28%;
+  width: 18%;
+  height: 48%;
+}
+
+/* Dashboard ↔ tab shell fades. Tabs themselves do not slide the page. */
+@keyframes wp-home-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.wp__screen.is-exit-home {
+  z-index: 3;
+  animation: wp-home-out var(--wp-dur) var(--wp-ease) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wp__screen.is-exit-home,
+  .wp__tap.is-on,
+  .wp__label-dot,
+  .wp__tab-panel {
+    animation: none;
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .paper-cs__proto[data-wcm-embed] {
+    aspect-ratio: auto;
+    height: calc(min(74vh, 560px) + var(--wp-chrome));
+  }
+}
+
+@media (max-width: 640px) {
+  .paper-cs__proto[data-wcm-embed] {
+    --wp-chrome: 34px;
+  }
+
+  .paper-cs__proto[data-wcm-embed] .wp__stage {
+    top: var(--wp-chrome);
+  }
+}
+
+@media (max-width: 480px) {
+  .paper-cs__proto[data-wcm-embed] {
+    height: calc(min(72vh, 500px) + var(--wp-chrome));
+  }
+
+  .wp__label {
+    top: 13px;
+    left: 14px;
+    font-size: 11px;
+  }
+}

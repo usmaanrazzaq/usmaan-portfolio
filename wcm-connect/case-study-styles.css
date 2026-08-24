@@ -198,6 +198,7 @@ body.paper-cs-route #nav-container {
 
 .paper-cs__hero {
   margin-top: var(--cs-gap-md);
+  background: linear-gradient(160deg, #4d80e659 0%, #4d80e640 34%, #4d80e626 62%, transparent 88%), #eeecec;
 }
 
 .paper-cs__hero img,
@@ -417,6 +418,10 @@ body.paper-cs-route #nav-container {
   .paper-cs__meta > div:first-child {
     margin-top: 0;
   }
+}
+
+html[data-theme="dark"] .paper-cs__hero {
+  background: linear-gradient(160deg, #4d80e659 0%, #4d80e640 34%, #4d80e626 62%, transparent 88%), #1c1c1c;
 }
 
 @media (prefers-reduced-motion: reduce) {
