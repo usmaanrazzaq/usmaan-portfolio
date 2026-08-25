@@ -1,0 +1,87 @@
+@import "tailwindcss";
+@import "../styles/paper-home.css";
+@import "../styles/contact-modal.css";
+
+/*
+ * Theme is an attribute on <html>, set by the blocking script in the root
+ * layout before first paint. Everything below reads from that, so `dark:`
+ * utilities and the ported CSS switch together.
+ */
+@custom-variant dark ([data-theme="dark"] &);
+
+/*
+ * The paper design is written against max-width breakpoints. Tailwind's
+ * built-in `max-*` variants are exclusive (`< 768px`), which would drop iPad
+ * portrait out of the mobile layout, so these match the original CSS exactly.
+ */
+@custom-variant to-lg (@media (max-width: 1200px));
+@custom-variant to-md (@media (max-width: 768px));
+@custom-variant to-sm (@media (max-width: 600px));
+
+/* Design tokens, lifted verbatim from home.css. */
+:root {
+  --home-ink: #2b2b2b;
+  --home-muted: #5c5c5c;
+  --home-bg: #ffffff;
+  --home-surface: #ffffff;
+  --home-surface-hover: #fafafa;
+  --home-surface-active: #f5f5f5;
+  --home-pill: rgba(120, 120, 128, 0.12);
+  --home-pill-border: rgba(255, 255, 255, 0.72);
+  --home-pill-stroke: rgba(0, 0, 0, 0.08);
+  --home-divider: #dddddd;
+  --home-media-bg: #eeecec;
+  --home-accent: #2f5bea;
+  --home-gutter: 25px;
+  --home-copy: 536px;
+  --home-media: 906px;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  background-color: var(--home-bg);
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --home-ink: #f0f0f0;
+  --home-muted: #b8b8b8;
+  --home-bg: #111111;
+  --home-surface: #1a1a1a;
+  --home-surface-hover: #242424;
+  --home-surface-active: #2c2c2c;
+  --home-pill: rgba(255, 255, 255, 0.1);
+  --home-pill-border: rgba(255, 255, 255, 0.18);
+  --home-pill-stroke: rgba(255, 255, 255, 0.12);
+  --home-divider: #2a2a2a;
+  --home-media-bg: #1c1c1c;
+  background-color: var(--home-bg);
+}
+
+@theme inline {
+  --color-ink: var(--home-ink);
+  --color-muted: var(--home-muted);
+  --color-page: var(--home-bg);
+  --color-surface: var(--home-surface);
+  --color-surface-hover: var(--home-surface-hover);
+  --color-surface-active: var(--home-surface-active);
+  --color-divider: var(--home-divider);
+  --color-media: var(--home-media-bg);
+  --color-pill: var(--home-pill);
+  --color-pill-stroke: var(--home-pill-stroke);
+  --color-accent: var(--home-accent);
+
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --radius-media: 12px;
+  --radius-pill: 100px;
+
+  --spacing-gutter: var(--home-gutter);
+  --container-copy: var(--home-copy);
+  --container-media: var(--home-media);
+
+  --breakpoint-sm: 600px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1200px;
+}
+
+html {
+  font-size: 16px;
+}
