@@ -10,6 +10,7 @@ import {
   initMetricUnderlineScrollTriggers,
 } from "@/lib/rented/charts";
 import { initChartLightbox } from "@/lib/rented/lightbox";
+import PaperCsChrome from "@/components/PaperCsChrome";
 import {
   mountListingsDemo,
   mountProfileTabsDemo,
@@ -35,13 +36,6 @@ export default function RentedCaseStudy() {
   const suggestionsRef = useRef<HTMLElement>(null);
   const profileTabsRef = useRef<HTMLElement>(null);
   const listingsRef = useRef<HTMLElement>(null);
-
-  // The copied CSS keys the page background and the hidden static-site nav off
-  // this class, exactly as body.paper-cs-route does on the live page.
-  useEffect(() => {
-    document.body.classList.add("paper-cs-route");
-    return () => document.body.classList.remove("paper-cs-route");
-  }, []);
 
   useGSAP(
     () => {
@@ -76,25 +70,7 @@ export default function RentedCaseStudy() {
 
   return (
     <>
-      <main className="paper-cs" aria-labelledby="cs-title" ref={rootRef}>
-        {/* Not next/link: the prototype script mounts itself once per document
-            load, so a client-side navigation would leave the homepage showcase
-            sitting on its fallback image. */}
-        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-        <a className="paper-cs__back" href="/">
-          <svg width="18" height="18" viewBox="0 0 21.6 21.6" aria-hidden="true">
-            <path
-              d="M12.6 16.2L7.2 10.8 12.6 5.4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-          Back
-        </a>
-
+      <PaperCsChrome ref={rootRef}>
         <header className="paper-cs__header">
           <h1 id="cs-title">Rented</h1>
 
@@ -566,7 +542,7 @@ export default function RentedCaseStudy() {
             </p>
           </div>
         </section>
-      </main>
+      </PaperCsChrome>
 
       <div
         className="lightbox-overlay"
