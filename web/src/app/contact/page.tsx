@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import HomeContent from "@/components/HomeContent";
+import HomeShell from "@/components/HomeShell";
 
 export const metadata: Metadata = {
   title: "Contact | Usmaan Razzaq",
@@ -10,5 +11,9 @@ export const metadata: Metadata = {
  * reads the path on mount and opens itself.
  */
 export default function Contact() {
-  return <HomeContent />;
+  return (
+    <HomeShell>
+      <HomeContent />
+    </HomeShell>
+  );
 }

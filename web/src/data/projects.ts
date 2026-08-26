@@ -3,8 +3,9 @@
  * static site. `slug` feeds the `data-work` attribute the media washes key off,
  * so it must keep matching the selectors in styles/paper-home.css.
  *
- * Case study hrefs still point at the static HTML pages at the repo root; those
- * routes have not been migrated yet.
+ * Rented's case study href resolves to the Next route at app/rented/rented. The
+ * rest still point at the static HTML pages at the repo root; those routes have
+ * not been migrated yet.
  */
 
 export type ProjectMedia =

@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import ContactModal from "@/components/ContactModal";
-import SiteChrome from "@/components/SiteChrome";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -49,19 +48,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* eslint-disable-next-line @next/next/no-css-tags */}
         <link rel="stylesheet" href="/shared/rented-prototype.css" />
       </head>
-      <body className="bg-page text-ink min-h-screen">
-        <section
-          className="paper-home mx-auto w-[min(1512px,100%)] px-gutter pt-7 pb-20 font-sans text-base leading-[1.55] to-md:px-5 to-md:pt-5 to-md:pb-16"
-          aria-labelledby="home-title"
-        >
-          <SiteChrome />
-          {children}
-        </section>
+      <body className="bg-page text-ink min-h-screen font-sans text-base leading-[1.55]">
+        {children}
 
         <ContactModal />
 
-        {/* The Rented showcase widget is shared with the static case study, so it
-            stays a plain script that mounts itself into [data-rp-embed]. */}
+        {/* The Rented prototype is shared with the static case study, so it stays
+            a plain script that mounts itself into every [data-rp-embed] — the
+            homepage showcase and the case study's full, interactive variant. */}
         <Script src="/shared/rented-prototype.js" strategy="afterInteractive" />
         <Analytics />
       </body>
