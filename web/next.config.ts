@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(import.meta.dirname),
   },
+
+  experimental: {
+    // This repo lives on an exFAT volume, which cannot store extended
+    // attributes, so macOS writes an AppleDouble "._name" sidecar beside every
+    // file. Turbopack's dev cache parses its own filenames as integers
+    // (00000001.sst), chokes on "._00000001", and dies on startup with
+    // "Failed to open database ... invalid digit found in string".
+    // Safe to re-enable on APFS or Linux, where no sidecars are created.
+    turbopackFileSystemCacheForDev: false,
+  },
 };
 
 export default nextConfig;
