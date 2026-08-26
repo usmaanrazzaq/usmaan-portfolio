@@ -33,9 +33,12 @@ const FILES = [
   "images/Adsum-Campaign-Black-Friday.webp",
   "images/Adsum-Campaign-ELAC.webp",
   "images/Adsum-Campaign-Workshop.webp",
+  "images/OTRS-Mobile-UI.webp",
   "video/NMYA-Video-Display.mov",
   "video/Adsum-SS26-Vid.mov",
+  // The homepage showcase and the case study hero are two different cuts.
   "video/OTRS-Final-Display.mov",
+  "video/OTRS-Desktop-Display.mov",
   "shared/rented-prototype.html",
   "shared/rented-prototype.js",
   "shared/rented-prototype.css",

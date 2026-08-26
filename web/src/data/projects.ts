@@ -3,9 +3,9 @@
  * static site. `slug` feeds the `data-work` attribute the media washes key off,
  * so it must keep matching the selectors in styles/paper-home.css.
  *
- * Rented, WCM, and Adsum case study hrefs resolve to Next routes. The rest
- * still point at the static HTML pages at the repo root; those routes have not
- * been migrated yet.
+ * Rented, WCM, Adsum, and On The Run Studio case study hrefs resolve to Next
+ * routes. The rest still point at the static HTML pages at the repo root; those
+ * routes have not been migrated yet.
  */
 
 export type ProjectMedia =
@@ -80,7 +80,7 @@ export const projects: Project[] = [
     headline: "Creating a brand and a Design Studio.",
     description:
       "What started as a visual reference account grew into a 5,000+ community of designers, studios, and brands — then a merch line, then a full design studio. Community insight now drives every client engagement.",
-    caseHref: "/on-the-run-studio/on-the-run-studio/otrs-case-study",
+    caseHref: "/on-the-run-studio/on-the-run-studio/otrs-case-study/",
     siteHref: "https://on-the-run-studio-site.vercel.app/",
     mediaLabel: "Read On The Run Studio case study",
     media: {
