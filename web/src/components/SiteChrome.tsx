@@ -4,11 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
 /** Which tab reads as current; the routes that render the work stack default to Work. */
-export type NavTab = "work" | "about";
+export type NavTab = "work" | "about" | "playground";
 
 /**
- * Playground still lives in the static site at the repo root. The rest stay
- * plain anchors too: the Rented prototype script mounts once per document load,
+ * The tabs are plain anchors: the Rented prototype script mounts once per document load,
  * so a client-side navigation would leave the homepage showcase on its fallback
  * image. Contact is a URL that opens the modal; ContactModal intercepts the
  * click.

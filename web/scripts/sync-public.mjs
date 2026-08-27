@@ -39,6 +39,8 @@ const FILES = [
   "images/Adsum-Campaign-ELAC.webp",
   "images/Adsum-Campaign-Workshop.webp",
   "images/OTRS-Mobile-UI.webp",
+  "images/goodreads-genre-onboarding.webp",
+  "images/claude-code-sidebar.webp",
   // The homepage showcase and the case study hero are two different cuts.
   "video/NMYA-Video-Display.mov",
   "video/NMYA-Colored-Vid.mov",
@@ -46,6 +48,7 @@ const FILES = [
   // The homepage showcase and the case study hero are two different cuts.
   "video/OTRS-Final-Display.mov",
   "video/OTRS-Desktop-Display.mov",
+  "video/Goodreads-Genre-Selection.mov",
   "shared/rented-prototype.html",
   "shared/rented-prototype.js",
   "shared/rented-prototype.css",
