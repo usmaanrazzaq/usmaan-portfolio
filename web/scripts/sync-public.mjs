@@ -20,6 +20,10 @@ const FILES = [
   "images/usmaan-logo-mark.png",
   "images/home-rented-showcase.webp",
   "images/home-nmya-showcase.webp",
+  "images/nmya-al-bashir-detail.png",
+  "images/nmya-search-detail.png",
+  "images/nmya-new-home-detail.png",
+  "images/nmya-old-home-detail.png",
   "images/home-wcm-showcase.webp",
   "images/WCM-Main-Display.webp",
   "images/WCM-Dashboard-Card.webp",
@@ -34,7 +38,9 @@ const FILES = [
   "images/Adsum-Campaign-ELAC.webp",
   "images/Adsum-Campaign-Workshop.webp",
   "images/OTRS-Mobile-UI.webp",
+  // The homepage showcase and the case study hero are two different cuts.
   "video/NMYA-Video-Display.mov",
+  "video/NMYA-Colored-Vid.mov",
   "video/Adsum-SS26-Vid.mov",
   // The homepage showcase and the case study hero are two different cuts.
   "video/OTRS-Final-Display.mov",

@@ -3,9 +3,8 @@
  * static site. `slug` feeds the `data-work` attribute the media washes key off,
  * so it must keep matching the selectors in styles/paper-home.css.
  *
- * Rented, WCM, Adsum, and On The Run Studio case study hrefs resolve to Next
- * routes. The rest still point at the static HTML pages at the repo root; those
- * routes have not been migrated yet.
+ * Every case study href now resolves to a Next route. About and Playground are
+ * still the static HTML pages at the repo root; they have not been migrated.
  */
 
 export type ProjectMedia =
@@ -47,7 +46,7 @@ export const projects: Project[] = [
     headline: "Redesigning a non-profit site to better serve Muslim youth.",
     description:
       "I led a redesign overhaul of the nonprofit association\u2019s website. I worked with stakeholders to better understand the longstanding issues, their goals for the website, and the problems they faced. I conducted user research through three to five focus groups with participants from different demographics, including age, roles, and knowledge levels. I used the feedback and research findings to redesign and develop the nonprofit\u2019s website while proposing a migration from WordPress to Webflow.",
-    caseHref: "/national-muslim-youth-association/muslim-youth-website/case-study",
+    caseHref: "/national-muslim-youth-association/muslim-youth-website/case-study/",
     siteHref: "https://atfal-website.vercel.app/",
     mediaLabel: "Read National Muslim Youth Association case study",
     media: {
