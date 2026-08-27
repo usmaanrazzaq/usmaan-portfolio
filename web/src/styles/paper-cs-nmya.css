@@ -1,0 +1,361 @@
+/*
+ * National Muslim Youth Association only — the rules where
+ * national-muslim-youth-association/muslim-youth-website/case-study-styles.css
+ * differs from the Rented sheet in paper-cs.css, which this file loads on top of.
+ *
+ * Next bundles page CSS globally, so the in-page rules are scoped to
+ * `.paper-cs--nmya` and the overlay rules to `.lightbox-overlay--nmya`. That
+ * keeps Rented's pair and chart lightbox at their own sizes, Adsum's charts
+ * stacked, and OTRS's globe row alone.
+ *
+ * The findings block is the resolved cascade of the shared
+ * interactive-components.css base and the NMYA overrides that follow it on the
+ * static page, flattened here so the shared sheet does not have to be imported.
+ */
+
+/* Safari keeps the video's square corners without an explicit clip. */
+.paper-cs--nmya .paper-cs__hero,
+.paper-cs--nmya .paper-cs__shot {
+  clip-path: inset(0 round 12px);
+}
+
+.paper-cs--nmya .paper-cs__hero video {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  aspect-ratio: 722 / 488;
+  background: var(--cs-frame);
+}
+
+/* --- Detail pairs: tighter gutter and a wider crop than Rented --- */
+.paper-cs--nmya .paper-cs__pair {
+  gap: 10px;
+}
+
+.paper-cs--nmya .paper-cs__pair > .paper-cs__shot > img {
+  aspect-ratio: 1024 / 696;
+  object-position: top center;
+}
+
+.paper-cs--nmya .paper-cs__shot img.paper-cs__zoomable:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+/* --- Research insight map --- */
+.paper-cs--nmya .paper-cs__findings[data-research-findings] {
+  margin-top: var(--cs-gap-md);
+  padding: 28px 24px;
+  background: var(--cs-frame);
+  border-radius: 12px;
+  display: grid;
+  gap: 28px;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__eyebrow {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: var(--cs-muted);
+  margin-bottom: 8px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__intro p {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--cs-ink);
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__map {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  position: relative;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__group {
+  background: var(--cs-surface);
+  border-radius: 10px;
+  padding: 18px 16px;
+  min-height: 0;
+  position: relative;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__group-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__group-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  color: var(--cs-muted);
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__group-name {
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--cs-ink);
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__row {
+  display: grid;
+  gap: 0.35rem;
+  border-top: 1px solid rgba(43, 43, 43, 0.08);
+  padding-top: 12px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__row:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: var(--cs-ink);
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__label::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--cs-ink);
+  flex: 0 0 auto;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__desc {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--cs-muted);
+  margin-top: 4px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  position: relative;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__connector::before {
+  content: "";
+  width: min(64%, 420px);
+  height: 1px;
+  background: rgba(43, 43, 43, 0.16);
+}
+
+/* The static sheet only recolours this bar's dead border-left; the painted
+   fill stays the shared sheet's grey in both themes. */
+.paper-cs--nmya .paper-cs__findings .research-findings__connector::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 1px;
+  height: 1rem;
+  background: #d8d8d8;
+  transform: translateX(-50%);
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__response {
+  background: var(--cs-ink);
+  border-radius: 10px;
+  padding: 18px 16px;
+  display: grid;
+  gap: 1rem;
+  color: #ffffff;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__response-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 12px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.paper-cs--nmya .paper-cs__findings .research-findings__chip {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  padding: 7px 12px;
+  color: #ffffff;
+}
+
+/* --- Lightbox --- */
+.lightbox-overlay--nmya .lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  transform: scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lightbox-overlay--nmya.active .lightbox-img {
+  transform: scale(1);
+}
+
+.lightbox-overlay--nmya .lightbox-chart {
+  width: min(920px, 100%);
+  max-height: 85vh;
+}
+
+/* The static page loads its own sheet after interactive-components.css, so
+   `.lightbox-chart-card` beats `.chart-card` on background and padding. */
+.lightbox-overlay--nmya .lightbox-chart-card {
+  width: 100%;
+  margin: 0;
+  background: #fff;
+  border-radius: 12px;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  transform: scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lightbox-overlay--nmya.active .lightbox-chart-card {
+  transform: scale(1);
+}
+
+.lightbox-overlay--nmya .lightbox-chart-card .line-chart {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.lightbox-overlay--nmya .lightbox-chart-card .chart-line {
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+}
+
+.lightbox-overlay--nmya .lightbox-chart-card .chart-area {
+  opacity: 1;
+}
+
+.lightbox-overlay--nmya .lightbox-chart-card .chart-dots circle {
+  transform: scale(1);
+}
+
+.lightbox-overlay--nmya .lightbox-close {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.lightbox-overlay--nmya .lightbox-close::before,
+.lightbox-overlay--nmya .lightbox-close::after {
+  background: #fff;
+  transition: opacity 0.2s ease;
+}
+
+.lightbox-overlay--nmya .lightbox-close:hover::before,
+.lightbox-overlay--nmya .lightbox-close:hover::after {
+  opacity: 0.65;
+}
+
+.lightbox-overlay--nmya .lightbox-close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@container (max-width: 720px) {
+  .paper-cs--nmya .paper-cs__findings .research-findings__connector {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  /* flex: 1 1 0 collapses the cards in a column flex. */
+  .paper-cs--nmya .paper-cs__charts .chart-card {
+    flex: none;
+    width: 100%;
+  }
+
+  /* The static sheet's narrow padding and gap are authored below the base
+     rule's specificity, so live keeps 28px/24px here. Not ported. */
+
+  .paper-cs--nmya .paper-cs__findings .research-findings__map {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .paper-cs--nmya .paper-cs__findings .research-findings__connector {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .paper-cs--nmya .paper-cs__findings .research-findings__chips {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .paper-cs--nmya .paper-cs__findings .research-findings__chip {
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-cs--nmya .paper-cs__findings .research-findings__intro,
+  .paper-cs--nmya .paper-cs__findings .research-findings__group,
+  .paper-cs--nmya .paper-cs__findings .research-findings__row,
+  .paper-cs--nmya .paper-cs__findings .research-findings__connector,
+  .paper-cs--nmya .paper-cs__findings .research-findings__response,
+  .paper-cs--nmya .paper-cs__findings .research-findings__chip {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .lightbox-overlay--nmya,
+  .lightbox-overlay--nmya .lightbox-img,
+  .lightbox-overlay--nmya .lightbox-chart-card {
+    transition: none;
+  }
+}

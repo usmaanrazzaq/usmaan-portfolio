@@ -1,0 +1,57 @@
+/*
+ * WCM Connect only — the rules where wcm-connect/case-study-styles.css differs
+ * from the Rented sheet in paper-cs.css, which this file loads on top of.
+ *
+ * Next bundles page CSS globally, so the media rules are scoped to
+ * `.paper-cs--wcm` to keep Rented's aspect ratios intact. The lightbox rules
+ * are left unscoped, matching the static file: they sit outside `.paper-cs`,
+ * and Rented's overlay renders a chart slot rather than an image.
+ */
+
+.paper-cs--wcm .paper-cs__hero img {
+  aspect-ratio: 906 / 612;
+}
+
+.paper-cs--wcm .paper-cs__shot--wide img {
+  aspect-ratio: 1024 / 694;
+}
+
+.paper-cs--wcm .paper-cs__pair--components img {
+  aspect-ratio: 1024 / 640;
+  object-fit: cover;
+}
+
+.paper-cs--wcm .paper-cs__pair--components + .paper-cs__pair--components {
+  margin-top: var(--cs-gap-sm);
+}
+
+.paper-cs--wcm .paper-cs__hero img.paper-cs__zoomable:focus-visible,
+.paper-cs--wcm .paper-cs__shot img.paper-cs__zoomable:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+.lightbox-img {
+  display: block;
+  max-width: 100%;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  transform: scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.lightbox-overlay.active .lightbox-img {
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-overlay:has(.lightbox-img),
+  .lightbox-img {
+    transition: none;
+  }
+}
