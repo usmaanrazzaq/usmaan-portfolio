@@ -49,9 +49,15 @@ export default function ContactModal() {
     document.title = "Contact | Usmaan Razzaq";
 
     if (options.pushState && !isContactPath(window.location.pathname)) {
-      // Raw history, not the Next router: /contact/ is an overlay on the
-      // homepage, so re-rendering the route would restart the page.
-      window.history.pushState({ contactModal: true }, "", "/contact/");
+      // Raw history, not the Next router: /contact/ is an overlay on the page
+      // it was opened from, so re-rendering the route would restart the page.
+      // The opener rides along in history state so closing returns to it —
+      // /about/ stays /about/, the way the static site restores it.
+      window.history.pushState(
+        { contactModal: true, restorePath: window.location.pathname },
+        "",
+        "/contact/",
+      );
       openedViaRouteRef.current = true;
     }
 
@@ -67,7 +73,9 @@ export default function ContactModal() {
 
     const shouldRestoreHistory = options.restoreHistory !== false && openedViaRouteRef.current;
     if (shouldRestoreHistory && isContactPath(window.location.pathname)) {
-      window.history.replaceState({}, "", "/");
+      // A deep link to /contact/ renders the homepage, so that is the fallback.
+      const state = window.history.state as { restorePath?: string } | null;
+      window.history.replaceState({}, "", state?.restorePath ?? "/");
     }
     openedViaRouteRef.current = false;
 

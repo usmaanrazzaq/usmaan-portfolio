@@ -1,22 +1,29 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import ThemeToggle from "@/components/ThemeToggle";
 
-/**
- * Playground and About still live in the static site at the repo root, so they
- * stay plain anchors. Contact is a URL that opens the modal; ContactModal
- * intercepts the click.
- */
-const TABS = [
-  { label: "Work", href: "#work", active: true },
-  { label: "Playground", href: "/playground/", external: true },
-  { label: "About", href: "/about/", external: true },
-  { label: "Contact", href: "/contact/", external: true },
-] as const;
+/** Which tab reads as current; the routes that render the work stack default to Work. */
+export type NavTab = "work" | "about";
 
-export default function SiteChrome() {
+/**
+ * Playground still lives in the static site at the repo root. The rest stay
+ * plain anchors too: the Rented prototype script mounts once per document load,
+ * so a client-side navigation would leave the homepage showcase on its fallback
+ * image. Contact is a URL that opens the modal; ContactModal intercepts the
+ * click.
+ */
+function tabsFor(current: NavTab) {
+  return [
+    // Work is the in-page work stack on the homepage, a link back to it elsewhere.
+    { id: "work", label: "Work", href: current === "work" ? "#work" : "/" },
+    { id: "playground", label: "Playground", href: "/playground/" },
+    { id: "about", label: "About", href: "/about/" },
+    { id: "contact", label: "Contact", href: "/contact/" },
+  ] as const;
+}
+
+export default function SiteChrome({ current = "work" }: { current?: NavTab }) {
   const [isOpen, setIsOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
 
@@ -39,12 +46,16 @@ export default function SiteChrome() {
     };
   }, [isOpen]);
 
-  const activeTab = TABS.find((tab) => "active" in tab && tab.active) ?? TABS[0];
+  const tabs = tabsFor(current);
+  const activeTab = tabs.find((tab) => tab.id === current) ?? tabs[0];
 
   return (
     <header className="flex items-center justify-between gap-[18px] to-md:gap-3">
       <div className="flex min-w-0 items-center gap-[18px] to-md:gap-3">
-        <Link
+        {/* Plain anchor, like the tabs: a client-side navigation to the homepage
+            would leave the Rented showcase sitting on its fallback image. */}
+        {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+        <a
           href="/"
           className="block h-[42px] w-[82px] shrink-0 leading-[0] to-sm:h-auto to-sm:w-[72px]"
           aria-label="Usmaan Razzaq — Home"
@@ -58,7 +69,7 @@ export default function SiteChrome() {
             alt=""
             className="block h-[42px] w-[82px] object-cover to-sm:aspect-[82/42] to-sm:h-auto to-sm:w-[72px]"
           />
-        </Link>
+        </a>
 
         <nav
           ref={navRef}
@@ -95,11 +106,11 @@ export default function SiteChrome() {
           </button>
 
           <div className="paper-home__tabs" id="paper-home-menu">
-            {TABS.map((tab) => {
-              const isActive = "active" in tab && tab.active;
+            {tabs.map((tab) => {
+              const isActive = tab.id === current;
               return (
                 <a
-                  key={tab.label}
+                  key={tab.id}
                   href={tab.href}
                   className={isActive ? "is-active" : undefined}
                   aria-current={isActive ? "page" : undefined}

@@ -1,9 +1,9 @@
 /**
- * Copies the homepage's assets from the static site at the repo root into
+ * Copies the Next app's assets from the static site at the repo root into
  * web/public. The root files stay the single source of truth, so these copies
  * are gitignored and refreshed on every dev/build run.
  *
- * Only files the Next homepage actually references are copied. Unchanged files
+ * Only files the Next routes actually reference are copied. Unchanged files
  * are skipped so the ~78MB of showcase video is written once, not every run.
  */
 
@@ -18,6 +18,7 @@ const publicRoot = join(webRoot, "public");
 /** Files copied 1:1, relative to the repo root. */
 const FILES = [
   "images/usmaan-logo-mark.png",
+  "images/About-Page-IMG.webp",
   "images/home-rented-showcase.webp",
   "images/home-nmya-showcase.webp",
   "images/nmya-al-bashir-detail.png",
