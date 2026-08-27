@@ -60,6 +60,21 @@ const FILES = [
 /** Directories copied wholesale, relative to the repo root. */
 const DIRS = ["images/rented-proto"];
 
+/**
+ * Copies written under a different name, relative to the repo root.
+ *
+ * Next serves public/ files as static assets except *.html, which it treats as
+ * pages -- so /shared/rented-prototype.html 404s in production even though it
+ * works in `next dev`. The prototype's markup ships under a second, inert
+ * extension the router does not claim.
+ */
+const RENAMES = [
+  {
+    from: "shared/rented-prototype.html",
+    to: "shared/rented-prototype.partial",
+  },
+];
+
 async function statOrNull(path) {
   try {
     return await stat(path);
@@ -90,6 +105,21 @@ async function copyFile(relativePath) {
   return 1;
 }
 
+async function copyRenamed({ from: fromPath, to: toPath }) {
+  const from = join(siteRoot, fromPath);
+  const to = join(publicRoot, toPath);
+
+  if (!(await statOrNull(from))) {
+    console.warn(`[sync-public] missing source, skipped: ${fromPath}`);
+    return 0;
+  }
+  if (await isUpToDate(from, to)) return 0;
+
+  await mkdir(dirname(to), { recursive: true });
+  await cp(from, to);
+  return 1;
+}
+
 async function copyDir(relativePath) {
   const from = join(siteRoot, relativePath);
   if (!(await statOrNull(from))) {
@@ -107,7 +137,11 @@ async function copyDir(relativePath) {
   return results.reduce((total, copied) => total + copied, 0);
 }
 
-const counts = await Promise.all([...FILES.map(copyFile), ...DIRS.map(copyDir)]);
+const counts = await Promise.all([
+  ...FILES.map(copyFile),
+  ...DIRS.map(copyDir),
+  ...RENAMES.map(copyRenamed),
+]);
 const copied = counts.reduce((total, count) => total + count, 0);
 
 console.log(
