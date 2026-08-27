@@ -11,7 +11,10 @@
 (function (global) {
   'use strict';
 
-  var PARTIAL_URL = '/shared/rented-prototype.html';
+  /* Next serves public/*.html as pages, not assets, so the production build
+     404s the .html copy; the static site at the repo root only has the .html. */
+  var PARTIAL_URL = '/shared/rented-prototype.partial';
+  var PARTIAL_FALLBACK_URL = '/shared/rented-prototype.html';
 
   var VARIANTS = {
     full: { interactive: true, gutter: 40 },
@@ -21,11 +24,17 @@
   var instances = [];
   var partialRequest = null;
 
+  function fetchPartial(url) {
+    return global.fetch(url).then(function (response) {
+      if (!response.ok) throw new Error('rented prototype partial: ' + response.status);
+      return response.text();
+    });
+  }
+
   function loadPartial() {
     if (!partialRequest) {
-      partialRequest = global.fetch(PARTIAL_URL).then(function (response) {
-        if (!response.ok) throw new Error('rented prototype partial: ' + response.status);
-        return response.text();
+      partialRequest = fetchPartial(PARTIAL_URL).catch(function () {
+        return fetchPartial(PARTIAL_FALLBACK_URL);
       });
     }
     return partialRequest;
