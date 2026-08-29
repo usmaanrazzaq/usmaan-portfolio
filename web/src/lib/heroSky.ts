@@ -5,6 +5,26 @@ export const HERO_SKY_ID = "home-hero-sky";
 export const HERO_SKY_STORAGE_KEY = "hero-sky";
 
 /**
+ * Serialises a value for inlining inside a <script> element.
+ *
+ * The HTML parser ends a script element at the first `</script` sequence
+ * regardless of JavaScript string context, and JSON.stringify does not escape
+ * `<`. Alt text here comes from Are.na block descriptions, so a description
+ * containing `</script` would close the element early and let the rest be
+ * parsed as HTML -- a broken picker at best, script injection at worst.
+ * Escaping `<` keeps the JSON valid and makes that impossible.
+ *
+ * U+2028/U+2029 go too: they are legal in JSON strings but terminate a line in
+ * older JavaScript parsers, and this script is deliberately un-transpiled.
+ */
+function inlineJson(value: unknown): string {
+  return JSON.stringify(value)
+    .replace(/</g, "\\u003c")
+    .replace(new RegExp("\u2028", "g"), "\\u2028")
+    .replace(new RegExp("\u2029", "g"), "\\u2029");
+}
+
+/**
  * Picks the hero plate's image, in the browser, before the plate paints.
  *
  * It has to run client-side: every route is prerendered to static HTML, so a
@@ -31,23 +51,11 @@ export const HERO_SKY_STORAGE_KEY = "hero-sky";
  * The pool is passed in rather than imported so the caller decides the source —
  * the Are.na channel, or the local manifest when that fetch fails.
  */
-/**
- * Escapes a value for inlining inside an HTML `<script>` element. `JSON.stringify`
- * leaves `<` untouched, so a value containing `</script` (e.g. an Are.na
- * description used as alt text) would otherwise close the script early and let
- * the remainder be parsed as HTML — a picker break at best, script injection at
- * worst. Escaping `<` as `\u003c` keeps the JSON valid while making that
- * impossible.
- */
-function inlineJson(value: unknown): string {
-  return JSON.stringify(value).replace(/</g, "\\u003c");
-}
-
 export function heroSkyScript(pool: HeroSky[]): string {
   return `(function () {
   var pool = ${inlineJson(pool.map((sky) => [sky.src, sky.alt]))};
-  var key = ${JSON.stringify(HERO_SKY_STORAGE_KEY)};
-  var id = ${JSON.stringify(HERO_SKY_ID)};
+  var key = ${inlineJson(HERO_SKY_STORAGE_KEY)};
+  var id = ${inlineJson(HERO_SKY_ID)};
   if (!pool.length) return;
 
   var index = Math.floor(Math.random() * pool.length);
