@@ -40,7 +40,7 @@ export default function AboutContent() {
       </h1>
 
       <div className="paper-about__layout">
-        <figure className="paper-about__photo">
+        <figure className="paper-about__photo home-enter [--enter-delay:60ms]">
           {/* Not next/image: a fixed-size asset synced from the static site. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -53,7 +53,7 @@ export default function AboutContent() {
           />
         </figure>
 
-        <div className="paper-about__content">
+        <div className="paper-about__content home-enter [--enter-delay:140ms]">
           <div className="paper-about__bio">
             <p>
               {"I'm Usmaan, a Product Designer and Front-End Developer based in Queens, NY. I'm passionate about designing intuitive, user-centered experiences that solve real problems and feel natural to use. I studied Multimedia Programming and Web Design at Borough of Manhattan Community College, where I built a foundation that bridges design and code. I continuously sharpen my front-end skills through platforms like Scrimba. At the core of my work is a belief that great design isn't just about how something looks, but how it works and how it makes people feel."}

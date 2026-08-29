@@ -18,14 +18,14 @@ function subscribe(onChange: () => void) {
   return () => observer.disconnect();
 }
 
-export default function ThemeToggle() {
+export default function ThemeToggle({ className }: { className?: string }) {
   const theme = useSyncExternalStore<Theme>(subscribe, getPreferredTheme, () => "light");
   const isDark = theme === "dark";
 
   return (
     <button
       type="button"
-      className="paper-home__theme"
+      className={className ? `paper-home__theme ${className}` : "paper-home__theme"}
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
       aria-pressed={isDark}
       onClick={() => applyTheme(getPreferredTheme() === "dark" ? "light" : "dark")}

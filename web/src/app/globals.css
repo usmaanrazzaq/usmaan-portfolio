@@ -32,6 +32,11 @@
   --home-divider: #dddddd;
   --home-media-bg: #eeecec;
   --home-accent: #2f5bea;
+  /* Hero: the panel ground, the translucent nav/scroll glass, and its hairline. */
+  --home-hero-panel: #f8f7f2;
+  --home-glass: rgba(255, 255, 255, 0.25);
+  --home-hairline: #8d8d92;
+  --home-frost: blur(24px) saturate(180%);
   --home-gutter: 25px;
   --home-copy: 536px;
   --home-media: 906px;
@@ -52,6 +57,10 @@ html[data-theme="dark"] {
   --home-pill-stroke: rgba(255, 255, 255, 0.12);
   --home-divider: #2a2a2a;
   --home-media-bg: #1c1c1c;
+  --home-hero-panel: #191919;
+  --home-glass: rgba(255, 255, 255, 0.06);
+  --home-hairline: rgba(255, 255, 255, 0.22);
+  --home-frost: blur(24px) saturate(140%);
   background-color: var(--home-bg);
 }
 
@@ -67,6 +76,9 @@ html[data-theme="dark"] {
   --color-pill: var(--home-pill);
   --color-pill-stroke: var(--home-pill-stroke);
   --color-accent: var(--home-accent);
+  --color-hero-panel: var(--home-hero-panel);
+  --color-glass: var(--home-glass);
+  --color-hairline: var(--home-hairline);
 
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -84,4 +96,65 @@ html[data-theme="dark"] {
 
 html {
   font-size: 16px;
+}
+
+/*
+ * Cross-document view transitions.
+ *
+ * The nav tabs are deliberately plain anchors -- the Rented prototype script
+ * mounts once per document load -- so routing stays a real browser navigation.
+ * This hands the cross-fade to the browser instead of a client-side router,
+ * which means none of that constraint has to change. Firefox has no support
+ * yet and simply gets the instant swap it has today.
+ */
+@view-transition {
+  navigation: auto;
+}
+
+/*
+ * The outgoing page holds at full opacity and the incoming one dissolves over
+ * the top of it (::view-transition-new paints above ::view-transition-old).
+ * Fading both would briefly show the page background through the middle of the
+ * transition. Movement is left to each page's own entrance so the two do not
+ * fight each other.
+ */
+::view-transition-old(root) {
+  animation: none;
+}
+
+::view-transition-new(root) {
+  animation: page-dissolve-in 260ms var(--ease-out-expo) both;
+}
+
+@keyframes page-dissolve-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
+/*
+ * Present only while the theme toggle is mid-swap (see applyTheme). Covers the
+ * properties that actually carry a theme colour -- `filter` is in the list so
+ * the hero stamp's dark-mode inversion cross-fades with everything else.
+ * `opacity` is deliberately absent: it belongs to the scroll reveals.
+ */
+.is-theme-switching,
+.is-theme-switching *,
+.is-theme-switching *::before,
+.is-theme-switching *::after {
+  transition:
+    background-color 320ms ease,
+    color 320ms ease,
+    border-color 320ms ease,
+    fill 320ms ease,
+    stroke 320ms ease,
+    filter 320ms ease !important;
+  transition-delay: 0s !important;
 }

@@ -11,7 +11,7 @@ export default function PlaygroundContent() {
       </h1>
 
       <div className="paper-projects__list">
-        <article className="paper-projects__item">
+        <article className="paper-projects__item home-enter [--enter-delay:60ms]">
           <figure className="paper-projects__media paper-projects__media--phone">
             {/* Native video, like the case study heroes: the .mov is synced
                 from the static site and plays as its own loop. */}
@@ -38,7 +38,7 @@ export default function PlaygroundContent() {
           </p>
         </article>
 
-        <article className="paper-projects__item">
+        <article className="paper-projects__item home-enter [--enter-delay:150ms]">
           <figure className="paper-projects__media">
             {/* Not next/image: a fixed-size asset synced from the static site. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}

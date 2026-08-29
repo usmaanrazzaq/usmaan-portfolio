@@ -41,9 +41,31 @@ export function getPreferredTheme(): Theme {
   return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 }
 
+/**
+ * Every --home-* colour swaps on one frame, which reads as a flash. The class
+ * below lends the document a transition on just the theme-carrying properties
+ * for the length of the swap, then takes it away again -- a permanent global
+ * transition would fight hover states and drag on scroll.
+ */
+const THEME_SWITCH_MS = 360;
+let switchTimer: number | undefined;
+
+function beginThemeSwitch() {
+  // Honour reduced motion, and skip on the server-rendered first paint.
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const root = document.documentElement;
+  root.classList.add("is-theme-switching");
+  window.clearTimeout(switchTimer);
+  switchTimer = window.setTimeout(() => {
+    root.classList.remove("is-theme-switching");
+  }, THEME_SWITCH_MS);
+}
+
 export function applyTheme(theme: Theme) {
   const color = THEME_COLORS[theme];
 
+  beginThemeSwitch();
   document.documentElement.setAttribute("data-theme", theme);
   document.documentElement.style.colorScheme = theme;
   document.documentElement.style.backgroundColor = color;

@@ -1,153 +1,164 @@
 /*
  * Paper home — the parts of the original home.css that Tailwind is a bad fit
- * for: the animated metal pill borders, the per-project media washes and their
- * SVG masks, the video stage, the live clock, the frosted mobile nav panel, and
- * the scroll reveal. Structure, type, and color live in Tailwind utilities on
+ * for: the frosted glass controls, the per-project media washes and their SVG
+ * masks, the video stage, the live clock, and the scroll reveal. Structure, type, and color live in Tailwind utilities on
  * the components; these rules only own what utilities cannot express.
  *
  * Ported from home.css in the static site at the repo root.
  */
 
-@property --metal-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes paper-home-metal-spin {
-  to {
-    --metal-angle: 360deg;
+/*
+ * —— Entrance ——
+ *
+ * The hero assembles itself on load in staggered beats; About and Playground
+ * reuse the same classes so arriving there after a page transition is not a
+ * hard cut either. Each element sets its
+ * own --enter-delay via a [--enter-delay:Nms] utility; these classes own the
+ * motion. The delay has to come through a custom property rather than an
+ * animation-delay utility because this file is unlayered and so outranks
+ * Tailwind's utilities layer -- the `animation` shorthand below would reset any
+ * delay a utility set.
+ *
+ * fill-mode is `backwards`, never `forwards`: it holds the from-state through
+ * the delay and then hands the element back to its normal computed style. With
+ * `forwards` the end value would be pinned forever, which would override the
+ * stamp's resting 25% and make the scroll cue's fade-out impossible.
+ */
+@keyframes home-enter-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
   }
 }
 
-/* Shared conic-gradient hairline used by every pill-shaped control. */
-.paper-home__tabs a::before,
-.paper-home__nav-toggle::before,
-.paper-home__theme::before,
-.paper-home__cta::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--metal-angle),
-    #8f8f8f 0deg,
-    #f4f4f4 45deg,
-    #6a6a6a 90deg,
-    #dedede 140deg,
-    #9b9b9b 180deg,
-    #ffffff 225deg,
-    #737373 280deg,
-    #ececec 320deg,
-    #8f8f8f 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+@keyframes home-enter-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes home-enter-panel {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes home-enter-plate {
+  from {
+    opacity: 0;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes home-enter-rule {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+@keyframes home-enter-stamp {
+  from {
+    opacity: 0;
+  }
+}
+
+.home-enter {
+  animation: home-enter-rise 600ms var(--ease-out-expo) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.home-enter-drop {
+  animation: home-enter-drop 600ms var(--ease-out-expo) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.home-enter-panel {
+  animation: home-enter-panel 700ms var(--ease-out-expo) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.home-enter-plate {
+  animation: home-enter-plate 900ms var(--ease-out-expo) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.home-enter-rule {
+  transform-origin: top;
+  animation: home-enter-rule 700ms var(--ease-out-expo) backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+.home-enter-stamp {
+  animation: home-enter-stamp 1200ms ease backwards;
+  animation-delay: var(--enter-delay, 0ms);
+}
+
+/*
+ * —— Scroll cue ——
+ * Dimmed by ScrollCue once the work section reaches the viewport. visibility
+ * lands last so the link leaves the tab order instead of sitting invisible and
+ * still focusable; it is discrete, so it flips at the end of the fade out and
+ * immediately on the way back in.
+ */
+.home-scroll-cue {
+  transition:
+    opacity 400ms var(--ease-out-expo),
+    transform 400ms var(--ease-out-expo),
+    visibility 400ms;
+}
+
+.home-scroll-cue.is-dimmed {
   opacity: 0;
-  transition: opacity 220ms ease;
-  z-index: 0;
+  transform: translateY(8px);
+  visibility: hidden;
+  pointer-events: none;
 }
 
 /* —— Nav —— */
 .paper-home__nav {
   position: relative;
   flex-shrink: 0;
-  margin-left: 6px;
-}
-
-.paper-home__nav-toggle {
-  position: relative;
-  display: none;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  min-width: 112px;
-  min-height: 36px;
-  padding: 8px 12px 8px 14px;
-  box-sizing: border-box;
-  border-radius: 100px;
-  color: var(--home-ink);
-  font: inherit;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
-  text-align: left;
-  cursor: pointer;
-  appearance: none;
-  -webkit-appearance: none;
-  isolation: isolate;
-  background: var(--home-surface);
-  border: 1px solid transparent;
-  box-shadow: none;
-  transition:
-    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.paper-home__nav-toggle-label {
-  position: relative;
-  z-index: 1;
-}
-
-.paper-home__nav-chevron {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-  opacity: 0.65;
-  transition: transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.paper-home__nav.is-open .paper-home__nav-chevron {
-  transform: rotate(180deg);
 }
 
 .paper-home__tabs {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
   flex-shrink: 0;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-radius: 100px;
+  background: var(--home-glass);
+  border: 0.5px solid var(--home-hairline);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
 }
 
+/*
+ * Text-only inside the pill. The frame draws every tab the same ink; the muted
+ * resting colour is kept so the current page still reads at a glance off-home.
+ */
 .paper-home__tabs > a {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: auto;
-  min-width: 84px;
-  min-height: 30px;
-  padding: 7px 14px;
   box-sizing: border-box;
-  border-radius: 100px;
   color: var(--home-muted);
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 18px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
   text-align: center;
   text-decoration: none;
-  isolation: isolate;
-  background: var(--home-surface);
-  border: 1px solid transparent;
-  box-shadow: none;
-  transition:
-    color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+  background: none;
+  border: 0;
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-home__tabs a.is-active {
   color: var(--home-ink);
-  background: var(--home-surface);
-  border-color: transparent;
-}
-
-.paper-home__tabs a.is-active::before {
-  opacity: 0;
 }
 
 /* —— Theme toggle —— */
@@ -157,9 +168,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  margin-left: auto;
+  width: 45px;
+  height: 45px;
   padding: 0;
   box-sizing: border-box;
   border-radius: 100px;
@@ -168,8 +178,11 @@
   appearance: none;
   -webkit-appearance: none;
   isolation: isolate;
-  background: var(--home-surface);
-  border: 1px solid transparent;
+  background: var(--home-glass);
+  border: 0.5px solid var(--home-hairline);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
+  pointer-events: auto;
   box-shadow: none;
   transition:
     background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -183,16 +196,23 @@
  * having to know the theme during hydration.
  */
 .paper-home__theme .theme-icon {
-  position: relative;
+  position: absolute;
+  inset: 0;
   z-index: 1;
-  display: none;
-  width: 16px;
-  height: 16px;
+  margin: auto;
+  width: 24px;
+  height: 24px;
+  opacity: 0;
+  transform: rotate(-70deg) scale(0.7);
+  transition:
+    opacity 320ms var(--ease-out-expo),
+    transform 320ms var(--ease-out-expo);
 }
 
 html:not([data-theme="dark"]) .paper-home__theme .theme-icon--moon,
 html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
-  display: block;
+  opacity: 1;
+  transform: none;
 }
 
 .paper-home__theme:focus-visible {
@@ -290,163 +310,16 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 }
 
 /* —— Socials —— */
-.paper-home__socials {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 16px;
-}
-
 .paper-home__socials a {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
   color: var(--home-ink);
-  opacity: 0.92;
-  isolation: isolate;
-  transition:
-    color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.22s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.26s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.paper-home__socials a::before,
-.paper-home__socials a::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.78);
-  transition:
-    opacity 0.35s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-/* Metal shader shimmer behind the brand glow */
-.paper-home__socials a::before {
-  width: 46px;
-  height: 46px;
-  background: conic-gradient(
-    from var(--metal-angle),
-    #8f8f8f 0deg,
-    #f4f4f4 40deg,
-    var(--icon-metal, #c8c8c8) 90deg,
-    #6a6a6a 140deg,
-    #dedede 180deg,
-    #ffffff 230deg,
-    var(--icon-metal, #b8b8b8) 280deg,
-    #ececec 320deg,
-    #8f8f8f 360deg
-  );
-  filter: blur(11px) saturate(1.15);
-}
-
-/* Brand-color core glow */
-.paper-home__socials a::after {
-  background: radial-gradient(
-    circle,
-    var(--icon-glow, transparent) 0%,
-    transparent 70%
-  );
-  filter: blur(1.5px);
-}
-
-.paper-home__socials a[aria-label="LinkedIn"] {
-  --icon-glow: rgba(10, 102, 194, 0.72);
-  --icon-metal: #5ea3e8;
-}
-
-.paper-home__socials a[aria-label="Instagram"] {
-  --icon-glow: rgba(228, 64, 95, 0.72);
-  --icon-metal: #f58529;
-}
-
-.paper-home__socials a[aria-label="GitHub"] {
-  --icon-glow: rgba(23, 21, 21, 0.45);
-  --icon-metal: #d0d0d0;
-}
-
-.paper-home__socials a[aria-label="X (Twitter)"] {
-  --icon-glow: rgba(0, 0, 0, 0.42);
-  --icon-metal: #e8e8e8;
-}
-
-.paper-home__socials a[aria-label="Resume"] {
-  --icon-glow: rgba(47, 91, 234, 0.55);
-  --icon-metal: #9bb4ff;
-}
-
-html[data-theme="dark"] .paper-home__socials a[aria-label="GitHub"] {
-  --icon-glow: rgba(220, 220, 220, 0.45);
-  --icon-metal: #f2f2f2;
-}
-
-html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"] {
-  --icon-glow: rgba(255, 255, 255, 0.4);
-  --icon-metal: #ffffff;
-}
-
-.paper-home__socials svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  position: relative;
-  z-index: 1;
-}
-
-.paper-home__socials a:last-child svg {
-  width: 15px;
-  height: 15px;
-  fill: none;
+  text-decoration: none;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-home__socials a:focus-visible {
   outline: 2px solid #2f5bea;
   outline-offset: 3px;
-}
-
-.paper-home__socials a[aria-label="LinkedIn"]:focus-visible {
-  color: #0a66c2;
-}
-
-.paper-home__socials a[aria-label="Instagram"]:focus-visible {
-  color: #e4405f;
-}
-
-.paper-home__socials a[aria-label="GitHub"]:focus-visible {
-  color: #171515;
-}
-
-.paper-home__socials a[aria-label="X (Twitter)"]:focus-visible {
-  color: #000000;
-}
-
-.paper-home__socials a[aria-label="Resume"]:focus-visible {
-  color: #2f5bea;
-}
-
-.paper-home__socials a:focus-visible::before,
-.paper-home__socials a:focus-visible::after {
-  opacity: 0.72;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.paper-home__socials a:focus-visible::before {
-  animation: paper-home-metal-spin 2.2s linear infinite;
-}
-
-html[data-theme="dark"] .paper-home__socials a[aria-label="GitHub"]:focus-visible,
-html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-visible {
-  color: #f0f0f0;
+  border-radius: 4px;
 }
 
 /* —— Case reveal —— */
@@ -480,9 +353,13 @@ html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:focus-v
   font-weight: 500;
   line-height: 18px;
   text-decoration: none;
-  isolation: isolate;
-  background: var(--home-surface);
-  border: 1px solid var(--home-pill-stroke);
+  /* Same frosted glass as the floating nav pill and the scroll cue. Only the
+     surface is shared -- the size stays as it was, since this sits inline in a
+     case card rather than floating over the page. */
+  background: var(--home-glass);
+  border: 0.5px solid var(--home-hairline);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
   box-shadow: none;
   transition:
     background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -704,100 +581,16 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 /* —— Hover —— */
 @media (hover: hover) {
   .paper-home__socials a:hover {
-    opacity: 1;
-    transform: translateY(-1px);
-  }
-
-  .paper-home__socials a:hover::before,
-  .paper-home__socials a:hover::after {
-    opacity: 0.72;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  .paper-home__socials a:hover::before {
-    animation: paper-home-metal-spin 2.2s linear infinite;
-  }
-
-  .paper-home__socials a[aria-label="LinkedIn"]:hover {
-    color: #0a66c2;
-  }
-
-  .paper-home__socials a[aria-label="Instagram"]:hover {
-    color: #e4405f;
-  }
-
-  .paper-home__socials a[aria-label="GitHub"]:hover {
-    color: #171515;
-  }
-
-  .paper-home__socials a[aria-label="X (Twitter)"]:hover {
-    color: #000000;
-  }
-
-  .paper-home__socials a[aria-label="Resume"]:hover {
-    color: #2f5bea;
-  }
-
-  html[data-theme="dark"] .paper-home__socials a[aria-label="GitHub"]:hover,
-  html[data-theme="dark"] .paper-home__socials a[aria-label="X (Twitter)"]:hover {
-    color: #f0f0f0;
-  }
-
-  .paper-home__nav-toggle:hover,
-  .paper-home__nav.is-open .paper-home__nav-toggle {
-    background: var(--home-surface-hover);
-    border-color: transparent;
-  }
-
-  .paper-home__nav-toggle:hover::before,
-  .paper-home__nav.is-open .paper-home__nav-toggle::before {
-    opacity: 1;
-    animation: paper-home-metal-spin 2.2s linear infinite;
-  }
-
-  .paper-home__nav-toggle:active {
-    background: var(--home-surface-active);
-  }
-
-  .paper-home__theme:hover {
-    background: var(--home-surface-hover);
-    border-color: transparent;
-  }
-
-  .paper-home__theme:hover::before {
-    opacity: 1;
-    animation: paper-home-metal-spin 2.2s linear infinite;
-  }
-
-  .paper-home__theme:active {
-    background: var(--home-surface-active);
+    opacity: 0.6;
   }
 
   .paper-home__tabs a:hover,
   .paper-home__tabs a.is-active:hover {
     color: var(--home-ink);
-    border-color: transparent;
-    background: var(--home-surface-hover);
-  }
-
-  .paper-home__tabs a:hover::before,
-  .paper-home__tabs a.is-active:hover::before {
-    opacity: 1;
-    animation: paper-home-metal-spin 2.2s linear infinite;
-  }
-
-  .paper-home__tabs a:active {
-    background: var(--home-surface-active);
   }
 
   .paper-home__cta:hover {
-    border-color: transparent;
-    background: var(--home-surface-hover);
-  }
-
-  .paper-home__cta:hover::before {
-    opacity: 1;
-    animation: paper-home-metal-spin 2.2s linear infinite;
+    background: var(--home-pill);
   }
 
   .paper-home__cta:hover svg {
@@ -806,7 +599,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   }
 
   .paper-home__cta:active {
-    background: var(--home-surface-active);
+    background: var(--home-pill-stroke);
   }
 
   .paper-home__case-media:hover {
@@ -819,108 +612,45 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   outline-offset: 3px;
 }
 
-/* —— Mobile nav panel —— */
-@media (max-width: 768px) {
-  .paper-home__nav {
-    margin-left: 0;
-  }
-
-  .paper-home__nav-toggle {
-    display: inline-flex;
-  }
-
-  .paper-home__nav-toggle::before {
-    opacity: 1;
-    animation: paper-home-metal-spin 2.2s linear infinite;
-  }
-
-  .paper-home__nav-toggle:active {
-    background: var(--home-surface-hover);
-  }
-
+/*
+ * The floating pill is the nav at every width — there is no mobile dropdown.
+ * It only needs to shed enough width to clear a 320px screen.
+ */
+@media (max-width: 600px) {
   .paper-home__tabs {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: auto;
-    z-index: 50;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 2px;
-    width: min(220px, calc(100vw - 40px));
-    padding: 6px;
-    box-sizing: border-box;
-    border-radius: 18px;
-    /* Keep the panel in the layer tree so backdrop-filter can frost content behind it */
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-6px);
-    background:
-      linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.34) 100%),
-      rgba(120, 120, 128, 0.1);
-    -webkit-backdrop-filter: blur(36px) saturate(1.85);
-    backdrop-filter: blur(36px) saturate(1.85);
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    box-shadow:
-      0 1px 1px rgba(0, 0, 0, 0.04),
-      0 14px 40px rgba(0, 0, 0, 0.12),
-      inset 0 0.5px 0 rgba(255, 255, 255, 0.9),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.35);
-    transition:
-      opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
-      transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
-      visibility 200ms;
-  }
-
-  html[data-theme="dark"] .paper-home__tabs {
-    background:
-      linear-gradient(180deg, rgba(40, 40, 40, 0.72) 0%, rgba(28, 28, 28, 0.62) 100%),
-      rgba(0, 0, 0, 0.28);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    box-shadow:
-      0 1px 1px rgba(0, 0, 0, 0.2),
-      0 14px 40px rgba(0, 0, 0, 0.35),
-      inset 0 0.5px 0 rgba(255, 255, 255, 0.12),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.06);
-  }
-
-  .paper-home__nav.is-open .paper-home__tabs {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
+    gap: 14px;
+    /* min-height keeps the pill the same height as the toggle beside it. */
+    min-height: 40px;
+    padding: 10px 16px;
   }
 
   .paper-home__tabs > a {
-    width: 100%;
-    min-width: 0;
-    min-height: 44px;
-    justify-content: flex-start;
-    padding: 11px 14px;
-    border-radius: 14px;
-    background: transparent;
-    border-color: transparent;
+    font-size: 14px;
+    line-height: 18px;
   }
 
-  .paper-home__tabs a::before {
-    display: none;
+  .paper-home__theme {
+    width: 40px;
+    height: 40px;
   }
 
-  .paper-home__tabs a.is-active,
-  .paper-home__tabs a:hover,
-  .paper-home__tabs a.is-active:hover {
-    background: rgba(120, 120, 128, 0.14);
-    border-color: transparent;
-  }
-
-  .paper-home__tabs a:hover::before,
-  .paper-home__tabs a.is-active:hover::before {
-    opacity: 0;
-    animation: none;
+  .paper-home__theme .theme-icon {
+    width: 20px;
+    height: 20px;
   }
 }
+
+@media (max-width: 360px) {
+  .paper-home__tabs {
+    gap: 10px;
+    padding: 9px 13px;
+  }
+
+  .paper-home__tabs > a {
+    font-size: 13px;
+  }
+}
+
 
 @media (max-width: 600px) {
   .paper-home__cta {
@@ -947,18 +677,28 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 
   .paper-home__cta,
   .paper-home__cta svg,
-  .paper-home__cta::before,
   .paper-home__tabs a,
-  .paper-home__tabs a::before,
   .paper-home__tabs,
-  .paper-home__nav-toggle,
-  .paper-home__nav-toggle::before,
   .paper-home__theme,
-  .paper-home__theme::before,
-  .paper-home__socials a,
-  .paper-home__socials a::before,
-  .paper-home__socials a::after {
+  .paper-home__theme .theme-icon,
+  .home-scroll-cue {
     transition: none;
     animation: none;
+  }
+
+  .home-enter,
+  .home-enter-drop,
+  .home-enter-panel,
+  .home-enter-plate,
+  .home-enter-rule,
+  .home-enter-stamp {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+
+  /* The stamp rests ghosted, not opaque. */
+  .home-enter-stamp {
+    opacity: 0.25;
   }
 }
