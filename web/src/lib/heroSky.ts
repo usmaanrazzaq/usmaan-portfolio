@@ -31,9 +31,21 @@ export const HERO_SKY_STORAGE_KEY = "hero-sky";
  * The pool is passed in rather than imported so the caller decides the source —
  * the Are.na channel, or the local manifest when that fetch fails.
  */
+/**
+ * Escapes a value for inlining inside an HTML `<script>` element. `JSON.stringify`
+ * leaves `<` untouched, so a value containing `</script` (e.g. an Are.na
+ * description used as alt text) would otherwise close the script early and let
+ * the remainder be parsed as HTML — a picker break at best, script injection at
+ * worst. Escaping `<` as `\u003c` keeps the JSON valid while making that
+ * impossible.
+ */
+function inlineJson(value: unknown): string {
+  return JSON.stringify(value).replace(/</g, "\\u003c");
+}
+
 export function heroSkyScript(pool: HeroSky[]): string {
   return `(function () {
-  var pool = ${JSON.stringify(pool.map((sky) => [sky.src, sky.alt]))};
+  var pool = ${inlineJson(pool.map((sky) => [sky.src, sky.alt]))};
   var key = ${JSON.stringify(HERO_SKY_STORAGE_KEY)};
   var id = ${JSON.stringify(HERO_SKY_ID)};
   if (!pool.length) return;
