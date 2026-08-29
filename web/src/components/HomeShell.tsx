@@ -16,6 +16,9 @@ export default function HomeShell({
   current?: NavTab;
   children: React.ReactNode;
 }) {
+  // One padding for every route: the floating nav is sticky and shared, so it
+  // has to start at the same offset everywhere rather than sitting lower on the
+  // homepage to match the hero frame's static 80px.
   const base =
     "paper-home mx-auto w-[min(1512px,100%)] px-gutter pt-7 pb-20 font-sans text-base leading-[1.55] to-md:px-5 to-md:pt-5 to-md:pb-16";
 

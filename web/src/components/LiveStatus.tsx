@@ -6,8 +6,14 @@ import { useEffect, useRef } from "react";
  * Location plus the live New York clock. The clock is driven imperatively, the
  * same way the static site does it, so only the digits that actually changed
  * get the roll animation and the pulse restarts in sync with each tick.
+ *
+ * The hero passes its own className to reach the frame's 12px light setting; the
+ * default below is the type this row has everywhere else.
  */
-export default function LiveStatus() {
+const DEFAULT_CLASS =
+  "text-muted mb-3 flex items-center gap-1.5 text-sm leading-[1.5] font-normal whitespace-nowrap to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal";
+
+export default function LiveStatus({ className }: { className?: string }) {
   const timeRef = useRef<HTMLTimeElement>(null);
   const liveRef = useRef<HTMLSpanElement>(null);
   const dayNightRef = useRef<HTMLSpanElement>(null);
@@ -74,10 +80,7 @@ export default function LiveStatus() {
   }, []);
 
   return (
-    <div
-      className="text-muted mb-3 flex items-center gap-1.5 text-sm leading-[1.5] font-normal whitespace-nowrap to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal"
-      aria-label="Current location and local time"
-    >
+    <div className={className ?? DEFAULT_CLASS} aria-label="Current location and local time">
       <span ref={liveRef} className="hero-live" aria-hidden="true" />
       <span>New York, NY</span>
       <span className="opacity-40" aria-hidden="true">
