@@ -9,8 +9,8 @@ export const THEME_COLORS: Record<Theme, string> = {
 
 /**
  * Runs before first paint, from the document head. It has to stay a plain
- * string of ES5 so it can be inlined without a bundler pass, and it mirrors the
- * inline script in the static site's index.html.
+ * string of ES5 so it can be inlined without a bundler pass. It was carried
+ * over from the inline script in the static site this app replaced.
  */
 export const THEME_INIT_SCRIPT = `(function () {
   try {

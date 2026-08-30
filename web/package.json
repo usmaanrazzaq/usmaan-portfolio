@@ -3,12 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "predev": "node scripts/sync-public.mjs",
     "dev": "next dev",
-    "prebuild": "node scripts/sync-public.mjs",
     "build": "next build",
     "start": "next start",
-    "sync-public": "node scripts/sync-public.mjs",
     "lint": "eslint"
   },
   "dependencies": {
