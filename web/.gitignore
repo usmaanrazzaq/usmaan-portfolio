@@ -40,13 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# assets copied from the static site at the repo root by scripts/sync-public.mjs
-/public/images
-/public/video
-/public/shared
-/public/Favicon.png
-/public/iOS Icon.png
-/public/Usmaan-Razzaq-Resume.pdf
-
 # macOS metadata files
 ._*

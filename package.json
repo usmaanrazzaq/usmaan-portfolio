@@ -1,24 +1,10 @@
 {
   "name": "usmaan-portfolio",
-  "version": "1.0.0",
-  "description": "This is my personal portfolio website, built using HTML, CSS, and JavaScript. It showcases my design work, development projects, and other creative work.",
-  "main": "main.js",
+  "private": true,
+  "description": "Personal portfolio site. The app lives in web/ — these scripts just forward to it.",
   "scripts": {
-    "start": "node server.js",
-    "dev:next": "npm --prefix web run dev",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "http://local_proxy@127.0.0.1:20381/git/usmaanrazzaq/usmaan-portfolio"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.0.0",
-    "express": "^4.21.0",
-    "sharp": "^0.34.5"
+    "dev": "npm --prefix web run dev",
+    "build": "npm --prefix web run build",
+    "start": "npm --prefix web run start"
   }
 }
