@@ -22,7 +22,7 @@
 .paper-about__photo {
   margin: 0;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: var(--radius-media);
   background: var(--home-media-bg);
   line-height: 0;
 }
