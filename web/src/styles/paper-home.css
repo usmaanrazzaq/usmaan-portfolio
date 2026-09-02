@@ -96,6 +96,75 @@
 }
 
 /*
+ * —— Postcard scale ——
+ *
+ * The Paper frame is 1141×600 with a 540px copy column and a 500px plate.
+ * Letting the panel go fluid while those widths stay fixed clips the photo
+ * and the copy. The inner layout stays at the frame's size; a container
+ * query scales the whole card to the available width so the grain, the
+ * dotted rule, and the plate all move together. Below 768px the inner
+ * unwraps into the stacked layout.
+ */
+.home-hero-postcard {
+  container-type: inline-size;
+  width: min(1141px, 100%);
+  margin-inline: auto;
+  margin-top: 72px;
+  --postcard-texture-opacity: 0.45;
+}
+
+.home-hero-postcard__texture {
+  opacity: var(--postcard-texture-opacity);
+}
+
+.home-hero-postcard__scale {
+  position: relative;
+  width: 100%;
+  height: calc(600px * min(1, 100cqw / 1141px));
+  overflow: hidden;
+  border-radius: var(--radius-media);
+}
+
+.home-hero-postcard__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 1141px;
+  height: 600px;
+  padding-inline: 20px;
+  overflow: hidden;
+  background-color: var(--home-hero-panel);
+  transform-origin: top left;
+  transform: scale(min(1, 100cqw / 1141px));
+}
+
+@media (max-width: 768px) {
+  .home-hero-postcard {
+    margin-top: 40px;
+  }
+
+  .home-hero-postcard__scale {
+    height: auto;
+    overflow: hidden;
+  }
+
+  .home-hero-postcard__inner {
+    position: relative;
+    width: 100%;
+    height: auto;
+    transform: none;
+    flex-direction: column;
+    gap: 25px;
+    padding: 24px 16px;
+    overflow: hidden;
+  }
+}
+
+/*
  * —— Scroll cue ——
  * Dimmed by ScrollCue once the work section reaches the viewport. visibility
  * lands last so the link leaves the tab order instead of sitting invisible and
@@ -384,10 +453,10 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   width: min(100%, var(--home-media));
   flex: 1 1 auto;
   min-width: 0;
-  border-radius: 12px;
+  border-radius: var(--radius-media);
   overflow: hidden;
   /* clip-path catches masked wash overlays that can otherwise paint square corners */
-  clip-path: inset(0 round 12px);
+  clip-path: inset(0 round var(--radius-media));
   line-height: 0;
   background: var(--home-media-bg);
 }
@@ -690,15 +759,18 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-enter-drop,
   .home-enter-panel,
   .home-enter-plate,
-  .home-enter-rule,
-  .home-enter-stamp {
+  .home-enter-rule {
     opacity: 1;
     transform: none;
     animation: none;
   }
 
-  /* The stamp rests ghosted, not opaque. */
   .home-enter-stamp {
-    opacity: 0.25;
+    transform: none;
+    animation: none;
+  }
+
+  .home-hero-postcard__texture {
+    opacity: var(--postcard-texture-opacity);
   }
 }

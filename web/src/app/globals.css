@@ -33,7 +33,7 @@
   --home-media-bg: #eeecec;
   --home-accent: #2f5bea;
   /* Hero: the panel ground, the translucent nav/scroll glass, and its hairline. */
-  --home-hero-panel: #f8f7f2;
+  --home-hero-panel: #f2f1e8;
   --home-glass: rgba(255, 255, 255, 0.25);
   --home-hairline: #8d8d92;
   --home-frost: blur(24px) saturate(180%);
@@ -82,7 +82,7 @@ html[data-theme="dark"] {
 
   --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
 
-  --radius-media: 12px;
+  --radius-media: 10px;
   --radius-pill: 100px;
 
   --spacing-gutter: var(--home-gutter);

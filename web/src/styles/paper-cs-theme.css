@@ -23,17 +23,6 @@ html[data-theme="dark"] body.paper-cs-route {
   color: var(--cs-ink);
 }
 
-html[data-theme="dark"] .paper-cs__back {
-  background: var(--cs-surface);
-  color: var(--cs-ink);
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-html[data-theme="dark"] .paper-cs__back:hover {
-  background: var(--cs-surface-hover);
-  border-color: transparent;
-}
-
 html[data-theme="dark"] .paper-cs__findings .research-findings__group,
 html[data-theme="dark"] .lightbox-img,
 html[data-theme="dark"] .lightbox-chart,

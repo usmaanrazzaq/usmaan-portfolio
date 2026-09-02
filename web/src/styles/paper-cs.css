@@ -56,65 +56,31 @@ body.paper-cs-route #nav-container {
   padding: 70px 0 120px;
 }
 
-@property --metal-angle {
-  syntax: "<angle>";
-  inherits: false;
-  initial-value: 0deg;
-}
-
-@keyframes paper-cs-metal-spin {
-  to {
-    --metal-angle: 360deg;
-  }
-}
-
 .paper-cs__back {
   position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 5px;
+  justify-content: center;
+  gap: 2px;
+  min-height: 30px;
   padding: 7px 14px 7px 10px;
+  box-sizing: border-box;
   border-radius: 100px;
-  border: 1px solid rgba(43, 43, 43, 0.18);
-  background: var(--cs-surface);
+  /* Same frosted glass as the homepage Read Case Study / View Website pills. */
+  background: var(--home-glass);
+  border: 0.5px solid var(--home-hairline);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
+  box-shadow: none;
   color: var(--cs-ink);
   font-size: 14px;
-  line-height: 1.4;
+  font-weight: 500;
+  line-height: 18px;
   text-decoration: none;
   isolation: isolate;
   transition:
-    color 220ms ease,
-    border-color 220ms ease,
-    background-color 220ms ease;
-}
-
-.paper-cs__back::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  pointer-events: none;
-  background: conic-gradient(
-    from var(--metal-angle),
-    #8f8f8f 0deg,
-    #f4f4f4 45deg,
-    #6a6a6a 90deg,
-    #dedede 140deg,
-    #9b9b9b 180deg,
-    #ffffff 225deg,
-    #737373 280deg,
-    #ececec 320deg,
-    #8f8f8f 360deg
-  );
-  -webkit-mask:
-    linear-gradient(#fff 0 0) content-box,
-    linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 220ms ease;
-  z-index: 0;
+    background-color 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-cs__back svg {
@@ -123,7 +89,10 @@ body.paper-cs-route #nav-container {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  transition: transform 220ms ease;
+  opacity: 0.72;
+  transition:
+    opacity 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .paper-cs__header {
@@ -1030,17 +999,16 @@ body.paper-cs-route #nav-container {
 
 @media (hover: hover) {
   .paper-cs__back:hover {
-    border-color: transparent;
-    background: var(--cs-surface-hover);
-  }
-
-  .paper-cs__back:hover::before {
-    opacity: 1;
-    animation: paper-cs-metal-spin 2.2s linear infinite;
+    background: var(--home-pill);
   }
 
   .paper-cs__back:hover svg {
+    opacity: 1;
     transform: translateX(-2px);
+  }
+
+  .paper-cs__back:active {
+    background: var(--home-pill-stroke);
   }
 }
 
@@ -1048,6 +1016,10 @@ body.paper-cs-route #nav-container {
   .paper-cs {
     width: min(100% - 40px, var(--cs-column));
     padding: 40px 0 88px;
+  }
+
+  .paper-cs__back {
+    min-height: 40px;
   }
 
   .paper-cs__header {
@@ -1098,8 +1070,7 @@ body.paper-cs-route #nav-container {
   }
 
   .paper-cs__back,
-  .paper-cs__back svg,
-  .paper-cs__back::before {
+  .paper-cs__back svg {
     transition: none;
     animation: none;
   }
