@@ -464,6 +464,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 .paper-home__case[data-work="rented"] .paper-home__case-media,
 .paper-home__case[data-work="nmya"] .paper-home__case-media,
 .paper-home__case[data-work="adsum"] .paper-home__case-media,
+.paper-home__case[data-work="dpr"] .paper-home__case-media,
 .paper-home__case[data-work="otrs"] .paper-home__case-media {
   position: relative;
   isolation: isolate;
@@ -478,6 +479,13 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 .paper-home__case[data-work="nmya"] .paper-home__case-media {
   background:
     linear-gradient(160deg, #66776159 0%, #66776140 34%, #66776126 62%, transparent 88%),
+    var(--home-media-bg);
+}
+
+.paper-home__case[data-work="dpr"] .paper-home__case-media {
+  --dpr-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%200h882a12%2012%200%200%201%2012%2012v588a12%2012%200%200%201-12%2012H12a12%2012%200%200%201-12-12V12a12%2012%200%200%201%2012-12zM52%2070h801a10%2010%200%200%201%2010%2010v451a10%2010%200%200%201-10%2010H52a10%2010%200%200%201-10-10V80a10%2010%200%200%201%2010-10zM361%20538h182v74H361z%22%2F%3E%3C%2Fsvg%3E");
+  background:
+    linear-gradient(160deg, #4d80e659 0%, #4d80e640 34%, #4d80e626 62%, transparent 88%),
     var(--home-media-bg);
 }
 
@@ -498,6 +506,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 .paper-home__case[data-work="rented"] .paper-home__case-media::after,
 .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
 .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
+.paper-home__case[data-work="dpr"] .paper-home__case-media::after,
 .paper-home__case[data-work="otrs"] .paper-home__case-media::after {
   content: "";
   position: absolute;
@@ -577,9 +586,41 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   mask-repeat: no-repeat;
 }
 
+/* DPR display sits on a black field, so the Rented blue wash is painted
+   around the monitor — same container treatment as OTRS. */
+.paper-home__case[data-work="dpr"] .paper-home__case-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    linear-gradient(160deg, #4d80e659 0%, #4d80e640 34%, #4d80e626 62%, transparent 88%),
+    var(--home-media-bg);
+  -webkit-mask-image: var(--dpr-wash-mask);
+  mask-image: var(--dpr-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
+.paper-home__case[data-work="dpr"] .paper-home__case-media::after {
+  z-index: 3;
+  border-radius: inherit;
+  -webkit-mask-image: var(--dpr-wash-mask);
+  mask-image: var(--dpr-wash-mask);
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+}
+
 .paper-home__case[data-work="rented"] .paper-home__case-media > *,
 .paper-home__case[data-work="nmya"] .paper-home__case-media > *,
 .paper-home__case[data-work="adsum"] .paper-home__case-media > *,
+.paper-home__case[data-work="dpr"] .paper-home__case-media > *,
 .paper-home__case[data-work="otrs"] .paper-home__case-media > * {
   position: relative;
   z-index: 1;
@@ -588,6 +629,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 html[data-theme="dark"] .paper-home__case[data-work="rented"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
+html[data-theme="dark"] .paper-home__case[data-work="dpr"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-media::after {
   opacity: 0.22;
   mix-blend-mode: soft-light;
@@ -603,6 +645,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 
 .paper-home__case[data-work="nmya"] .paper-home__case-stage,
 .paper-home__case[data-work="adsum"] .paper-home__case-stage,
+.paper-home__case[data-work="dpr"] .paper-home__case-stage,
 .paper-home__case[data-work="otrs"] .paper-home__case-stage {
   overflow: hidden;
   border-radius: inherit;
@@ -610,6 +653,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 
 .paper-home__case[data-work="nmya"] .paper-home__case-stage video,
 .paper-home__case[data-work="adsum"] .paper-home__case-stage video,
+.paper-home__case[data-work="dpr"] .paper-home__case-stage video,
 .paper-home__case[data-work="otrs"] .paper-home__case-stage video {
   display: block;
   width: 100%;
