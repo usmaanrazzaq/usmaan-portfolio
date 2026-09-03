@@ -4,7 +4,7 @@
  */
 const SOCIALS = [
   { label: "LinkedIn", href: "https://www.linkedin.com/in/usmaan-razzaq-9886511b1/" },
-  { label: "Instagram", href: "https://www.instagram.com/usmaanrzq" },
+  { label: "Instagram", href: "https://www.instagram.com/usmaanrzqdesign" },
   { label: "GitHub", href: "https://github.com/usmaanrazzaq" },
   { label: "X (Twitter)", href: "https://x.com/usmaanrzq" },
   { label: "Resume", href: "/Usmaan-Razzaq-Resume.pdf?v=20260823-2000" },
