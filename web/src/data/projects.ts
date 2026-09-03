@@ -13,12 +13,12 @@ export type ProjectMedia =
   | { kind: "rented-showcase"; fallbackSrc: string };
 
 export type Project = {
-  slug: "rented" | "nmya" | "adsum" | "otrs" | "wcm";
+  slug: "rented" | "nmya" | "adsum" | "dpr" | "otrs" | "wcm";
   title: string;
   date: string;
   headline: string;
   description: string;
-  caseHref: string;
+  caseHref?: string;
   siteHref?: string;
   mediaLabel: string;
   media: ProjectMedia;
@@ -70,6 +70,22 @@ export const projects: Project[] = [
       kind: "video",
       src: "/video/Adsum-SS26-Vid.mov",
       label: "Adsum NYC SS26 product and landing page showcase",
+    },
+  },
+  {
+    slug: "dpr",
+    title: "DPR Studio",
+    date: "June 2026 - Present",
+    headline: "Redesigning and developing a custom Shopify site for a design studio.",
+    description:
+      "DPR Studio is a production studio based in California specializing in Garment Design, Brand Identity, Brand Strategy, Creative Direction, and Production Management. I worked with the founder of the studio to redesign and develop their Shopify website, owning the process end-to-end, from research, design, to shipped code.",
+    siteHref: "https://dpr.studio/",
+    mediaLabel: "View DPR Studio website",
+    media: {
+      kind: "video",
+      src: "/video/DPR-Studio-Updated.mov",
+      poster: "/images/home-dpr-showcase.webp",
+      label: "DPR Studio Shopify website showcase",
     },
   },
   {
