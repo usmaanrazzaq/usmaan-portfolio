@@ -56,10 +56,10 @@ export default function AboutContent() {
         <div className="paper-about__content home-enter [--enter-delay:140ms]">
           <div className="paper-about__bio">
             <p>
-              {"I'm Usmaan, a Product Designer and Front-End Developer based in Queens, NY. I'm passionate about designing intuitive, user-centered experiences that solve real problems and feel natural to use. I studied Multimedia Programming and Web Design at Borough of Manhattan Community College, where I built a foundation that bridges design and code. I continuously sharpen my front-end skills through platforms like Scrimba. At the core of my work is a belief that great design isn't just about how something looks, but how it works and how it makes people feel."}
+              {"I'm Usmaan, a Product Designer and Front-End Developer based in Queens, NY. I'm passionate about designing intuitive, user-centered experiences that solve real problems and feel natural to use. I studied Multimedia Programming and Web Design at Borough of Manhattan Community College, where I built a foundation that bridges design and code. Currently, I am enrolled at Queens College as a BFA major in Design. I continuously sharpen my front-end skills through platforms like Scrimba. At the core of my work is a belief that great design isn't just about how something looks, but how it works and how it makes people feel."}
             </p>
             <p>
-              {"I wouldn't be who I am without the inspiration of minds and creators like Dieter Rams, Ludwig Mies Van Der Rohe, John Pawson, Donald Judd, Jony Ive, Dr. Abdus Salam, Anthony Bourdain, Jan Tschichold, Massimo Vignelli, Marcel Breuer, Alvar Aalto, Peter Märkli, and many more. Their work, ideas, and spirit have shaped the way I see the world — teaching me that design, culture, and curiosity are all part of the same pursuit of meaning."}
+              {"I wouldn't be who I am without the inspiration of minds and creators like Dieter Rams, Ludwig Mies van der Rohe, John Pawson, Donald Judd, Jony Ive, Dr. Abdus Salam, Anthony Bourdain, Jan Tschichold, Massimo Vignelli, Marcel Breuer, Alvar Aalto, Peter Märkli, Peter Zumthor, and many more. Their work, ideas, and spirit have shaped the way I see the world — teaching me that design, culture, and curiosity are all part of the same pursuit of meaning."}
             </p>
           </div>
 
