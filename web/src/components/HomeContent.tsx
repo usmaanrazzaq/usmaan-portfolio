@@ -5,6 +5,14 @@ import ScrollCue from "@/components/ScrollCue";
 import WorkStack from "@/components/WorkStack";
 import { projects } from "@/data/projects";
 
+/** Runs while the parser is still above `#work`, so a restored `/#work` cannot
+ *  scroll the page before the hero exists. */
+const STRIP_WORK_HASH_SCRIPT = `(function () {
+  if (location.hash !== '#work') return;
+  history.replaceState(null, '', location.pathname + location.search);
+  window.scrollTo(0, 0);
+})();`;
+
 /**
  * Shared by / and /contact/ — the contact route is the same page with the modal
  * opened over it, which is how the static site behaves.
@@ -12,6 +20,8 @@ import { projects } from "@/data/projects";
 export default function HomeContent() {
   return (
     <>
+      <script dangerouslySetInnerHTML={{ __html: STRIP_WORK_HASH_SCRIPT }} />
+
       <HomeHero />
 
       <ScrollCue />

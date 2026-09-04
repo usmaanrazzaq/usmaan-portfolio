@@ -1,11 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 
 /**
  * The "Scroll to view work" cue that closes the hero. Plain anchor to the work
  * stack, matching the nav's own links so the Rented prototype script is not
  * re-mounted by a client-side navigation.
+ *
+ * A normal click scrolls in place and leaves the URL at `/`. Writing `#work`
+ * would make the next load land on the stack instead of the hero. Modifier
+ * clicks keep the hash so a new-tab open still has a target.
  *
  * It dims itself once the work section reaches the viewport — the instruction is
  * stale by the time you are reading the cases. Same IntersectionObserver shape
@@ -34,6 +38,17 @@ export default function ScrollCue() {
     return () => observer.disconnect();
   }, []);
 
+  function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (event.defaultPrevented || event.button !== 0) return;
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+
+    const work = document.getElementById("work");
+    if (!work) return;
+
+    event.preventDefault();
+    work.scrollIntoView();
+  }
+
   return (
     <div
       className={`home-enter home-scroll-cue mt-[63px] flex flex-col items-center gap-5 [--enter-delay:660ms] to-md:mt-10${
@@ -46,6 +61,7 @@ export default function ScrollCue() {
         href="#work"
         aria-label="Scroll to selected work"
         className="border-hairline bg-glass text-ink flex size-[45px] shrink-0 items-center justify-center rounded-pill border-[0.5px]"
+        onClick={handleClick}
       >
         <svg
           width="24"
