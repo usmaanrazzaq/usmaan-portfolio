@@ -68,14 +68,14 @@ export const projects: Project[] = [
     mediaLabel: "Read Adsum NYC case study",
     media: {
       kind: "video",
-      src: "/video/Adsum-SS26-Vid.mov",
-      label: "Adsum NYC SS26 product and landing page showcase",
+      src: "/video/Adsum-OOFOS-Desktop.mov",
+      label: "Adsum NYC OOFOS campaign website showcase",
     },
   },
   {
     slug: "dpr",
     title: "DPR Studio",
-    date: "June 2026 - Present",
+    date: "June 2025 - Present",
     headline: "Redesigning and developing a custom Shopify site for a design studio.",
     description:
       "DPR Studio is a production studio based in California specializing in Garment Design, Brand Identity, Brand Strategy, Creative Direction, and Production Management. I worked with the founder of the studio to redesign and develop their Shopify website, owning the process end-to-end, from research, design, to shipped code.",
