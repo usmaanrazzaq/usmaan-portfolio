@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SHARE_OPEN_GRAPH, SHARE_TWITTER } from "@/lib/share";
 import HomeShell from "@/components/HomeShell";
 import PlaygroundContent from "@/components/PlaygroundContent";
 
@@ -12,12 +13,15 @@ export const metadata: Metadata = {
   title: "Playground | Usmaan Razzaq",
   description,
   alternates: { canonical: "/playground/" },
+  // Spread back in so link previews show the site icon, not a scraped image.
   openGraph: {
+    ...SHARE_OPEN_GRAPH,
     url: "/playground/",
     title: "Playground | Usmaan Razzaq",
     description,
   },
   twitter: {
+    ...SHARE_TWITTER,
     title: "Playground | Usmaan Razzaq",
     description,
   },
