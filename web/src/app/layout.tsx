@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import ContactModal from "@/components/ContactModal";
+import { SHARE_OPEN_GRAPH, SHARE_TWITTER } from "@/lib/share";
 import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import "./globals.css";
 
@@ -13,18 +14,15 @@ export const metadata: Metadata = {
   title: "Usmaan Razzaq — Product Designer",
   description,
   openGraph: {
-    type: "website",
+    ...SHARE_OPEN_GRAPH,
     url: "https://usmaanrazzaq.design/",
     title: "Usmaan Razzaq — Product Designer",
     description,
-    siteName: "Usmaan Razzaq",
-    images: [{ url: "/iOS Icon.png", width: 180, height: 180 }],
   },
   twitter: {
-    card: "summary",
+    ...SHARE_TWITTER,
     title: "Usmaan Razzaq — Product Designer",
     description,
-    images: ["/iOS Icon.png"],
   },
   icons: {
     icon: [{ url: "/Favicon.png", sizes: "48x48" }],
