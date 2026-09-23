@@ -13,7 +13,7 @@ export default function HomeShell({
 }: {
   className?: string;
   labelledBy?: string;
-  current?: NavTab;
+  current?: NavTab | null;
   children: React.ReactNode;
 }) {
   // One padding for every route: the floating nav is sticky and shared, so it

@@ -1,0 +1,243 @@
+/*
+ * References page — from the Paper "Main" frame.
+ *
+ * Four staggered columns (20px apart, 30px between stacked images) that
+ * collapse to a single column on mobile. The images come from Are.na. Every
+ * rule is scoped to .paper-references, so the rest of the site is untouched.
+ */
+
+.paper-references__intro {
+  max-width: 749px;
+  margin: 40px 0 30px;
+  color: var(--home-ink);
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.paper-references__grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+  align-items: start;
+}
+
+.paper-references__column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.paper-references__media {
+  margin: 0;
+  background: var(--home-media-bg);
+  line-height: 0;
+}
+
+.paper-references__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* The whole image is the trigger; strip the button chrome so it reads as art. */
+.paper-references__open {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.paper-references__open:focus-visible {
+  outline: 2px solid var(--home-accent);
+  outline-offset: 3px;
+}
+
+/*
+ * Lightbox — from the Paper "Main - Lightbox View" frame: the image alone,
+ * centred on a flat dimmed ground. At the 1512 x 1205 frame the image is
+ * 1266 x 901, so it scales to 84vw / 75vh (capped at those sizes), keeping
+ * its own aspect ratio.
+ */
+
+html:has(.paper-references__lightbox[open]) {
+  overflow: hidden;
+}
+
+.paper-references__lightbox {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  opacity: 0;
+  transition:
+    opacity 0.28s ease,
+    overlay 0.28s ease allow-discrete,
+    display 0.28s ease allow-discrete;
+}
+
+.paper-references__lightbox[open] {
+  display: block;
+  opacity: 1;
+}
+
+@starting-style {
+  .paper-references__lightbox[open] {
+    opacity: 0;
+  }
+}
+
+.paper-references__lightbox:focus {
+  outline: none;
+}
+
+.paper-references__lightbox::backdrop {
+  background: rgba(43, 43, 43, 0.55);
+}
+
+.paper-references__stage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Width is the smallest of the frame's two caps and the height cap turned into
+   a width through the image's ratio, so any shape fits and small images scale
+   up to the same presence as in Paper. */
+.paper-references__stage img {
+  display: block;
+  width: min(84vw, 1266px, 75dvh * var(--ratio), 901px * var(--ratio));
+  height: auto;
+}
+
+/* No stored dimensions: the same caps, applied once the image knows its own
+   shape. It shows at its natural size rather than scaling up. */
+.paper-references__stage img.is-unsized {
+  width: auto;
+  max-width: min(84vw, 1266px);
+  max-height: min(75dvh, 901px);
+}
+
+/* Keyboard-only controls: invisible until focused, then the site's round
+   surface buttons. */
+.paper-references__control {
+  position: absolute;
+  z-index: 1;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--home-surface);
+  color: var(--home-ink);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.paper-references__control:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+.paper-references__close {
+  top: 20px;
+  right: 20px;
+}
+
+.paper-references__step {
+  top: 50%;
+  translate: 0 -50%;
+}
+
+.paper-references__step--prev {
+  left: 20px;
+}
+
+.paper-references__step--next {
+  right: 20px;
+}
+
+.paper-references__close::before,
+.paper-references__close::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 16px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.paper-references__close::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.paper-references__close::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+/* Chevrons: two borders of a rotated square, nudged toward the point. */
+.paper-references__step::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+.paper-references__step--prev::before {
+  transform: translate(-30%, -50%) rotate(-135deg);
+}
+
+.paper-references__step--next::before {
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-references__lightbox {
+    transition: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .paper-references__stage img {
+    width: min(100vw - 32px, 85dvh * var(--ratio));
+  }
+
+  .paper-references__stage img.is-unsized {
+    width: auto;
+    max-width: calc(100vw - 32px);
+    max-height: 85dvh;
+  }
+
+  .paper-references__intro {
+    margin: 32px 0 24px;
+  }
+
+  .paper-references__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+
+  /* The columns step aside so every image is a direct grid item, and each
+     figure's inline `order` puts the feed back newest first. */
+  .paper-references__column {
+    display: contents;
+  }
+}
