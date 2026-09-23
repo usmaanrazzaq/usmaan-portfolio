@@ -3,6 +3,7 @@ import HomeShell from "@/components/HomeShell";
 import ReferencesContent from "@/components/ReferencesContent";
 import { LOCAL_REFERENCES } from "@/data/references";
 import { getArenaReferences } from "@/lib/arena";
+import { SHARE_OPEN_GRAPH, SHARE_TWITTER } from "@/lib/share";
 
 // The References-only layout. Everything else — chrome, type, tokens — is
 // shared with the homepage. Deliberately unlinked: no nav tab points here.
@@ -15,12 +16,15 @@ export const metadata: Metadata = {
   title: "References | Usmaan Razzaq",
   description,
   alternates: { canonical: "/references/" },
+  // Spread back in so link previews show the site icon, not a scraped image.
   openGraph: {
+    ...SHARE_OPEN_GRAPH,
     url: "/references/",
     title: "References | Usmaan Razzaq",
     description,
   },
   twitter: {
+    ...SHARE_TWITTER,
     title: "References | Usmaan Razzaq",
     description,
   },
