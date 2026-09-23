@@ -9,7 +9,7 @@ export type NavTab = "work" | "about" | "playground";
  * image. Contact is a URL that opens the modal; ContactModal intercepts the
  * click.
  */
-function tabsFor(current: NavTab) {
+function tabsFor(current: NavTab | null) {
   return [
     // Reads as Home now that the hero opens the page. "#top" is the spec's
     // document-top fragment, so it needs no anchor element to scroll back up.
@@ -26,7 +26,8 @@ function tabsFor(current: NavTab) {
  * component. It sticks so it follows the page down, and the row around it is
  * click-through so it does not swallow taps on the content scrolling beneath.
  */
-export default function SiteChrome({ current = "work" }: { current?: NavTab }) {
+// `null` is for unlinked pages (References): no tab reads as current.
+export default function SiteChrome({ current = "work" }: { current?: NavTab | null }) {
   const tabs = tabsFor(current);
 
   return (
