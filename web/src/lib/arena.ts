@@ -111,6 +111,7 @@ export async function getArenaSkies(): Promise<HeroSky[]> {
 export const REFERENCE_CHANNELS = [
   "layouts-designs-elements",
   "spaces-buildings-and-things",
+  "additional-for-references",
 ] as const;
 
 /** New connections reach the page within ten minutes, without a redeploy. */
@@ -215,7 +216,7 @@ function toReference(block: ArenaV3Block, channelTitle: string): Reference | nul
 
 /**
  * Every image block connected to the reference channels, newest connection first
- * across both. A block connected to both channels appears once, at its most
+ * across all of them. A block connected to multiple channels appears once, at its most
  * recent connection.
  *
  * Unauthenticated, like the hero: the channels are public. Any failure returns
@@ -225,6 +226,7 @@ export async function getArenaReferences(): Promise<Reference[]> {
   const titles: Record<(typeof REFERENCE_CHANNELS)[number], string> = {
     "layouts-designs-elements": "Layouts, Designs, Elements",
     "spaces-buildings-and-things": "Spaces, Buildings, and Things",
+    "additional-for-references": "Additional for References",
   };
 
   let connected: Connected[];
