@@ -114,8 +114,8 @@ export const REFERENCE_CHANNELS = [
   "additional-for-references",
 ] as const;
 
-/** New connections reach the page within ten minutes, without a redeploy. */
-const REFERENCES_REVALIDATE_SECONDS = 600;
+/** New connections are eligible for a background refresh after one minute. */
+const REFERENCES_REVALIDATE_SECONDS = 60;
 
 /** Longer descriptions are notes rather than alt text. */
 const MAX_ALT_LENGTH = 160;
