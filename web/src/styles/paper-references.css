@@ -77,22 +77,10 @@ html:has(.paper-references__lightbox[open]) {
   padding: 0;
   border: 0;
   background: transparent;
-  opacity: 0;
-  transition:
-    opacity 0.28s ease,
-    overlay 0.28s ease allow-discrete,
-    display 0.28s ease allow-discrete;
 }
 
 .paper-references__lightbox[open] {
   display: block;
-  opacity: 1;
-}
-
-@starting-style {
-  .paper-references__lightbox[open] {
-    opacity: 0;
-  }
 }
 
 .paper-references__lightbox:focus {
@@ -207,12 +195,6 @@ html:has(.paper-references__lightbox[open]) {
 
 .paper-references__step--next::before {
   transform: translate(-70%, -50%) rotate(45deg);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .paper-references__lightbox {
-    transition: none;
-  }
 }
 
 @media (max-width: 768px) {

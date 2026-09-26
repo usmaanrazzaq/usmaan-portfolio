@@ -31,7 +31,7 @@ export const metadata: Metadata = {
 };
 
 export default async function References() {
-  // Both Are.na channels, newest connection first; the Paper images if Are.na
+  // All Are.na channels, newest connection first; the Paper images if Are.na
   // is unreachable.
   const arena = await getArenaReferences();
   const references = arena.length ? arena : LOCAL_REFERENCES;
