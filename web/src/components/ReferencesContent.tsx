@@ -43,24 +43,73 @@ export default function ReferencesContent({ references }: { references: Referenc
   const dialogRef = useRef<HTMLDialogElement>(null);
   const touchX = useRef<number | null>(null);
   const [index, setIndex] = useState<number | null>(null);
+  const [preview, setPreview] = useState<{ id: string; src: string } | null>(null);
+  const [readyFulls, setReadyFulls] = useState<Set<string>>(() => new Set());
 
   const columns = useMemo(() => toColumns(references), [references]);
   const images = references;
   const isOpen = index !== null;
   const current = isOpen ? images[index] : null;
+  const currentSrc = current
+    ? readyFulls.has(current.id)
+      ? current.full
+      : preview?.id === current.id
+        ? preview.src
+        : current.src
+    : null;
 
+  // Keep the already-decoded grid image visible while the larger Are.na
+  // variant loads. Only swap sources after the browser has decoded it, and
+  // ignore the result if the visitor has moved to another image meanwhile.
   useEffect(() => {
+    if (!current || readyFulls.has(current.id)) return;
+
+    let cancelled = false;
+    const fullImage = new Image();
+    fullImage.src = current.full;
+
+    void fullImage
+      .decode()
+      .then(() => {
+        if (cancelled) return;
+        setReadyFulls((ready) => {
+          if (ready.has(current.id)) return ready;
+          const next = new Set(ready);
+          next.add(current.id);
+          return next;
+        });
+      })
+      // A failed large image deliberately leaves the cached preview in place.
+      .catch(() => undefined);
+
+    return () => {
+      cancelled = true;
+    };
+  }, [current, readyFulls]);
+
+  function openImage(order: number, previewSrc: string) {
     const dialog = dialogRef.current;
-    if (!isOpen || !dialog || dialog.open) return;
+    const image = images[order];
+
+    setPreview({ id: image.id, src: previewSrc });
+    setIndex(order);
+
+    if (!dialog || dialog.open) return;
     dialog.showModal();
     // showModal() focuses the first control, which would reveal the hidden
     // close button on the next key press. Hold focus on the dialog instead;
     // Tab still reaches the controls.
-    dialog.focus();
-  }, [isOpen]);
+    dialog.focus({ preventScroll: true });
+  }
 
   function step(delta: number) {
+    setPreview(null);
     setIndex((i) => (i === null ? i : (i + delta + images.length) % images.length));
+  }
+
+  function onClose() {
+    setPreview(null);
+    setIndex(null);
   }
 
   function onKeyDown(event: React.KeyboardEvent<HTMLDialogElement>) {
@@ -118,7 +167,10 @@ export default function ReferencesContent({ references }: { references: Referenc
                   type="button"
                   className="paper-references__open"
                   aria-label={`${image.alt} — enlarge`}
-                  onClick={() => setIndex(order)}
+                  onClick={(event) => {
+                    const gridImage = event.currentTarget.querySelector("img");
+                    openImage(order, gridImage?.currentSrc || image.src);
+                  }}
                 >
                   {/* Not next/image: Are.na already serves resized variants. */}
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -144,7 +196,7 @@ export default function ReferencesContent({ references }: { references: Referenc
         className="paper-references__lightbox"
         aria-label="Enlarged image"
         tabIndex={-1}
-        onClose={() => setIndex(null)}
+        onClose={onClose}
         onClick={onDialogClick}
         onKeyDown={onKeyDown}
         onTouchStart={onTouchStart}
@@ -180,7 +232,7 @@ export default function ReferencesContent({ references }: { references: Referenc
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={current.id}
-              src={current.full}
+              src={currentSrc ?? current.src}
               alt={current.alt}
               {...(current.unsized
                 ? { className: "is-unsized" }
