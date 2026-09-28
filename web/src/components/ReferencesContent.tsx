@@ -2,7 +2,7 @@
 
 /**
  * The References page body, from the Paper "Main" frame. The chrome comes from
- * HomeShell, so this is the intro line, the image grid, and its lightbox.
+ * HomeShell, so this is the intro, the image grid, and its lightbox.
  *
  * The images arrive newest first (the Are.na channels, merged by connection
  * date). They are dealt into four staggered columns, as laid out in Paper:
@@ -145,10 +145,17 @@ export default function ReferencesContent({ references }: { references: Referenc
         References
       </h1>
 
-      <p className="paper-references__intro home-enter">
-        A selection of images used as design inspiration and to provide a visual
-        representation of my design ideology.
-      </p>
+      <div className="paper-references__intro home-enter">
+        <p>
+          References is a page dedicated to a selection of images used as design
+          inspiration and to provide a visual representation of my design ideology.
+        </p>
+        <p>
+          The page is built and updated through three Are.na channels that combine
+          into one collective page. References is periodically updated with
+          additional connections from my Are.na channels.
+        </p>
+      </div>
 
       <div className="paper-references__grid">
         {columns.map((column, i) => (
