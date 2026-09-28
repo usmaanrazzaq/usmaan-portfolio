@@ -7,12 +7,19 @@
  */
 
 .paper-references__intro {
-  max-width: 749px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 999px;
   margin: 40px 0 30px;
   color: var(--home-ink);
   font-size: 16px;
   font-weight: 300;
   line-height: 20px;
+}
+
+.paper-references__intro p {
+  margin: 0;
 }
 
 .paper-references__grid {
