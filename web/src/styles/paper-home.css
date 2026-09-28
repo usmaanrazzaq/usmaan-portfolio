@@ -461,6 +461,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   background: var(--home-media-bg);
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-media,
 .paper-home__case[data-work="rented"] .paper-home__case-media,
 .paper-home__case[data-work="nmya"] .paper-home__case-media,
 .paper-home__case[data-work="adsum"] .paper-home__case-media,
@@ -470,6 +471,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   isolation: isolate;
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-media,
 .paper-home__case[data-work="rented"] .paper-home__case-media,
 .paper-home__case[data-work="nmya"] .paper-home__case-media,
 .paper-home__case[data-work="adsum"] .paper-home__case-media,
@@ -489,6 +491,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   --display-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%200h882a12%2012%200%200%201%2012%2012v588a12%2012%200%200%201-12%2012H12a12%2012%200%200%201-12-12V12a12%2012%200%200%201%2012-12zM52%2070h801a10%2010%200%200%201%2010%2010v451a10%2010%200%200%201-10%2010H52a10%2010%200%200%201-10-10V80a10%2010%200%200%201%2010-10zM361%20538h182v74H361z%22%2F%3E%3C%2Fsvg%3E");
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-media::after,
 .paper-home__case[data-work="rented"] .paper-home__case-media::after,
 .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
 .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
@@ -542,6 +545,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   mask-repeat: no-repeat;
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-media > *,
 .paper-home__case[data-work="rented"] .paper-home__case-media > *,
 .paper-home__case[data-work="nmya"] .paper-home__case-media > *,
 .paper-home__case[data-work="adsum"] .paper-home__case-media > *,
@@ -551,6 +555,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   z-index: 1;
 }
 
+html[data-theme="dark"] .paper-home__case[data-work="shifts"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="rented"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
 html[data-theme="dark"] .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
