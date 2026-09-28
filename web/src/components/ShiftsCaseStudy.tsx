@@ -2,18 +2,8 @@
 
 import { useEffect, useRef } from "react";
 import PaperCsChrome from "@/components/PaperCsChrome";
+import ShiftsDemos from "@/components/ShiftsDemos";
 import { initImageLightbox } from "@/lib/wcm/lightbox";
-
-const componentShots = [
-  [
-    { src: "/images/Shifts-Create-Team.webp", alt: "Shifts create a new team dialog" },
-    { src: "/images/Shifts-Day-Column.webp", alt: "Shifts day column with shift cards" },
-  ],
-  [
-    { src: "/images/Shifts-Properties-Panel.webp", alt: "Shifts shift properties side panel" },
-    { src: "/images/Shifts-Team-Menu.webp", alt: "Shifts team actions menu" },
-  ],
-];
 
 export default function ShiftsCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
@@ -146,33 +136,7 @@ export default function ShiftsCaseStudy() {
           <h2 id="components-heading">Components</h2>
         </section>
 
-        {componentShots.map((row, i) => (
-          <div className="paper-cs__pair paper-cs__pair--components" key={i}>
-            {row.map((shot) => (
-              <figure className="paper-cs__shot" key={shot.src}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={shot.src}
-                  width="1600"
-                  height="1200"
-                  alt={shot.alt}
-                  loading="lazy"
-                />
-              </figure>
-            ))}
-          </div>
-        ))}
-
-        <figure className="paper-cs__shot paper-cs__shot--full">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/Shifts-New-Shift.webp"
-            width="1600"
-            height="1200"
-            alt="Shifts new shift dialog with title, times, priority, members, and labels"
-            loading="lazy"
-          />
-        </figure>
+        <ShiftsDemos />
       </PaperCsChrome>
 
       <div
