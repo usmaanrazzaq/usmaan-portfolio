@@ -196,11 +196,12 @@
   align-items: center;
   gap: 20px;
   flex-shrink: 0;
-  padding: 12px 20px;
+  height: 40px;
+  padding: 10px 20px;
   box-sizing: border-box;
   border-radius: 100px;
   background: var(--home-glass);
-  border: 0.5px solid var(--home-hairline);
+  border: 0.5px solid var(--home-nav-hairline);
   -webkit-backdrop-filter: var(--home-frost);
   backdrop-filter: var(--home-frost);
 }
@@ -216,9 +217,9 @@
   justify-content: center;
   box-sizing: border-box;
   color: var(--home-muted);
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 18px;
   text-align: center;
   text-decoration: none;
   background: none;
@@ -237,8 +238,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 45px;
-  height: 45px;
+  width: 40px;
+  height: 40px;
   padding: 0;
   box-sizing: border-box;
   border-radius: 100px;
@@ -248,7 +249,7 @@
   -webkit-appearance: none;
   isolation: isolate;
   background: var(--home-glass);
-  border: 0.5px solid var(--home-hairline);
+  border: 0.5px solid var(--home-nav-hairline);
   -webkit-backdrop-filter: var(--home-frost);
   backdrop-filter: var(--home-frost);
   pointer-events: auto;
@@ -662,24 +663,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 @media (max-width: 600px) {
   .paper-home__tabs {
     gap: 14px;
-    /* min-height keeps the pill the same height as the toggle beside it. */
-    min-height: 40px;
     padding: 10px 16px;
-  }
-
-  .paper-home__tabs > a {
-    font-size: 14px;
-    line-height: 18px;
-  }
-
-  .paper-home__theme {
-    width: 40px;
-    height: 40px;
-  }
-
-  .paper-home__theme .theme-icon {
-    width: 20px;
-    height: 20px;
   }
 }
 

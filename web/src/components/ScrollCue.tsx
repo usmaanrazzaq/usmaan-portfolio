@@ -60,7 +60,7 @@ export default function ScrollCue() {
       <a
         href="#work"
         aria-label="Scroll to selected work"
-        className="border-hairline bg-glass text-ink flex size-[45px] shrink-0 items-center justify-center rounded-pill border-[0.5px]"
+        className="border-hairline bg-glass text-ink flex size-10 shrink-0 items-center justify-center rounded-pill border-[0.5px]"
         onClick={handleClick}
       >
         <svg
