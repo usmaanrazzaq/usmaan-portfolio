@@ -13,7 +13,7 @@ export type ProjectMedia =
   | { kind: "rented-showcase"; fallbackSrc: string };
 
 export type Project = {
-  slug: "rented" | "nmya" | "adsum" | "dpr" | "otrs" | "wcm";
+  slug: "shifts" | "rented" | "nmya" | "adsum" | "dpr" | "otrs" | "wcm";
   title: string;
   date: string;
   headline: string;
@@ -28,6 +28,19 @@ export const MEDIA_WIDTH = 906;
 export const MEDIA_HEIGHT = 612;
 
 export const projects: Project[] = [
+  {
+    slug: "shifts",
+    title: "Shifts Management",
+    date: "Sept 2026 - Present",
+    headline:
+      "Designing a simple and modern shifts management application for small to large scale teams.",
+    description:
+      "Shifts is a team scheduling app that helps organizations plan and manage member shifts in one simple, organized calendar.",
+    caseHref: "/shifts/",
+    siteHref: "https://shifts-schedule-khaki.vercel.app/",
+    mediaLabel: "Read Shifts Management case study",
+    media: { kind: "image", src: "/images/home-shifts-showcase.webp" },
+  },
   {
     slug: "rented",
     title: "Rented",

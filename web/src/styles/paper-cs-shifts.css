@@ -1,0 +1,24 @@
+/*
+ * Shifts only — media ratios on top of paper-cs.css. The lightbox rules come
+ * from paper-cs-wcm.css, which the route also imports.
+ */
+
+.paper-cs--shifts .paper-cs__body p + p {
+  margin-top: 1lh;
+}
+
+.paper-cs--shifts .paper-cs__pair--components img,
+.paper-cs--shifts .paper-cs__shot--full img {
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.paper-cs--shifts .paper-cs__shot--full {
+  margin-top: var(--cs-gap-sm);
+}
+
+.paper-cs--shifts .paper-cs__hero img.paper-cs__zoomable:focus-visible,
+.paper-cs--shifts .paper-cs__shot img.paper-cs__zoomable:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
