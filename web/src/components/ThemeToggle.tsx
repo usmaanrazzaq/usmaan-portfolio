@@ -37,7 +37,6 @@ export default function ThemeToggle({ className }: { className?: string }) {
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
         strokeLinecap="round"
         aria-hidden="true"
       >
@@ -51,12 +50,11 @@ export default function ThemeToggle({ className }: { className?: string }) {
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
         aria-hidden="true"
       >
-        <path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z" />
+        <path d="M20 15.346C18.859 15.921 17.569 16.245 16.204 16.245C11.538 16.245 7.755 12.462 7.755 7.796C7.755 6.431 8.079 5.141 8.654 4C5.893 5.39 4 8.249 4 11.551C4 16.217 7.783 20 12.449 20C15.751 20 18.61 18.107 20 15.346Z" />
       </svg>
     </button>
   );

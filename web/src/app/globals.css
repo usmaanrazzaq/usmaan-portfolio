@@ -36,6 +36,8 @@
   --home-hero-panel: #f2f1e8;
   --home-glass: rgba(255, 255, 255, 0.25);
   --home-hairline: #8d8d92;
+  /* The floating nav's own edge: the same grey, at half strength. */
+  --home-nav-hairline: rgba(141, 141, 146, 0.5);
   --home-frost: blur(24px) saturate(180%);
   --home-gutter: 25px;
   --home-copy: 536px;
@@ -60,6 +62,7 @@ html[data-theme="dark"] {
   --home-hero-panel: #191919;
   --home-glass: rgba(255, 255, 255, 0.06);
   --home-hairline: rgba(255, 255, 255, 0.22);
+  --home-nav-hairline: rgba(255, 255, 255, 0.22);
   --home-frost: blur(24px) saturate(140%);
   background-color: var(--home-bg);
 }
