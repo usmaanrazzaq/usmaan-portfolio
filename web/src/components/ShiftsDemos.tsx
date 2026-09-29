@@ -76,40 +76,60 @@ function Avatar({ initials, color }: { initials: string; color: string }) {
   );
 }
 
-const shifts = [
+const crew = {
+  RS: "#804ccd",
+  BC: "#f17818",
+  DD: "#007c90",
+  PO: "#4461dc",
+  JH: "#c2285e",
+  KC: "#6f6f6f",
+};
+
+type Initials = keyof typeof crew;
+
+const shifts: {
+  name: string;
+  time: string;
+  labels: [string, string][];
+  avatars: Initials[];
+}[] = [
   {
-    name: "Maya Chen",
+    name: "Roger Sterling",
     time: "7:00 AM - 11:00 AM",
     labels: [
       ["teal", "Branding"],
       ["purple", "Motion"],
     ],
+    avatars: ["RS", "BC", "DD"],
   },
   {
-    name: "Luis Ortega",
+    name: "Don Draper",
     time: "9:00 AM - 1:00 PM",
     labels: [
       ["orange", "Print"],
       ["gray", "Review"],
       ["purple", "Motion"],
     ],
+    avatars: ["PO", "JH", "KC"],
   },
   {
-    name: "Amara Okafor",
+    name: "Bert Cooper",
     time: "12:00 PM - 4:00 PM",
     labels: [
       ["teal", "Branding"],
       ["purple", "Motion"],
       ["orange", "Print"],
     ],
+    avatars: ["RS", "DD", "KC"],
   },
   {
-    name: "Jonah Weiss",
+    name: "Lane Pryce",
     time: "3:00 PM - 7:00 PM",
     labels: [
       ["blue", "UX"],
       ["pink", "Photo"],
     ],
+    avatars: ["BC", "PO", "JH"],
   },
 ];
 
@@ -155,7 +175,7 @@ function CreateTeam() {
           <span className="shd-add__ph">Add Members</span>
           <span className="shd-input__val" data-val />
           <span className="shd-chip shd-chip--person shd-fill" data-sct-chip>
-            <Avatar initials="DD" color="#037a8b" />
+            <Avatar initials="DD" color={crew.DD} />
             Don Draper
           </span>
         </div>
@@ -195,9 +215,9 @@ function Schedule() {
               ))}
             </span>
             <span className="ssd__avatars">
-              <span />
-              <span />
-              <span />
+              {shift.avatars.map((initials) => (
+                <Avatar initials={initials} color={crew[initials]} key={initials} />
+              ))}
             </span>
           </li>
         ))}
@@ -229,7 +249,7 @@ const properties: { label: string; ph: ReactNode; value: ReactNode }[] = [
     value: (
       <>
         <span className="spp__stack">
-          <Avatar initials="DD" color="#037a8b" />
+          <Avatar initials="DD" color={crew.DD} />
           <Avatar initials="DB" color="#3f6bbf" />
           <Avatar initials="SN" color="#6b7f64" />
         </span>
@@ -423,7 +443,7 @@ function NewShift() {
           <UsersIcon />
           <span className="shd-add__ph">Add Members</span>
           <span className="shd-chip shd-chip--person shd-fill" data-sns-chip>
-            <Avatar initials="DD" color="#037a8b" />
+            <Avatar initials="DD" color={crew.DD} />
             Don Draper
           </span>
           <span className="shd-chip shd-chip--person shd-fill" data-sns-chip>
