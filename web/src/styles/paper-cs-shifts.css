@@ -212,39 +212,39 @@
 }
 
 .shd-tag--teal {
-  border-color: #3a8a99;
-  background: #cfe6ea;
-  color: #2f7f8e;
+  border-color: #007c90;
+  background: #00768f40;
+  color: #007c90;
 }
 
 .shd-tag--purple {
-  border-color: #8a6ad0;
-  background: #e5dbf8;
-  color: #7a55c8;
+  border-color: #804ccd;
+  background: #804ccd40;
+  color: #804ccd;
 }
 
 .shd-tag--orange {
-  border-color: #f08a4b;
-  background: #fde2cf;
-  color: #e5762e;
+  border-color: #f17818;
+  background: #f1781840;
+  color: #f17818;
 }
 
 .shd-tag--gray {
-  border-color: #8a8a8a;
-  background: #dadada;
-  color: #666;
+  border-color: #6f6f6f;
+  background: #6f6f6f40;
+  color: #6f6f6f;
 }
 
 .shd-tag--blue {
-  border-color: #5a74d6;
-  background: #d8e0fa;
-  color: #4a64c6;
+  border-color: #4461dc;
+  background: #4461dc40;
+  color: #4461dc;
 }
 
 .shd-tag--pink {
-  border-color: #c7486a;
-  background: #f5d2db;
-  color: #b83a5c;
+  border-color: #c2285e;
+  background: #c2285e40;
+  color: #c2285e;
 }
 
 .shd-btn {
@@ -343,20 +343,25 @@
 
 /* Schedule day column */
 .ssd {
-  height: 578px;
-  padding: 14px 10px 10px;
-  border-radius: 12px;
-  background: #f5f5f4;
+  height: 562px;
+  padding: 10px;
+  border-radius: 10px;
+  background: #f6f6f5;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .ssd__head {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 20px;
-  margin-bottom: 12px;
-  padding: 0 4px 0 1px;
-  font-size: 11.5px;
+  height: 26px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.ssd__head > .shd-icon {
+  margin-right: 6px;
 }
 
 .ssd__cards {
@@ -371,11 +376,9 @@
 .ssd__card {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 9px;
-  height: 123px;
+  gap: 10px;
   box-sizing: border-box;
-  padding: 0 10px;
+  padding: 10px;
   border-radius: 8px;
   background: #fff;
   transition:
@@ -396,13 +399,14 @@
 }
 
 .ssd__time {
-  color: #888;
-  font-size: 11.5px;
+  color: #8a8a8a;
+  font-size: 12px;
+  line-height: 16px;
 }
 
 .ssd__name {
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 .ssd__labels {
@@ -410,21 +414,29 @@
   gap: 5px;
 }
 
+.ssd .shd-tag {
+  height: auto;
+  border-radius: 100px;
+  font-size: 10px;
+  line-height: 12px;
+}
+
 .ssd__avatars {
   display: flex;
 }
 
-.ssd__avatars > span {
-  width: 24px;
-  height: 24px;
-  box-sizing: border-box;
-  border: 1.5px solid #fff;
-  border-radius: 50%;
-  background: #dedede;
+.ssd__avatars > .shd-avatar {
+  width: 20px;
+  height: 20px;
+  outline: 0.5px solid rgba(229, 229, 229, 0.2);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 12px;
 }
 
-.ssd__avatars > span + span {
-  margin-left: -12px;
+.ssd__avatars > .shd-avatar + .shd-avatar {
+  margin-left: -10px;
 }
 
 /* Properties panel */
