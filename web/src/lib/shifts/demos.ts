@@ -2,6 +2,8 @@
  * The five self-running component demos in the Shifts case study. Each mount
  * fits its canvas into the frame, then plays a list of beats on a loop while
  * the figure is on screen (see `loopBeats`). Every mount returns a teardown.
+ * `fraction` overrides how much of the frame's width the canvas spans, which
+ * the lightbox uses on phones.
  */
 
 import { fitCanvas, loopBeats, typeBeats } from "@/lib/demoLoop";
@@ -57,8 +59,8 @@ function mount(
 }
 
 /** Create a new team: name typed, colour picked, a member added, submitted. */
-export function mountCreateTeamDemo(root: HTMLElement) {
-  return mount(root, PAPER_W.createTeam / 800, ({ q, qa }) => {
+export function mountCreateTeamDemo(root: HTMLElement, fraction?: number) {
+  return mount(root, fraction ?? PAPER_W.createTeam / 800, ({ q, qa }) => {
     const name = q("[data-sct-name]");
     const swatches = q("[data-sct-swatches]");
     const members = q("[data-sct-members]");
@@ -81,7 +83,7 @@ export function mountCreateTeamDemo(root: HTMLElement) {
         { at: 1850, run: off(name, "is-focus") },
         { at: 2100, run: on(swatches, "is-picked") },
         { at: 2700, run: () => swatches?.style.setProperty("--sel", "2") },
-        ...typeBeats(members, "Priya Raman", 3400, 60),
+        ...typeBeats(members, "Don Draper", 3400, 60),
         {
           at: 4350,
           run: () => {
@@ -99,8 +101,8 @@ export function mountCreateTeamDemo(root: HTMLElement) {
 }
 
 /** Schedule day column: the four shift cards stack in, hold, and replay. */
-export function mountScheduleDemo(root: HTMLElement) {
-  return mount(root, PAPER_W.schedule / 800, ({ q }) => {
+export function mountScheduleDemo(root: HTMLElement, fraction?: number) {
+  return mount(root, fraction ?? PAPER_W.schedule / 800, ({ q }) => {
     const stage = q("[data-ssd-stage]");
     return {
       reset: () => stage?.classList.add("is-intro"),
@@ -112,8 +114,8 @@ export function mountScheduleDemo(root: HTMLElement) {
 }
 
 /** Properties panel: each property fills in, then a note is typed. */
-export function mountPropertiesDemo(root: HTMLElement) {
-  return mount(root, PAPER_W.properties / 800, ({ q, qa }) => {
+export function mountPropertiesDemo(root: HTMLElement, fraction?: number) {
+  return mount(root, fraction ?? PAPER_W.properties / 800, ({ q, qa }) => {
     const rows = qa("[data-spp-row]");
     const notes = q("[data-spp-notes]");
     return {
@@ -139,8 +141,8 @@ export function mountPropertiesDemo(root: HTMLElement) {
 }
 
 /** Team menu: the hover highlight glides down the actions and back. */
-export function mountTeamMenuDemo(root: HTMLElement) {
-  return mount(root, PAPER_W.teamMenu / 800, ({ q, qa }) => {
+export function mountTeamMenuDemo(root: HTMLElement, fraction?: number) {
+  return mount(root, fraction ?? PAPER_W.teamMenu / 800, ({ q, qa }) => {
     const menu = q("[data-stm-menu]");
     const rows = qa("[data-stm-row]");
 
@@ -176,8 +178,8 @@ export function mountTeamMenuDemo(root: HTMLElement) {
 }
 
 /** New shift: title, times, priority, members, and labels filled, then added. */
-export function mountNewShiftDemo(root: HTMLElement) {
-  return mount(root, PAPER_W.newShift / 800, ({ q, qa }) => {
+export function mountNewShiftDemo(root: HTMLElement, fraction?: number) {
+  return mount(root, fraction ?? PAPER_W.newShift / 800, ({ q, qa }) => {
     const title = q("[data-sns-title]");
     const start = q("[data-sns-start]");
     const end = q("[data-sns-end]");
