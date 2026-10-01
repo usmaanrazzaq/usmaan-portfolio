@@ -93,41 +93,23 @@ export default function ShiftsCaseStudy() {
           <h2 id="research-heading">Research</h2>
           <div className="paper-cs__body">
             <p>
-              Market gap. Nonprofit-style shift work falls between two product categories.
-              Employee schedulers (When I Work, Deputy, Homebase, Connecteam, Sling, Shiftboard)
-              are built for paid hourly teams: strong on open shifts, swaps, and labor cost,
-              priced per user. Volunteer tools (SignUpGenius, Better Impact, VolunteerHub,
-              Volgistics, Bloomerang, WhenToHelp) are strong on signups and hours/CRM but weak on
-              daily ops. A real hybrid, staff and volunteers on one operational calendar, is rare.
-              On price, both sides squeeze small orgs: per-seat fees, per-volunteer growth taxes,
-              and reminders/SMS paywalled behind free ad-supported tiers.
-            </p>
-            <p>
-              Coordinator pain. Most coordinators run schedules through spreadsheets and group
-              texts, with no single view of who&apos;s working when. That leads to double
-              bookings, stale rosters, and understaffed days that go unnoticed. No-shows/backfill
-              are a known pain point industry-wide, but we deprioritized them for this prototype
-              to focus on the more foundational problem first.
-            </p>
-            <p>
-              Scope decision. Core failure we designed around: managers can&apos;t see staff
-              coverage without a spreadsheet. That narrowed the Sept 18 prototype to one calendar
-              plus staff roster, not full workforce management, not volunteer-first. Swaps,
-              reminders, payroll, and mobile claim flows were explicitly cut.
-            </p>
-            <p>
-              Design references. Instead of benchmarking scheduling software, we studied Linear
-              (dense lists, side-peek detail, quiet status, hairline structure) and Notion (one
-              dataset, multiple views, chips/properties, calm neutrals). North star: a calendar
-              that feels like a work OS, not a digitized timesheet.
-            </p>
-            <p>
-              What v0.01 showed. The day-column shift-card interaction shell worked well:
-              creation, side panel, labels, priority, notes, delete. But the board shows shifts on
-              days, not people against coverage. There are no staff rows, no headcount, no gap
-              cues, no role field, and the roster still lives separately under Teams. Takeaway:
-              the shell is right; the next research bet is making people, assignment, and coverage
-              gaps first-class on the same surface.
+              Nonprofit-style shift work falls between two mismatched product categories: employee
+              schedulers (When I Work, Deputy, Homebase, Connecteam, Sling, Shiftboard) built for
+              paid hourly teams with per-user pricing, and volunteer tools (SignUpGenius, Better
+              Impact, VolunteerHub, Volgistics, Bloomerang, WhenToHelp) strong on signups and CRM
+              but weak on daily ops, with a true staff-and-volunteer hybrid calendar rare across
+              both. Coordinators are largely stuck running schedules through spreadsheets and
+              group texts, with no single view of who&apos;s working when, leading to double
+              bookings, stale rosters, and understaffed days that go unnoticed. We framed the core
+              failure as managers can&apos;t see staff coverage without a spreadsheet, which
+              narrowed the September 18 prototype to one calendar plus a staff roster (cutting
+              swaps, reminders, payroll, and mobile claim flows), and drew its UI direction from
+              Linear and Notion rather than legacy scheduling software, aiming for a calendar that
+              feels like a work OS. Building v0.01 validated that interaction shell (shift cards,
+              side panel, labels, priority, notes) but showed shifts on days rather than people
+              against coverage, with no staff rows, headcount, gap cues, or role field yet,
+              pointing to the next research bet: making people, assignment, and coverage gaps
+              first-class on the same surface.
             </p>
           </div>
         </section>
