@@ -15,6 +15,7 @@ html[data-theme="dark"] {
   --cs-surface: #242424;
   --cs-surface-hover: #2e2e2e;
   --cs-surface-active: #363636;
+  --cs-directory-active: rgba(255, 255, 255, 0.08);
   background-color: var(--cs-bg);
 }
 

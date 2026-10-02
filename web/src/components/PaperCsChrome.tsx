@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import type { ReactNode, Ref } from "react";
+import CsDirectory, { type CsDirectoryItem } from "@/components/CsDirectory";
 
 /**
  * The frame every paper case study shares: the `paper-cs-route` body class the
@@ -12,10 +13,13 @@ import type { ReactNode, Ref } from "react";
 export default function PaperCsChrome({
   className,
   ref,
+  directory,
   children,
 }: {
   className?: string;
   ref?: Ref<HTMLElement>;
+  /** Section list for the left margin; omit it and the page has none. */
+  directory?: CsDirectoryItem[];
   children: ReactNode;
 }) {
   useEffect(() => {
@@ -46,6 +50,8 @@ export default function PaperCsChrome({
         </svg>
         Back
       </a>
+
+      {directory && <CsDirectory items={directory} />}
 
       {children}
     </main>

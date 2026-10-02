@@ -5,6 +5,13 @@ import PaperCsChrome from "@/components/PaperCsChrome";
 import ShiftsDemos from "@/components/ShiftsDemos";
 import { initImageLightbox } from "@/lib/wcm/lightbox";
 
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "research-heading", label: "Research" },
+  { id: "components-heading", label: "Components" },
+];
+
 export default function ShiftsCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -16,7 +23,7 @@ export default function ShiftsCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome className="paper-cs--shifts" ref={rootRef}>
+      <PaperCsChrome className="paper-cs--shifts" ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">Shifts Web App</h1>
 
