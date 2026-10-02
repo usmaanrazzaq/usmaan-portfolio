@@ -14,6 +14,13 @@ import {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "merchandise-heading", label: "Merchandise" },
+  { id: "studio-heading", label: "Design Studio" },
+];
+
 export default function OtrsCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -35,7 +42,7 @@ export default function OtrsCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome className="paper-cs--otrs" ref={rootRef}>
+      <PaperCsChrome className="paper-cs--otrs" ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">On The Run Studio</h1>
 

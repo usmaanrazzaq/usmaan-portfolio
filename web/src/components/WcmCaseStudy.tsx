@@ -4,6 +4,16 @@ import { useEffect, useRef } from "react";
 import PaperCsChrome from "@/components/PaperCsChrome";
 import { initImageLightbox } from "@/lib/wcm/lightbox";
 
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "problem-heading", label: "Problem" },
+  { id: "research-heading", label: "Research & Direction" },
+  { id: "solutions-heading", label: "Solutions" },
+  { id: "accessibility-heading", label: "Accessibility" },
+  { id: "systems-heading", label: "Design Systems" },
+];
+
 export default function WcmCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -15,7 +25,7 @@ export default function WcmCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome className="paper-cs--wcm" ref={rootRef}>
+      <PaperCsChrome className="paper-cs--wcm" ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">WCM Connect App</h1>
 

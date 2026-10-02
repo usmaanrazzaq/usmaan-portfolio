@@ -30,6 +30,14 @@ declare global {
   }
 }
 
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "problem-heading", label: "Problem" },
+  { id: "research-heading", label: "Research" },
+  { id: "decisions-heading", label: "Design Decisions" },
+];
+
 export default function RentedCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -70,7 +78,7 @@ export default function RentedCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome ref={rootRef}>
+      <PaperCsChrome ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">Rented</h1>
 
