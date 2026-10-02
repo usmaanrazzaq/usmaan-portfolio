@@ -15,6 +15,7 @@
   --cs-surface: #ffffff;
   --cs-surface-hover: #fafafa;
   --cs-surface-active: #f5f5f5;
+  --cs-directory-active: #f1f1f18c;
   --cs-column: 722px;
   --cs-gap-sm: 10px;
   --cs-gap-md: 40px;
@@ -95,6 +96,94 @@ body.paper-cs-route #nav-container {
     transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Next-only: the section directory in the left margin (CsDirectory.tsx). Fixed
+   to the viewport edge, level with the title, and hidden once the margin is too
+   narrow to hold it. */
+.paper-cs__directory {
+  position: fixed;
+  /* The title's top edge: 70px page padding + the 33px Back pill + 40px. */
+  top: 143px;
+  left: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+  width: 165px;
+  padding: 10px 5px;
+}
+
+.paper-cs__directory-title {
+  color: var(--cs-ink);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.paper-cs__directory ul {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  /* Pulled left by the pill's inline padding so the labels stay in line with
+     the "Directory" title while the pill reaches out past them. */
+  margin-left: -8px;
+  list-style: none;
+}
+
+/* One pill for the whole list: it sits on the active row and glides to
+   whichever row is hovered or focused. `--pill-index` comes from CsDirectory;
+   a translate percentage is the pill's own height, i.e. one row. */
+.paper-cs__directory-pill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: calc(14px * 1.4 + 8px);
+  border-radius: 8px;
+  background: var(--cs-directory-active);
+  transform: translateY(calc(var(--pill-index, 0) * 100%));
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+/* Sections you are not in sit back in the muted grey; the current one, and
+   whichever the pill is on, come up to full ink. */
+.paper-cs__directory a {
+  position: relative;
+  display: block;
+  padding: 4px 8px;
+  border-radius: 8px;
+  color: var(--cs-muted);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  text-decoration: none;
+  transition: color 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.paper-cs__directory a[aria-current],
+.paper-cs__directory a:focus-visible {
+  color: var(--cs-ink);
+}
+
+@media (hover: hover) {
+  .paper-cs__directory a:hover {
+    color: var(--cs-ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .paper-cs__directory-pill,
+  .paper-cs__directory a {
+    transition: none;
+  }
+}
+
+@media (max-width: 1199px) {
+  .paper-cs__directory {
+    display: none;
+  }
+}
+
 .paper-cs__header {
   margin-top: 40px;
 }
@@ -152,6 +241,8 @@ body.paper-cs-route #nav-container {
   font-size: 18px;
   font-weight: 500;
   line-height: 1.4;
+  /* Where a directory link lands the heading. */
+  scroll-margin-top: 40px;
 }
 
 .paper-cs__body {
@@ -1009,8 +1100,7 @@ body.paper-cs-route #nav-container {
 
   .paper-cs__back:active {
     background: var(--home-pill-stroke);
-  }
-}
+  }}
 
 @media (max-width: 768px) {
   .paper-cs {
