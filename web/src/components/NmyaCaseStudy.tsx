@@ -14,6 +14,15 @@ import {
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
+// "Wireframe & Development" is shortened: a directory row has to fit one line.
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "problem-heading", label: "Problem" },
+  { id: "research-heading", label: "User Research" },
+  { id: "wireframe-heading", label: "Wireframe" },
+];
+
 export default function NmyaCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -35,7 +44,7 @@ export default function NmyaCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome className="paper-cs--nmya" ref={rootRef}>
+      <PaperCsChrome className="paper-cs--nmya" ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">National Muslim Youth Association</h1>
 

@@ -23,6 +23,14 @@ const campaigns = [
   { src: "/images/Adsum-Campaign-Workshop.webp", caption: "Workshop Scene" },
 ];
 
+const DIRECTORY = [
+  { id: "overview-heading", label: "Overview" },
+  { id: "outcome-heading", label: "Outcome" },
+  { id: "landing-heading", label: "Landing Pages" },
+  { id: "size-filter-heading", label: "Size Filter" },
+  { id: "additional-heading", label: "Additional Work" },
+];
+
 export default function AdsumCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -49,7 +57,7 @@ export default function AdsumCaseStudy() {
 
   return (
     <>
-      <PaperCsChrome className="paper-cs--adsum" ref={rootRef}>
+      <PaperCsChrome className="paper-cs--adsum" ref={rootRef} directory={DIRECTORY}>
         <header className="paper-cs__header">
           <h1 id="cs-title">Adsum NYC</h1>
 
