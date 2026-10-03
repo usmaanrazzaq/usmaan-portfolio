@@ -116,7 +116,7 @@ export function mountProfileTabsDemo(root: Element) {
     root.querySelector<HTMLElement>(`[data-rpd-panel="${btn.getAttribute("data-rpd-tab")}"]`),
   );
   const tapEl = root.querySelector<HTMLElement>("[data-rpd-tap]");
-  const stage = root.querySelector(".rpd");
+  const stage = root.querySelector<HTMLElement>(".rpd");
 
   if (!tabsRoot || btns.length !== 3 || panels.some((panel) => !panel)) return () => {};
 
@@ -142,8 +142,10 @@ export function mountProfileTabsDemo(root: Element) {
     const targetRect = target.getBoundingClientRect();
     if (!targetRect.width || !stageRect.width) return;
 
-    tapEl.style.left = `${targetRect.left + targetRect.width / 2 - stageRect.left}px`;
-    tapEl.style.top = `${targetRect.top + targetRect.height / 2 - stageRect.top}px`;
+    // The lightbox scales the demo up, so map screen pixels back to its own.
+    const scale = stageRect.width / stage.offsetWidth || 1;
+    tapEl.style.left = `${(targetRect.left + targetRect.width / 2 - stageRect.left) / scale}px`;
+    tapEl.style.top = `${(targetRect.top + targetRect.height / 2 - stageRect.top) / scale}px`;
     tapEl.classList.remove("is-on");
     void tapEl.offsetWidth;
     tapEl.classList.add("is-on");

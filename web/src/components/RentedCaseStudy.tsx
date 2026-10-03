@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { CSSProperties } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -11,18 +10,9 @@ import {
 } from "@/lib/rented/charts";
 import { initChartLightbox } from "@/lib/rented/lightbox";
 import PaperCsChrome from "@/components/PaperCsChrome";
-import {
-  mountListingsDemo,
-  mountProfileTabsDemo,
-  mountSuggestionsDemo,
-} from "@/lib/rented/demos";
+import RentedDemos from "@/components/RentedDemos";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
-
-/** The demos read `--i` off each item to stagger the stack-load entrance. */
-function step(index: number) {
-  return { "--i": index } as CSSProperties;
-}
 
 declare global {
   interface Window {
@@ -41,9 +31,6 @@ const DIRECTORY = [
 export default function RentedCaseStudy() {
   const rootRef = useRef<HTMLElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
-  const suggestionsRef = useRef<HTMLElement>(null);
-  const profileTabsRef = useRef<HTMLElement>(null);
-  const listingsRef = useRef<HTMLElement>(null);
 
   useGSAP(
     () => {
@@ -57,16 +44,6 @@ export default function RentedCaseStudy() {
   useEffect(() => {
     if (!rootRef.current || !overlayRef.current) return;
     return initChartLightbox(rootRef.current, overlayRef.current);
-  }, []);
-
-  useEffect(() => {
-    const teardowns = [
-      suggestionsRef.current && mountSuggestionsDemo(suggestionsRef.current),
-      profileTabsRef.current && mountProfileTabsDemo(profileTabsRef.current),
-      listingsRef.current && mountListingsDemo(listingsRef.current),
-    ];
-
-    return () => teardowns.forEach((teardown) => teardown && teardown());
   }, []);
 
   // The prototype script is shared with the static site and mounts itself into
@@ -297,244 +274,7 @@ export default function RentedCaseStudy() {
           </div>
         </section>
 
-        <div className="paper-cs__pair paper-cs__pair--demos">
-          <figure
-            className="paper-cs__shot paper-cs__suggestions"
-            data-rsd
-            aria-label="Rented suggestion chips stacking in above the search field"
-            ref={suggestionsRef}
-          >
-            <div className="rsd" aria-hidden="true">
-              <div className="rsd__stage is-intro">
-                <ul className="rsd__chips">
-                  <li style={step(0)}>
-                    <span className="rsd__chip">Hand Tools</span>
-                  </li>
-                  <li style={step(1)}>
-                    <span className="rsd__chip">Audio Equipment</span>
-                  </li>
-                  <li style={step(2)}>
-                    <span className="rsd__chip">Kitchen Appliances</span>
-                  </li>
-                  <li style={step(3)}>
-                    <span className="rsd__chip">Tents &amp; Events Spaces</span>
-                  </li>
-                </ul>
-                <div className="rsd__search">
-                  <span className="rsd__placeholder">Search for a product</span>
-                  <span className="rsd__actions">
-                    <svg className="rsd__mic" viewBox="0 0 10 16" width="10" height="16" focusable="false">
-                      <path
-                        d="M5 1.05a2.05 2.05 0 0 0-2.05 2.05v5.56a2.05 2.05 0 1 0 4.1 0V3.1A2.05 2.05 0 0 0 5 1.05Z"
-                        fill="none"
-                        stroke="#939393"
-                        strokeWidth="0.67"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M1 7.3v1.39a4 4 0 0 0 8 0V7.3"
-                        fill="none"
-                        stroke="#939393"
-                        strokeWidth="0.67"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                      <path
-                        d="M5 13.5v2.2M2.5 15.7h5"
-                        fill="none"
-                        stroke="#939393"
-                        strokeWidth="0.67"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <span className="rsd__send">
-                      <svg viewBox="0 0 15 15" width="15" height="15" focusable="false">
-                        <circle cx="7.5" cy="7.5" r="7.5" fill="none" stroke="#fff" strokeWidth="0.67" />
-                        <path
-                          d="M7.5 11.67V3.33M4.17 6.67 7.5 3.33l3.33 3.34"
-                          fill="none"
-                          stroke="#fff"
-                          strokeWidth="0.67"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </span>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </figure>
-
-          <figure
-            className="paper-cs__shot paper-cs__profile-tabs"
-            data-rpd
-            aria-label="Rented profile tabs cycling through Listed, History, and Review"
-            ref={profileTabsRef}
-          >
-            <div className="rpd" aria-hidden="true">
-              <div className="rpd__tabs" data-rpd-tabs data-tab="0" style={{ "--tab": 0 } as CSSProperties}>
-                <span className="rpd__thumb" />
-                <span className="rpd__btn is-active" data-rpd-tab="0">Listed</span>
-                <span className="rpd__btn" data-rpd-tab="1">History</span>
-                <span className="rpd__btn" data-rpd-tab="2">Review</span>
-              </div>
-
-              <div className="rpd__panels">
-                <div className="rpd__panel is-active is-intro" data-rpd-panel="0">
-                  <ul className="rpd__grid">
-                    <li style={step(0)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/studio.webp" width="176" height="195" alt="" loading="lazy" />
-                      <span>Studio Equipment</span>
-                    </li>
-                    <li style={step(1)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/easel-field.webp" width="176" height="195" alt="" loading="lazy" />
-                      <span>Painting Equipment</span>
-                    </li>
-                    <li style={step(2)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/mower.webp?v=20260803-trim" width="176" height="195" alt="" loading="lazy" />
-                      <span>Lawn Mower</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="rpd__panel" data-rpd-panel="1" hidden>
-                  <ul className="rpd__rows">
-                    <li style={step(0)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/easel-field.webp" width="52" height="58" alt="" loading="lazy" />
-                      <div>
-                        <h4>Painting Equipment</h4>
-                        <p>Lent to Maya R. · Mar 2 – 6</p>
-                      </div>
-                      <span className="rpd__amount">$60</span>
-                    </li>
-                    <li style={step(1)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/studio.webp" width="52" height="58" alt="" loading="lazy" />
-                      <div>
-                        <h4>Studio Equipment</h4>
-                        <p>Lent to Devon K. · Feb 14 – 16</p>
-                      </div>
-                      <span className="rpd__amount">$180</span>
-                    </li>
-                    <li style={step(2)}>
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/images/rented-proto/mower.webp?v=20260803-trim" width="52" height="58" alt="" loading="lazy" />
-                      <div>
-                        <h4>Lawn Mower</h4>
-                        <p>Lent to Priya S. · Jan 28</p>
-                      </div>
-                      <span className="rpd__amount">$25</span>
-                    </li>
-                  </ul>
-                </div>
-
-                <div className="rpd__panel" data-rpd-panel="2" hidden>
-                  <ul className="rpd__reviews">
-                    <li style={step(0)}>
-                      <span className="rpd__who">Maya R.</span>
-                      <span className="rpd__score">★★★★★</span>
-                      <p>
-                        Easel was in great shape and John met me halfway across town. Would rent
-                        again.
-                      </p>
-                    </li>
-                    <li style={step(1)}>
-                      <span className="rpd__who">Devon K.</span>
-                      <span className="rpd__score">★★★★☆</span>
-                      <p>
-                        Studio setup was exactly as pictured. Clear instructions for pickup and
-                        drop-off.
-                      </p>
-                    </li>
-                    <li style={step(2)}>
-                      <span className="rpd__who">Priya S.</span>
-                      <span className="rpd__score">★★★★★</span>
-                      <p>
-                        Quick replies and a fair price. Made borrowing the mower completely
-                        painless.
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-              <span className="rpd__tap" data-rpd-tap />
-            </div>
-          </figure>
-        </div>
-
-        <figure
-          className="paper-cs__shot paper-cs__shot--wide paper-cs__listings"
-          data-rld
-          aria-label="Rented search results with product listings stacking into view"
-          ref={listingsRef}
-        >
-          <div className="rld" aria-hidden="true">
-            <div className="rld__fit">
-              <div className="rld__canvas">
-                <div className="rld__searchbar">
-                  <div className="rld__field">
-                    <span className="rld__query">Painting Equipment</span>
-                    <svg className="rld__clear" viewBox="0 0 9 9" width="9" height="9" focusable="false">
-                      <path d="M9 0 0 9M0 0l9 9" fill="none" stroke="#2B2B2B" strokeWidth="1.5" strokeLinecap="round" />
-                    </svg>
-                  </div>
-                  <span className="rld__cancel">Cancel</span>
-                </div>
-
-                <div className="rld__stage is-intro" data-rld-stage>
-                  <article className="rld__card rld__card--best" style={step(0)}>
-                    <ul className="rld__tags">
-                      <li className="rld__tag rld__tag--match">Best Match</li>
-                      <li className="rld__tag rld__tag--near">Close By</li>
-                      <li className="rld__tag rld__tag--price">Best Price</li>
-                    </ul>
-                    <div className="rld__body">
-                      <div className="rld__photo">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/images/rented-proto/easel.webp" width="203" height="203" alt="" loading="lazy" />
-                      </div>
-                      <div className="rld__copy">
-                        <h3>Painting easel and stand</h3>
-                        <p>
-                          Sturdy beechwood easel that fits canvases up to 48&quot;. Adjustable
-                          height, tilting top, and built-in brush tray. Folds flat for storage.
-                          Perfect for weekend painters and art students.
-                        </p>
-                        <p className="rld__price">Daily : $12 / Weekly: $60</p>
-                      </div>
-                    </div>
-                  </article>
-
-                  <article className="rld__card" style={step(1)}>
-                    <div className="rld__body">
-                      <div className="rld__photo">
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src="/images/rented-proto/sprayer.webp" width="249" height="195" alt="" loading="lazy" />
-                      </div>
-                      <div className="rld__copy">
-                        <h3>House Painting Equipment</h3>
-                        <p>
-                          High-output sprayer for walls, fences, decks, and ceilings. Handles
-                          latex, oil-based paints, and stains with a smooth finish. Includes 25-ft
-                          hose and adjustable tip.
-                        </p>
-                        <p className="rld__price">Daily : $15 / Weekly: $75</p>
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-            </div>
-          </div>
-        </figure>
+        <RentedDemos />
 
         <section className="paper-cs__section" aria-labelledby="decisions-heading">
           <h2 id="decisions-heading">Design Decisions</h2>

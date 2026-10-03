@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { useEffect, useRef } from "react";
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
+import DemoLightbox, { useDemoLightbox } from "@/components/DemoLightbox";
 import {
   mountCreateTeamDemo,
   mountNewShiftDemo,
@@ -559,153 +559,18 @@ function DemoFrame({
 }
 
 /**
- * The enlarged view: a fresh copy of the chosen demo, stepped through with the
- * side buttons, the arrow keys, or a swipe. Styled after the image lightbox.
- */
-function DemoLightbox({
-  index,
-  onStep,
-  onClose,
-}: {
-  index: number | null;
-  onStep: (delta: number) => void;
-  onClose: () => void;
-}) {
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const closeRef = useRef<HTMLButtonElement>(null);
-  const touchX = useRef<number | null>(null);
-  const [active, setActive] = useState(false);
-  const isOpen = index !== null;
-
-  useEffect(() => {
-    if (!isOpen) return;
-    const frame = requestAnimationFrame(() => setActive(true));
-    document.body.style.overflow = "hidden";
-    return () => {
-      cancelAnimationFrame(frame);
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
-
-  // The overlay is `visibility: hidden` until active, so focus waits for it.
-  useEffect(() => {
-    if (active) closeRef.current?.focus();
-  }, [active]);
-
-  function close() {
-    setActive(false);
-    window.setTimeout(onClose, 280);
-  }
-
-  // The document listener reads the latest handlers through a ref, so it is
-  // attached once per open rather than on every render.
-  const keys = useRef({ close, onStep });
-  useEffect(() => {
-    keys.current = { close, onStep };
-  });
-
-  useEffect(() => {
-    if (!isOpen) return;
-    function onKeyDown(event: globalThis.KeyboardEvent) {
-      if (event.key === "Escape") keys.current.close();
-      else if (event.key === "ArrowRight") keys.current.onStep(1);
-      else if (event.key === "ArrowLeft") keys.current.onStep(-1);
-      else return;
-      event.preventDefault();
-    }
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [isOpen]);
-
-  // Clicks on the dimmed ground close it; clicks on the component do not.
-  function onClick(event: React.MouseEvent<HTMLDivElement>) {
-    const target = event.target as HTMLElement;
-    if (target === overlayRef.current || target.classList.contains("lightbox-stage")) close();
-  }
-
-  function onTouchStart(event: React.TouchEvent) {
-    touchX.current = event.touches[0].clientX;
-  }
-
-  function onTouchEnd(event: React.TouchEvent) {
-    if (touchX.current === null) return;
-    const dx = event.changedTouches[0].clientX - touchX.current;
-    touchX.current = null;
-    if (Math.abs(dx) > 40) onStep(dx < 0 ? 1 : -1);
-  }
-
-  // Rendered only while open, into <body>, so no ancestor can clip it.
-  if (!isOpen) return null;
-
-  return createPortal(
-    <div
-      className={`lightbox-overlay lightbox-overlay--shifts${active ? " active" : ""}`}
-      role="dialog"
-      aria-modal="true"
-      aria-label="Enlarged component"
-      ref={overlayRef}
-      onClick={onClick}
-      onTouchStart={onTouchStart}
-      onTouchEnd={onTouchEnd}
-    >
-      <button
-        type="button"
-        className="lightbox-close"
-        aria-label="Close lightbox"
-        ref={closeRef}
-        onClick={close}
-      />
-      <button
-        type="button"
-        className="lightbox-step lightbox-step--prev"
-        aria-label="Previous component"
-        onClick={() => onStep(-1)}
-      />
-      <button
-        type="button"
-        className="lightbox-step lightbox-step--next"
-        aria-label="Next component"
-        onClick={() => onStep(1)}
-      />
-      <p className="sr-only" aria-live="polite">
-        Component {index + 1} of {DEMOS.length}
-      </p>
-      <div className="lightbox-stage">
-        <DemoFrame key={index} demo={DEMOS[index]} fillOnPhone />
-      </div>
-    </div>,
-    document.body,
-  );
-}
-
-/**
  * The Components section: five coded, self-running replicas of the Shifts UI,
  * laid out like the screenshots they replace (pair, pair, full width). Each
  * opens in a lightbox that steps through all five.
  */
 export default function ShiftsDemos() {
-  const [index, setIndex] = useState<number | null>(null);
-  const opener = useRef<HTMLElement | null>(null);
-
-  function open(order: number, el: HTMLElement) {
-    opener.current = el;
-    setIndex(order);
-  }
-
-  function step(delta: number) {
-    setIndex((i) => (i === null ? i : (i + delta + DEMOS.length) % DEMOS.length));
-  }
-
-  function onClose() {
-    setIndex(null);
-    opener.current?.focus();
-  }
+  const lightbox = useDemoLightbox(DEMOS.length);
 
   const frame = (order: number, className?: string) => (
     <DemoFrame
       demo={DEMOS[order]}
       className={`paper-cs__zoomable ${className ?? ""}`}
-      onOpen={(el) => open(order, el)}
+      onOpen={(el) => lightbox.open(order, el)}
     />
   );
 
@@ -723,7 +588,23 @@ export default function ShiftsDemos() {
 
       {frame(4, "paper-cs__shot--full")}
 
-      <DemoLightbox index={index} onStep={step} onClose={onClose} />
+      <DemoLightbox
+        index={lightbox.index}
+        count={DEMOS.length}
+        noun="component"
+        className="lightbox-overlay--shifts"
+        onStep={lightbox.step}
+        onClose={lightbox.close}
+      >
+        {lightbox.index !== null && (
+          <DemoFrame
+            key={lightbox.index}
+            demo={DEMOS[lightbox.index]}
+            className="lightbox-frame"
+            fillOnPhone
+          />
+        )}
+      </DemoLightbox>
     </>
   );
 }

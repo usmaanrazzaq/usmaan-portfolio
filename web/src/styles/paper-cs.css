@@ -1088,6 +1088,158 @@ body.paper-cs-route #nav-container {
   transform: translate(-50%, -50%) rotate(-45deg);
 }
 
+/*
+ * Demo lightbox (DemoLightbox.tsx): a case study's self-running demos, opened
+ * large and stepped through. Each case study sizes its own `.lightbox-frame`.
+ */
+.paper-cs__shot.paper-cs__zoomable {
+  cursor: zoom-in;
+}
+
+.paper-cs__shot.paper-cs__zoomable:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+/* Visible at once on open, so the close button can take focus straight away. */
+.lightbox-overlay--demos.active {
+  transition: opacity 0.28s ease;
+}
+
+.lightbox-overlay--demos .lightbox-stage {
+  width: min(1100px, 100% - 112px);
+}
+
+.lightbox-frame {
+  flex-shrink: 0;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
+  cursor: default;
+  transform: scale(0.96);
+  transition: transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
+  animation: lightbox-frame-in 0.24s ease;
+}
+
+.lightbox-overlay--demos.active .lightbox-frame {
+  transform: scale(1);
+}
+
+@keyframes lightbox-frame-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.lightbox-overlay--demos .lightbox-close,
+.lightbox-step {
+  z-index: 1;
+}
+
+.lightbox-step {
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--cs-surface);
+  color: var(--cs-ink);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: background-color 0.2s ease;
+}
+
+.lightbox-step--prev {
+  left: 20px;
+}
+
+.lightbox-step--next {
+  right: 20px;
+}
+
+/* A chevron drawn from two borders of a rotated square. */
+.lightbox-step::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 9px;
+  height: 9px;
+  border-top: 1.5px solid currentColor;
+  border-right: 1.5px solid currentColor;
+}
+
+.lightbox-step--prev::before {
+  transform: translate(-30%, -50%) rotate(-135deg);
+}
+
+.lightbox-step--next::before {
+  transform: translate(-70%, -50%) rotate(45deg);
+}
+
+.lightbox-step:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .lightbox-step:hover {
+    background: var(--cs-surface-hover);
+  }
+}
+
+.lightbox-step:active {
+  background: var(--cs-surface-active);
+}
+
+/* On a phone the frame spans the width, so the steps drop below it. */
+@media (max-width: 640px) {
+  .lightbox-overlay--demos {
+    padding-bottom: 104px;
+  }
+
+  .lightbox-overlay--demos .lightbox-stage {
+    width: 100%;
+  }
+
+  .lightbox-step {
+    top: auto;
+    bottom: 32px;
+    width: 48px;
+    height: 48px;
+    transform: none;
+  }
+
+  .lightbox-step--prev {
+    left: calc(50% - 60px);
+  }
+
+  .lightbox-step--next {
+    right: calc(50% - 60px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox-frame {
+    transition: none;
+    animation: none;
+  }
+}
+
+/*
+ * Rented's demos lay out at their in-page size and are scaled up as a whole,
+ * so the enlarged copy keeps the original proportions (RentedDemos.tsx).
+ */
+.rented-lb {
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.rented-lb > .paper-cs__shot {
+  margin: 0;
+  aspect-ratio: auto;
+  transform-origin: top left;
+}
+
 @media (hover: hover) {
   .paper-cs__back:hover {
     background: var(--home-pill);
