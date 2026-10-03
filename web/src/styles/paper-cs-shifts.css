@@ -738,144 +738,17 @@
 }
 
 /*
- * Component lightbox. The overlay, stage, and close button come from
- * paper-cs.css; this sizes the enlarged 4:3 frame and adds the step buttons.
+ * Component lightbox. The overlay, frame, and step buttons come from
+ * paper-cs.css; this sizes the enlarged 4:3 frame.
  */
-.paper-cs--shifts .shd.paper-cs__zoomable {
-  cursor: zoom-in;
-}
-
-.paper-cs--shifts .shd.paper-cs__zoomable:focus-visible {
-  outline: 2px solid #2f5bea;
-  outline-offset: 3px;
-}
-
-/* Visible at once on open, so the close button can take focus straight away. */
-.lightbox-overlay--shifts.active {
-  transition: opacity 0.28s ease;
-}
-
 .lightbox-overlay--shifts .shd {
-  flex-shrink: 0;
   width: min(1100px, 100%, calc(85vh * 4 / 3));
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-  cursor: default;
-  transform: scale(0.96);
-  transition: transform 0.28s cubic-bezier(0.25, 0.1, 0.25, 1);
-  animation: shd-lightbox-in 0.24s ease;
 }
 
-.lightbox-overlay--shifts.active .shd {
-  transform: scale(1);
-}
-
-@keyframes shd-lightbox-in {
-  from {
-    opacity: 0;
-  }
-}
-
-.lightbox-overlay--shifts .lightbox-stage {
-  width: min(1100px, 100% - 112px);
-}
-
-.lightbox-overlay--shifts .lightbox-close,
-.lightbox-step {
-  z-index: 1;
-}
-
-.lightbox-step {
-  position: absolute;
-  top: 50%;
-  width: 40px;
-  height: 40px;
-  border: 0;
-  border-radius: 50%;
-  background: var(--cs-surface);
-  color: var(--cs-ink);
-  cursor: pointer;
-  transform: translateY(-50%);
-  transition: background-color 0.2s ease;
-}
-
-.lightbox-step--prev {
-  left: 20px;
-}
-
-.lightbox-step--next {
-  right: 20px;
-}
-
-/* A chevron drawn from two borders of a rotated square. */
-.lightbox-step::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 9px;
-  height: 9px;
-  border-top: 1.5px solid currentColor;
-  border-right: 1.5px solid currentColor;
-}
-
-.lightbox-step--prev::before {
-  transform: translate(-30%, -50%) rotate(-135deg);
-}
-
-.lightbox-step--next::before {
-  transform: translate(-70%, -50%) rotate(45deg);
-}
-
-.lightbox-step:focus-visible {
-  outline: 2px solid #2f5bea;
-  outline-offset: 3px;
-}
-
-@media (hover: hover) {
-  .lightbox-step:hover {
-    background: var(--cs-surface-hover);
-  }
-}
-
-.lightbox-step:active {
-  background: var(--cs-surface-active);
-}
-
-/* On a phone the frame spans the width, so the steps drop below it. */
+/* On a phone the frame is portrait, and the component fills it. */
 @media (max-width: 640px) {
-  .lightbox-overlay--shifts {
-    padding-bottom: 104px;
-  }
-
-  .lightbox-overlay--shifts .lightbox-stage {
-    width: 100%;
-  }
-
   .lightbox-overlay--shifts .shd {
     aspect-ratio: 3 / 4;
     width: min(100%, calc((100dvh - 152px) * 3 / 4));
-  }
-
-  .lightbox-step {
-    top: auto;
-    bottom: 32px;
-    width: 48px;
-    height: 48px;
-    transform: none;
-  }
-
-  .lightbox-step--prev {
-    left: calc(50% - 60px);
-  }
-
-  .lightbox-step--next {
-    right: calc(50% - 60px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .lightbox-overlay--shifts .shd {
-    transition: none;
-    animation: none;
   }
 }
