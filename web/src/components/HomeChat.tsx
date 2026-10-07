@@ -163,12 +163,16 @@ export default function HomeChat() {
   function sendMessage(text: string) {
     if (!text) return;
 
+    // The newest message is the one that counts: whatever the last one left
+    // pending (its hint, its scroll, its navigation) is dropped, so two quick
+    // sends cannot both run or leave the typing dots behind.
+    clearTimers();
+    setTyping(false);
+
     // Writing in before the script has finished skips to the end of it.
     if (!booted || count < HERO_CHAT.length) {
-      clearTimers();
       setBooted(true);
       setCount(HERO_CHAT.length);
-      setTyping(false);
     }
 
     setDraft("");
