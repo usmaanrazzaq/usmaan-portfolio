@@ -74,8 +74,9 @@ const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent rounded-br-xs text-white`;
  * "playground" open those pages, "contact" opens the contact modal.
  *
  * The server renders the finished thread, hidden, and the sequence replays it
- * once this mounts. Without JS (the <noscript> rule) or with reduced motion
- * (the media query in paper-home.css) the finished thread simply shows.
+ * once this mounts. Without JS (the <noscript> rule), with reduced motion (the
+ * media query in paper-home.css), or when the script arrives after the CSS
+ * fallback has already shown it, the finished thread simply stays.
  */
 export default function HomeChat() {
   const [booted, setBooted] = useState(false);
@@ -119,10 +120,18 @@ export default function HomeChat() {
       }, typingMs(HERO_CHAT[index]));
     }
 
+    // The sequence only plays when this has the thread from the start. If it
+    // is already on screen (the CSS fallback gave up waiting for a slow
+    // script, or reduced motion never hid it), blanking it to type it out
+    // again would be a step backwards, so settle on the finished thread.
+    const list = listRef.current;
+    const shown = !list || getComputedStyle(list).visibility === "visible";
+    const settle = reduce || shown;
+
     later(() => {
       setBooted(true);
-      setCount(reduce ? HERO_CHAT.length : 0);
-      if (!reduce) later(() => send(0), START_DELAY_MS);
+      setCount(settle ? HERO_CHAT.length : 0);
+      if (!settle) later(() => send(0), START_DELAY_MS);
     }, 0);
 
     return clearTimers;

@@ -127,7 +127,8 @@
  * Until the component mounts, the server-rendered thread is held back so the
  * sequence does not open on a flash of the finished state. The animation is
  * the way out if the script never arrives; <noscript> and reduced motion skip
- * the wait.
+ * the wait. HomeChat reads this visibility on mount: if the fallback has
+ * already fired it leaves the finished thread alone rather than replaying it.
  */
 .home-chat__list.is-booting {
   visibility: hidden;
