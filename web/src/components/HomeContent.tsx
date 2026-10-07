@@ -1,7 +1,6 @@
 import { Fragment } from "react";
 import CaseCard from "@/components/CaseCard";
-import HomeHero from "@/components/HomeHero";
-import ScrollCue from "@/components/ScrollCue";
+import HomeChat from "@/components/HomeChat";
 import WorkStack from "@/components/WorkStack";
 import { projects } from "@/data/projects";
 
@@ -27,9 +26,7 @@ export default function HomeContent() {
     <>
       <script dangerouslySetInnerHTML={{ __html: STRIP_WORK_HASH_SCRIPT }} />
 
-      <HomeHero />
-
-      <ScrollCue />
+      <HomeChat />
 
       <section className="mt-[100px] scroll-mt-6 to-md:mt-16" id="work" aria-label="Selected work">
         <WorkStack>

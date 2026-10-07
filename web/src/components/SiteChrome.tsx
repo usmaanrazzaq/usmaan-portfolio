@@ -1,3 +1,4 @@
+import HeroNavGate from "@/components/HeroNavGate";
 import ThemeToggle from "@/components/ThemeToggle";
 
 /** Which tab reads as current; the routes that render the work stack default to Work. */
@@ -26,13 +27,32 @@ function tabsFor(current: NavTab | null) {
  * component. It sticks so it follows the page down, and the row around it is
  * click-through so it does not swallow taps on the content scrolling beneath.
  */
+// Whole literals, not template pieces: Tailwind reads class names out of the
+// source text, and a utility butted up against `${` is not one it recognises.
+const CHROME =
+  "paper-home__chrome pointer-events-none sticky top-5 z-50 flex items-center justify-center gap-2.5 to-sm:gap-2";
+const NAV = "paper-home__nav pointer-events-auto";
+
 // `null` is for unlinked pages (References): no tab reads as current.
-export default function SiteChrome({ current = "work" }: { current?: NavTab | null }) {
+//
+// `hideOnHero` is the homepage's variant: the nav is rendered hidden and
+// HeroNavGate brings it back once the work stack is in view. The nav drops its
+// entrance class there, since that animation would show it on the way in.
+export default function SiteChrome({
+  current = "work",
+  hideOnHero = false,
+}: {
+  current?: NavTab | null;
+  hideOnHero?: boolean;
+}) {
   const tabs = tabsFor(current);
 
   return (
-    <header className="pointer-events-none sticky top-5 z-50 flex items-center justify-center gap-2.5 to-sm:gap-2">
-      <nav className="paper-home__nav home-enter-drop pointer-events-auto" aria-label="Portfolio sections">
+    <header className={hideOnHero ? `${CHROME} is-hero` : CHROME}>
+      <nav
+        className={hideOnHero ? NAV : `${NAV} home-enter-drop`}
+        aria-label="Portfolio sections"
+      >
         <div className="paper-home__tabs">
           {tabs.map((tab) => {
             const isActive = tab.id === current;
@@ -50,7 +70,24 @@ export default function SiteChrome({ current = "work" }: { current?: NavTab | nu
         </div>
       </nav>
 
-      <ThemeToggle className="home-enter-drop" />
+      {/* The slot carries the hero's slide to the right edge, so it does not
+          fight the button's own entrance transform. */}
+      <span className="paper-home__theme-slot flex">
+        <ThemeToggle className="home-enter-drop" />
+      </span>
+
+      {hideOnHero && (
+        <>
+          <HeroNavGate />
+          <noscript>
+            <style>
+              {
+                ".paper-home__chrome.is-hero .paper-home__nav{opacity:1!important;transform:none!important;pointer-events:auto!important}.paper-home__chrome.is-hero .paper-home__theme-slot{transform:none!important}"
+              }
+            </style>
+          </noscript>
+        </>
+      )}
     </header>
   );
 }

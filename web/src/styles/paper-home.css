@@ -21,8 +21,7 @@
  *
  * fill-mode is `backwards`, never `forwards`: it holds the from-state through
  * the delay and then hands the element back to its normal computed style. With
- * `forwards` the end value would be pinned forever, which would override the
- * stamp's resting 25% and make the scroll cue's fade-out impossible.
+ * `forwards` the end value would be pinned forever.
  */
 @keyframes home-enter-rise {
   from {
@@ -38,29 +37,9 @@
   }
 }
 
-@keyframes home-enter-panel {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-}
-
-@keyframes home-enter-plate {
-  from {
-    opacity: 0;
-    transform: scale(1.05);
-  }
-}
-
 @keyframes home-enter-rule {
   from {
     transform: scaleY(0);
-  }
-}
-
-@keyframes home-enter-stamp {
-  from {
-    opacity: 0;
   }
 }
 
@@ -74,115 +53,466 @@
   animation-delay: var(--enter-delay, 0ms);
 }
 
-.home-enter-panel {
-  animation: home-enter-panel 700ms var(--ease-out-expo) backwards;
-  animation-delay: var(--enter-delay, 0ms);
-}
-
-.home-enter-plate {
-  animation: home-enter-plate 900ms var(--ease-out-expo) backwards;
-  animation-delay: var(--enter-delay, 0ms);
-}
-
 .home-enter-rule {
   transform-origin: top;
   animation: home-enter-rule 700ms var(--ease-out-expo) backwards;
   animation-delay: var(--enter-delay, 0ms);
 }
 
-.home-enter-stamp {
-  animation: home-enter-stamp 1200ms ease backwards;
-  animation-delay: var(--enter-delay, 0ms);
+/*
+ * —— Chat hero ——
+ *
+ * The "Hero v1" Paper frame: a 362px message thread, header, bubbles, and
+ * composer 50px apart, the whole group centred in the first viewport. The 68px
+ * is the shell's top padding plus the 40px nav; taking it off both ends keeps
+ * the group on the viewport's own centre rather than the space under the nav.
+ */
+.home-chat {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: min(362px, 100%);
+  min-height: calc(100svh - 136px);
+  margin-inline: auto;
+}
+
+.home-chat__thread {
+  position: relative;
+  display: flex;
+  flex: none;
+  flex-direction: column;
+}
+
+.home-chat__list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: auto 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* In flow and invisible: the finished script, holding the thread's height. */
+.home-chat__ghost {
+  visibility: hidden;
+  padding-block: 50px 12px;
+  pointer-events: none;
 }
 
 /*
- * —— Postcard scale ——
- *
- * The Paper frame is 1141×600 with a 540px copy column and a 500px plate.
- * Letting the panel go fluid while those widths stay fixed clips the photo
- * and the copy. The inner layout stays at the frame's size; a container
- * query scales the whole card to the available width so the grain, the
- * dotted rule, and the plate all move together. Below 768px the inner
- * unwraps into the stacked layout.
+ * The live thread sits over the ghost. It only becomes a scroller once a
+ * visitor has written into it: until then the script is known to fit, and
+ * leaving overflow alone lets the top bubble's picker rise past the edge. The
+ * inline bleed is room for the tapback badges once it does clip.
  */
-.home-hero-postcard {
-  container-type: inline-size;
-  width: min(1141px, 100%);
-  margin-inline: auto;
-  margin-top: 72px;
-  --postcard-texture-opacity: 0.45;
-}
-
-.home-hero-postcard__texture {
-  opacity: var(--postcard-texture-opacity);
-}
-
-.home-hero-postcard__scale {
-  position: relative;
-  width: 100%;
-  height: calc(600px * min(1, 100cqw / 1141px));
-  overflow: hidden;
-  border-radius: var(--radius-media);
-}
-
-.home-hero-postcard__inner {
+.home-chat__scroll {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0 -12px;
+  display: flex;
+  flex-direction: column;
+  padding: 50px 12px 12px;
+}
+
+.home-chat__scroll.is-scrollable {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+
+.home-chat__scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/*
+ * Until the component mounts, the server-rendered thread is held back so the
+ * sequence does not open on a flash of the finished state. The animation is
+ * the way out if the script never arrives; <noscript> and reduced motion skip
+ * the wait.
+ */
+.home-chat__list.is-booting {
+  visibility: hidden;
+  animation: home-chat-boot 0s 6s forwards;
+}
+
+@keyframes home-chat-boot {
+  to {
+    visibility: visible;
+  }
+}
+
+.home-chat__row {
+  display: flex;
+  justify-content: flex-start;
+  animation: home-chat-pop 360ms var(--ease-out-expo) backwards;
+  transform-origin: bottom left;
+}
+
+.home-chat__row.is-sent {
+  justify-content: flex-end;
+  transform-origin: bottom right;
+}
+
+@keyframes home-chat-pop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.9);
+  }
+}
+
+.home-chat__wrap {
+  position: relative;
+  max-width: calc(100% - 12px);
+}
+
+.home-chat__bubble {
+  margin: 0;
+  transition: filter 220ms var(--ease-out-expo);
+  -webkit-touch-callout: none;
+}
+
+.paper-home a.home-chat__bubble:focus-visible {
+  outline-offset: 2px;
+}
+
+/* —— Typing dots —— */
+.home-chat__typing {
+  gap: 4px;
+  height: 34px;
+}
+
+.home-chat__typing span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--home-muted);
+  animation: home-chat-dot 1.2s ease-in-out infinite;
+}
+
+.home-chat__typing span:nth-child(2) {
+  animation-delay: 160ms;
+}
+
+.home-chat__typing span:nth-child(3) {
+  animation-delay: 320ms;
+}
+
+@keyframes home-chat-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+/*
+ * —— Tapbacks ——
+ * The corner button is both the way in and, once a reaction is left, the badge
+ * that shows it. Empty, it stays out of sight until the bubble is hovered or
+ * the button is focused.
+ */
+.home-chat__tapback {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  width: 1141px;
-  height: 600px;
-  padding-inline: 20px;
-  overflow: hidden;
-  background-color: var(--home-hero-panel);
-  transform-origin: top left;
-  transform: scale(min(1, 100cqw / 1141px));
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 2px solid var(--home-bg);
+  border-radius: 50%;
+  background: var(--home-bubble);
+  color: var(--home-muted);
+  font-size: 12px;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__row.is-sent .home-chat__tapback {
+  right: auto;
+  left: -10px;
+}
+
+.home-chat__tapback:focus-visible,
+.home-chat__wrap.is-open .home-chat__tapback,
+.home-chat__wrap.has-reaction .home-chat__tapback {
+  opacity: 1;
+  transform: none;
+}
+
+/* A left reaction is the emoji itself, on the picker's ground. */
+.home-chat__wrap.has-reaction .home-chat__tapback {
+  top: -13px;
+  right: -13px;
+  width: 28px;
+  height: 28px;
+  background: var(--home-picker);
+  font-size: 14px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+  animation: home-chat-badge 420ms var(--ease-out-expo);
+}
+
+.home-chat__row.is-sent .home-chat__wrap.has-reaction .home-chat__tapback {
+  right: auto;
+  left: -13px;
+}
+
+@keyframes home-chat-badge {
+  from {
+    transform: scale(0.4);
+  }
+  60% {
+    transform: scale(1.15);
+  }
+}
+
+.home-chat__tapback svg {
+  width: 1em;
+  height: 1em;
+}
+
+/*
+ * The reactions are the system's own emoji, so they are Apple's on Apple
+ * devices and the platform's set elsewhere. Naming the emoji fonts first keeps
+ * the two that have a text form (the heart and the double mark) in colour.
+ */
+.home-chat__emoji {
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+  font-style: normal;
+  line-height: 1;
+}
+
+/*
+ * The picker is Messages' tapback bubble: a borderless pill lifted off the
+ * thread, tied back to its bubble by a two-dot tail. It springs out of the tail's corner and the glyphs
+ * follow in a quick stagger. The shadow is a drop-shadow filter so the tail,
+ * which is two pseudo-elements, casts it too.
+ */
+.home-chat__picker {
+  position: absolute;
+  bottom: calc(100% + 14px);
+  left: -4px;
+  z-index: 2;
+  display: flex;
+  gap: 2px;
+  padding: 5px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--home-picker);
+  filter: drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.25)) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.16));
+  transform-origin: 12px calc(100% + 12px);
+  animation: home-chat-picker 340ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
+}
+
+.home-chat__picker::before,
+.home-chat__picker::after {
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+  content: "";
+}
+
+.home-chat__picker::before {
+  bottom: -4px;
+  left: 16px;
+  width: 13px;
+  height: 13px;
+}
+
+.home-chat__picker::after {
+  bottom: -11px;
+  left: 9px;
+  width: 6px;
+  height: 6px;
+}
+
+.home-chat__row.is-sent .home-chat__picker {
+  right: -4px;
+  left: auto;
+  transform-origin: calc(100% - 12px) calc(100% + 12px);
+}
+
+.home-chat__row.is-sent .home-chat__picker::before {
+  right: 16px;
+  left: auto;
+}
+
+.home-chat__row.is-sent .home-chat__picker::after {
+  right: 9px;
+  left: auto;
+}
+
+@keyframes home-chat-picker {
+  from {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+}
+
+.home-chat__picker button {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  font-size: 21px;
+  cursor: pointer;
+  transition:
+    background-color 220ms var(--ease-out-expo),
+    color 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+  animation: home-chat-picker-glyph 320ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
+  animation-delay: calc(60ms + var(--i, 0) * 28ms);
+}
+
+.home-chat__picker button:nth-child(2) {
+  --i: 1;
+}
+
+.home-chat__picker button:nth-child(3) {
+  --i: 2;
+}
+
+.home-chat__picker button:nth-child(4) {
+  --i: 3;
+}
+
+.home-chat__picker button:nth-child(5) {
+  --i: 4;
+}
+
+.home-chat__picker button:nth-child(6) {
+  --i: 5;
+}
+
+@keyframes home-chat-picker-glyph {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+.home-chat__picker button[aria-pressed="true"] {
+  background: var(--home-pill);
+}
+
+.home-chat__picker button:active {
+  transform: scale(0.9);
+}
+
+/*
+ * —— Quick replies ——
+ * With the 12px under the thread, the 28px row and its 10px margin make up the
+ * frame's 50px between the last bubble and the composer.
+ */
+.home-chat__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.home-chat__chips button {
+  height: 28px;
+  padding: 0 12px;
+  border: 0.5px solid var(--home-chat-border);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--home-ink);
+  font: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  cursor: pointer;
+  transition:
+    background-color 220ms var(--ease-out-expo),
+    transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__chips button:active {
+  transform: scale(0.96);
+}
+
+/* —— Composer —— */
+.home-chat__composer:has(input:focus-visible) {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+.home-chat__composer button {
+  border: 0;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__composer button:active {
+  transform: scale(0.94);
+}
+
+.home-chat button:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .home-chat__wrap:hover .home-chat__tapback {
+    opacity: 1;
+    transform: none;
+  }
+
+  .home-chat__chips button:hover {
+    background: var(--home-pill);
+  }
+
+  a.home-chat__bubble:hover {
+    filter: brightness(0.95);
+  }
+
+  .home-chat__picker button:hover {
+    transform: scale(1.18);
+  }
+}
+
+/*
+ * Touch: nothing hovers, so an empty tapback button is not a target at all and
+ * the long press is the way in. Text selection would fight that press. iOS
+ * zooms the page on focusing an input set under 16px.
+ */
+@media (hover: none) {
+  .home-chat__wrap:not(.has-reaction):not(.is-open) .home-chat__tapback {
+    pointer-events: none;
+  }
+
+  .home-chat__bubble {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .home-chat__composer input {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 768px) {
-  .home-hero-postcard {
-    margin-top: 40px;
+  .home-chat {
+    min-height: calc(100svh - 120px);
   }
-
-  .home-hero-postcard__scale {
-    height: auto;
-    overflow: hidden;
-  }
-
-  .home-hero-postcard__inner {
-    position: relative;
-    width: 100%;
-    height: auto;
-    transform: none;
-    flex-direction: column;
-    gap: 25px;
-    padding: 24px 16px;
-    overflow: hidden;
-  }
-}
-
-/*
- * —— Scroll cue ——
- * Dimmed by ScrollCue once the work section reaches the viewport. visibility
- * lands last so the link leaves the tab order instead of sitting invisible and
- * still focusable; it is discrete, so it flips at the end of the fade out and
- * immediately on the way back in.
- */
-.home-scroll-cue {
-  transition:
-    opacity 400ms var(--ease-out-expo),
-    transform 400ms var(--ease-out-expo),
-    visibility 400ms;
-}
-
-.home-scroll-cue.is-dimmed {
-  opacity: 0;
-  transform: translateY(8px);
-  visibility: hidden;
-  pointer-events: none;
 }
 
 /* —— Nav —— */
@@ -229,6 +559,36 @@
 
 .paper-home__tabs a.is-active {
   color: var(--home-ink);
+}
+
+/*
+ * —— Hero chrome ——
+ * The homepage's header (SiteChrome's hideOnHero): while the chat hero is on
+ * screen the nav is out of the way and the theme toggle waits at the right
+ * edge. HeroNavGate adds is-revealed once the work stack is in view and
+ * measures --hero-toggle-shift; the fallback is the same sum from the shell's
+ * width and a typical nav, close enough for the frames before it has run.
+ * Tabbing into the hidden nav brings it back too, so it is never out of reach.
+ */
+.paper-home__chrome.is-hero.is-ready .paper-home__nav,
+.paper-home__chrome.is-hero.is-ready .paper-home__theme-slot {
+  transition:
+    opacity 400ms var(--ease-out-expo),
+    transform 500ms var(--ease-out-expo);
+}
+
+.paper-home__chrome.is-hero:not(.is-revealed):not(:has(.paper-home__nav:focus-within))
+  .paper-home__nav {
+  opacity: 0;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+
+.paper-home__chrome.is-hero:not(.is-revealed):not(:has(.paper-home__nav:focus-within))
+  .paper-home__theme-slot {
+  transform: translateX(
+    var(--hero-toggle-shift, calc((min(1512px, 100vw) - 2 * var(--home-gutter) - 345px) / 2))
+  );
 }
 
 /* —— Theme toggle —— */
@@ -377,19 +737,6 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 .hero-daynight.is-day .dn-sun,
 .hero-daynight.is-night .dn-moon {
   display: block;
-}
-
-/* —— Socials —— */
-.paper-home__socials a {
-  color: var(--home-ink);
-  text-decoration: none;
-  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.paper-home__socials a:focus-visible {
-  outline: 2px solid #2f5bea;
-  outline-offset: 3px;
-  border-radius: 4px;
 }
 
 /* —— Case reveal —— */
@@ -624,10 +971,6 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
 
 /* —— Hover —— */
 @media (hover: hover) {
-  .paper-home__socials a:hover {
-    opacity: 0.6;
-  }
-
   .paper-home__tabs a:hover,
   .paper-home__tabs a.is-active:hover {
     color: var(--home-ink);
@@ -708,27 +1051,34 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__tabs,
   .paper-home__theme,
   .paper-home__theme .theme-icon,
-  .home-scroll-cue {
+  .paper-home__chrome.is-hero.is-ready .paper-home__nav,
+  .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
+  .home-chat__chips button,
+  .home-chat__bubble,
+  .home-chat__tapback,
+  .home-chat__picker button,
+  .home-chat__composer button {
     transition: none;
+    animation: none;
+  }
+
+  .home-chat__row,
+  .home-chat__picker,
+  .home-chat__typing span,
+  .home-chat__wrap.has-reaction .home-chat__tapback {
+    animation: none;
+  }
+
+  .home-chat__list.is-booting {
+    visibility: visible;
     animation: none;
   }
 
   .home-enter,
   .home-enter-drop,
-  .home-enter-panel,
-  .home-enter-plate,
   .home-enter-rule {
     opacity: 1;
     transform: none;
     animation: none;
-  }
-
-  .home-enter-stamp {
-    transform: none;
-    animation: none;
-  }
-
-  .home-hero-postcard__texture {
-    opacity: var(--postcard-texture-opacity);
   }
 }

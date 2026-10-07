@@ -24,7 +24,7 @@ here, so `npm run dev` from the root does the same thing.
 - `src/lib/` — case-study behaviour (lightboxes, charts, the OTRS globe) and shared
   helpers
 - `src/styles/` — the `paper-*.css` stylesheets
-- `src/data/` — static content: the project list, the hero skies
+- `src/data/` — static content: the project list, the hero chat script
 - `public/` — static assets, tracked in git: `hero/`, `images/`, `video/`, `shared/`,
   the favicons, and the resume PDF
 

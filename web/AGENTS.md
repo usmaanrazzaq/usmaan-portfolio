@@ -41,7 +41,7 @@ same scripts are reachable from the repo root (`npm run dev` there forwards here
 - `src/lib/` — per-case-study behaviour (lightboxes, charts, the OTRS globe) and
   shared helpers (`theme.ts`, `arena.ts`).
 - `src/styles/` — the `paper-*.css` stylesheets, imported by the components.
-- `src/data/` — static content (`projects.ts`, `heroSkies.ts`).
+- `src/data/` — static content (`projects.ts`, `heroChat.ts`).
 - `src/proxy.ts` — legacy-URL normalisation (Next 16's renamed middleware).
 - `public/` — static assets, tracked in git: `hero/`, `images/`, `video/`, `shared/`,
   plus `Favicon.png`, `iOS Icon.png`, and the resume PDF. There is **no** asset copy

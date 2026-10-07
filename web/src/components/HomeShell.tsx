@@ -9,11 +9,14 @@ export default function HomeShell({
   className,
   labelledBy = "home-title",
   current = "work",
+  hideNavOnHero = false,
   children,
 }: {
   className?: string;
   labelledBy?: string;
   current?: NavTab | null;
+  /** The homepage only: the chat hero stands in for the nav until the work stack. */
+  hideNavOnHero?: boolean;
   children: React.ReactNode;
 }) {
   // One padding for every route: the floating nav is sticky and shared, so it
@@ -24,7 +27,7 @@ export default function HomeShell({
 
   return (
     <section className={className ? `${base} ${className}` : base} aria-labelledby={labelledBy}>
-      <SiteChrome current={current} />
+      <SiteChrome current={current} hideOnHero={hideNavOnHero} />
       {children}
     </section>
   );
