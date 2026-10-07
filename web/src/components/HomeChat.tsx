@@ -50,8 +50,6 @@ function typingMs(message: ChatMessage) {
   return message.href ? 320 : Math.min(1300, 520 + message.text.length * 6);
 }
 
-const QUICK_REPLIES = ["Portfolio", "About", "Playground", "Contact"];
-
 const REACTION_LABELS: Record<Reaction, string> = {
   heart: "Heart",
   up: "Thumbs up",
@@ -70,8 +68,8 @@ const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent rounded-br-xs text-white`;
  * The homepage hero, ported from the "Hero v1" Paper frame: a message thread
  * from Usmaan. The scripted bubbles are sent one at a time behind typing dots,
  * every bubble takes an iMessage-style tapback, and the composer is a small
- * command line: "portfolio" scrolls to the work stack, "about" and
- * "playground" open those pages, "contact" opens the contact modal.
+ * command line: "portfolio" scrolls to the work stack, "about", "playground",
+ * and "references" open those pages, "contact" opens the contact modal.
  *
  * The server renders the finished thread, hidden, and the sequence replays it
  * once this mounts. Without JS (the <noscript> rule), with reduced motion (the
@@ -257,7 +255,7 @@ export default function HomeChat() {
             width={50}
             height={50}
             alt=""
-            className="bg-media size-[50px] shrink-0 rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
+            className="home-chat__avatar bg-media size-[50px] shrink-0 rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
           />
           <h1 id="home-title" className="text-ink text-sm leading-[18px] font-normal">
             Usmaan Razzaq
@@ -326,57 +324,213 @@ export default function HomeChat() {
         </noscript>
       </div>
 
-      {/* The composer's commands as one-tap replies, for anyone who would
-          rather not type: each is sent as the visitor's own bubble. */}
-      <div
-        className="home-chat__chips home-enter [--enter-delay:220ms]"
-        role="group"
-        aria-label="Quick replies"
-      >
-        {QUICK_REPLIES.map((reply) => (
-          <button key={reply} type="button" onClick={() => sendMessage(reply)}>
-            {reply}
-          </button>
-        ))}
-      </div>
+      <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
+        <ChatMenu />
 
-      <form
-        className="home-chat__composer home-enter border-chat-border flex h-[50px] shrink-0 items-center justify-between gap-2 rounded-pill border-[0.5px] py-2 pr-2 pl-3 [--enter-delay:260ms]"
-        onSubmit={handleSubmit}
-      >
-        <input
-          ref={inputRef}
-          type="text"
-          value={draft}
-          onChange={(event) => setDraft(event.target.value)}
-          placeholder="Type 'Portfolio' to see work"
-          aria-label="Message Usmaan. Type portfolio, about, playground, or contact."
-          autoComplete="off"
-          autoCapitalize="off"
-          enterKeyHint="send"
-          maxLength={140}
-          className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none placeholder:text-[#929292]"
-        />
-        <button
-          type="submit"
-          aria-label="Send"
-          className="bg-bubble-sent flex size-10 shrink-0 items-center justify-center rounded-pill text-white"
+        <form
+          className="home-chat__composer home-chat__glass flex h-10 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill pr-2 pl-3"
+          onSubmit={handleSubmit}
         >
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
+          <input
+            ref={inputRef}
+            type="text"
+            value={draft}
+            onChange={(event) => setDraft(event.target.value)}
+            placeholder="Type 'Portfolio' to see work"
+            aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
+            autoComplete="off"
+            autoCapitalize="off"
+            enterKeyHint="send"
+            maxLength={140}
+            className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none placeholder:text-[#929292]"
+          />
+          <button
+            type="submit"
+            aria-label="Send"
+            className="bg-bubble-sent flex size-[35px] shrink-0 items-center justify-center rounded-pill text-white"
           >
-            <path d="M12 5L12 19" />
-            <path d="M6 11L12 5L18 11" />
-          </svg>
-        </button>
-      </form>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 5L12 19" />
+              <path d="M6 11L12 5L18 11" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+const MENU_ID = "home-chat-menu";
+const MENU = "home-chat__menu home-chat__glass";
+
+/** The site's routes, with the frame's 16px line icons (24px viewBox paths). */
+const MENU_ITEMS = [
+  {
+    label: "Home",
+    // The spec's document-top fragment, as the nav's own Home tab uses here.
+    href: "#top",
+    paths: [
+      "M5 9.5V20C5 20.552 5.448 21 6 21H18C18.552 21 19 20.552 19 20V9.5",
+      "M14 15H10V21H14V15Z",
+      "M3 11L12 3L21 11",
+    ],
+  },
+  {
+    label: "About",
+    href: "/about/",
+    paths: [
+      "M12 11C14.209 11 16 9.209 16 7C16 4.791 14.209 3 12 3C9.791 3 8 4.791 8 7C8 9.209 9.791 11 12 11Z",
+      "M19 21V19C19 16.791 17.209 15 15 15H9C6.791 15 5 16.791 5 19V21",
+    ],
+  },
+  {
+    label: "Playground",
+    href: "/playground/",
+    paths: [
+      "M12 18C11.172 18 10.5 18.871 10.5 19.944C10.5 21.333 12 23 12 23C12 23 13.5 21.333 13.5 19.944C13.5 18.871 12.828 18 12 18Z",
+      "M12 8H12.01",
+      "M10.5 14.5H13.5M10.5 14.5L8 17.5L5 12.5L8.839 11M10.5 14.5C10.045 13.931 9.279 12.648 8.839 11M13.5 14.5C14.167 13.667 15.5 11.3 15.5 8.5C15.5 5.7 13.167 3 12 2C10.833 3 8.5 5.7 8.5 8.5C8.5 9.389 8.634 10.234 8.839 11M13.5 14.5C13.955 13.931 14.721 12.648 15.161 11L19 12.5L16 17.5L13.5 14.5Z",
+    ],
+  },
+  {
+    label: "References",
+    href: "/references/",
+    // The microscope's tilted barrel is a rotated rect, not a path.
+    barrel: true,
+    paths: [
+      "M10.793 8C15.077 8.601 21.868 12.83 15.793 21",
+      "M6.292 16H10.293",
+      "M3.292 21H21.293",
+    ],
+  },
+  {
+    label: "Contact",
+    // ContactModal intercepts this link and opens over the page.
+    href: "/contact/",
+    paths: [
+      "M3 6C3 5.448 3.448 5 4 5H20C20.552 5 21 5.448 21 6V18C21 18.552 20.552 19 20 19H4C3.448 19 3 18.552 3 18V6Z",
+      "M4 6L12 13L20 6",
+    ],
+  },
+];
+
+function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="shrink-0"
+      aria-hidden="true"
+    >
+      {barrel && (
+        <rect
+          x="7.234"
+          y="2.615"
+          width="4.727"
+          height="8.273"
+          rx="1"
+          transform="rotate(15 7.234 2.615)"
+        />
+      )}
+      {paths.map((d) => (
+        <path key={d} d={d} />
+      ))}
+    </svg>
+  );
+}
+
+/**
+ * The button beside the composer and the menu it opens: the site's routes in a
+ * frosted card that rises from the button, for the stretch of the homepage
+ * where the nav itself is out of the way. The links are plain anchors, like
+ * the nav's, so every route is a real document load.
+ */
+function ChatMenu() {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+
+    function onPointerDown(event: globalThis.PointerEvent) {
+      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [open]);
+
+  function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+
+    const links = Array.from(event.currentTarget.querySelectorAll("a"));
+    const index = links.indexOf(document.activeElement as HTMLAnchorElement);
+    const step = event.key === "ArrowDown" ? 1 : -1;
+    event.preventDefault();
+    links[(index + step + links.length) % links.length]?.focus();
+  }
+
+  return (
+    <div
+      ref={wrapRef}
+      className="relative shrink-0"
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !open) return;
+        setOpen(false);
+        buttonRef.current?.focus();
+      }}
+      onBlur={(event) => {
+        const next = event.relatedTarget;
+        if (open && next instanceof Node && !event.currentTarget.contains(next)) setOpen(false);
+      }}
+    >
+      <button
+        ref={buttonRef}
+        type="button"
+        className="home-chat__menu-button home-chat__glass text-ink flex size-10 items-center justify-center rounded-pill"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls={MENU_ID}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <MenuIcon paths={MENU_ITEMS[0].paths} />
+      </button>
+
+      {/* Always mounted, so closing can be played as well as opening. Closed,
+          it is visibility:hidden, which also takes it out of the tab order and
+          the accessibility tree. */}
+      <nav
+        ref={menuRef}
+        id={MENU_ID}
+        className={open ? `${MENU} is-open` : MENU}
+        aria-label="Site"
+        onKeyDown={handleMenuKeyDown}
+      >
+        {MENU_ITEMS.map((item) => (
+          <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
+            <MenuIcon paths={item.paths} barrel={"barrel" in item} />
+            {item.label}
+          </a>
+        ))}
+      </nav>
     </div>
   );
 }
@@ -412,10 +566,18 @@ function ChatBubble({
 
   const sent = bubble.from === "me";
 
-  useEffect(() => {
+  // A layout effect, so the picker is placed before it is first painted.
+  useLayoutEffect(() => {
     if (!open) return;
 
     const picker = pickerRef.current;
+    // The picker hangs off the bubble's left edge, which on a short bubble
+    // already carries it out past the corner button. A bubble wider than the
+    // picker would leave it stranded at the far end from that button, so
+    // there it lines up with the bubble's right edge instead.
+    const wrap = wrapRef.current;
+    if (picker && wrap) picker.classList.toggle("is-end", wrap.offsetWidth > picker.offsetWidth);
+
     (
       picker?.querySelector<HTMLButtonElement>('[aria-pressed="true"]') ??
       picker?.querySelector<HTMLButtonElement>("button")
@@ -602,22 +764,62 @@ function ChatBubble({
   );
 }
 
-/** The system emoji for each reaction, the set Messages offers. */
-const REACTION_EMOJI: Record<Reaction, string> = {
-  heart: "\u2764\uFE0F",
-  up: "\u{1F44D}",
-  down: "\u{1F44E}",
-  haha: "\u{1F602}",
-  emphasis: "\u203C\uFE0F",
-  question: "\u2753",
-};
-
+/**
+ * The six tapbacks, drawn the way current iOS does: its own coloured marks
+ * rather than the emoji keyboard's. The thumbs are the system emoji, which is
+ * what iOS uses too; the heart and the three lettered marks are drawn here so
+ * they keep their pink, blue, red, and purple on every platform.
+ */
 function ReactionGlyph({ reaction }: { reaction: Reaction }) {
-  return (
-    <span className="home-chat__emoji" aria-hidden="true">
-      {REACTION_EMOJI[reaction]}
-    </span>
-  );
+  switch (reaction) {
+    case "heart":
+      return (
+        <svg className="home-chat__glyph-heart" viewBox="0 0 24 24" aria-hidden="true">
+          <defs>
+            <linearGradient id="home-chat-heart" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stopColor="#ffa3d1" />
+              <stop offset="1" stopColor="#ff5aa9" />
+            </linearGradient>
+          </defs>
+          <path
+            fill="url(#home-chat-heart)"
+            d="M12 21.2c-.4 0-.8-.1-1.1-.4C6.3 17.300 2 13.700 2 9.300 2 6.300 4.300 4 7.200 4c1.900 0 3.700 1 4.800 2.600C13.100 5 14.900 4 16.800 4 19.700 4 22 6.300 22 9.300c0 4.400-4.300 8-8.900 11.500-.3.300-.7.400-1.100.4Z"
+          />
+        </svg>
+      );
+    case "up":
+      return (
+        <span className="home-chat__emoji" aria-hidden="true">
+          {"\u{1F44D}"}
+        </span>
+      );
+    case "down":
+      return (
+        <span className="home-chat__emoji" aria-hidden="true">
+          {"\u{1F44E}"}
+        </span>
+      );
+    case "haha":
+      return (
+        <span className="home-chat__glyph-text home-chat__glyph-text--haha" aria-hidden="true">
+          HA
+          <br />
+          HA
+        </span>
+      );
+    case "emphasis":
+      return (
+        <span className="home-chat__glyph-text home-chat__glyph-text--emphasis" aria-hidden="true">
+          !!
+        </span>
+      );
+    case "question":
+      return (
+        <span className="home-chat__glyph-text home-chat__glyph-text--question" aria-hidden="true">
+          ?
+        </span>
+      );
+  }
 }
 
 function AddReactionGlyph() {

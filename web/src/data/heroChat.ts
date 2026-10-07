@@ -57,8 +57,9 @@ export const CHAT_COMMANDS: Record<string, ChatCommand> = {
   work: { scroll: "work" },
   about: { open: "/about/" },
   playground: { open: "/playground/" },
+  references: { open: "/references/" },
   contact: { contact: true },
 };
 
 /** The reply to anything the composer does not understand. */
-export const CHAT_HINT = "Try 'portfolio', 'about', 'playground', or 'contact'.";
+export const CHAT_HINT = "Try 'portfolio', 'about', 'playground', 'references', or 'contact'.";

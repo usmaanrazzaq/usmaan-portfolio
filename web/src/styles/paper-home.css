@@ -76,6 +76,26 @@
   margin-inline: auto;
 }
 
+/*
+ * The portrait goes black and white with the dark theme. It takes its time
+ * over it, longer than the 320ms the rest of the page swaps in, so the colour
+ * drains out (and comes back) as a fade rather than a flip. The second rule
+ * is only there to outrank the theme switch's own blanket `filter` timing in
+ * globals.css, which is !important.
+ */
+.home-chat__avatar {
+  filter: grayscale(0);
+  transition: filter 700ms ease;
+}
+
+html[data-theme="dark"] .home-chat__avatar {
+  filter: grayscale(1);
+}
+
+html.is-theme-switching .home-chat__avatar {
+  transition: filter 700ms ease !important;
+}
+
 .home-chat__thread {
   position: relative;
   display: flex;
@@ -95,7 +115,7 @@
 /* In flow and invisible: the finished script, holding the thread's height. */
 .home-chat__ghost {
   visibility: hidden;
-  padding-block: 50px 12px;
+  padding-block: 50px;
   pointer-events: none;
 }
 
@@ -110,7 +130,7 @@
   inset: 0 -12px;
   display: flex;
   flex-direction: column;
-  padding: 50px 12px 12px;
+  padding: 50px 12px;
 }
 
 .home-chat__scroll.is-scrollable {
@@ -278,15 +298,15 @@
   }
 }
 
-.home-chat__tapback svg {
+.home-chat__tapback > svg {
   width: 1em;
   height: 1em;
 }
 
 /*
- * The reactions are the system's own emoji, so they are Apple's on Apple
- * devices and the platform's set elsewhere. Naming the emoji fonts first keeps
- * the two that have a text form (the heart and the double mark) in colour.
+ * The reaction marks. The thumbs are system emoji; naming the emoji fonts
+ * keeps them in colour. The heart is an SVG, and "HA HA", "!!", and "?" are
+ * heavy rounded type filled with iOS's blue, red, and purple.
  */
 .home-chat__emoji {
   font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
@@ -294,92 +314,116 @@
   line-height: 1;
 }
 
+.home-chat__glyph-heart {
+  width: 1em;
+  height: 1em;
+}
+
+.home-chat__glyph-text {
+  font-family: ui-rounded, "SF Pro Rounded", "Arial Rounded MT Bold", system-ui, sans-serif;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.home-chat__glyph-text--haha {
+  font-size: 0.52em;
+  line-height: 0.92;
+  text-align: center;
+  background-image: linear-gradient(180deg, #7cc4ff, #3b9bff);
+}
+
+.home-chat__glyph-text--emphasis {
+  background-image: linear-gradient(180deg, #ff8f84, #f2544a);
+}
+
+.home-chat__glyph-text--question {
+  background-image: linear-gradient(180deg, #c7a2ff, #9a6bf2);
+}
+
 /*
- * The picker is Messages' tapback bubble: a borderless pill lifted off the
- * thread, tied back to its bubble by a two-dot tail. It springs out of the tail's corner and the glyphs
- * follow in a quick stagger. The shadow is a drop-shadow filter so the tail,
- * which is two pseudo-elements, casts it too.
+ * The picker is current iOS's tapback bar: a clear glass pill over the thread
+ * with the marks in colour. It is drawn out from the bubble's side (the left
+ * for a received bubble, the right for the visitor's own) by a clip that
+ * sweeps across, and the marks pop in behind the sweep. The clip's negative
+ * insets leave room for the shadow, which a clip would otherwise cut off; the
+ * shadow is a box-shadow rather than a filter because a filter on this
+ * element would stop its backdrop blur from seeing the page.
  */
 .home-chat__picker {
   position: absolute;
-  bottom: calc(100% + 14px);
-  left: -4px;
+  bottom: calc(100% + 8px);
+  left: -6px;
   z-index: 2;
   display: flex;
   gap: 2px;
-  padding: 5px 8px;
+  padding: 5px 10px;
+  border: 0.5px solid var(--home-picker-edge);
   border-radius: var(--radius-pill);
-  background: var(--home-picker);
-  filter: drop-shadow(0 0 0.5px rgba(0, 0, 0, 0.25)) drop-shadow(0 6px 18px rgba(0, 0, 0, 0.16));
-  transform-origin: 12px calc(100% + 12px);
-  animation: home-chat-picker 340ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
-}
-
-.home-chat__picker::before,
-.home-chat__picker::after {
-  position: absolute;
-  border-radius: 50%;
-  background: inherit;
-  content: "";
-}
-
-.home-chat__picker::before {
-  bottom: -4px;
-  left: 16px;
-  width: 13px;
-  height: 13px;
-}
-
-.home-chat__picker::after {
-  bottom: -11px;
-  left: 9px;
-  width: 6px;
-  height: 6px;
+  background: var(--home-picker-glass);
+  -webkit-backdrop-filter: blur(22px) saturate(180%);
+  backdrop-filter: blur(22px) saturate(180%);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.16),
+    0 1px 3px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 var(--home-picker-sheen);
+  animation: home-chat-picker 420ms var(--ease-out-expo) backwards;
 }
 
 .home-chat__row.is-sent .home-chat__picker {
-  right: -4px;
+  right: -6px;
   left: auto;
-  transform-origin: calc(100% - 12px) calc(100% + 12px);
+  animation-name: home-chat-picker-sent;
 }
 
-.home-chat__row.is-sent .home-chat__picker::before {
-  right: 16px;
-  left: auto;
-}
-
-.home-chat__row.is-sent .home-chat__picker::after {
-  right: 9px;
+/* A wide received bubble: same sweep from the left, parked at the right. */
+.home-chat__picker.is-end {
+  right: -6px;
   left: auto;
 }
 
 @keyframes home-chat-picker {
   from {
     opacity: 0;
-    transform: scale(0.3);
+    clip-path: inset(-40px calc(100% - 44px) -40px -40px round 999px);
+    transform: translateX(-10px);
+  }
+  to {
+    clip-path: inset(-40px -40px -40px -40px round 999px);
+  }
+}
+
+@keyframes home-chat-picker-sent {
+  from {
+    opacity: 0;
+    clip-path: inset(-40px -40px -40px calc(100% - 44px) round 999px);
+    transform: translateX(10px);
+  }
+  to {
+    clip-path: inset(-40px -40px -40px -40px round 999px);
   }
 }
 
 .home-chat__picker button {
-  position: relative;
-  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: transparent;
-  font-size: 21px;
+  font-size: 24px;
   cursor: pointer;
   transition:
     background-color 220ms var(--ease-out-expo),
-    color 220ms var(--ease-out-expo),
     transform 220ms var(--ease-out-expo);
-  animation: home-chat-picker-glyph 320ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
-  animation-delay: calc(60ms + var(--i, 0) * 28ms);
+  animation: home-chat-picker-glyph 360ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
+  animation-delay: calc(70ms + var(--i, 0) * 38ms);
 }
 
 .home-chat__picker button:nth-child(2) {
@@ -402,10 +446,15 @@
   --i: 5;
 }
 
+/* The visitor's own bubble opens from the right, so its marks land that way. */
+.home-chat__row.is-sent .home-chat__picker button {
+  animation-delay: calc(70ms + (5 - var(--i, 0)) * 38ms);
+}
+
 @keyframes home-chat-picker-glyph {
   from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: scale(0.3);
   }
 }
 
@@ -417,40 +466,116 @@
   transform: scale(0.9);
 }
 
-/*
- * —— Quick replies ——
- * With the 12px under the thread, the 28px row and its 10px margin make up the
- * frame's 50px between the last bubble and the composer.
- */
-.home-chat__chips {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.home-chat__chips button {
-  height: 28px;
-  padding: 0 12px;
-  border: 0.5px solid var(--home-chat-border);
-  border-radius: var(--radius-pill);
-  background: transparent;
-  color: var(--home-ink);
-  font: inherit;
-  font-size: 13px;
-  line-height: 18px;
-  cursor: pointer;
-  transition:
-    background-color 220ms var(--ease-out-expo),
-    transform 220ms var(--ease-out-expo);
-}
-
-.home-chat__chips button:active {
-  transform: scale(0.96);
-}
-
 /* —— Composer —— */
+/*
+ * The composer, the menu button, and the menu share the nav pill's glass: the
+ * same translucent ground, hairline, and frost, so the thread reads through
+ * them the way the page reads through the nav.
+ */
+.home-chat__glass {
+  background: var(--home-glass);
+  border: 0.5px solid var(--home-nav-hairline);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
+}
+
+.home-chat__menu-button {
+  padding: 0;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__menu-button:active {
+  transform: scale(0.94);
+}
+
+/*
+ * The card rises from the button's corner, 6px clear of the row. It is always
+ * in the DOM and the open class plays it both ways: out, it settles down
+ * toward the button and fades, a little quicker than it arrived, and
+ * visibility flips only once that has finished so the links leave the tab
+ * order without cutting the fade short. The links follow the card in on a
+ * short stagger; on the way out they simply go with it.
+ */
+.home-chat__menu {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 180px;
+  padding: 20px 10px;
+  border-radius: 12px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.96);
+  transform-origin: 20px calc(100% + 26px);
+  transition:
+    opacity 200ms ease,
+    transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
+    visibility 0s linear 260ms;
+}
+
+.home-chat__menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: none;
+  transition:
+    opacity 260ms ease,
+    transform 480ms var(--ease-out-expo),
+    visibility 0s;
+}
+
+.home-chat__menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 25px;
+  padding: 0 2px;
+  border-radius: 4px;
+  color: var(--home-ink);
+  font-size: 14px;
+  line-height: 18px;
+  text-decoration: none;
+  opacity: 0;
+  transform: translateY(6px);
+  transition:
+    opacity 160ms ease,
+    transform 0s linear 260ms;
+}
+
+.home-chat__menu.is-open a {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 320ms ease calc(60ms + var(--i, 0) * 35ms),
+    transform 480ms var(--ease-out-expo) calc(60ms + var(--i, 0) * 35ms);
+}
+
+.home-chat__menu a:nth-child(2) {
+  --i: 1;
+}
+
+.home-chat__menu a:nth-child(3) {
+  --i: 2;
+}
+
+.home-chat__menu a:nth-child(4) {
+  --i: 3;
+}
+
+.home-chat__menu a:nth-child(5) {
+  --i: 4;
+}
+
+.paper-home .home-chat__menu a:focus-visible {
+  outline-offset: 2px;
+}
+
 .home-chat__composer:has(input:focus-visible) {
   outline: 2px solid #2f5bea;
   outline-offset: 3px;
@@ -477,8 +602,9 @@
     transform: none;
   }
 
-  .home-chat__chips button:hover {
-    background: var(--home-pill);
+  .home-chat__menu.is-open a:hover {
+    opacity: 0.6;
+    transition: opacity 220ms var(--ease-out-expo);
   }
 
   a.home-chat__bubble:hover {
@@ -1055,7 +1181,12 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__theme .theme-icon,
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
-  .home-chat__chips button,
+  .home-chat__avatar,
+  .home-chat__menu-button,
+  .home-chat__menu,
+  .home-chat__menu.is-open,
+  .home-chat__menu a,
+  .home-chat__menu.is-open a,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
