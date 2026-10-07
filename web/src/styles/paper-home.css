@@ -491,8 +491,9 @@
 }
 
 /*
- * Touch: nothing hovers, so an empty tapback button is not a target at all and
- * the long press is the way in. Text selection would fight that press. iOS
+ * Touch: nothing hovers, so an empty tapback button is not a target at all; a
+ * tap on a text bubble, or a long press on any bubble, is the way in. Text
+ * selection would fight that press. iOS
  * zooms the page on focusing an input set under 16px.
  */
 @media (hover: none) {

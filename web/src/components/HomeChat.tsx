@@ -85,12 +85,15 @@ export default function HomeChat() {
   const [extra, setExtra] = useState<Bubble[]>([]);
   const [draft, setDraft] = useState("");
   const [openFor, setOpenFor] = useState<string | null>(null);
+  // What a screen reader is told about the visitor's own turns. The scripted
+  // thread is never announced: it is there to be read, not narrated at them.
+  const [status, setStatus] = useState("");
 
   const reactions = useSyncExternalStore(subscribeReactions, getReactions, getServerReactions);
 
   const timers = useRef(new Set<number>());
   const nextId = useRef(0);
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastTop = useRef<number | null>(null);
@@ -177,6 +180,7 @@ export default function HomeChat() {
     // sends cannot both run or leave the typing dots behind.
     clearTimers();
     setTyping(false);
+    setStatus("");
 
     // Writing in before the script has finished skips to the end of it.
     if (!booted || count < HERO_CHAT.length) {
@@ -199,6 +203,7 @@ export default function HomeChat() {
       later(() => {
         addExtra({ id: `reply-${nextId.current++}`, text: CHAT_HINT });
         setTyping(false);
+        setStatus(`Usmaan: ${CHAT_HINT}`);
       }, REPLY_DELAY_MS);
       return;
     }
@@ -209,6 +214,7 @@ export default function HomeChat() {
       inputRef.current?.blur();
       later(() => {
         const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        setStatus("Showing selected work.");
         document
           .getElementById(command.scroll)
           ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
@@ -220,12 +226,16 @@ export default function HomeChat() {
       // The modal takes focus and hands it back on close, so let go of the
       // field first or the keyboard reopens under it on touch.
       inputRef.current?.blur();
-      later(() => window.dispatchEvent(new Event(CONTACT_OPEN_EVENT)), COMMAND_DELAY_MS);
+      later(() => {
+        setStatus("Opening the contact form.");
+        window.dispatchEvent(new Event(CONTACT_OPEN_EVENT));
+      }, COMMAND_DELAY_MS);
       return;
     }
 
     // A real navigation, like the nav's own links: the Rented prototype script
     // mounts once per document load, so the routes are never client-side.
+    setStatus(`Opening the ${word} page.`);
     later(() => window.location.assign(command.open), COMMAND_DELAY_MS);
   }
 
@@ -274,10 +284,12 @@ export default function HomeChat() {
           ))}
         </ol>
 
-        <div
+        {/* A labelled section, not a live log: a log would read all nine
+            scripted bubbles out as they land. The status line below speaks for
+            the visitor's own turns instead. */}
+        <section
           ref={scrollRef}
           className={`home-chat__scroll${extra.length > 0 ? " is-scrollable" : ""}`}
-          role="log"
           aria-label="Messages from Usmaan"
         >
           <ol ref={listRef} className={`home-chat__list${booted ? "" : " is-booting"}`}>
@@ -303,7 +315,11 @@ export default function HomeChat() {
               </li>
             )}
           </ol>
-        </div>
+        </section>
+
+        <p className="sr-only" role="status" aria-live="polite">
+          {status}
+        </p>
 
         <noscript>
           <style>{".home-chat__list.is-booting{visibility:visible;animation:none}"}</style>
@@ -367,8 +383,10 @@ export default function HomeChat() {
 
 /**
  * One bubble and its tapback. The corner button is the way in on a pointer or
- * keyboard; on touch, where nothing hovers, a long press opens the same picker.
- * A double click hearts a text bubble, as it does in Messages.
+ * keyboard. On touch, where nothing hovers, a tap on a text bubble opens the
+ * same picker, and a long press does on any bubble (a tap on a link bubble has
+ * to stay the link). A double click with a mouse hearts a text bubble, as it
+ * does in Messages.
  */
 function ChatBubble({
   bubble,
@@ -390,6 +408,7 @@ function ChatBubble({
   const pickerRef = useRef<HTMLDivElement>(null);
   const press = useRef<{ timer: number; x: number; y: number } | null>(null);
   const swallowClick = useRef(false);
+  const lastPointer = useRef("mouse");
 
   const sent = bubble.from === "me";
 
@@ -407,7 +426,18 @@ function ChatBubble({
     }
 
     document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
+
+    const trigger = triggerRef.current;
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+      // The picker held focus and is now gone. If nothing else took it (a click
+      // on empty page, say), hand it back to the button that opened the picker
+      // rather than leaving it on <body>.
+      requestAnimationFrame(() => {
+        const active = document.activeElement;
+        if (!active || active === document.body) trigger?.focus({ preventScroll: true });
+      });
+    };
     // onClose is a fresh closure each render; it only ever clears the open id.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
@@ -422,6 +452,7 @@ function ChatBubble({
 
   function handlePointerDown(event: PointerEvent) {
     swallowClick.current = false;
+    lastPointer.current = event.pointerType;
     if (event.pointerType === "mouse") return;
 
     cancelPress();
@@ -491,6 +522,12 @@ function ChatBubble({
           onClose();
           triggerRef.current?.focus();
         }}
+        onBlur={(event) => {
+          // Tabbing on past the picker closes it; focus is already on its way
+          // to the next control, so there is nothing to restore.
+          const next = event.relatedTarget;
+          if (open && next instanceof Node && !event.currentTarget.contains(next)) onClose();
+        }}
       >
         {bubble.href ? (
           <a
@@ -505,7 +542,15 @@ function ChatBubble({
         ) : (
           <p
             className={sent ? BUBBLE_SENT : BUBBLE_RECEIVED}
+            onClick={() => {
+              // Touch and pen only: a mouse has the corner button on hover.
+              if (lastPointer.current === "mouse") return;
+              if (open) onClose();
+              else onOpen();
+            }}
             onDoubleClick={() => {
+              // On touch the first tap has already opened the picker.
+              if (lastPointer.current !== "mouse") return;
               window.getSelection()?.removeAllRanges();
               onReact("heart");
             }}
