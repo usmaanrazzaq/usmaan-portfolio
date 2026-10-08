@@ -33,7 +33,7 @@ Open http://localhost:3000. `npm run build` produces a production build and
 | `web/src/components/` | Components, including the `HomeShell` / `SiteChrome` / `PaperCsChrome` page shells |
 | `web/src/lib/` | Case-study behaviour (lightboxes, charts, the OTRS globe) and shared helpers |
 | `web/src/styles/` | The `paper-*.css` stylesheets |
-| `web/src/data/` | Static content — the project list, the hero skies |
+| `web/src/data/` | Static content — the project list, the hero chat script |
 | `web/public/` | Static assets: `hero/`, `images/`, `video/`, `shared/`, the favicons, the resume |
 
 ## Deployment

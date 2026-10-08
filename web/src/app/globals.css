@@ -32,8 +32,15 @@
   --home-divider: #dddddd;
   --home-media-bg: #eeecec;
   --home-accent: #2f5bea;
-  /* Hero: the panel ground, the translucent nav/scroll glass, and its hairline. */
-  --home-hero-panel: #f2f1e8;
+  /* Hero chat: received and sent bubbles. */
+  --home-bubble: #efefef;
+  --home-bubble-sent: #3c97ff;
+  /* Tapbacks: the badge's solid ground, and the picker's glass, edge, and top sheen. */
+  --home-picker: #ffffff;
+  --home-picker-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(240, 243, 248, 0.72));
+  --home-picker-edge: rgba(255, 255, 255, 0.9);
+  --home-picker-sheen: rgba(255, 255, 255, 0.95);
+  /* The translucent nav glass and its hairline. */
   --home-glass: rgba(255, 255, 255, 0.25);
   --home-hairline: #8d8d92;
   /* The floating nav's own edge: the same grey, at half strength. */
@@ -59,7 +66,11 @@ html[data-theme="dark"] {
   --home-pill-stroke: rgba(255, 255, 255, 0.12);
   --home-divider: #2a2a2a;
   --home-media-bg: #1c1c1c;
-  --home-hero-panel: #191919;
+  --home-bubble: #262628;
+  --home-picker: #3a3a3c;
+  --home-picker-glass: linear-gradient(180deg, rgba(72, 72, 76, 0.78), rgba(48, 48, 52, 0.7));
+  --home-picker-edge: rgba(255, 255, 255, 0.16);
+  --home-picker-sheen: rgba(255, 255, 255, 0.14);
   --home-glass: rgba(255, 255, 255, 0.06);
   --home-hairline: rgba(255, 255, 255, 0.22);
   --home-nav-hairline: rgba(255, 255, 255, 0.22);
@@ -79,7 +90,8 @@ html[data-theme="dark"] {
   --color-pill: var(--home-pill);
   --color-pill-stroke: var(--home-pill-stroke);
   --color-accent: var(--home-accent);
-  --color-hero-panel: var(--home-hero-panel);
+  --color-bubble: var(--home-bubble);
+  --color-bubble-sent: var(--home-bubble-sent);
   --color-glass: var(--home-glass);
   --color-hairline: var(--home-hairline);
 
@@ -145,7 +157,7 @@ html {
 /*
  * Present only while the theme toggle is mid-swap (see applyTheme). Covers the
  * properties that actually carry a theme colour -- `filter` is in the list so
- * the hero stamp's dark-mode inversion cross-fades with everything else.
+ * a dark-mode inversion cross-fades with everything else.
  * `opacity` is deliberately absent: it belongs to the scroll reveals.
  */
 .is-theme-switching,

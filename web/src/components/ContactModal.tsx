@@ -12,6 +12,9 @@ const CONTACT_PATHS = ["/contact/", "/contact", "/Contact/", "/Contact"];
 const OPEN_SELECTOR =
   '[data-contact-open], a[href="/contact/"], a[href="/contact"], a[href="/Contact/"], a[href="/Contact"]';
 
+/** Fired on `window` by anything that opens the modal without a link to click. */
+export const CONTACT_OPEN_EVENT = "contact:open";
+
 function isContactPath(path: string) {
   return CONTACT_PATHS.includes(path);
 }
@@ -191,6 +194,10 @@ export default function ContactModal() {
       close();
     }
 
+    function onOpenEvent() {
+      open({ pushState: true });
+    }
+
     function onPopState() {
       if (isContactPath(window.location.pathname)) open({ fromRoute: true });
       else close({ restoreHistory: false });
@@ -199,11 +206,13 @@ export default function ContactModal() {
     document.addEventListener("click", onClick);
     document.addEventListener("keydown", onKeyDown);
     window.addEventListener("popstate", onPopState);
+    window.addEventListener(CONTACT_OPEN_EVENT, onOpenEvent);
 
     return () => {
       document.removeEventListener("click", onClick);
       document.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("popstate", onPopState);
+      window.removeEventListener(CONTACT_OPEN_EVENT, onOpenEvent);
     };
   }, [open, close]);
 
