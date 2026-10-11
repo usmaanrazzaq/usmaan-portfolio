@@ -581,6 +581,25 @@ html.is-theme-switching .home-chat__avatar {
   outline-offset: 3px;
 }
 
+.home-chat__caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 1.15em;
+  margin-left: 1px;
+  vertical-align: -0.2em;
+  background: currentColor;
+}
+
+.home-chat__caret.is-blinking {
+  animation: home-chat-caret 1s steps(1, end) infinite;
+}
+
+@keyframes home-chat-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
 .home-chat__composer button {
   border: 0;
   cursor: pointer;
@@ -632,7 +651,8 @@ html.is-theme-switching .home-chat__avatar {
     -webkit-user-select: none;
   }
 
-  .home-chat__composer input {
+  .home-chat__composer input,
+  .home-chat__placeholder {
     font-size: 16px;
   }
 }
@@ -1198,6 +1218,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-chat__row,
   .home-chat__picker,
   .home-chat__typing span,
+  .home-chat__caret,
   .home-chat__wrap.has-reaction .home-chat__tapback {
     animation: none;
   }
