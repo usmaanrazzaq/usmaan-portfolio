@@ -584,9 +584,9 @@ html.is-theme-switching .home-chat__avatar {
 .home-chat__caret {
   display: inline-block;
   width: 1.5px;
-  height: 1.15em;
+  height: 1.1em;
   margin-left: 1px;
-  vertical-align: -0.2em;
+  vertical-align: -0.18em;
   background: currentColor;
 }
 

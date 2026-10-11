@@ -398,8 +398,6 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
   const [text, setText] = useState(CHAT_PLACEHOLDERS[0]);
   const [holding, setHolding] = useState(true);
   const [reduced, setReduced] = useState(false);
-  const outerRef = useRef<HTMLSpanElement>(null);
-  const innerRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -459,23 +457,14 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
     };
   }, []);
 
-  // A phrase longer than a narrow field slides left as it is typed, the way
-  // the field itself scrolls to keep its caret in view.
-  useLayoutEffect(() => {
-    const outer = outerRef.current;
-    const inner = innerRef.current;
-    if (!outer || !inner) return;
-    const overflow = Math.max(0, inner.scrollWidth - outer.clientWidth);
-    inner.style.transform = overflow ? `translateX(-${overflow}px)` : "";
-  }, [text]);
-
+  // A phrase longer than the field keeps its start and trails off, as a native
+  // placeholder does: the command word is the part that has to stay readable.
   return (
     <span
-      ref={outerRef}
-      className="home-chat__placeholder pointer-events-none absolute inset-0 flex items-center overflow-hidden text-sm leading-[18px] font-normal whitespace-nowrap text-[#929292]"
+      className="home-chat__placeholder pointer-events-none absolute inset-0 flex items-center text-sm leading-[18px] font-normal text-[#929292]"
       aria-hidden="true"
     >
-      <span ref={innerRef}>
+      <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
         {text}
         {!reduced && !focused && (
           <span className={`home-chat__caret${holding ? " is-blinking" : ""}`} />
