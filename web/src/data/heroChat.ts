@@ -61,5 +61,17 @@ export const CHAT_COMMANDS: Record<string, ChatCommand> = {
   contact: { contact: true },
 };
 
+/**
+ * The composer's placeholder, typed out one phrase at a time. Each one leads
+ * with "Type '" so only the rest of the line is rewritten between them.
+ */
+export const CHAT_PLACEHOLDERS = [
+  "Type 'Portfolio' to see work",
+  "Type 'About' to know more about me",
+  "Type 'Playground' to see explorations",
+  "Type 'References' to see what inspires me",
+  "Type 'Contact' to get in touch",
+];
+
 /** The reply to anything the composer does not understand. */
 export const CHAT_HINT = "Try 'portfolio', 'about', 'playground', 'references', or 'contact'.";

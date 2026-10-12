@@ -15,6 +15,7 @@ import LiveStatus from "@/components/LiveStatus";
 import {
   CHAT_COMMANDS,
   CHAT_HINT,
+  CHAT_PLACEHOLDERS,
   HERO_CHAT,
   type ChatIcon,
   type ChatMessage,
@@ -83,6 +84,7 @@ export default function HomeChat() {
   const [extra, setExtra] = useState<Bubble[]>([]);
   const [draft, setDraft] = useState("");
   const [openFor, setOpenFor] = useState<string | null>(null);
+  const [focused, setFocused] = useState(false);
   // What a screen reader is told about the visitor's own turns. The scripted
   // thread is never announced: it is there to be read, not narrated at them.
   const [status, setStatus] = useState("");
@@ -331,19 +333,23 @@ export default function HomeChat() {
           className="home-chat__composer home-chat__glass flex h-10 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill pr-2 pl-3"
           onSubmit={handleSubmit}
         >
-          <input
-            ref={inputRef}
-            type="text"
-            value={draft}
-            onChange={(event) => setDraft(event.target.value)}
-            placeholder="Type 'Portfolio' to see work"
-            aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
-            autoComplete="off"
-            autoCapitalize="off"
-            enterKeyHint="send"
-            maxLength={140}
-            className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none placeholder:text-[#929292]"
-          />
+          <span className="relative flex min-w-0 flex-1">
+            <input
+              ref={inputRef}
+              type="text"
+              value={draft}
+              onChange={(event) => setDraft(event.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => setFocused(false)}
+              aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
+              autoComplete="off"
+              autoCapitalize="off"
+              enterKeyHint="send"
+              maxLength={140}
+              className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none"
+            />
+            {!draft && <TypedPlaceholder focused={focused} />}
+          </span>
           <button
             type="submit"
             aria-label="Send"
@@ -366,6 +372,105 @@ export default function HomeChat() {
         </form>
       </div>
     </div>
+  );
+}
+
+const TYPE_MS = 55;
+const DELETE_MS = 28;
+const HOLD_MS = 2200;
+/** The beat between the old phrase's tail going and the new one starting. */
+const RETYPE_DELAY_MS = 300;
+
+function sharedPrefix(a: string, b: string) {
+  let length = 0;
+  while (length < a.length && a[length] === b[length]) length++;
+  return length;
+}
+
+/**
+ * The composer's placeholder, drawn over the empty field: each command's
+ * phrase is typed out, held, and deleted back to the "Type '" every phrase
+ * shares before the next is typed. It starts on the first phrase in full, as
+ * the server renders it, and stays there with reduced motion. The field's own
+ * aria-label names every command, so this is hidden from assistive tech.
+ */
+function TypedPlaceholder({ focused }: { focused: boolean }) {
+  const [text, setText] = useState(CHAT_PLACEHOLDERS[0]);
+  const [holding, setHolding] = useState(true);
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      const id = window.setTimeout(() => setReduced(true), 0);
+      return () => window.clearTimeout(id);
+    }
+
+    let phrase = 0;
+    let length = CHAT_PLACEHOLDERS[0].length;
+    let timer = 0;
+    let next: (() => void) | null = null;
+
+    function schedule(run: () => void, ms: number) {
+      next = run;
+      if (!document.hidden) timer = window.setTimeout(run, ms);
+    }
+
+    function hold() {
+      setHolding(true);
+      schedule(erase, HOLD_MS);
+    }
+
+    function erase() {
+      setHolding(false);
+      const current = CHAT_PLACEHOLDERS[phrase];
+      const upcoming = CHAT_PLACEHOLDERS[(phrase + 1) % CHAT_PLACEHOLDERS.length];
+      if (length > sharedPrefix(current, upcoming)) {
+        length--;
+        setText(current.slice(0, length));
+        schedule(erase, DELETE_MS);
+        return;
+      }
+      phrase = (phrase + 1) % CHAT_PLACEHOLDERS.length;
+      schedule(type, RETYPE_DELAY_MS);
+    }
+
+    function type() {
+      const current = CHAT_PLACEHOLDERS[phrase];
+      length++;
+      setText(current.slice(0, length));
+      if (length < current.length) schedule(type, TYPE_MS + Math.random() * 40);
+      else hold();
+    }
+
+    // A background tab throttles timers into a stutter, so stop the loop there
+    // and pick it up from the same step on return.
+    function onVisibilityChange() {
+      window.clearTimeout(timer);
+      if (!document.hidden && next) timer = window.setTimeout(next, TYPE_MS);
+    }
+
+    hold();
+    document.addEventListener("visibilitychange", onVisibilityChange);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVisibilityChange);
+    };
+  }, []);
+
+  // A phrase longer than the field keeps its start and trails off, as a native
+  // placeholder does: the command word is the part that has to stay readable.
+  return (
+    <span
+      className="home-chat__placeholder pointer-events-none absolute inset-0 flex items-center text-sm leading-[18px] font-normal text-[#929292]"
+      aria-hidden="true"
+    >
+      <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
+        {text}
+        {!reduced && !focused && (
+          <span className={`home-chat__caret${holding ? " is-blinking" : ""}`} />
+        )}
+      </span>
+    </span>
   );
 }
 
