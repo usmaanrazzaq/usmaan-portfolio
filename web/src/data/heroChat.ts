@@ -1,9 +1,8 @@
 /**
  * The script for the homepage hero's chat thread, in the order it is sent.
  *
- * `id` is the key a visitor's tapback is stored under (lib/chatReactions.ts),
- * so renaming one drops the reactions left on that bubble. A message with an
- * `href` is sent as a link bubble.
+ * `id` keys a visitor's tapback on that bubble, so ids must be unique. A
+ * message with an `href` is sent as a link bubble.
  */
 
 export type ChatIcon = "linkedin" | "instagram" | "github" | "x" | "resume";
