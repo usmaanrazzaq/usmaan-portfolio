@@ -615,7 +615,111 @@ html.is-theme-switching .home-chat__avatar {
   outline-offset: 3px;
 }
 
+/*
+ * —— Shimmer ——
+ *
+ * A glint of the work displays' blue runs through the scroll cue every few
+ * seconds and then rests, so it reads as a nudge rather than a loading state.
+ * The gradient is several times the label's width with the band in the
+ * middle; walking background-position from 100% to 0% carries the band from
+ * fully off the left edge to fully off the right, so the resting frame shows
+ * none of it. The sweep is linear so the arrow can meet the band at the
+ * label's end.
+ *
+ * The text is painted by the clipped background and its own fill is made
+ * transparent with -webkit-text-fill-color rather than `color`, which leaves
+ * currentColor intact for the gradient's base.
+ */
+@keyframes home-shimmer-sweep {
+  0% {
+    background-position: 100% 0;
+  }
+
+  55%,
+  100% {
+    background-position: 0% 0;
+  }
+}
+
+/*
+ * In the dark theme the blue is about as bright as the ink, so the cue rests
+ * on a dimmer grey there and the glint lifts it instead of vanishing into it.
+ */
+.home-scroll-cue {
+  --home-cue-base: var(--home-ink);
+  border-radius: 100px;
+  transition: opacity 220ms var(--ease-out-expo);
+}
+
+html[data-theme="dark"] .home-scroll-cue {
+  --home-cue-base: #8e8e93;
+}
+
+.home-scroll-cue:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+/* 300% keeps the band's 36–64% span clear of the label at both ends. */
+.home-scroll-cue__label {
+  background-image: linear-gradient(
+    90deg,
+    var(--home-cue-base) 0%,
+    var(--home-cue-base) 36%,
+    var(--home-shimmer) 46%,
+    var(--home-shimmer) 54%,
+    var(--home-cue-base) 64%,
+    var(--home-cue-base) 100%
+  );
+  background-size: 300% 100%;
+  background-position: 100% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: home-shimmer-sweep 3s linear 1s infinite;
+}
+
+.home-scroll-cue__arrow {
+  color: var(--home-cue-base);
+  animation: home-cue-arrow 3s linear 1s infinite;
+}
+
+/* The band's centre crosses the label's end at 41% of the cycle. */
+@keyframes home-cue-arrow {
+  0%,
+  32%,
+  56%,
+  100% {
+    color: var(--home-cue-base);
+  }
+
+  42%,
+  48% {
+    color: var(--home-shimmer);
+  }
+}
+
+/*
+ * The placeholder's glint rides the caret instead of sweeping on a clock:
+ * each letter is typed in lit and fades back to the placeholder grey. At the
+ * typing pace that leaves a short trail of the newest seven or eight letters
+ * glowing behind the cursor, which goes out once the phrase is held.
+ */
+.home-chat__letter {
+  animation: home-chat-letter 650ms ease-out;
+}
+
+@keyframes home-chat-letter {
+  from {
+    color: var(--home-shimmer);
+  }
+}
+
 @media (hover: hover) {
+  .home-scroll-cue:hover {
+    opacity: 0.7;
+  }
+
   .home-chat__wrap:hover .home-chat__tapback {
     opacity: 1;
     transform: none;
@@ -1210,9 +1314,26 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
-  .home-chat__composer button {
+  .home-chat__composer button,
+  .home-scroll-cue {
     transition: none;
     animation: none;
+  }
+
+  .home-scroll-cue__label,
+  .home-scroll-cue__arrow {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    animation: none;
+  }
+
+  .home-chat__letter {
+    animation: none;
+  }
+
+  .home-scroll-cue__label,
+  .home-scroll-cue__arrow {
+    color: var(--home-ink);
   }
 
   .home-chat__row,
