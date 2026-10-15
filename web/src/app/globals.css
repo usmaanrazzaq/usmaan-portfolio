@@ -35,6 +35,8 @@
   /* Hero chat: received and sent bubbles. */
   --home-bubble: #efefef;
   --home-bubble-sent: #3c97ff;
+  /* The glint that runs through the hero's cues: the work displays' blue. */
+  --home-shimmer: #c2ceec;
   /* Tapbacks: the badge's solid ground, and the picker's glass, edge, and top sheen. */
   --home-picker: #ffffff;
   --home-picker-glass: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(240, 243, 248, 0.72));
@@ -67,6 +69,8 @@ html[data-theme="dark"] {
   --home-divider: #2a2a2a;
   --home-media-bg: #1c1c1c;
   --home-bubble: #262628;
+  /* The same blue lifted toward white: #c2ceec sits too close to the dark ink. */
+  --home-shimmer: #dce4f7;
   --home-picker: #3a3a3c;
   --home-picker-glass: linear-gradient(180deg, rgba(72, 72, 76, 0.78), rgba(48, 48, 52, 0.7));
   --home-picker-edge: rgba(255, 255, 255, 0.16);

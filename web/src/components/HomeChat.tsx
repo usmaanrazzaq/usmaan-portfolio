@@ -12,6 +12,7 @@ import {
 } from "react";
 import { CONTACT_OPEN_EVENT } from "@/components/ContactModal";
 import LiveStatus from "@/components/LiveStatus";
+import ScrollCue from "@/components/ScrollCue";
 import {
   CHAT_COMMANDS,
   CHAT_HINT,
@@ -371,6 +372,8 @@ export default function HomeChat() {
           </button>
         </form>
       </div>
+
+      <ScrollCue className="home-enter mt-10 [--enter-delay:340ms]" />
     </div>
   );
 }
@@ -459,13 +462,20 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
 
   // A phrase longer than the field keeps its start and trails off, as a native
   // placeholder does: the command word is the part that has to stay readable.
+  // Each letter is its own span so it can arrive lit and fade behind the
+  // caret. Keyed by position: the shared "Type '" is never deleted, so it never
+  // remounts, while every retyped letter is a fresh mount and lights up again.
   return (
     <span
       className="home-chat__placeholder pointer-events-none absolute inset-0 flex items-center text-sm leading-[18px] font-normal text-[#929292]"
       aria-hidden="true"
     >
       <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
-        {text}
+        {Array.from(text, (letter, index) => (
+          <span key={index} className="home-chat__letter">
+            {letter}
+          </span>
+        ))}
         {!reduced && !focused && (
           <span className={`home-chat__caret${holding ? " is-blinking" : ""}`} />
         )}
