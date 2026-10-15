@@ -468,9 +468,9 @@ html.is-theme-switching .home-chat__avatar {
 
 /* —— Composer —— */
 /*
- * The composer, the menu button, and the menu share the nav pill's glass: the
- * same translucent ground, hairline, and frost, so the thread reads through
- * them the way the page reads through the nav.
+ * The composer and the menu share the nav pill's glass: the same translucent
+ * ground, hairline, and frost, so the thread reads through them the way the
+ * page reads through the nav.
  */
 .home-chat__glass {
   background: var(--home-glass);
@@ -479,40 +479,30 @@ html.is-theme-switching .home-chat__avatar {
   backdrop-filter: var(--home-frost);
 }
 
-.home-chat__menu-button {
-  padding: 0;
-  cursor: pointer;
-  transition: transform 220ms var(--ease-out-expo);
-}
-
-.home-chat__menu-button:active {
-  transform: scale(0.94);
-}
-
 /*
- * The card rises from the button's corner, 6px clear of the row. It is always
- * in the DOM and the open class plays it both ways: out, it settles down
- * toward the button and fades, a little quicker than it arrived, and
- * visibility flips only once that has finished so the links leave the tab
- * order without cutting the fade short. The links follow the card in on a
+ * The card spans the composer and sits 15px above it. It is always in the DOM
+ * and the open class plays it both ways: in, it rises out of the field; out,
+ * it settles back down into it and fades, a little quicker than it arrived,
+ * and visibility flips only once that has finished so the links leave the tab
+ * order without cutting the fade short. The rows follow the card in on a
  * short stagger; on the way out they simply go with it.
  */
 .home-chat__menu {
   position: absolute;
-  bottom: calc(100% + 6px);
+  right: 0;
+  bottom: calc(100% + 15px);
   left: 0;
   z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 180px;
-  padding: 20px 10px;
+  padding: 15px;
   border-radius: 12px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: translateY(10px) scale(0.96);
-  transform-origin: 20px calc(100% + 26px);
+  transform-origin: 50% 100%;
   transition:
     opacity 200ms ease,
     transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -530,17 +520,15 @@ html.is-theme-switching .home-chat__avatar {
     visibility 0s;
 }
 
-.home-chat__menu a {
+.home-chat__menu > * {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
-  height: 25px;
-  padding: 0 2px;
-  border-radius: 4px;
+  height: 30px;
   color: var(--home-ink);
   font-size: 14px;
   line-height: 18px;
-  text-decoration: none;
   opacity: 0;
   transform: translateY(6px);
   transition:
@@ -548,7 +536,7 @@ html.is-theme-switching .home-chat__avatar {
     transform 0s linear 260ms;
 }
 
-.home-chat__menu.is-open a {
+.home-chat__menu.is-open > * {
   opacity: 1;
   transform: none;
   transition:
@@ -556,20 +544,45 @@ html.is-theme-switching .home-chat__avatar {
     transform 480ms var(--ease-out-expo) calc(60ms + var(--i, 0) * 35ms);
 }
 
-.home-chat__menu a:nth-child(2) {
+.home-chat__menu > :nth-child(2) {
   --i: 1;
 }
 
-.home-chat__menu a:nth-child(3) {
+.home-chat__menu > :nth-child(3) {
   --i: 2;
 }
 
-.home-chat__menu a:nth-child(4) {
+.home-chat__menu > :nth-child(4) {
   --i: 3;
 }
 
-.home-chat__menu a:nth-child(5) {
+.home-chat__menu > :nth-child(5) {
   --i: 4;
+}
+
+.home-chat__menu a {
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.home-chat__menu-head button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0 -8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__menu-head button:active {
+  transform: scale(0.9);
 }
 
 .paper-home .home-chat__menu a:focus-visible {
@@ -1306,11 +1319,11 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
-  .home-chat__menu-button,
   .home-chat__menu,
   .home-chat__menu.is-open,
-  .home-chat__menu a,
-  .home-chat__menu.is-open a,
+  .home-chat__menu > *,
+  .home-chat__menu.is-open > *,
+  .home-chat__menu-head button,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
