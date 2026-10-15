@@ -75,6 +75,7 @@ export default function HomeChat() {
   const [draft, setDraft] = useState("");
   const [openFor, setOpenFor] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   // What a screen reader is told about the visitor's own turns. The scripted
   // thread is never announced: it is there to be read, not narrated at them.
   const [status, setStatus] = useState("");
@@ -86,6 +87,7 @@ export default function HomeChat() {
   const scrollRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const barRef = useRef<HTMLDivElement>(null);
   const lastTop = useRef<number | null>(null);
 
   function later(run: () => void, ms: number) {
@@ -153,6 +155,19 @@ export default function HomeChat() {
     });
   }, [booted, count, typing, extra.length]);
 
+  // The menu belongs to the field: a press anywhere outside the composer and
+  // the card puts it away.
+  useEffect(() => {
+    if (!menuOpen) return;
+
+    function onPointerDown(event: globalThis.PointerEvent) {
+      if (!barRef.current?.contains(event.target as Node)) setMenuOpen(false);
+    }
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [menuOpen]);
+
   function addExtra(bubble: Bubble) {
     setExtra((previous) => [...previous, bubble].slice(-MAX_EXTRA));
   }
@@ -180,6 +195,8 @@ export default function HomeChat() {
 
     setDraft("");
     setOpenFor(null);
+    // Out of the way of the reply landing above the composer.
+    setMenuOpen(false);
     addExtra({ id: `visitor-${nextId.current++}`, text, from: "me" });
 
     const word = text
@@ -321,21 +338,68 @@ export default function HomeChat() {
         </noscript>
       </div>
 
-      <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
-        <ChatMenu />
-
+      <div
+        ref={barRef}
+        className={`home-chat__bar home-enter relative flex shrink-0 [--enter-delay:260ms]${menuOpen ? " is-open" : ""}`}
+        onKeyDown={(event) => {
+          if (event.key !== "Escape" || !menuOpen) return;
+          setMenuOpen(false);
+          inputRef.current?.focus();
+        }}
+        onBlur={(event) => {
+          // A null target is a click on nothing focusable, which the document
+          // listener already handles, or the window losing focus, which
+          // should leave the menu as it was.
+          const next = event.relatedTarget;
+          if (menuOpen && next instanceof Node && !event.currentTarget.contains(next)) {
+            setMenuOpen(false);
+          }
+        }}
+      >
         <form
-          className="home-chat__composer home-chat__glass flex h-10 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill pr-2 pl-3"
+          className="home-chat__composer home-chat__glass flex h-12.5 min-w-0 flex-1 items-center justify-between gap-1.25 rounded-pill p-2"
           onSubmit={handleSubmit}
         >
+          <label
+            htmlFor={INPUT_ID}
+            className="bg-pill text-ink flex size-7.5 shrink-0 cursor-text items-center justify-center rounded-pill"
+            aria-hidden="true"
+            onPointerDown={() => setMenuOpen(true)}
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M17 10C17 13.866 13.866 17 10 17C6.134 17 3 13.866 3 10C3 6.134 6.134 3 10 3C13.866 3 17 6.134 17 10Z" />
+              <path d="M21 21L15 15" />
+            </svg>
+          </label>
           <span className="relative flex min-w-0 flex-1">
             <input
               ref={inputRef}
+              id={INPUT_ID}
               type="text"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              onFocus={() => setFocused(true)}
+              onFocus={() => {
+                setFocused(true);
+                setMenuOpen(true);
+              }}
               onBlur={() => setFocused(false)}
+              // A field that already has focus does not fire onFocus again, so
+              // a click on it after Escape closed the menu has to reopen it.
+              onPointerDown={() => setMenuOpen(true)}
+              onKeyDown={(event) => {
+                if (event.key !== "ArrowDown" || !menuOpen) return;
+                event.preventDefault();
+                document.getElementById(MENU_ID)?.querySelector("a")?.focus();
+              }}
               aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
               autoComplete="off"
               autoCapitalize="off"
@@ -348,7 +412,7 @@ export default function HomeChat() {
           <button
             type="submit"
             aria-label="Send"
-            className="bg-bubble-sent flex size-[35px] shrink-0 items-center justify-center rounded-pill text-white"
+            className="bg-bubble-sent flex size-7.5 shrink-0 items-center justify-center rounded-pill text-white"
           >
             <svg
               width="16"
@@ -365,6 +429,26 @@ export default function HomeChat() {
             </svg>
           </button>
         </form>
+
+        {/* The site's routes, for the stretch of the homepage where the nav
+            itself is out of the way. Always mounted, so closing can be played
+            as well as opening. Closed, it is visibility:hidden, which also
+            takes it out of the tab order and the accessibility tree. The links
+            are plain anchors, like the nav's, so every route is a real
+            document load. */}
+        <nav
+          id={MENU_ID}
+          className={menuOpen ? `${MENU} is-open` : MENU}
+          aria-label="Site"
+          onKeyDown={handleMenuKeyDown}
+        >
+          {MENU_ITEMS.map((item) => (
+            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
+              <MenuIcon paths={item.paths} barrel={"barrel" in item} />
+              {item.label}
+            </a>
+          ))}
+        </nav>
       </div>
 
       <ScrollCue className="home-enter mt-10 [--enter-delay:340ms]" />
@@ -478,6 +562,7 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
   );
 }
 
+const INPUT_ID = "home-chat-input";
 const MENU_ID = "home-chat-menu";
 const MENU = "home-chat__menu home-chat__glass";
 
@@ -562,86 +647,14 @@ function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
   );
 }
 
-/**
- * The button beside the composer and the menu it opens: the site's routes in a
- * frosted card that rises from the button, for the stretch of the homepage
- * where the nav itself is out of the way. The links are plain anchors, like
- * the nav's, so every route is a real document load.
- */
-function ChatMenu() {
-  const [open, setOpen] = useState(false);
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLElement>(null);
+function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
+  if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
 
-  useEffect(() => {
-    if (!open) return;
-
-    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
-
-    function onPointerDown(event: globalThis.PointerEvent) {
-      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false);
-    }
-
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [open]);
-
-  function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
-    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-
-    const links = Array.from(event.currentTarget.querySelectorAll("a"));
-    const index = links.indexOf(document.activeElement as HTMLAnchorElement);
-    const step = event.key === "ArrowDown" ? 1 : -1;
-    event.preventDefault();
-    links[(index + step + links.length) % links.length]?.focus();
-  }
-
-  return (
-    <div
-      ref={wrapRef}
-      className="relative shrink-0"
-      onKeyDown={(event) => {
-        if (event.key !== "Escape" || !open) return;
-        setOpen(false);
-        buttonRef.current?.focus();
-      }}
-      onBlur={(event) => {
-        const next = event.relatedTarget;
-        if (open && next instanceof Node && !event.currentTarget.contains(next)) setOpen(false);
-      }}
-    >
-      <button
-        ref={buttonRef}
-        type="button"
-        className="home-chat__menu-button home-chat__glass text-ink flex size-10 items-center justify-center rounded-pill"
-        aria-label={open ? "Close menu" : "Open menu"}
-        aria-expanded={open}
-        aria-controls={MENU_ID}
-        onClick={() => setOpen((value) => !value)}
-      >
-        <MenuIcon paths={MENU_ITEMS[0].paths} />
-      </button>
-
-      {/* Always mounted, so closing can be played as well as opening. Closed,
-          it is visibility:hidden, which also takes it out of the tab order and
-          the accessibility tree. */}
-      <nav
-        ref={menuRef}
-        id={MENU_ID}
-        className={open ? `${MENU} is-open` : MENU}
-        aria-label="Site"
-        onKeyDown={handleMenuKeyDown}
-      >
-        {MENU_ITEMS.map((item) => (
-          <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
-            <MenuIcon paths={item.paths} barrel={"barrel" in item} />
-            {item.label}
-          </a>
-        ))}
-      </nav>
-    </div>
-  );
+  const links = Array.from(event.currentTarget.querySelectorAll("a"));
+  const index = links.indexOf(document.activeElement as HTMLAnchorElement);
+  const step = event.key === "ArrowDown" ? 1 : -1;
+  event.preventDefault();
+  links[(index + step + links.length) % links.length]?.focus();
 }
 
 /**

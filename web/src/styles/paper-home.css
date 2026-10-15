@@ -468,9 +468,9 @@ html.is-theme-switching .home-chat__avatar {
 
 /* —— Composer —— */
 /*
- * The composer, the menu button, and the menu share the nav pill's glass: the
- * same translucent ground, hairline, and frost, so the thread reads through
- * them the way the page reads through the nav.
+ * The composer and the menu share the nav pill's glass: the same translucent
+ * ground, hairline, and frost, so the thread reads through them the way the
+ * page reads through the nav.
  */
 .home-chat__glass {
   background: var(--home-glass);
@@ -479,40 +479,46 @@ html.is-theme-switching .home-chat__avatar {
   backdrop-filter: var(--home-frost);
 }
 
-.home-chat__menu-button {
-  padding: 0;
-  cursor: pointer;
-  transition: transform 220ms var(--ease-out-expo);
+/*
+ * Focusing the field opens the menu, and the composer widens out from the
+ * thread's column to the "Menu open" frame's 500px with it, evenly on both
+ * sides. On a phone it stops at the shell's 20px gutters.
+ */
+.home-chat__bar {
+  align-self: center;
+  width: 100%;
+  transition: width 480ms var(--ease-out-expo);
 }
 
-.home-chat__menu-button:active {
-  transform: scale(0.94);
+.home-chat__bar.is-open {
+  width: min(500px, calc(100vw - 40px));
 }
 
 /*
- * The card rises from the button's corner, 6px clear of the row. It is always
- * in the DOM and the open class plays it both ways: out, it settles down
- * toward the button and fades, a little quicker than it arrived, and
- * visibility flips only once that has finished so the links leave the tab
- * order without cutting the fade short. The links follow the card in on a
- * short stagger; on the way out they simply go with it.
+ * The card spans the composer and sits 15px above it, so it widens along with
+ * the bar. It is always in the DOM and the open class plays it both ways: in,
+ * it rises out of the field; out, it settles back down into it and fades, a
+ * little quicker than it arrived, and visibility flips only once that has
+ * finished so the links leave the tab order without cutting the fade short.
+ * The links follow the card in on a short stagger; on the way out they simply
+ * go with it.
  */
 .home-chat__menu {
   position: absolute;
-  bottom: calc(100% + 6px);
+  right: 0;
+  bottom: calc(100% + 15px);
   left: 0;
   z-index: 3;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 180px;
-  padding: 20px 10px;
+  padding: 20px;
   border-radius: 12px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
   transform: translateY(10px) scale(0.96);
-  transform-origin: 20px calc(100% + 26px);
+  transform-origin: 50% 100%;
   transition:
     opacity 200ms ease,
     transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -534,8 +540,8 @@ html.is-theme-switching .home-chat__avatar {
   display: flex;
   align-items: center;
   gap: 10px;
-  height: 25px;
-  padding: 0 2px;
+  height: 30px;
+  padding: 0 10px;
   border-radius: 4px;
   color: var(--home-ink);
   font-size: 14px;
@@ -1306,7 +1312,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
-  .home-chat__menu-button,
+  .home-chat__bar,
   .home-chat__menu,
   .home-chat__menu.is-open,
   .home-chat__menu a,
