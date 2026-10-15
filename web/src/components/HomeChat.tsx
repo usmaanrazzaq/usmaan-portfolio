@@ -457,13 +457,28 @@ export default function HomeChat() {
           aria-labelledby={MENU_TITLE_ID}
           onKeyDown={handleMenuKeyDown}
         >
-          <span id={MENU_TITLE_ID} className="home-chat__menu-head">
-            Quick Suggestions
-          </span>
+          <div className="home-chat__menu-head">
+            <span id={MENU_TITLE_ID}>Quick Suggestions</span>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={(event) => {
+                setMenuOpen(false);
+                // A keyboard press (no pointer, so no click count) would
+                // otherwise leave focus on a button that is about to hide.
+                if (event.detail === 0) refocusInput();
+              }}
+            >
+              <CloseIcon />
+            </button>
+          </div>
           {MENU_ITEMS.map((item) => (
             <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
-              <MenuIcon paths={item.paths} barrel={"barrel" in item} />
-              {item.label}
+              <span className="flex items-center gap-2.5">
+                <MenuIcon paths={item.paths} barrel={"barrel" in item} />
+                {item.label}
+              </span>
+              <ExternalLinkIcon />
             </a>
           ))}
         </nav>
@@ -584,23 +599,23 @@ const MENU_ID = "home-chat-menu";
 const MENU_TITLE_ID = "home-chat-menu-title";
 const MENU = "home-chat__menu home-chat__glass";
 
-/** The site's routes, with the frame's 16px line icons (24px viewBox paths). */
+/** The site's routes, with the frame's 14px line icons (21px viewBox paths). */
 const MENU_ITEMS = [
   {
     label: "About",
     href: "/about/",
     paths: [
-      "M12 11C14.209 11 16 9.209 16 7C16 4.791 14.209 3 12 3C9.791 3 8 4.791 8 7C8 9.209 9.791 11 12 11Z",
-      "M19 21V19C19 16.791 17.209 15 15 15H9C6.791 15 5 16.791 5 19V21",
+      "M10.5 9.625C12.433 9.625 14 8.058 14 6.125 14 4.192 12.433 2.625 10.5 2.625 8.567 2.625 7 4.192 7 6.125 7 8.058 8.567 9.625 10.5 9.625Z",
+      "M16.625 18.375V16.625C16.625 14.692 15.058 13.125 13.125 13.125H7.875C5.942 13.125 4.375 14.692 4.375 16.625V18.375",
     ],
   },
   {
     label: "Playground",
     href: "/playground/",
     paths: [
-      "M12 18C11.172 18 10.5 18.871 10.5 19.944C10.5 21.333 12 23 12 23C12 23 13.5 21.333 13.5 19.944C13.5 18.871 12.828 18 12 18Z",
-      "M12 8H12.01",
-      "M10.5 14.5H13.5M10.5 14.5L8 17.5L5 12.5L8.839 11M10.5 14.5C10.045 13.931 9.279 12.648 8.839 11M13.5 14.5C14.167 13.667 15.5 11.3 15.5 8.5C15.5 5.7 13.167 3 12 2C10.833 3 8.5 5.7 8.5 8.5C8.5 9.389 8.634 10.234 8.839 11M13.5 14.5C13.955 13.931 14.721 12.648 15.161 11L19 12.5L16 17.5L13.5 14.5Z",
+      "M10.5 15.75C9.776 15.75 9.188 16.512 9.188 17.451 9.188 18.666 10.5 20.125 10.5 20.125 10.5 20.125 11.813 18.666 11.813 17.451 11.813 16.512 11.224 15.75 10.5 15.75Z",
+      "M10.5 7H10.509",
+      "M9.188 12.688H11.813M9.188 12.688L7 15.313 4.375 10.938 7.734 9.625M9.188 12.688C8.789 12.19 8.119 11.067 7.734 9.625M11.813 12.688C12.396 11.959 13.563 9.888 13.563 7.438 13.563 4.987 11.521 2.625 10.5 1.75 9.479 2.625 7.438 4.987 7.438 7.438 7.438 8.215 7.555 8.955 7.734 9.625M11.813 12.688C12.211 12.19 12.881 11.067 13.266 9.625L16.625 10.938 14 15.313 11.813 12.688Z",
     ],
   },
   {
@@ -609,9 +624,9 @@ const MENU_ITEMS = [
     // The microscope's tilted barrel is a rotated rect, not a path.
     barrel: true,
     paths: [
-      "M10.793 8C15.077 8.601 21.868 12.83 15.793 21",
-      "M6.292 16H10.293",
-      "M3.292 21H21.293",
+      "M9.444 7C13.192 7.526 19.134 11.226 13.819 18.375",
+      "M5.505 14H9.006",
+      "M2.88 18.375H18.631",
     ],
   },
   {
@@ -619,8 +634,8 @@ const MENU_ITEMS = [
     // ContactModal intercepts this link and opens over the page.
     href: "/contact/",
     paths: [
-      "M3 6C3 5.448 3.448 5 4 5H20C20.552 5 21 5.448 21 6V18C21 18.552 20.552 19 20 19H4C3.448 19 3 18.552 3 18V6Z",
-      "M4 6L12 13L20 6",
+      "M2.625 5.25C2.625 4.767 3.017 4.375 3.5 4.375H17.5C17.983 4.375 18.375 4.767 18.375 5.25V15.75C18.375 16.233 17.983 16.625 17.5 16.625H3.5C3.017 16.625 2.625 16.233 2.625 15.75V5.25Z",
+      "M3.5 5.25L10.5 11.375 17.5 5.25",
     ],
   },
 ];
@@ -628,9 +643,9 @@ const MENU_ITEMS = [
 function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
   return (
     <svg
-      width="16"
-      height="16"
-      viewBox="0 0 24 24"
+      width="14"
+      height="14"
+      viewBox="0 0 21 21"
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
@@ -640,17 +655,58 @@ function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
     >
       {barrel && (
         <rect
-          x="7.234"
-          y="2.615"
-          width="4.727"
-          height="8.273"
+          x="6.275"
+          y="2.533"
+          width="4.145"
+          height="7.255"
           rx="1"
-          transform="rotate(15 7.234 2.615)"
+          transform="translate(0.92 -1.78) rotate(15)"
         />
       )}
       {paths.map((d) => (
         <path key={d} d={d} />
       ))}
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 21 21"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M15.75 5.25L5.25 15.75" />
+      <path d="M5.25 5.25L15.75 15.75" />
+    </svg>
+  );
+}
+
+/** Decorative: the routes stay same-document; the mark just mirrors the frame. */
+function ExternalLinkIcon() {
+  return (
+    <svg
+      width="14"
+      height="14"
+      viewBox="0 0 21 21"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className="shrink-0"
+      aria-hidden="true"
+    >
+      <path d="M17.5 3.5L7.875 13.125" />
+      <path d="M12.25 3.5L17.5 3.5 17.5 8.75" />
+      <path d="M15.75 12.25V16.625C15.75 17.108 15.358 17.5 14.875 17.5H4.375C3.892 17.5 3.5 17.108 3.5 16.625V6.125C3.5 5.642 3.892 5.25 4.375 5.25H8.75" />
     </svg>
   );
 }

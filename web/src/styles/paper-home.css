@@ -523,9 +523,9 @@ html.is-theme-switching .home-chat__avatar {
 .home-chat__menu > * {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   height: 30px;
-  padding: 0 10px;
   color: var(--home-ink);
   font-size: 14px;
   line-height: 18px;
@@ -565,9 +565,24 @@ html.is-theme-switching .home-chat__avatar {
   text-decoration: none;
 }
 
-/* The placeholder's grey: a label for the rows, not one of them. */
-.home-chat__menu > .home-chat__menu-head {
-  color: #929292;
+.home-chat__menu-head button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin: 0 -8px 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__menu-head button:active {
+  transform: scale(0.9);
 }
 
 .paper-home .home-chat__menu a:focus-visible {
@@ -1308,6 +1323,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-chat__menu.is-open,
   .home-chat__menu > *,
   .home-chat__menu.is-open > *,
+  .home-chat__menu-head button,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
