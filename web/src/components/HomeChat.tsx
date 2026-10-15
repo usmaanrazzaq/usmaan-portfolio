@@ -457,34 +457,9 @@ export default function HomeChat() {
           aria-labelledby={MENU_TITLE_ID}
           onKeyDown={handleMenuKeyDown}
         >
-          <div className="home-chat__menu-head">
-            <span id={MENU_TITLE_ID}>Quick Suggestions</span>
-            <button
-              type="button"
-              aria-label="Close menu"
-              onClick={(event) => {
-                setMenuOpen(false);
-                // A keyboard press (no pointer, so no click count) would
-                // otherwise leave focus on a button that is about to hide.
-                if (event.detail === 0) refocusInput();
-              }}
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M18 6L6 18" />
-                <path d="M6 6L18 18" />
-              </svg>
-            </button>
-          </div>
+          <span id={MENU_TITLE_ID} className="home-chat__menu-head">
+            Quick Suggestions
+          </span>
           {MENU_ITEMS.map((item) => (
             <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
               <MenuIcon paths={item.paths} barrel={"barrel" in item} />

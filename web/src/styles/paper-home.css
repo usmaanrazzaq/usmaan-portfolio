@@ -496,7 +496,7 @@ html.is-theme-switching .home-chat__avatar {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 20px;
+  padding: 15px;
   border-radius: 12px;
   opacity: 0;
   visibility: hidden;
@@ -565,30 +565,9 @@ html.is-theme-switching .home-chat__avatar {
   text-decoration: none;
 }
 
-.home-chat__menu-head {
-  justify-content: space-between;
-}
-
-/* A 30px target around the 16px cross, pulled out so the cross itself still
-   sits on the row's 10px inset. */
-.home-chat__menu-head button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  margin-right: -7px;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 220ms var(--ease-out-expo);
-}
-
-.home-chat__menu-head button:active {
-  transform: scale(0.9);
+/* The placeholder's grey: a label for the rows, not one of them. */
+.home-chat__menu > .home-chat__menu-head {
+  color: #929292;
 }
 
 .paper-home .home-chat__menu a:focus-visible {
@@ -1329,7 +1308,6 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-chat__menu.is-open,
   .home-chat__menu > *,
   .home-chat__menu.is-open > *,
-  .home-chat__menu-head button,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
