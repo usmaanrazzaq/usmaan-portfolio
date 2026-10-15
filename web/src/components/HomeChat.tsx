@@ -88,6 +88,8 @@ export default function HomeChat() {
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const barRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+  const quietFocus = useRef(false);
   const lastTop = useRef<number | null>(null);
 
   function later(run: () => void, ms: number) {
@@ -167,6 +169,13 @@ export default function HomeChat() {
     document.addEventListener("pointerdown", onPointerDown);
     return () => document.removeEventListener("pointerdown", onPointerDown);
   }, [menuOpen]);
+
+  /** Hands focus back to the field without that focus reopening the menu. */
+  function refocusInput() {
+    quietFocus.current = true;
+    inputRef.current?.focus();
+    quietFocus.current = false;
+  }
 
   function addExtra(bubble: Bubble) {
     setExtra((previous) => [...previous, bubble].slice(-MAX_EXTRA));
@@ -340,11 +349,12 @@ export default function HomeChat() {
 
       <div
         ref={barRef}
-        className={`home-chat__bar home-enter relative flex shrink-0 [--enter-delay:260ms]${menuOpen ? " is-open" : ""}`}
+        className="home-chat__bar home-enter relative flex shrink-0 [--enter-delay:260ms]"
         onKeyDown={(event) => {
           if (event.key !== "Escape" || !menuOpen) return;
           setMenuOpen(false);
-          inputRef.current?.focus();
+          // Focus on a link would be lost as the card hides.
+          if (menuRef.current?.contains(document.activeElement)) refocusInput();
         }}
         onBlur={(event) => {
           // A null target is a click on nothing focusable, which the document
@@ -360,11 +370,15 @@ export default function HomeChat() {
           className="home-chat__composer home-chat__glass flex h-12.5 min-w-0 flex-1 items-center justify-between gap-1.25 rounded-pill p-2"
           onSubmit={handleSubmit}
         >
-          <label
-            htmlFor={INPUT_ID}
-            className="bg-pill text-ink flex size-7.5 shrink-0 cursor-text items-center justify-center rounded-pill"
-            aria-hidden="true"
-            onPointerDown={() => setMenuOpen(true)}
+          {/* Toggles the menu without focusing the field, so on touch the
+              keyboard stays down while the visitor picks a route. */}
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls={MENU_ID}
+            className="bg-pill text-ink flex size-7.5 shrink-0 items-center justify-center rounded-pill"
+            onClick={() => setMenuOpen((open) => !open)}
           >
             <svg
               width="16"
@@ -375,21 +389,21 @@ export default function HomeChat() {
               strokeWidth="1.5"
               strokeLinecap="round"
               strokeLinejoin="round"
+              aria-hidden="true"
             >
               <path d="M17 10C17 13.866 13.866 17 10 17C6.134 17 3 13.866 3 10C3 6.134 6.134 3 10 3C13.866 3 17 6.134 17 10Z" />
               <path d="M21 21L15 15" />
             </svg>
-          </label>
+          </button>
           <span className="relative flex min-w-0 flex-1">
             <input
               ref={inputRef}
-              id={INPUT_ID}
               type="text"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
               onFocus={() => {
                 setFocused(true);
-                setMenuOpen(true);
+                if (!quietFocus.current) setMenuOpen(true);
               }}
               onBlur={() => setFocused(false)}
               // A field that already has focus does not fire onFocus again, so
@@ -437,11 +451,40 @@ export default function HomeChat() {
             are plain anchors, like the nav's, so every route is a real
             document load. */}
         <nav
+          ref={menuRef}
           id={MENU_ID}
           className={menuOpen ? `${MENU} is-open` : MENU}
-          aria-label="Site"
+          aria-labelledby={MENU_TITLE_ID}
           onKeyDown={handleMenuKeyDown}
         >
+          <div className="home-chat__menu-head">
+            <span id={MENU_TITLE_ID}>Quick Suggestions</span>
+            <button
+              type="button"
+              aria-label="Close menu"
+              onClick={(event) => {
+                setMenuOpen(false);
+                // A keyboard press (no pointer, so no click count) would
+                // otherwise leave focus on a button that is about to hide.
+                if (event.detail === 0) refocusInput();
+              }}
+            >
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M18 6L6 18" />
+                <path d="M6 6L18 18" />
+              </svg>
+            </button>
+          </div>
           {MENU_ITEMS.map((item) => (
             <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
               <MenuIcon paths={item.paths} barrel={"barrel" in item} />
@@ -562,22 +605,12 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
   );
 }
 
-const INPUT_ID = "home-chat-input";
 const MENU_ID = "home-chat-menu";
+const MENU_TITLE_ID = "home-chat-menu-title";
 const MENU = "home-chat__menu home-chat__glass";
 
 /** The site's routes, with the frame's 16px line icons (24px viewBox paths). */
 const MENU_ITEMS = [
-  {
-    label: "Home",
-    // The spec's document-top fragment, as the nav's own Home tab uses here.
-    href: "#top",
-    paths: [
-      "M5 9.5V20C5 20.552 5.448 21 6 21H18C18.552 21 19 20.552 19 20V9.5",
-      "M14 15H10V21H14V15Z",
-      "M3 11L12 3L21 11",
-    ],
-  },
   {
     label: "About",
     href: "/about/",

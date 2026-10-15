@@ -480,28 +480,12 @@ html.is-theme-switching .home-chat__avatar {
 }
 
 /*
- * Focusing the field opens the menu, and the composer widens out from the
- * thread's column to the "Menu open" frame's 500px with it, evenly on both
- * sides. On a phone it stops at the shell's 20px gutters.
- */
-.home-chat__bar {
-  align-self: center;
-  width: 100%;
-  transition: width 480ms var(--ease-out-expo);
-}
-
-.home-chat__bar.is-open {
-  width: min(500px, calc(100vw - 40px));
-}
-
-/*
- * The card spans the composer and sits 15px above it, so it widens along with
- * the bar. It is always in the DOM and the open class plays it both ways: in,
- * it rises out of the field; out, it settles back down into it and fades, a
- * little quicker than it arrived, and visibility flips only once that has
- * finished so the links leave the tab order without cutting the fade short.
- * The links follow the card in on a short stagger; on the way out they simply
- * go with it.
+ * The card spans the composer and sits 15px above it. It is always in the DOM
+ * and the open class plays it both ways: in, it rises out of the field; out,
+ * it settles back down into it and fades, a little quicker than it arrived,
+ * and visibility flips only once that has finished so the links leave the tab
+ * order without cutting the fade short. The rows follow the card in on a
+ * short stagger; on the way out they simply go with it.
  */
 .home-chat__menu {
   position: absolute;
@@ -536,17 +520,15 @@ html.is-theme-switching .home-chat__avatar {
     visibility 0s;
 }
 
-.home-chat__menu a {
+.home-chat__menu > * {
   display: flex;
   align-items: center;
   gap: 10px;
   height: 30px;
   padding: 0 10px;
-  border-radius: 4px;
   color: var(--home-ink);
   font-size: 14px;
   line-height: 18px;
-  text-decoration: none;
   opacity: 0;
   transform: translateY(6px);
   transition:
@@ -554,7 +536,7 @@ html.is-theme-switching .home-chat__avatar {
     transform 0s linear 260ms;
 }
 
-.home-chat__menu.is-open a {
+.home-chat__menu.is-open > * {
   opacity: 1;
   transform: none;
   transition:
@@ -562,20 +544,51 @@ html.is-theme-switching .home-chat__avatar {
     transform 480ms var(--ease-out-expo) calc(60ms + var(--i, 0) * 35ms);
 }
 
-.home-chat__menu a:nth-child(2) {
+.home-chat__menu > :nth-child(2) {
   --i: 1;
 }
 
-.home-chat__menu a:nth-child(3) {
+.home-chat__menu > :nth-child(3) {
   --i: 2;
 }
 
-.home-chat__menu a:nth-child(4) {
+.home-chat__menu > :nth-child(4) {
   --i: 3;
 }
 
-.home-chat__menu a:nth-child(5) {
+.home-chat__menu > :nth-child(5) {
   --i: 4;
+}
+
+.home-chat__menu a {
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.home-chat__menu-head {
+  justify-content: space-between;
+}
+
+/* A 30px target around the 16px cross, pulled out so the cross itself still
+   sits on the row's 10px inset. */
+.home-chat__menu-head button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  margin-right: -7px;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  transition: transform 220ms var(--ease-out-expo);
+}
+
+.home-chat__menu-head button:active {
+  transform: scale(0.9);
 }
 
 .paper-home .home-chat__menu a:focus-visible {
@@ -1312,11 +1325,11 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
-  .home-chat__bar,
   .home-chat__menu,
   .home-chat__menu.is-open,
-  .home-chat__menu a,
-  .home-chat__menu.is-open a,
+  .home-chat__menu > *,
+  .home-chat__menu.is-open > *,
+  .home-chat__menu-head button,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,
