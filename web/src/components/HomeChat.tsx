@@ -5,7 +5,6 @@ import {
   useLayoutEffect,
   useRef,
   useState,
-  useSyncExternalStore,
   type FormEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -21,20 +20,10 @@ import {
   type ChatIcon,
   type ChatMessage,
 } from "@/data/heroChat";
-import {
-  REACTIONS,
-  getReactions,
-  getServerReactions,
-  setReaction,
-  subscribeReactions,
-  type Reaction,
-} from "@/lib/chatReactions";
+import { REACTIONS, type Reaction, type Reactions } from "@/lib/chatReactions";
 
 /** A scripted bubble, a visitor's own (`from: "me"`), or a reply to one. */
 type Bubble = ChatMessage & { from?: "me" };
-
-/** Only the scripted bubbles outlive a reload, so only their tapbacks are stored. */
-const SCRIPTED_IDS = HERO_CHAT.map((message) => message.id);
 
 /** The beat before the first typing dots, so the header lands first. */
 const START_DELAY_MS = 500;
@@ -90,7 +79,7 @@ export default function HomeChat() {
   // thread is never announced: it is there to be read, not narrated at them.
   const [status, setStatus] = useState("");
 
-  const reactions = useSyncExternalStore(subscribeReactions, getReactions, getServerReactions);
+  const [reactions, setReactions] = useState<Reactions>({});
 
   const timers = useRef(new Set<number>());
   const nextId = useRef(0);
@@ -241,7 +230,12 @@ export default function HomeChat() {
   }
 
   function react(id: string, reaction: Reaction) {
-    setReaction(id, reactions[id] === reaction ? null : reaction, SCRIPTED_IDS);
+    setReactions((current) => {
+      const next: Record<string, Reaction> = { ...current };
+      if (current[id] === reaction) delete next[id];
+      else next[id] = reaction;
+      return next;
+    });
     setOpenFor(null);
   }
 
