@@ -62,8 +62,9 @@
 /*
  * —— Chat hero ——
  *
- * The "Hero v1" Paper frame: a 362px message thread, header, bubbles, and
- * composer 50px apart, the whole group centred in the first viewport. The 68px
+ * The "Hero v3" Paper frame: a 500px message thread, header, bubbles,
+ * composer, and scroll cue 40px apart, the whole group centred in the first
+ * viewport. The 68px
  * is the shell's top padding plus the 40px nav; taking it off both ends keeps
  * the group on the viewport's own centre rather than the space under the nav.
  */
@@ -71,7 +72,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: min(362px, 100%);
+  width: min(500px, 100%);
   min-height: calc(100svh - 136px);
   margin-inline: auto;
 }
@@ -103,10 +104,40 @@ html.is-theme-switching .home-chat__avatar {
   flex-direction: column;
 }
 
+/*
+ * Once the visitor's messages push the thread past its top, the older bubbles
+ * slide under a soft frosted edge instead of being cut off flat against the
+ * header, the way they pass under the bar in Messages. The edge is the page's
+ * own ground at the top, so the scroller's clip line never shows, thinning to
+ * nothing over the thread's 40px of top padding; the mask carries the frost
+ * out with it. It fades in only once the thread has actually scrolled.
+ */
+.home-chat__thread::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -12px;
+  left: -12px;
+  z-index: 2;
+  height: 40px;
+  background: linear-gradient(var(--home-bg) 15%, transparent);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  -webkit-mask-image: linear-gradient(#000 40%, transparent);
+  mask-image: linear-gradient(#000 40%, transparent);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 320ms ease;
+}
+
+.home-chat__thread.is-scrolled::before {
+  opacity: 1;
+}
+
 .home-chat__list {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
   margin: auto 0;
   padding: 0;
   list-style: none;
@@ -115,7 +146,7 @@ html.is-theme-switching .home-chat__avatar {
 /* In flow and invisible: the finished script, holding the thread's height. */
 .home-chat__ghost {
   visibility: hidden;
-  padding-block: 50px;
+  padding-block: 40px;
   pointer-events: none;
 }
 
@@ -130,7 +161,7 @@ html.is-theme-switching .home-chat__avatar {
   inset: 0 -12px;
   display: flex;
   flex-direction: column;
-  padding: 50px 12px;
+  padding: 40px 12px;
 }
 
 .home-chat__scroll.is-scrollable {
@@ -180,9 +211,11 @@ html.is-theme-switching .home-chat__avatar {
   }
 }
 
+/* The long bubble wraps at 380px, as in the frame, leaving the thread room to
+ * read as a conversation rather than a block of text. */
 .home-chat__wrap {
   position: relative;
-  max-width: calc(100% - 12px);
+  max-width: min(380px, calc(100% - 12px));
 }
 
 .home-chat__bubble {
@@ -468,9 +501,9 @@ html.is-theme-switching .home-chat__avatar {
 
 /* —— Composer —— */
 /*
- * The composer and the menu share the nav pill's glass: the same translucent
- * ground, hairline, and frost, so the thread reads through them the way the
- * page reads through the nav.
+ * The composer, the menu button, and the menu share the nav pill's glass: the
+ * same translucent ground, hairline, and frost, so the thread reads through
+ * them the way the page reads through the nav.
  */
 .home-chat__glass {
   background: var(--home-glass);
@@ -479,34 +512,53 @@ html.is-theme-switching .home-chat__avatar {
   backdrop-filter: var(--home-frost);
 }
 
+.home-chat__menu-button {
+  padding: 0;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    transform 220ms var(--ease-out-expo);
+}
+
+/* A firmer ground while the card is up, so the button reads as its anchor. */
+.home-chat__menu-button[aria-expanded="true"] {
+  background: var(--home-pill);
+}
+
+.home-chat__menu-button:active {
+  transform: scale(0.94);
+}
+
 /*
- * The card spans the composer and sits 15px above it. It is always in the DOM
- * and the open class plays it both ways: in, it rises out of the field; out,
- * it settles back down into it and fades, a little quicker than it arrived,
- * and visibility flips only once that has finished so the links leave the tab
- * order without cutting the fade short. The rows follow the card in on a
- * short stagger; on the way out they simply go with it.
+ * The card pops up from the button, 6px clear of the row, and grows out of the
+ * button's centre. It is always in the DOM and the open class plays it both
+ * ways: in, it springs up on a long expo ease; out, it shrinks back into the
+ * button and fades, quicker than it arrived, and visibility flips only once
+ * that has finished so the links leave the tab order without cutting the fade
+ * short. The card itself is never blurred (a filter would smear its frost);
+ * the rows are, coming into focus on a short stagger as the card lands. On the
+ * way out they simply go with it.
  */
 .home-chat__menu {
   position: absolute;
-  right: 0;
-  bottom: calc(100% + 15px);
+  bottom: calc(100% + 6px);
   left: 0;
   z-index: 3;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  padding: 15px;
+  gap: 15px;
+  width: 250px;
+  padding: 20px 15px;
   border-radius: 12px;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(10px) scale(0.96);
-  transform-origin: 50% 100%;
+  transform: translateY(8px) scale(0.9);
+  transform-origin: 22.5px calc(100% + 28.5px);
   transition:
-    opacity 200ms ease,
-    transform 260ms cubic-bezier(0.4, 0, 0.2, 1),
-    visibility 0s linear 260ms;
+    opacity 220ms cubic-bezier(0.4, 0, 1, 1),
+    transform 240ms cubic-bezier(0.4, 0, 1, 1),
+    visibility 0s linear 240ms;
 }
 
 .home-chat__menu.is-open {
@@ -516,73 +568,54 @@ html.is-theme-switching .home-chat__avatar {
   transform: none;
   transition:
     opacity 260ms ease,
-    transform 480ms var(--ease-out-expo),
+    transform 560ms var(--ease-out-expo),
     visibility 0s;
 }
 
-.home-chat__menu > * {
+.home-chat__menu a {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 10px;
-  height: 30px;
+  height: 25px;
+  padding: 0 2px;
+  border-radius: 4px;
   color: var(--home-ink);
   font-size: 14px;
   line-height: 18px;
+  text-decoration: none;
   opacity: 0;
+  filter: blur(3px);
   transform: translateY(6px);
   transition:
-    opacity 160ms ease,
-    transform 0s linear 260ms;
+    opacity 140ms ease,
+    filter 0s linear 240ms,
+    transform 0s linear 240ms;
 }
 
-.home-chat__menu.is-open > * {
+.home-chat__menu.is-open a {
   opacity: 1;
+  filter: none;
   transform: none;
   transition:
-    opacity 320ms ease calc(60ms + var(--i, 0) * 35ms),
-    transform 480ms var(--ease-out-expo) calc(60ms + var(--i, 0) * 35ms);
+    opacity 320ms ease calc(70ms + var(--i, 0) * 35ms),
+    filter 360ms ease calc(70ms + var(--i, 0) * 35ms),
+    transform 520ms var(--ease-out-expo) calc(70ms + var(--i, 0) * 35ms);
 }
 
-.home-chat__menu > :nth-child(2) {
+.home-chat__menu a:nth-child(2) {
   --i: 1;
 }
 
-.home-chat__menu > :nth-child(3) {
+.home-chat__menu a:nth-child(3) {
   --i: 2;
 }
 
-.home-chat__menu > :nth-child(4) {
+.home-chat__menu a:nth-child(4) {
   --i: 3;
 }
 
-.home-chat__menu > :nth-child(5) {
+.home-chat__menu a:nth-child(5) {
   --i: 4;
-}
-
-.home-chat__menu a {
-  border-radius: 4px;
-  text-decoration: none;
-}
-
-.home-chat__menu-head button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  margin: 0 -8px 0 0;
-  padding: 0;
-  border: 0;
-  border-radius: 4px;
-  background: none;
-  color: inherit;
-  cursor: pointer;
-  transition: transform 220ms var(--ease-out-expo);
-}
-
-.home-chat__menu-head button:active {
-  transform: scale(0.9);
 }
 
 .paper-home .home-chat__menu a:focus-visible {
@@ -1319,11 +1352,12 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
+  .home-chat__thread::before,
+  .home-chat__menu-button,
   .home-chat__menu,
   .home-chat__menu.is-open,
-  .home-chat__menu > *,
-  .home-chat__menu.is-open > *,
-  .home-chat__menu-head button,
+  .home-chat__menu a,
+  .home-chat__menu.is-open a,
   .home-chat__bubble,
   .home-chat__tapback,
   .home-chat__picker button,

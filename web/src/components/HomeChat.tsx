@@ -51,12 +51,12 @@ const REACTION_LABELS: Record<Reaction, string> = {
 };
 
 const BUBBLE_BASE =
-  "home-chat__bubble flex items-center gap-[5px] rounded-xl px-3 py-2 text-sm leading-[18px] font-normal [overflow-wrap:anywhere]";
-const BUBBLE_RECEIVED = `${BUBBLE_BASE} bg-bubble text-ink rounded-bl-xs`;
-const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent rounded-br-xs text-white`;
+  "home-chat__bubble flex items-center gap-[5px] rounded-[18px] px-3 py-2 text-sm leading-[18px] font-normal [overflow-wrap:anywhere]";
+const BUBBLE_RECEIVED = `${BUBBLE_BASE} bg-bubble text-ink`;
+const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
 
 /**
- * The homepage hero, ported from the "Hero v1" Paper frame: a message thread
+ * The homepage hero, ported from the "Hero v3" Paper frame: a message thread
  * from Usmaan. The scripted bubbles are sent one at a time behind typing dots,
  * every bubble takes an iMessage-style tapback, and the composer is a small
  * command line: "portfolio" scrolls to the work stack, "about", "playground",
@@ -75,7 +75,9 @@ export default function HomeChat() {
   const [draft, setDraft] = useState("");
   const [openFor, setOpenFor] = useState<string | null>(null);
   const [focused, setFocused] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+  // Whether the thread has scrolled, so its top messages are passing under
+  // the header and the frosted edge should be up to receive them.
+  const [scrolled, setScrolled] = useState(false);
   // What a screen reader is told about the visitor's own turns. The scripted
   // thread is never announced: it is there to be read, not narrated at them.
   const [status, setStatus] = useState("");
@@ -87,9 +89,6 @@ export default function HomeChat() {
   const scrollRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const barRef = useRef<HTMLDivElement>(null);
-  const menuRef = useRef<HTMLElement>(null);
-  const quietFocus = useRef(false);
   const lastTop = useRef<number | null>(null);
 
   function later(run: () => void, ms: number) {
@@ -157,26 +156,6 @@ export default function HomeChat() {
     });
   }, [booted, count, typing, extra.length]);
 
-  // The menu belongs to the field: a press anywhere outside the composer and
-  // the card puts it away.
-  useEffect(() => {
-    if (!menuOpen) return;
-
-    function onPointerDown(event: globalThis.PointerEvent) {
-      if (!barRef.current?.contains(event.target as Node)) setMenuOpen(false);
-    }
-
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
-  }, [menuOpen]);
-
-  /** Hands focus back to the field without that focus reopening the menu. */
-  function refocusInput() {
-    quietFocus.current = true;
-    inputRef.current?.focus();
-    quietFocus.current = false;
-  }
-
   function addExtra(bubble: Bubble) {
     setExtra((previous) => [...previous, bubble].slice(-MAX_EXTRA));
   }
@@ -204,8 +183,6 @@ export default function HomeChat() {
 
     setDraft("");
     setOpenFor(null);
-    // Out of the way of the reply landing above the composer.
-    setMenuOpen(false);
     addExtra({ id: `visitor-${nextId.current++}`, text, from: "me" });
 
     const word = text
@@ -288,7 +265,7 @@ export default function HomeChat() {
         <LiveStatus className="home-enter text-muted mb-3 flex items-center gap-1.5 self-stretch text-xs leading-[1.5] font-light whitespace-nowrap [--enter-delay:180ms] to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal" />
       </header>
 
-      <div className="home-chat__thread">
+      <div className={`home-chat__thread${scrolled ? " is-scrolled" : ""}`}>
         {/* The finished script, laid out but never shown: it holds the thread
             open at its final height, so the bubbles arriving above it move
             nothing outside the thread and a short screen still fits them all. */}
@@ -312,6 +289,7 @@ export default function HomeChat() {
           ref={scrollRef}
           className={`home-chat__scroll${extra.length > 0 ? " is-scrollable" : ""}`}
           aria-label="Messages from Usmaan"
+          onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 0)}
         >
           <ol ref={listRef} className={`home-chat__list${booted ? "" : " is-booting"}`}>
             {bubbles.map((bubble) => (
@@ -347,73 +325,21 @@ export default function HomeChat() {
         </noscript>
       </div>
 
-      <div
-        ref={barRef}
-        className="home-chat__bar home-enter relative flex shrink-0 [--enter-delay:260ms]"
-        onKeyDown={(event) => {
-          if (event.key !== "Escape" || !menuOpen) return;
-          setMenuOpen(false);
-          // Focus on a link would be lost as the card hides.
-          if (menuRef.current?.contains(document.activeElement)) refocusInput();
-        }}
-        onBlur={(event) => {
-          // A null target is a click on nothing focusable, which the document
-          // listener already handles, or the window losing focus, which
-          // should leave the menu as it was.
-          const next = event.relatedTarget;
-          if (menuOpen && next instanceof Node && !event.currentTarget.contains(next)) {
-            setMenuOpen(false);
-          }
-        }}
-      >
+      <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
+        <ChatMenu />
+
         <form
-          className="home-chat__composer home-chat__glass flex h-12.5 min-w-0 flex-1 items-center justify-between gap-1.25 rounded-pill p-2"
+          className="home-chat__composer home-chat__glass flex h-11.25 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill px-3"
           onSubmit={handleSubmit}
         >
-          {/* Toggles the menu without focusing the field, so on touch the
-              keyboard stays down while the visitor picks a route. */}
-          <button
-            type="button"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-            aria-controls={MENU_ID}
-            className="bg-pill text-ink flex size-7.5 shrink-0 items-center justify-center rounded-pill"
-            onClick={() => setMenuOpen((open) => !open)}
-          >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="M17 10C17 13.866 13.866 17 10 17C6.134 17 3 13.866 3 10C3 6.134 6.134 3 10 3C13.866 3 17 6.134 17 10Z" />
-              <path d="M21 21L15 15" />
-            </svg>
-          </button>
           <span className="relative flex min-w-0 flex-1">
             <input
               ref={inputRef}
               type="text"
               value={draft}
               onChange={(event) => setDraft(event.target.value)}
-              onFocus={() => {
-                setFocused(true);
-                if (!quietFocus.current) setMenuOpen(true);
-              }}
+              onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              // A field that already has focus does not fire onFocus again, so
-              // a click on it after Escape closed the menu has to reopen it.
-              onPointerDown={() => setMenuOpen(true)}
-              onKeyDown={(event) => {
-                if (event.key !== "ArrowDown" || !menuOpen) return;
-                event.preventDefault();
-                document.getElementById(MENU_ID)?.querySelector("a")?.focus();
-              }}
               aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
               autoComplete="off"
               autoCapitalize="off"
@@ -443,45 +369,6 @@ export default function HomeChat() {
             </svg>
           </button>
         </form>
-
-        {/* The site's routes, for the stretch of the homepage where the nav
-            itself is out of the way. Always mounted, so closing can be played
-            as well as opening. Closed, it is visibility:hidden, which also
-            takes it out of the tab order and the accessibility tree. The links
-            are plain anchors, like the nav's, so every route is a real
-            document load. */}
-        <nav
-          ref={menuRef}
-          id={MENU_ID}
-          className={menuOpen ? `${MENU} is-open` : MENU}
-          aria-labelledby={MENU_TITLE_ID}
-          onKeyDown={handleMenuKeyDown}
-        >
-          <div className="home-chat__menu-head">
-            <span id={MENU_TITLE_ID}>Quick Suggestions</span>
-            <button
-              type="button"
-              aria-label="Close menu"
-              onClick={(event) => {
-                setMenuOpen(false);
-                // A keyboard press (no pointer, so no click count) would
-                // otherwise leave focus on a button that is about to hide.
-                if (event.detail === 0) refocusInput();
-              }}
-            >
-              <CloseIcon />
-            </button>
-          </div>
-          {MENU_ITEMS.map((item) => (
-            <a key={item.label} href={item.href} onClick={() => setMenuOpen(false)}>
-              <span className="flex items-center gap-2.5">
-                <MenuIcon paths={item.paths} barrel={"barrel" in item} />
-                {item.label}
-              </span>
-              <ExternalLinkIcon />
-            </a>
-          ))}
-        </nav>
       </div>
 
       <ScrollCue className="home-enter mt-10 [--enter-delay:340ms]" />
@@ -596,26 +483,35 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
 }
 
 const MENU_ID = "home-chat-menu";
-const MENU_TITLE_ID = "home-chat-menu-title";
 const MENU = "home-chat__menu home-chat__glass";
 
-/** The site's routes, with the frame's 14px line icons (21px viewBox paths). */
+/** The site's routes, with the frame's 16px line icons (24px viewBox paths). */
 const MENU_ITEMS = [
+  {
+    label: "Home",
+    // The spec's document-top fragment, as the nav's own Home tab uses here.
+    href: "#top",
+    paths: [
+      "M5 9.5V20C5 20.552 5.448 21 6 21H18C18.552 21 19 20.552 19 20V9.5",
+      "M14 15H10V21H14V15Z",
+      "M3 11L12 3L21 11",
+    ],
+  },
   {
     label: "About",
     href: "/about/",
     paths: [
-      "M10.5 9.625C12.433 9.625 14 8.058 14 6.125 14 4.192 12.433 2.625 10.5 2.625 8.567 2.625 7 4.192 7 6.125 7 8.058 8.567 9.625 10.5 9.625Z",
-      "M16.625 18.375V16.625C16.625 14.692 15.058 13.125 13.125 13.125H7.875C5.942 13.125 4.375 14.692 4.375 16.625V18.375",
+      "M12 11C14.209 11 16 9.209 16 7C16 4.791 14.209 3 12 3C9.791 3 8 4.791 8 7C8 9.209 9.791 11 12 11Z",
+      "M19 21V19C19 16.791 17.209 15 15 15H9C6.791 15 5 16.791 5 19V21",
     ],
   },
   {
     label: "Playground",
     href: "/playground/",
     paths: [
-      "M10.5 15.75C9.776 15.75 9.188 16.512 9.188 17.451 9.188 18.666 10.5 20.125 10.5 20.125 10.5 20.125 11.813 18.666 11.813 17.451 11.813 16.512 11.224 15.75 10.5 15.75Z",
-      "M10.5 7H10.509",
-      "M9.188 12.688H11.813M9.188 12.688L7 15.313 4.375 10.938 7.734 9.625M9.188 12.688C8.789 12.19 8.119 11.067 7.734 9.625M11.813 12.688C12.396 11.959 13.563 9.888 13.563 7.438 13.563 4.987 11.521 2.625 10.5 1.75 9.479 2.625 7.438 4.987 7.438 7.438 7.438 8.215 7.555 8.955 7.734 9.625M11.813 12.688C12.211 12.19 12.881 11.067 13.266 9.625L16.625 10.938 14 15.313 11.813 12.688Z",
+      "M12 18C11.172 18 10.5 18.871 10.5 19.944C10.5 21.333 12 23 12 23C12 23 13.5 21.333 13.5 19.944C13.5 18.871 12.828 18 12 18Z",
+      "M12 8H12.01",
+      "M10.5 14.5H13.5M10.5 14.5L8 17.5L5 12.5L8.839 11M10.5 14.5C10.045 13.931 9.279 12.648 8.839 11M13.5 14.5C14.167 13.667 15.5 11.3 15.5 8.5C15.5 5.7 13.167 3 12 2C10.833 3 8.5 5.7 8.5 8.5C8.5 9.389 8.634 10.234 8.839 11M13.5 14.5C13.955 13.931 14.721 12.648 15.161 11L19 12.5L16 17.5L13.5 14.5Z",
     ],
   },
   {
@@ -624,9 +520,9 @@ const MENU_ITEMS = [
     // The microscope's tilted barrel is a rotated rect, not a path.
     barrel: true,
     paths: [
-      "M9.444 7C13.192 7.526 19.134 11.226 13.819 18.375",
-      "M5.505 14H9.006",
-      "M2.88 18.375H18.631",
+      "M10.793 8C15.077 8.601 21.868 12.83 15.793 21",
+      "M6.292 16H10.293",
+      "M3.292 21H21.293",
     ],
   },
   {
@@ -634,8 +530,8 @@ const MENU_ITEMS = [
     // ContactModal intercepts this link and opens over the page.
     href: "/contact/",
     paths: [
-      "M2.625 5.25C2.625 4.767 3.017 4.375 3.5 4.375H17.5C17.983 4.375 18.375 4.767 18.375 5.25V15.75C18.375 16.233 17.983 16.625 17.5 16.625H3.5C3.017 16.625 2.625 16.233 2.625 15.75V5.25Z",
-      "M3.5 5.25L10.5 11.375 17.5 5.25",
+      "M3 6C3 5.448 3.448 5 4 5H20C20.552 5 21 5.448 21 6V18C21 18.552 20.552 19 20 19H4C3.448 19 3 18.552 3 18V6Z",
+      "M4 6L12 13L20 6",
     ],
   },
 ];
@@ -643,9 +539,9 @@ const MENU_ITEMS = [
 function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
   return (
     <svg
-      width="14"
-      height="14"
-      viewBox="0 0 21 21"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
       strokeLinecap="round"
@@ -655,12 +551,12 @@ function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
     >
       {barrel && (
         <rect
-          x="6.275"
-          y="2.533"
-          width="4.145"
-          height="7.255"
+          x="7.234"
+          y="2.615"
+          width="4.727"
+          height="8.273"
           rx="1"
-          transform="translate(0.92 -1.78) rotate(15)"
+          transform="rotate(15 7.234 2.615)"
         />
       )}
       {paths.map((d) => (
@@ -670,55 +566,86 @@ function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
   );
 }
 
-function CloseIcon() {
+/**
+ * The button beside the composer and the menu it opens: the site's routes in a
+ * frosted card that rises from the button, for the stretch of the homepage
+ * where the nav itself is out of the way. The links are plain anchors, like
+ * the nav's, so every route is a real document load.
+ */
+function ChatMenu() {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+
+    function onPointerDown(event: globalThis.PointerEvent) {
+      if (!wrapRef.current?.contains(event.target as Node)) setOpen(false);
+    }
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [open]);
+
+  function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
+    if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
+
+    const links = Array.from(event.currentTarget.querySelectorAll("a"));
+    const index = links.indexOf(document.activeElement as HTMLAnchorElement);
+    const step = event.key === "ArrowDown" ? 1 : -1;
+    event.preventDefault();
+    links[(index + step + links.length) % links.length]?.focus();
+  }
+
   return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 21 21"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
+    <div
+      ref={wrapRef}
+      className="relative shrink-0"
+      onKeyDown={(event) => {
+        if (event.key !== "Escape" || !open) return;
+        setOpen(false);
+        buttonRef.current?.focus();
+      }}
+      onBlur={(event) => {
+        const next = event.relatedTarget;
+        if (open && next instanceof Node && !event.currentTarget.contains(next)) setOpen(false);
+      }}
     >
-      <path d="M15.75 5.25L5.25 15.75" />
-      <path d="M5.25 5.25L15.75 15.75" />
-    </svg>
+      <button
+        ref={buttonRef}
+        type="button"
+        className="home-chat__menu-button home-chat__glass text-ink flex size-11.25 items-center justify-center rounded-pill"
+        aria-label={open ? "Close menu" : "Open menu"}
+        aria-expanded={open}
+        aria-controls={MENU_ID}
+        onClick={() => setOpen((value) => !value)}
+      >
+        <MenuIcon paths={MENU_ITEMS[0].paths} />
+      </button>
+
+      {/* Always mounted, so closing can be played as well as opening. Closed,
+          it is visibility:hidden, which also takes it out of the tab order and
+          the accessibility tree. */}
+      <nav
+        ref={menuRef}
+        id={MENU_ID}
+        className={open ? `${MENU} is-open` : MENU}
+        aria-label="Site"
+        onKeyDown={handleMenuKeyDown}
+      >
+        {MENU_ITEMS.map((item) => (
+          <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
+            <MenuIcon paths={item.paths} barrel={"barrel" in item} />
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </div>
   );
-}
-
-/** Decorative: the routes stay same-document; the mark just mirrors the frame. */
-function ExternalLinkIcon() {
-  return (
-    <svg
-      width="14"
-      height="14"
-      viewBox="0 0 21 21"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="shrink-0"
-      aria-hidden="true"
-    >
-      <path d="M17.5 3.5L7.875 13.125" />
-      <path d="M12.25 3.5L17.5 3.5 17.5 8.75" />
-      <path d="M15.75 12.25V16.625C15.75 17.108 15.358 17.5 14.875 17.5H4.375C3.892 17.5 3.5 17.108 3.5 16.625V6.125C3.5 5.642 3.892 5.25 4.375 5.25H8.75" />
-    </svg>
-  );
-}
-
-function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
-  if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
-
-  const links = Array.from(event.currentTarget.querySelectorAll("a"));
-  const index = links.indexOf(document.activeElement as HTMLAnchorElement);
-  const step = event.key === "ArrowDown" ? 1 : -1;
-  event.preventDefault();
-  links[(index + step + links.length) % links.length]?.focus();
 }
 
 /**
