@@ -807,9 +807,33 @@ html[data-theme="dark"] .home-scroll-cue {
   }
 }
 
+/*
+ * On a phone the frame's spacing runs the composer under the browser's own
+ * bottom bar, so the group sits at the top of the first screen rather than
+ * its centre, and the thread's padding, its frosted edge, and the bubble gap
+ * all close up. The ghost and the live layer keep the same padding, or the
+ * thread would no longer be sized to its script.
+ */
 @media (max-width: 768px) {
   .home-chat {
+    justify-content: flex-start;
     min-height: calc(100svh - 120px);
+  }
+
+  .home-chat__thread::before {
+    height: 20px;
+  }
+
+  .home-chat__list {
+    gap: 6px;
+  }
+
+  .home-chat__ghost {
+    padding-block: 20px;
+  }
+
+  .home-chat__scroll {
+    padding-block: 20px;
   }
 }
 

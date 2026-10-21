@@ -247,7 +247,7 @@ export default function HomeChat() {
 
   return (
     <div className="home-chat">
-      <header className="flex shrink-0 flex-col items-start gap-2.5 py-2.5">
+      <header className="flex shrink-0 flex-col items-start gap-2.5 py-2.5 to-md:pt-0">
         <div className="home-enter flex items-center gap-2.5 [--enter-delay:100ms]">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
@@ -262,7 +262,7 @@ export default function HomeChat() {
           </h1>
         </div>
 
-        <LiveStatus className="home-enter text-muted mb-3 flex items-center gap-1.5 self-stretch text-xs leading-[1.5] font-light whitespace-nowrap [--enter-delay:180ms] to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal" />
+        <LiveStatus className="home-enter text-muted mb-3 flex items-center to-md:mb-1 gap-1.5 self-stretch text-xs leading-[1.5] font-light whitespace-nowrap [--enter-delay:180ms] to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal" />
       </header>
 
       <div className={`home-chat__thread${scrolled ? " is-scrolled" : ""}`}>
