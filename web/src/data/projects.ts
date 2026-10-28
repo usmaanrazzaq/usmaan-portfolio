@@ -3,7 +3,7 @@
  * static site. `slug` feeds the `data-work` attribute the media washes key off,
  * so it must keep matching the selectors in styles/paper-home.css.
  *
- * Every case study href now resolves to a Next route. About and Playground are
+ * Every case study href now resolves to a Next route. About and Explorations are
  * still the static HTML pages at the repo root; they have not been migrated.
  */
 

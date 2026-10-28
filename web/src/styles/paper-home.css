@@ -10,7 +10,7 @@
 /*
  * —— Entrance ——
  *
- * The hero assembles itself on load in staggered beats; About and Playground
+ * The hero assembles itself on load in staggered beats; About and Explorations
  * reuse the same classes so arriving there after a page transition is not a
  * hard cut either. Each element sets its
  * own --enter-delay via a [--enter-delay:Nms] utility; these classes own the

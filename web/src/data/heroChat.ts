@@ -55,7 +55,8 @@ export const CHAT_COMMANDS: Record<string, ChatCommand> = {
   portfolio: { scroll: "work" },
   work: { scroll: "work" },
   about: { open: "/about/" },
-  playground: { open: "/playground/" },
+  explorations: { open: "/explorations/" },
+  playground: { open: "/explorations/" },
   references: { open: "/references/" },
   contact: { contact: true },
 };
@@ -67,10 +68,10 @@ export const CHAT_COMMANDS: Record<string, ChatCommand> = {
 export const CHAT_PLACEHOLDERS = [
   "Type 'Portfolio' to see work",
   "Type 'About' to know more about me",
-  "Type 'Playground' to see explorations",
+  "Type 'Explorations' to see experiments",
   "Type 'References' to see what inspires me",
   "Type 'Contact' to get in touch",
 ];
 
 /** The reply to anything the composer does not understand. */
-export const CHAT_HINT = "Try 'portfolio', 'about', 'playground', 'references', or 'contact'.";
+export const CHAT_HINT = "Try 'portfolio', 'about', 'explorations', 'references', or 'contact'.";

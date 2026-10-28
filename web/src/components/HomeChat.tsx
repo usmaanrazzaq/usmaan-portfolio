@@ -59,7 +59,7 @@ const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
  * The homepage hero, ported from the "Hero v3" Paper frame: a message thread
  * from Usmaan. The scripted bubbles are sent one at a time behind typing dots,
  * every bubble takes an iMessage-style tapback, and the composer is a small
- * command line: "portfolio" scrolls to the work stack, "about", "playground",
+ * command line: "portfolio" scrolls to the work stack, "about", "explorations",
  * and "references" open those pages, "contact" opens the contact modal.
  *
  * The server renders the finished thread, hidden, and the sequence replays it
@@ -340,7 +340,7 @@ export default function HomeChat() {
               onChange={(event) => setDraft(event.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              aria-label="Message Usmaan. Type portfolio, about, playground, references, or contact."
+              aria-label="Message Usmaan. Type portfolio, about, explorations, references, or contact."
               autoComplete="off"
               autoCapitalize="off"
               enterKeyHint="send"
@@ -506,8 +506,8 @@ const MENU_ITEMS = [
     ],
   },
   {
-    label: "Playground",
-    href: "/playground/",
+    label: "Explorations",
+    href: "/explorations/",
     paths: [
       "M12 18C11.172 18 10.5 18.871 10.5 19.944C10.5 21.333 12 23 12 23C12 23 13.5 21.333 13.5 19.944C13.5 18.871 12.828 18 12 18Z",
       "M12 8H12.01",

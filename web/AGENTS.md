@@ -37,7 +37,7 @@ same scripts are reachable from the repo root (`npm run dev` there forwards here
 
 - `src/app/` — routes. `page.tsx` per route; `layout.tsx` is the root layout.
 - `src/components/` — components. The shared chrome is `HomeShell` (homepage),
-  `SiteChrome` (about/playground/contact), and `PaperCsChrome` (case studies).
+  `SiteChrome` (about/explorations/contact), and `PaperCsChrome` (case studies).
 - `src/lib/` — per-case-study behaviour (lightboxes, charts, the OTRS globe) and
   shared helpers (`theme.ts`, `arena.ts`).
 - `src/styles/` — the `paper-*.css` stylesheets, imported by the components.
@@ -55,8 +55,8 @@ as pages and 404s them in production — do not rename it back.
 
 - **No test framework.** There are no automated tests.
 - **Contact form** posts to the external Web3Forms API (`api.web3forms.com`).
-- **Old-URL redirects** live in two places, not a `vercel.json`. The `/projects` →
-  `/playground` rename is in `redirects()` in `next.config.ts`; the case fixes
+- **Old-URL redirects** live in two places, not a `vercel.json`. The `/projects` and
+  `/playground` → `/explorations` renames are in `redirects()` in `next.config.ts`; the case fixes
   (`/WCM-Connect`, `/Rented`, the `.html` suffix) are in `src/proxy.ts`, because Next
   matches a redirect `source` case-insensitively and such a rule would match its own
   lowercase destination and redirect forever. `proxy.ts` deliberately skips any path

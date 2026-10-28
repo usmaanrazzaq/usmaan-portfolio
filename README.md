@@ -1,6 +1,6 @@
 # usmaanrazzaq.design
 
-My personal portfolio — design work, case studies, and playground pieces.
+My personal portfolio — design work, case studies, and explorations.
 
 **Live:** https://usmaanrazzaq.design
 
