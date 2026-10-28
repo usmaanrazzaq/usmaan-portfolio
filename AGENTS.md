@@ -32,7 +32,7 @@ no lockfile.
 
 - `web/src/app/` — routes. `page.tsx` per route; `layout.tsx` is the root layout.
 - `web/src/components/` — components. The shared chrome is `HomeShell` (homepage),
-  `SiteChrome` (about/playground/contact), and `PaperCsChrome` (case studies).
+  `SiteChrome` (about/explorations/contact), and `PaperCsChrome` (case studies).
 - `web/src/lib/` — per-case-study behaviour (lightboxes, charts, the OTRS globe) and
   shared helpers (`theme.ts`, `arena.ts`).
 - `web/src/styles/` — the `paper-*.css` stylesheets, imported by the components.
@@ -54,7 +54,7 @@ phone prototype. The markup uses a `.partial` extension because Next treats
 - **Contact form** posts to the external Web3Forms API (`api.web3forms.com`); it needs
   internet access but no local backend.
 - **Old-URL redirects** live in two places, not in a `vercel.json`. The
-  `/projects` → `/playground` rename is in `redirects()` in
+  `/projects` and `/playground` → `/explorations` renames are in `redirects()` in
   `web/next.config.ts`; the case fixes (`/WCM-Connect`, `/Rented`, the `.html`
   suffix) are in `web/src/proxy.ts`, because Next matches a redirect `source`
   case-insensitively and such a rule would match its own lowercase destination

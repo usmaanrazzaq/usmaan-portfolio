@@ -1,13 +1,13 @@
 /**
- * The Playground page body, ported from pages/playground.html in the static
+ * The Explorations page body, ported from pages/playground.html in the static
  * site. The chrome comes from HomeShell, so this is the hidden heading and the
  * project list only.
  */
-export default function PlaygroundContent() {
+export default function ExplorationsContent() {
   return (
     <>
-      <h1 id="playground-title" className="sr-only">
-        Playground
+      <h1 id="explorations-title" className="sr-only">
+        Explorations
       </h1>
 
       <div className="paper-projects__list">

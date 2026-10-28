@@ -2,7 +2,7 @@ import path from "node:path";
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // The published URLs carry trailing slashes (/playground/, /rented/rented/),
+  // The published URLs carry trailing slashes (/explorations/, /rented/rented/),
   // inherited from the static site this app replaced. Keep them so the links
   // already out in the world keep resolving.
   trailingSlash: true,
@@ -13,7 +13,8 @@ const nextConfig: NextConfig = {
     root: path.resolve(import.meta.dirname),
   },
 
-  // The old site published /projects; it is /playground now.
+  // The old site published /projects, which became /playground and is
+  // /explorations now.
   //
   // The other legacy URLs from the static site's vercel.json were case fixes
   // (/WCM-Connect, /Rented, ...). Those live in src/proxy.ts instead, because
@@ -21,8 +22,8 @@ const nextConfig: NextConfig = {
   // match its own lowercase destination and loop.
   async redirects() {
     return [
-      { source: "/projects", destination: "/playground", permanent: true },
-      { source: "/projects/", destination: "/playground/", permanent: true },
+      { source: "/projects", destination: "/explorations/", permanent: true },
+      { source: "/playground", destination: "/explorations/", permanent: true },
     ];
   },
 

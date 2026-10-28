@@ -2,7 +2,7 @@ import HeroNavGate from "@/components/HeroNavGate";
 import ThemeToggle from "@/components/ThemeToggle";
 
 /** Which tab reads as current; the routes that render the work stack default to Work. */
-export type NavTab = "work" | "about" | "playground";
+export type NavTab = "work" | "about" | "explorations";
 
 /**
  * The tabs are plain anchors: the Rented prototype script mounts once per document load,
@@ -15,7 +15,7 @@ function tabsFor(current: NavTab | null) {
     // Reads as Home now that the hero opens the page. "#top" is the spec's
     // document-top fragment, so it needs no anchor element to scroll back up.
     { id: "work", label: "Home", href: current === "work" ? "#top" : "/" },
-    { id: "playground", label: "Playground", href: "/playground/" },
+    { id: "explorations", label: "Explorations", href: "/explorations/" },
     { id: "about", label: "About", href: "/about/" },
     { id: "contact", label: "Contact", href: "/contact/" },
   ] as const;
