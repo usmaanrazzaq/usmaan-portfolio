@@ -31,7 +31,7 @@ export const projects: Project[] = [
   {
     slug: "shifts",
     title: "Shifts Management",
-    date: "Sept 2026 - Present",
+    date: "July 2026 - Oct 2026",
     headline:
       "Designing a simple and modern shifts management application for small to large scale teams.",
     description:
