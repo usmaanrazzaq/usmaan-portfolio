@@ -34,7 +34,7 @@ export default function ShiftsCaseStudy() {
             </div>
             <div>
               <dt>Duration</dt>
-              <dd>Sept 2026 - Present</dd>
+              <dd>July 2026 - Oct 2026</dd>
             </div>
             <div>
               <dt>Scope</dt>
