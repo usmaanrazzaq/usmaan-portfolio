@@ -2,8 +2,10 @@
  * References page — from the Paper "Main" frame.
  *
  * Four staggered columns (20px apart, 30px between stacked images) that
- * collapse to a single column on mobile. The images come from Are.na. Every
- * rule is scoped to .paper-references, so the rest of the site is untouched.
+ * collapse to a single column on mobile. From 1600px the page drops the 1512px
+ * frame and runs gutter to gutter with five columns. The images come from
+ * Are.na. Every rule is scoped to .paper-references, so the rest of the site
+ * is untouched.
  */
 
 .paper-references__intro {
@@ -27,6 +29,11 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
   align-items: start;
+}
+
+/* Both layouts are in the page; only one shows at a time. See ReferencesContent. */
+.paper-references__grid--5 {
+  display: none;
 }
 
 .paper-references__column {
@@ -202,6 +209,21 @@ html:has(.paper-references__lightbox[open]) {
 
 .paper-references__step--next::before {
   transform: translate(-70%, -50%) rotate(45deg);
+}
+
+@media (min-width: 1600px) {
+  .paper-references {
+    width: 100%;
+  }
+
+  .paper-references__grid--4 {
+    display: none;
+  }
+
+  .paper-references__grid--5 {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 768px) {

@@ -10,6 +10,12 @@
  * top row left to right and the columns end close to even. On mobile the
  * columns dissolve and CSS `order` puts every image back in feed order.
  *
+ * Bigger desktops get five columns. The dealing depends on the count, so both
+ * layouts are rendered and CSS shows one: switching in JS would paint the
+ * server's four columns and then visibly reshuffle. Both use the same image
+ * URLs and `sizes`, so nothing downloads twice, and lazy images in the hidden
+ * grid never load.
+ *
  * The lightbox is a native <dialog>: showModal() gives it the top layer, Esc,
  * inert page content, and focus return for free, so all this owns is which
  * image is showing and stepping between them. It steps in feed order.
@@ -18,17 +24,17 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Reference } from "@/data/references";
 
-const COLUMNS = 4;
+const COLUMN_COUNTS = [4, 5];
 
 /** Images that start in the first screenful load eagerly; the rest are lazy. */
-const EAGER = 8;
+const EAGER = 10;
 
 type Placed = { reference: Reference; order: number };
 
-function toColumns(references: Reference[]): Placed[][] {
-  const columns: Placed[][] = Array.from({ length: COLUMNS }, () => []);
+function toColumns(references: Reference[], count: number): Placed[][] {
+  const columns: Placed[][] = Array.from({ length: count }, () => []);
   // Heights in column widths; the gap between images is small enough to ignore.
-  const heights = new Array<number>(COLUMNS).fill(0);
+  const heights = new Array<number>(count).fill(0);
 
   references.forEach((reference, order) => {
     const shortest = heights.indexOf(Math.min(...heights));
@@ -46,7 +52,10 @@ export default function ReferencesContent({ references }: { references: Referenc
   const [preview, setPreview] = useState<{ id: string; src: string } | null>(null);
   const [readyFulls, setReadyFulls] = useState<Set<string>>(() => new Set());
 
-  const columns = useMemo(() => toColumns(references), [references]);
+  const layouts = useMemo(
+    () => COLUMN_COUNTS.map((count) => toColumns(references, count)),
+    [references],
+  );
   const images = references;
   const isOpen = index !== null;
   const current = isOpen ? images[index] : null;
@@ -157,46 +166,51 @@ export default function ReferencesContent({ references }: { references: Referenc
         </p>
       </div>
 
-      <div className="paper-references__grid">
-        {columns.map((column, i) => (
-          <div
-            key={i}
-            className="paper-references__column home-enter"
-            style={{ "--enter-delay": `${60 + i * 60}ms` } as React.CSSProperties}
-          >
-            {column.map(({ reference: image, order }) => (
-              <figure
-                key={image.id}
-                className="paper-references__media"
-                style={{ order }}
-              >
-                <button
-                  type="button"
-                  className="paper-references__open"
-                  aria-label={`${image.alt} — enlarge`}
-                  onClick={(event) => {
-                    const gridImage = event.currentTarget.querySelector("img");
-                    openImage(order, gridImage?.currentSrc || image.src);
-                  }}
+      {layouts.map((columns) => (
+        <div
+          key={columns.length}
+          className={`paper-references__grid paper-references__grid--${columns.length}`}
+        >
+          {columns.map((column, i) => (
+            <div
+              key={i}
+              className="paper-references__column home-enter"
+              style={{ "--enter-delay": `${60 + i * 60}ms` } as React.CSSProperties}
+            >
+              {column.map(({ reference: image, order }) => (
+                <figure
+                  key={image.id}
+                  className="paper-references__media"
+                  style={{ order }}
                 >
-                  {/* Not next/image: Are.na already serves resized variants. */}
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    sizes="(max-width: 768px) calc(100vw - 40px), 25vw"
-                    width={image.unsized ? undefined : image.width}
-                    height={image.unsized ? undefined : image.height}
-                    alt=""
-                    loading={order < EAGER ? "eager" : "lazy"}
-                    decoding="async"
-                  />
-                </button>
-              </figure>
-            ))}
-          </div>
-        ))}
-      </div>
+                  <button
+                    type="button"
+                    className="paper-references__open"
+                    aria-label={`${image.alt} — enlarge`}
+                    onClick={(event) => {
+                      const gridImage = event.currentTarget.querySelector("img");
+                      openImage(order, gridImage?.currentSrc || image.src);
+                    }}
+                  >
+                    {/* Not next/image: Are.na already serves resized variants. */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={image.src}
+                      srcSet={image.srcSet}
+                      sizes="(max-width: 768px) calc(100vw - 40px), (min-width: 1600px) 20vw, 25vw"
+                      width={image.unsized ? undefined : image.width}
+                      height={image.unsized ? undefined : image.height}
+                      alt=""
+                      loading={order < EAGER ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </button>
+                </figure>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
 
       <dialog
         ref={dialogRef}

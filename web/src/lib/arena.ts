@@ -91,8 +91,8 @@ function toReference(block: ArenaV3Block, channelTitle: string): Reference | nul
   // The resized variants are "fit inside, without enlargement", so their
   // reported box can be larger than the image; clamp to the real width so the
   // srcset descriptors are honest.
-  // Grid columns top out around 370px, so small and medium cover 1x and 2x;
-  // large is kept for the lightbox only.
+  // Grid columns run around 370px, wider on very large screens, and small and
+  // medium cover those at 1x and 2x; large is kept for the lightbox only.
   const candidates = unsized
     ? []
     : [image.small, image.medium]
