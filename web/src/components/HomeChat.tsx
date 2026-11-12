@@ -12,14 +12,15 @@ import {
 import { CONTACT_OPEN_EVENT } from "@/components/ContactModal";
 import LiveStatus from "@/components/LiveStatus";
 import ScrollCue from "@/components/ScrollCue";
+import type { ReplyBubble } from "@/data/chatKnowledge";
 import {
-  CHAT_COMMANDS,
-  CHAT_HINT,
   CHAT_PLACEHOLDERS,
   HERO_CHAT,
+  type ChatCommand,
   type ChatIcon,
   type ChatMessage,
 } from "@/data/heroChat";
+import { INITIAL_CONTEXT, respond, type ChatContext } from "@/lib/chatMatcher";
 import { REACTIONS, type Reaction, type Reactions } from "@/lib/chatReactions";
 
 /** A scripted bubble, a visitor's own (`from: "me"`), or a reply to one. */
@@ -29,9 +30,10 @@ type Bubble = ChatMessage & { from?: "me" };
 const START_DELAY_MS = 500;
 /** The breath between one bubble landing and the next being "typed". */
 const PAUSE_MS = 120;
-/** How long a visitor's own bubble sits before its command runs. */
+/** The beat after a reply's last bubble lands before its command runs. */
 const COMMAND_DELAY_MS = 400;
-const REPLY_DELAY_MS = 900;
+/** The beat between the visitor sending and the typing dots appearing. */
+const READ_DELAY_MS = 300;
 const LONG_PRESS_MS = 450;
 /** Enough of a visitor's side of the thread to scroll back through. */
 const MAX_EXTRA = 30;
@@ -39,6 +41,11 @@ const MAX_EXTRA = 30;
 /** Longer messages take longer to "type"; the link bubbles arrive as a burst. */
 function typingMs(message: ChatMessage) {
   return message.href ? 320 : Math.min(1300, 520 + message.text.length * 6);
+}
+
+/** How a reply bubble is read out in the status line. */
+function spoken(bubble: ReplyBubble) {
+  return typeof bubble === "string" ? bubble : `Link: ${bubble.text}.`;
 }
 
 const REACTION_LABELS: Record<Reaction, string> = {
@@ -58,9 +65,12 @@ const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
 /**
  * The homepage hero, ported from the "Hero v3" Paper frame: a message thread
  * from Usmaan. The scripted bubbles are sent one at a time behind typing dots,
- * every bubble takes an iMessage-style tapback, and the composer is a small
- * command line: "portfolio" scrolls to the work stack, "about", "explorations",
- * and "references" open those pages, "contact" opens the contact modal.
+ * every bubble takes an iMessage-style tapback, and the composer answers back:
+ * src/lib/chatMatcher.ts picks a scripted reply from src/data/chatKnowledge.ts,
+ * sent here bubble by bubble behind the same typing dots. A reply can carry a
+ * command, run once it has landed: "portfolio" scrolls to the work stack,
+ * "about", "explorations", and "references" open those pages, and "contact"
+ * opens the contact modal.
  *
  * The server renders the finished thread, hidden, and the sequence replays it
  * once this mounts. Without JS (the <noscript> rule), with reduced motion (the
@@ -90,6 +100,9 @@ export default function HomeChat() {
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const lastTop = useRef<number | null>(null);
+  // What the conversation has offered and repeated so far. Only replies read
+  // it, so it never needs a render.
+  const conversation = useRef<ChatContext>(INITIAL_CONTEXT);
 
   function later(run: () => void, ms: number) {
     const id = window.setTimeout(() => {
@@ -169,7 +182,7 @@ export default function HomeChat() {
     if (!text) return;
 
     // The newest message is the one that counts: whatever the last one left
-    // pending (its hint, its scroll, its navigation) is dropped, so two quick
+    // pending (the rest of its reply, its scroll, its navigation) is dropped, so two quick
     // sends cannot both run or leave the typing dots behind.
     clearTimers();
     setTyping(false);
@@ -185,51 +198,55 @@ export default function HomeChat() {
     setOpenFor(null);
     addExtra({ id: `visitor-${nextId.current++}`, text, from: "me" });
 
-    const word = text
-      .toLowerCase()
-      .match(/[a-z]+/g)
-      ?.find((candidate) => Object.hasOwn(CHAT_COMMANDS, candidate));
-    const command = word ? CHAT_COMMANDS[word] : null;
+    const reply = respond(text, conversation.current);
+    conversation.current = reply.context;
 
-    if (!command) {
+    // Drop the keyboard on touch before a scroll or the contact modal, so the
+    // scroll is not fought by it and the modal does not open under it.
+    if (reply.action && !("open" in reply.action)) inputRef.current?.blur();
+
+    const messages: ChatMessage[] = reply.bubbles.map((bubble) => ({
+      ...(typeof bubble === "string" ? { text: bubble } : bubble),
+      id: `reply-${nextId.current++}`,
+    }));
+
+    function deliver(index: number) {
       setTyping(true);
       later(() => {
-        addExtra({ id: `reply-${nextId.current++}`, text: CHAT_HINT });
+        addExtra(messages[index]);
+        if (index + 1 < messages.length) {
+          later(() => deliver(index + 1), PAUSE_MS);
+          return;
+        }
         setTyping(false);
-        setStatus(`Usmaan: ${CHAT_HINT}`);
-      }, REPLY_DELAY_MS);
-      return;
+        setStatus(`Usmaan: ${reply.bubbles.map(spoken).join(" ")}`);
+        const action = reply.action;
+        if (action) later(() => run(action), COMMAND_DELAY_MS);
+      }, typingMs(messages[index]));
     }
 
+    later(() => deliver(0), READ_DELAY_MS);
+  }
+
+  function run(command: ChatCommand) {
     if ("scroll" in command) {
-      // Drop the keyboard on touch so the scroll is not fought by it. The URL
-      // stays at `/`: writing the hash would make the next load skip the hero.
-      inputRef.current?.blur();
-      later(() => {
-        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        setStatus("Showing selected work.");
-        document
-          .getElementById(command.scroll)
-          ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-      }, COMMAND_DELAY_MS);
+      // The URL stays at `/`: writing the hash would make the next load skip
+      // the hero.
+      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      document
+        .getElementById(command.scroll)
+        ?.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
       return;
     }
 
     if ("contact" in command) {
-      // The modal takes focus and hands it back on close, so let go of the
-      // field first or the keyboard reopens under it on touch.
-      inputRef.current?.blur();
-      later(() => {
-        setStatus("Opening the contact form.");
-        window.dispatchEvent(new Event(CONTACT_OPEN_EVENT));
-      }, COMMAND_DELAY_MS);
+      window.dispatchEvent(new Event(CONTACT_OPEN_EVENT));
       return;
     }
 
     // A real navigation, like the nav's own links: the Rented prototype script
     // mounts once per document load, so the routes are never client-side.
-    setStatus(`Opening the ${word} page.`);
-    later(() => window.location.assign(command.open), COMMAND_DELAY_MS);
+    window.location.assign(command.open);
   }
 
   function react(id: string, reaction: Reaction) {
@@ -340,7 +357,7 @@ export default function HomeChat() {
               onChange={(event) => setDraft(event.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
-              aria-label="Message Usmaan. Type portfolio, about, explorations, references, or contact."
+              aria-label="Message Usmaan. Ask a question, or type portfolio, about, explorations, references, or contact."
               autoComplete="off"
               autoCapitalize="off"
               enterKeyHint="send"
@@ -389,11 +406,11 @@ function sharedPrefix(a: string, b: string) {
 }
 
 /**
- * The composer's placeholder, drawn over the empty field: each command's
- * phrase is typed out, held, and deleted back to the "Type '" every phrase
- * shares before the next is typed. It starts on the first phrase in full, as
- * the server renders it, and stays there with reduced motion. The field's own
- * aria-label names every command, so this is hidden from assistive tech.
+ * The composer's placeholder, drawn over the empty field: each phrase is
+ * typed out, held, and deleted back to the opening it shares with the next
+ * ("Ask me about my ") before that one is typed. It starts on the first phrase
+ * in full, as the server renders it, and stays there with reduced motion. The
+ * field's own aria-label says the same, so this is hidden from assistive tech.
  */
 function TypedPlaceholder({ focused }: { focused: boolean }) {
   const [text, setText] = useState(CHAT_PLACEHOLDERS[0]);
@@ -461,7 +478,7 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
   // A phrase longer than the field keeps its start and trails off, as a native
   // placeholder does: the command word is the part that has to stay readable.
   // Each letter is its own span so it can arrive lit and fade behind the
-  // caret. Keyed by position: the shared "Type '" is never deleted, so it never
+  // caret. Keyed by position: a shared opening is never deleted, so it never
   // remounts, while every retyped letter is a fresh mount and lights up again.
   return (
     <span

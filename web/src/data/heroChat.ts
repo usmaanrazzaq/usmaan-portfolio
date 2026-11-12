@@ -45,33 +45,19 @@ export const HERO_CHAT: ChatMessage[] = [
 ];
 
 /**
- * What the composer understands. `scroll` stays on the page and moves to the
- * element with that id; `open` is a full document navigation; `contact` opens
- * the contact modal over the page.
+ * What a reply can do once it has landed (see src/data/chatKnowledge.ts).
+ * `scroll` stays on the page and moves to the element with that id; `open` is
+ * a full document navigation; `contact` opens the contact modal over the page.
  */
 export type ChatCommand = { scroll: string } | { open: string } | { contact: true };
 
-export const CHAT_COMMANDS: Record<string, ChatCommand> = {
-  portfolio: { scroll: "work" },
-  work: { scroll: "work" },
-  about: { open: "/about/" },
-  explorations: { open: "/explorations/" },
-  playground: { open: "/explorations/" },
-  references: { open: "/references/" },
-  contact: { contact: true },
-};
-
 /**
- * The composer's placeholder, typed out one phrase at a time. Each one leads
- * with "Type '" so only the rest of the line is rewritten between them.
+ * The composer's placeholder, typed out one phrase at a time. Only the part
+ * after the opening a phrase shares with the next one is rewritten, so here
+ * just the last word changes.
  */
 export const CHAT_PLACEHOLDERS = [
-  "Type 'Portfolio' to see work",
-  "Type 'About' to know more about me",
-  "Type 'Explorations' to see experiments",
-  "Type 'References' to see what inspires me",
-  "Type 'Contact' to get in touch",
+  "Ask me about my work",
+  "Ask me about my process",
+  "Ask me about my background",
 ];
-
-/** The reply to anything the composer does not understand. */
-export const CHAT_HINT = "Try 'portfolio', 'about', 'explorations', 'references', or 'contact'.";
