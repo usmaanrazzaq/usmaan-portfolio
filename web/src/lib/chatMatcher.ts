@@ -116,7 +116,7 @@ function bareMatch(tokens: string[]) {
   return COMPILED.find(({ bare }) => bare.some((target) => likeness(word, target) > 0))?.intent ?? null;
 }
 
-function bestMatch(tokens: string[], among: Compiled[] = COMPILED) {
+function bestMatch(tokens: string[], among: Compiled[] = COMPILED): Intent | null {
   let best: Compiled | null = null;
   let bestScore = 0;
   for (const compiled of among) {
