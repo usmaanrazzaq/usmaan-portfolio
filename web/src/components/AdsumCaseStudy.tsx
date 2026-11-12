@@ -106,7 +106,7 @@ export default function AdsumCaseStudy() {
             <p>
               Working directly with the founder in Shopify, I design and ship collection pages on
               an ongoing cadence for a storefront serving{" "}
-              <span className="paper-cs__metric">15K+ monthly active visitors</span> — supporting
+              <span className="paper-cs__metric">25K+ monthly active visitors</span> — supporting
               new releases, events, and seasonal sales. A size filter I built from scratch surfaces
               only in-stock sizes,{" "}
               <span className="paper-cs__metric">cutting clicks to sold-out variants by 35%</span>.

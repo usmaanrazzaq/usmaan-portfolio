@@ -75,7 +75,7 @@ export const projects: Project[] = [
     date: "Nov 2025 - Present",
     headline: "Product design & Marketing for a Brooklyn-based brand.",
     description:
-      "For a Brooklyn-based clothing brand serving 15K+ monthly active visitors, I designed a custom size filter that cut clicks to unavailable products by 35%.",
+      "For a Brooklyn-based clothing brand serving 25K+ monthly active visitors, I designed a custom size filter that cut clicks to unavailable products by 35%.",
     caseHref: "/adsum/",
     siteHref: "https://adsumnyc.com/",
     mediaLabel: "Read Adsum NYC case study",
