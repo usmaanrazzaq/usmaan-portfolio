@@ -859,7 +859,6 @@ const TOPICS: Intent[] = [
       "portfolio",
       "see work",
       "see your work",
-      "show me",
       "case studies",
       "case study",
       "projects",

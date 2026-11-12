@@ -85,8 +85,8 @@ const COMPILED: Compiled[] = INTENTS.map((intent) => ({
 
 const BY_ID = new Map(INTENTS.map((intent) => [intent.id, intent]));
 
-/** The distinct words of the message this topic's phrases account for. */
-function score({ intent, phrases }: Compiled, tokens: string[]) {
+/** Which words of the message this topic's phrases account for, and how well. */
+function coverage({ phrases }: Compiled, tokens: string[]) {
   const covered = new Map<number, number>();
 
   for (const phrase of phrases) {
@@ -100,9 +100,13 @@ function score({ intent, phrases }: Compiled, tokens: string[]) {
     }
   }
 
+  return covered;
+}
+
+function score(compiled: Compiled, tokens: string[]) {
   let total = 0;
-  covered.forEach((part) => (total += part));
-  return total * (intent.weight ?? 1);
+  coverage(compiled, tokens).forEach((part) => (total += part));
+  return total * (compiled.intent.weight ?? 1);
 }
 
 function bareMatch(tokens: string[]) {
@@ -112,17 +116,30 @@ function bareMatch(tokens: string[]) {
   return COMPILED.find(({ bare }) => bare.some((target) => likeness(word, target) > 0))?.intent ?? null;
 }
 
-function bestMatch(tokens: string[]) {
-  let best: Intent | null = null;
+function bestMatch(tokens: string[], among: Compiled[] = COMPILED) {
+  let best: Compiled | null = null;
   let bestScore = 0;
-  for (const compiled of COMPILED) {
+  for (const compiled of among) {
     const value = score(compiled, tokens);
     if (value > bestScore) {
-      best = compiled.intent;
+      best = compiled;
       bestScore = value;
     }
   }
-  return best;
+  if (!best?.intent.kind) return best?.intent ?? null;
+
+  // "Yes" or "tell me more" wins on word count alone, so a real question
+  // riding along with it ("tell me more about your process") would be lost to
+  // whatever the last reply offered. If another topic matches any word the
+  // follow-up does not account for, answer that topic instead.
+  const own = coverage(best, tokens);
+  const rest = tokens.map((_, at) => at).filter((at) => !own.has(at));
+  if (rest.length === 0) return best.intent;
+  const topical = among.filter(
+    (compiled) =>
+      !compiled.intent.kind && rest.some((at) => coverage(compiled, tokens).has(at)),
+  );
+  return bestMatch(tokens, topical) ?? best.intent;
 }
 
 function variant<T>(options: T[], count: number) {
