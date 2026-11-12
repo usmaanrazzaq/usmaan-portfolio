@@ -36,7 +36,8 @@ no lockfile.
 - `web/src/lib/` — per-case-study behaviour (lightboxes, charts, the OTRS globe) and
   shared helpers (`theme.ts`, `arena.ts`).
 - `web/src/styles/` — the `paper-*.css` stylesheets, imported by the components.
-- `web/src/data/` — static content (`projects.ts`, `heroChat.ts`).
+- `web/src/data/` — static content (`projects.ts`, `heroChat.ts`, and `chatKnowledge.ts`,
+  the homepage chat's scripted replies; `web/src/lib/chatMatcher.ts` picks among them).
 - `web/src/proxy.ts` — legacy-URL normalisation (Next 16's renamed middleware).
 - `web/public/` — static assets, tracked in git: `hero/`, `images/`, `video/`,
   `shared/`, plus `Favicon.png`, `iOS Icon.png`, and the resume PDF. They are served
