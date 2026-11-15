@@ -205,6 +205,13 @@ html.is-theme-switching .home-chat__avatar {
  * its corners, so a scrolled thread runs on under the header's glass; the
  * inline bleed is room for the tapback badges once it does clip. Until then
  * its empty reach lets pointer events through to the header.
+ *
+ * It is its own stacking context, so the z-indexes inside it (the fanned
+ * tiles, the tapback badges, the picker) only order things within the thread:
+ * once the header's glass is raised over it, nothing in the thread can climb
+ * back above the glass. Its scroll padding keeps the header's height, plus the
+ * glass's 28px fade, clear when the browser scrolls a focused link or
+ * reaction button into view, so keyboard focus never lands under the glass.
  */
 .home-chat__scroll {
   position: absolute;
@@ -212,7 +219,9 @@ html.is-theme-switching .home-chat__avatar {
   display: flex;
   flex-direction: column;
   padding: calc(var(--home-chat-head) + 40px) 10px 40px;
+  scroll-padding-top: calc(var(--home-chat-head) + 28px);
   border-radius: 11.5px 11.5px 0 0;
+  isolation: isolate;
   pointer-events: none;
 }
 
