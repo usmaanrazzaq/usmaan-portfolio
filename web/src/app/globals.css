@@ -33,8 +33,12 @@
   --home-media-bg: #eeecec;
   --home-accent: #2f5bea;
   /* Hero chat: received and sent bubbles. */
-  --home-bubble: #efefef;
+  --home-bubble: #f8f7f3;
   --home-bubble-sent: #3c97ff;
+  /* The warm card the hero chat sits in, its edge, and its soft lift. */
+  --home-chat-card: #f5f3ef;
+  --home-chat-card-edge: #d8d4ce;
+  --home-chat-card-shadow: 0 2px 9px 2px rgba(174, 171, 166, 0.25);
   /* The glint that runs through the hero's cues: the work displays' blue. */
   --home-shimmer: #c2ceec;
   /* Tapbacks: the badge's solid ground, and the picker's glass, edge, and top sheen. */
@@ -69,6 +73,9 @@ html[data-theme="dark"] {
   --home-divider: #2a2a2a;
   --home-media-bg: #1c1c1c;
   --home-bubble: #262628;
+  --home-chat-card: #1a1a1a;
+  --home-chat-card-edge: rgba(255, 255, 255, 0.12);
+  --home-chat-card-shadow: 0 2px 9px 2px rgba(0, 0, 0, 0.35);
   /* The same blue lifted toward white: #c2ceec sits too close to the dark ink. */
   --home-shimmer: #dce4f7;
   --home-picker: #3a3a3c;

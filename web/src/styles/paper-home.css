@@ -72,9 +72,41 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: min(500px, 100%);
+  width: min(580px, 100%);
   min-height: calc(100svh - 136px);
   margin-inline: auto;
+}
+
+/*
+ * The header, thread, and composer sit on a warm card, from the "Homepage Chat
+ * Desktop" frames; the scroll cue stays outside it, on the page. A fine grain
+ * over the card's colour gives it the feel of paper: a tile of SVG fractal
+ * noise, dark specks on the light theme and pale ones on the dark, sitting
+ * under the bubbles rather than over them.
+ *
+ * On a desktop the card stands at least 708px tall, as the frames do, with
+ * the thread taking up the room under the messages.
+ */
+.home-chat__card {
+  --home-chat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0 0 0 -0.08'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --home-chat-head: 125px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px 15px;
+  border: 0.5px solid var(--home-chat-card-edge);
+  border-radius: 12px;
+  background: var(--home-chat-grain), var(--home-chat-card);
+  box-shadow: var(--home-chat-card-shadow);
+}
+
+html[data-theme="dark"] .home-chat__card {
+  --home-chat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0.18 0 0 0 -0.06'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+@media (min-width: 769px) {
+  .home-chat__card {
+    min-height: 708px;
+  }
 }
 
 /*
@@ -100,37 +132,52 @@ html.is-theme-switching .home-chat__avatar {
 .home-chat__thread {
   position: relative;
   display: flex;
-  flex: none;
+  flex: 1 0 auto;
   flex-direction: column;
 }
 
 /*
- * Once the visitor's messages push the thread past its top, the older bubbles
- * slide under a soft frosted edge instead of being cut off flat against the
- * header, the way they pass under the bar in Messages. The edge is the page's
- * own ground at the top, so the scroller's clip line never shows, thinning to
- * nothing over the thread's 40px of top padding; the mask carries the frost
- * out with it. It fades in only once the thread has actually scrolled.
+ * The header is a pane of frosted glass over the top of the thread. The
+ * scroller reaches up behind it (--home-chat-head is the header's height, kept
+ * by HomeChat), so once the visitor's messages push the thread past its top,
+ * the older bubbles slide on under the name and portrait, softened but still
+ * there, the way they pass under the bar in Messages. Until the thread has
+ * scrolled the glass is clear and the header is simply the card; then the pane
+ * fades in: the card's colour at half strength, with its grain, over a blur.
+ * It has no edge of its own: it hangs 28px past the header and a mask thins the
+ * tint, grain, and blur out together over its last 40px, so the glass melts
+ * into the thread rather than stopping at a line.
+ *
+ * Before the visitor writes, nothing scrolls, so the header stays under the
+ * thread's layer, where a tapback picker on the top bubble can rise over it.
  */
-.home-chat__thread::before {
+.home-chat__head {
+  position: relative;
+}
+
+.home-chat__card.is-scrollable .home-chat__head {
+  z-index: 3;
+}
+
+.home-chat__head::before {
   content: "";
   position: absolute;
-  top: 0;
-  right: -12px;
-  left: -12px;
-  z-index: 2;
-  height: 40px;
-  background: linear-gradient(var(--home-bg) 15%, transparent);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  -webkit-mask-image: linear-gradient(#000 40%, transparent);
-  mask-image: linear-gradient(#000 40%, transparent);
+  inset: 0 -10px -28px;
+  z-index: -1;
+  border-radius: 11.5px 11.5px 0 0;
+  background:
+    var(--home-chat-grain),
+    color-mix(in srgb, var(--home-chat-card) 55%, transparent);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-mask-image: linear-gradient(#000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(#000 calc(100% - 40px), transparent);
   opacity: 0;
   pointer-events: none;
   transition: opacity 320ms ease;
 }
 
-.home-chat__thread.is-scrolled::before {
+.home-chat__card.is-scrolled .home-chat__head::before {
   opacity: 1;
 }
 
@@ -138,7 +185,7 @@ html.is-theme-switching .home-chat__avatar {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin: auto 0;
+  margin: 0 0 auto;
   padding: 0;
   list-style: none;
 }
@@ -153,18 +200,28 @@ html.is-theme-switching .home-chat__avatar {
 /*
  * The live thread sits over the ghost. It only becomes a scroller once a
  * visitor has written into it: until then the script is known to fit, and
- * leaving overflow alone lets the top bubble's picker rise past the edge. The
- * inline bleed is room for the tapback badges once it does clip.
+ * leaving overflow alone lets the top bubble's picker rise past the edge. It
+ * reaches up behind the header and out to the card's inner edges, rounded to
+ * its corners, so a scrolled thread runs on under the header's glass; the
+ * inline bleed is room for the tapback badges once it does clip. Until then
+ * its empty reach lets pointer events through to the header.
  */
 .home-chat__scroll {
   position: absolute;
-  inset: 0 -12px;
+  inset: calc(-1 * var(--home-chat-head)) -10px 0;
   display: flex;
   flex-direction: column;
-  padding: 40px 12px;
+  padding: calc(var(--home-chat-head) + 40px) 10px 40px;
+  border-radius: 11.5px 11.5px 0 0;
+  pointer-events: none;
+}
+
+.home-chat__scroll > * {
+  pointer-events: auto;
 }
 
 .home-chat__scroll.is-scrollable {
+  pointer-events: auto;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-width: none;
@@ -228,6 +285,78 @@ html.is-theme-switching .home-chat__avatar {
   outline-offset: 2px;
 }
 
+/*
+ * —— Connect links ——
+ * The script's links as 25px tiles. At rest each tucks under the one before
+ * it, half showing and turned 2deg, so the six read as one fanned stack; a
+ * hover, keyboard focus, or (on touch) a first tap spreads them into a row 2px
+ * apart. They arrive together, squared up under the first like a deck of
+ * cards, and once the row has popped in each one fans out to its place, 45ms
+ * after the one before (--i is its place in the row), springing a little past
+ * it and settling back.
+ *
+ * A spread snaps open at once. Folding back is gentler, like a hand of cards
+ * pushed together from its far end: the last tile slides home first and each
+ * one before it follows 40ms later (--n is the number of tiles), easing into
+ * the fan rather than squaring up.
+ */
+.home-chat__links {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-chat__link {
+  position: relative;
+  flex-shrink: 0;
+  width: 25px;
+  height: 25px;
+  transition:
+    margin-left 560ms cubic-bezier(0.32, 0.72, 0, 1),
+    transform 560ms cubic-bezier(0.32, 0.72, 0, 1);
+  transition-delay: calc((var(--n) - 1 - var(--i)) * 40ms);
+}
+
+.home-chat__link + .home-chat__link {
+  margin-left: -12px;
+  transform: rotate(2deg);
+  animation: home-chat-fan 460ms cubic-bezier(0.34, 1.4, 0.64, 1) backwards;
+  animation-delay: calc(140ms + var(--i) * 45ms);
+}
+
+@keyframes home-chat-fan {
+  from {
+    transform: translateX(calc(var(--i) * -13px)) rotate(0deg);
+  }
+}
+
+.home-chat__links:focus-within .home-chat__link + .home-chat__link,
+.home-chat__links.is-spread .home-chat__link + .home-chat__link {
+  margin-left: 2px;
+  transform: none;
+  transition-duration: 360ms;
+  transition-timing-function: var(--ease-out-expo);
+  transition-delay: 0ms;
+}
+
+.home-chat__link a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  border: 0.5px solid var(--home-nav-hairline);
+  border-radius: 5px;
+  transition: filter 220ms var(--ease-out-expo);
+  -webkit-touch-callout: none;
+}
+
+.paper-home .home-chat__link a:focus-visible {
+  outline-offset: 2px;
+}
+
 /* —— Typing dots —— */
 .home-chat__typing {
   gap: 4px;
@@ -280,7 +409,7 @@ html.is-theme-switching .home-chat__avatar {
   width: 24px;
   height: 24px;
   padding: 0;
-  border: 2px solid var(--home-bg);
+  border: 2px solid var(--home-chat-card);
   border-radius: 50%;
   background: var(--home-bubble);
   color: var(--home-muted);
@@ -776,8 +905,17 @@ html[data-theme="dark"] .home-scroll-cue {
     transition: opacity 220ms var(--ease-out-expo);
   }
 
-  a.home-chat__bubble:hover {
+  a.home-chat__bubble:hover,
+  .home-chat__link a:hover {
     filter: brightness(0.95);
+  }
+
+  .home-chat__links:hover .home-chat__link + .home-chat__link {
+    margin-left: 2px;
+    transform: none;
+    transition-duration: 360ms;
+    transition-timing-function: var(--ease-out-expo);
+    transition-delay: 0ms;
   }
 
   .home-chat__picker button:hover {
@@ -810,9 +948,11 @@ html[data-theme="dark"] .home-scroll-cue {
 /*
  * On a phone the frame's spacing runs the composer under the browser's own
  * bottom bar, so the group sits at the top of the first screen rather than
- * its centre, and the thread's padding, its frosted edge, and the bubble gap
- * all close up. The ghost and the live layer keep the same padding, or the
- * thread would no longer be sized to its script.
+ * its centre, and the thread's padding and the bubble gap close up. The card
+ * stretches to fill that first screen down to the scroll cue, its thread
+ * taking the room, so the composer sits near the foot of the screen. The ghost
+ * and the live layer keep the same padding, or the thread would no longer be
+ * sized to its script.
  */
 @media (max-width: 768px) {
   .home-chat {
@@ -820,8 +960,9 @@ html[data-theme="dark"] .home-scroll-cue {
     min-height: calc(100svh - 120px);
   }
 
-  .home-chat__thread::before {
-    height: 20px;
+  .home-chat__card {
+    --home-chat-head: 113px;
+    flex: 1 0 auto;
   }
 
   .home-chat__list {
@@ -833,7 +974,8 @@ html[data-theme="dark"] .home-scroll-cue {
   }
 
   .home-chat__scroll {
-    padding-block: 20px;
+    padding-top: calc(var(--home-chat-head) + 20px);
+    padding-bottom: 20px;
   }
 }
 
@@ -1376,13 +1518,15 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__nav,
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
-  .home-chat__thread::before,
+  .home-chat__head::before,
   .home-chat__menu-button,
   .home-chat__menu,
   .home-chat__menu.is-open,
   .home-chat__menu a,
   .home-chat__menu.is-open a,
   .home-chat__bubble,
+  .home-chat__link,
+  .home-chat__link a,
   .home-chat__tapback,
   .home-chat__picker button,
   .home-chat__composer button,
@@ -1408,6 +1552,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   }
 
   .home-chat__row,
+  .home-chat__link + .home-chat__link,
   .home-chat__picker,
   .home-chat__typing span,
   .home-chat__caret,

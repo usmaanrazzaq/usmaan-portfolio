@@ -1,11 +1,12 @@
 /**
  * The script for the homepage hero's chat thread, in the order it is sent.
  *
- * `id` keys a visitor's tapback on that bubble, so ids must be unique. A
- * message with an `href` is sent as a link bubble.
+ * `id` keys a visitor's tapback on that bubble, so ids must be unique. A run of
+ * messages with an `href` is sent as one row of icon links (see HomeChat's
+ * ConnectLinks), so each needs an `icon`; `text` is its accessible name.
  */
 
-export type ChatIcon = "linkedin" | "instagram" | "github" | "x" | "resume";
+export type ChatIcon = "linkedin" | "instagram" | "github" | "x" | "resume" | "arena";
 
 export type ChatMessage = {
   id: string;
@@ -41,7 +42,7 @@ export const HERO_CHAT: ChatMessage[] = [
     href: "/Usmaan-Razzaq-Resume.pdf?v=20260823-2000",
     icon: "resume",
   },
-  { id: "arena", text: "Are.na", href: "https://www.are.na/usmaan-r/channels" },
+  { id: "arena", text: "Are.na", href: "https://www.are.na/usmaan-r/channels", icon: "arena" },
 ];
 
 /**

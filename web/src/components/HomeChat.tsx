@@ -5,6 +5,7 @@ import {
   useLayoutEffect,
   useRef,
   useState,
+  type CSSProperties,
   type FormEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -38,7 +39,7 @@ const LONG_PRESS_MS = 450;
 /** Enough of a visitor's side of the thread to scroll back through. */
 const MAX_EXTRA = 30;
 
-/** Longer messages take longer to "type"; the link bubbles arrive as a burst. */
+/** Longer messages take longer to "type"; a link takes a short beat. */
 function typingMs(message: ChatMessage) {
   return message.href ? 320 : Math.min(1300, 520 + message.text.length * 6);
 }
@@ -56,6 +57,30 @@ const REACTION_LABELS: Record<Reaction, string> = {
   emphasis: "Emphasis",
   question: "Question",
 };
+
+/** A row of the thread: one bubble, or a run of the script's links as icons. */
+type ThreadItem =
+  { kind: "bubble"; bubble: Bubble } | { kind: "links"; id: string; links: ChatMessage[] };
+
+/**
+ * Folds each run of the script's link messages into one row of icon links.
+ * The row is keyed by its first link, so it stays mounted as the rest arrive.
+ */
+function threadItems(scripted: ChatMessage[]): ThreadItem[] {
+  const items: ThreadItem[] = [];
+  for (const message of scripted) {
+    const last = items[items.length - 1];
+    if (!message.href) items.push({ kind: "bubble", bubble: message });
+    else if (last?.kind === "links") last.links.push(message);
+    else
+      items.push({
+        kind: "links",
+        id: `links-${message.id}`,
+        links: [message],
+      });
+  }
+  return items;
+}
 
 const BUBBLE_BASE =
   "home-chat__bubble flex items-center gap-[5px] rounded-[18px] px-3 py-2 text-sm leading-[18px] font-normal [overflow-wrap:anywhere]";
@@ -96,6 +121,8 @@ export default function HomeChat() {
 
   const timers = useRef(new Set<number>());
   const nextId = useRef(0);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const headRef = useRef<HTMLElement>(null);
   const scrollRef = useRef<HTMLElement>(null);
   const listRef = useRef<HTMLOListElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -122,11 +149,19 @@ export default function HomeChat() {
 
     function send(index: number) {
       setTyping(true);
-      later(() => {
-        setCount(index + 1);
-        if (index + 1 === HERO_CHAT.length) setTyping(false);
-        else later(() => send(index + 1), PAUSE_MS);
-      }, typingMs(HERO_CHAT[index]));
+      later(() => land(index), typingMs(HERO_CHAT[index]));
+    }
+
+    // A run of links lands at once, squared up like a deck of cards, and
+    // fans out from there (paper-home.css), so it is typed only once.
+    function land(index: number) {
+      let end = index + 1;
+      if (HERO_CHAT[index].href) {
+        while (end < HERO_CHAT.length && HERO_CHAT[end].href) end++;
+      }
+      setCount(end);
+      if (end === HERO_CHAT.length) setTyping(false);
+      else later(() => send(end), PAUSE_MS);
     }
 
     // The sequence only plays when this has the thread from the start. If it
@@ -150,6 +185,22 @@ export default function HomeChat() {
   // that move instead of letting it jump: start the list where it was and ease
   // it to where it now is. offsetTop ignores the transform, so a bubble landing
   // mid-animation still measures the real layout.
+  // The scroller reaches up behind the header so the thread can pass under its
+  // glass; paper-home.css sizes that reach from the header's height, kept here
+  // as it changes (the status line wraps on a narrow screen).
+  useLayoutEffect(() => {
+    const card = cardRef.current;
+    const head = headRef.current;
+    if (!card || !head) return;
+
+    const sync = () => card.style.setProperty("--home-chat-head", `${head.offsetHeight}px`);
+    sync();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(sync);
+    observer.observe(head);
+    return () => observer.disconnect();
+  }, []);
+
   useLayoutEffect(() => {
     const scroll = scrollRef.current;
     const list = listRef.current;
@@ -259,133 +310,153 @@ export default function HomeChat() {
     setOpenFor(null);
   }
 
-  const scripted: Bubble[] = booted ? HERO_CHAT.slice(0, count) : HERO_CHAT;
-  const bubbles = [...scripted, ...extra];
+  const scripted = booted ? HERO_CHAT.slice(0, count) : HERO_CHAT;
+  const items: ThreadItem[] = [
+    ...threadItems(scripted),
+    ...extra.map((bubble) => ({ kind: "bubble" as const, bubble })),
+  ];
 
   return (
     <div className="home-chat">
-      <header className="flex shrink-0 flex-col items-start gap-2.5 py-2.5 to-md:pt-0">
-        <div className="home-enter flex items-center gap-2.5 [--enter-delay:100ms]">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/hero/usmaan-avatar.jpg"
-            width={50}
-            height={50}
-            alt=""
-            className="home-chat__avatar bg-media size-[50px] shrink-0 rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
-          />
-          <h1 id="home-title" className="text-ink text-sm leading-[18px] font-normal">
-            Usmaan Razzaq
-          </h1>
-        </div>
+      <div
+        ref={cardRef}
+        className={`home-chat__card${extra.length > 0 ? " is-scrollable" : ""}${scrolled ? " is-scrolled" : ""}`}
+      >
+        <header
+          ref={headRef}
+          className="home-chat__head flex shrink-0 flex-col items-start gap-2.5 pt-6.25 pb-2.5 to-md:pt-3.75"
+        >
+          <div className="home-enter flex items-center gap-2.5 [--enter-delay:100ms]">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/usmaan-avatar.jpg"
+              width={50}
+              height={50}
+              alt=""
+              className="home-chat__avatar bg-media size-[50px] shrink-0 rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
+            />
+            <h1 id="home-title" className="text-ink text-sm leading-[18px] font-normal">
+              Usmaan Razzaq
+            </h1>
+          </div>
 
-        <LiveStatus className="home-enter text-muted mb-3 flex items-center to-md:mb-1 gap-1.5 self-stretch text-xs leading-[1.5] font-light whitespace-nowrap [--enter-delay:180ms] to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal" />
-      </header>
+          <LiveStatus className="home-enter text-muted mb-3 flex items-center to-md:mb-1 gap-1.5 self-stretch text-xs leading-[1.5] font-light whitespace-nowrap [--enter-delay:180ms] to-sm:min-h-6 to-sm:flex-wrap to-sm:whitespace-normal" />
+        </header>
 
-      <div className={`home-chat__thread${scrolled ? " is-scrolled" : ""}`}>
-        {/* The finished script, laid out but never shown: it holds the thread
+        <div className="home-chat__thread">
+          {/* The finished script, laid out but never shown: it holds the thread
             open at its final height, so the bubbles arriving above it move
             nothing outside the thread and a short screen still fits them all. */}
-        <ol className="home-chat__list home-chat__ghost" aria-hidden="true">
-          {HERO_CHAT.map((message) => (
-            <li key={message.id} className="home-chat__row">
-              <div className="home-chat__wrap">
-                <div className={BUBBLE_RECEIVED}>
-                  {message.icon && <span className="size-3.5 shrink-0" />}
-                  <span>{message.text}</span>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ol>
-
-        {/* A labelled section, not a live log: a log would read all nine
-            scripted bubbles out as they land. The status line below speaks for
-            the visitor's own turns instead. */}
-        <section
-          ref={scrollRef}
-          className={`home-chat__scroll${extra.length > 0 ? " is-scrollable" : ""}`}
-          aria-label="Messages from Usmaan"
-          onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 0)}
-        >
-          <ol ref={listRef} className={`home-chat__list${booted ? "" : " is-booting"}`}>
-            {bubbles.map((bubble) => (
-              <ChatBubble
-                key={bubble.id}
-                bubble={bubble}
-                reaction={reactions[bubble.id]}
-                open={openFor === bubble.id}
-                onOpen={() => setOpenFor(bubble.id)}
-                onClose={() => setOpenFor(null)}
-                onReact={(reaction) => react(bubble.id, reaction)}
-              />
-            ))}
-
-            {typing && (
-              <li className="home-chat__row" aria-hidden="true">
-                <div className={`${BUBBLE_RECEIVED} home-chat__typing`}>
-                  <span />
-                  <span />
-                  <span />
-                </div>
-              </li>
+          <ol className="home-chat__list home-chat__ghost" aria-hidden="true">
+            {threadItems(HERO_CHAT).map((item) =>
+              item.kind === "links" ? (
+                <li key={item.id} className="home-chat__row">
+                  <div className="home-chat__link" />
+                </li>
+              ) : (
+                <li key={item.bubble.id} className="home-chat__row">
+                  <div className="home-chat__wrap">
+                    <div className={BUBBLE_RECEIVED}>
+                      <span>{item.bubble.text}</span>
+                    </div>
+                  </div>
+                </li>
+              ),
             )}
           </ol>
-        </section>
 
-        <p className="sr-only" role="status" aria-live="polite">
-          {status}
-        </p>
-
-        <noscript>
-          <style>{".home-chat__list.is-booting{visibility:visible;animation:none}"}</style>
-        </noscript>
-      </div>
-
-      <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
-        <ChatMenu />
-
-        <form
-          className="home-chat__composer home-chat__glass flex h-11.25 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill px-3"
-          onSubmit={handleSubmit}
-        >
-          <span className="relative flex min-w-0 flex-1">
-            <input
-              ref={inputRef}
-              type="text"
-              value={draft}
-              onChange={(event) => setDraft(event.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => setFocused(false)}
-              aria-label="Message Usmaan. Ask a question, or type portfolio, about, explorations, references, or contact."
-              autoComplete="off"
-              autoCapitalize="off"
-              enterKeyHint="send"
-              maxLength={140}
-              className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none"
-            />
-            {!draft && <TypedPlaceholder focused={focused} />}
-          </span>
-          <button
-            type="submit"
-            aria-label="Send"
-            className="bg-bubble-sent flex size-7.5 shrink-0 items-center justify-center rounded-pill text-white"
+          {/* A labelled section, not a live log: a log would read all nine
+            scripted bubbles out as they land. The status line below speaks for
+            the visitor's own turns instead. */}
+          <section
+            ref={scrollRef}
+            className={`home-chat__scroll${extra.length > 0 ? " is-scrollable" : ""}`}
+            aria-label="Messages from Usmaan"
+            onScroll={(event) => setScrolled(event.currentTarget.scrollTop > 0)}
           >
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
+            <ol ref={listRef} className={`home-chat__list${booted ? "" : " is-booting"}`}>
+              {items.map((item) =>
+                item.kind === "links" ? (
+                  <ConnectLinks key={item.id} links={item.links} />
+                ) : (
+                  <ChatBubble
+                    key={item.bubble.id}
+                    bubble={item.bubble}
+                    reaction={reactions[item.bubble.id]}
+                    open={openFor === item.bubble.id}
+                    onOpen={() => setOpenFor(item.bubble.id)}
+                    onClose={() => setOpenFor(null)}
+                    onReact={(reaction) => react(item.bubble.id, reaction)}
+                  />
+                ),
+              )}
+
+              {typing && (
+                <li className="home-chat__row" aria-hidden="true">
+                  <div className={`${BUBBLE_RECEIVED} home-chat__typing`}>
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                </li>
+              )}
+            </ol>
+          </section>
+
+          <p className="sr-only" role="status" aria-live="polite">
+            {status}
+          </p>
+
+          <noscript>
+            <style>{".home-chat__list.is-booting{visibility:visible;animation:none}"}</style>
+          </noscript>
+        </div>
+
+        <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
+          <ChatMenu />
+
+          <form
+            className="home-chat__composer home-chat__glass flex h-11.25 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill px-3"
+            onSubmit={handleSubmit}
+          >
+            <span className="relative flex min-w-0 flex-1">
+              <input
+                ref={inputRef}
+                type="text"
+                value={draft}
+                onChange={(event) => setDraft(event.target.value)}
+                onFocus={() => setFocused(true)}
+                onBlur={() => setFocused(false)}
+                aria-label="Message Usmaan. Ask a question, or type portfolio, about, explorations, references, or contact."
+                autoComplete="off"
+                autoCapitalize="off"
+                enterKeyHint="send"
+                maxLength={140}
+                className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none"
+              />
+              {!draft && <TypedPlaceholder focused={focused} />}
+            </span>
+            <button
+              type="submit"
+              aria-label="Send"
+              className="bg-bubble-sent flex size-7.5 shrink-0 items-center justify-center rounded-pill text-white"
             >
-              <path d="M12 5L12 19" />
-              <path d="M6 11L12 5L18 11" />
-            </svg>
-          </button>
-        </form>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                <path d="M12 5L12 19" />
+                <path d="M6 11L12 5L18 11" />
+              </svg>
+            </button>
+          </form>
+        </div>
       </div>
 
       <ScrollCue className="home-enter mt-10 [--enter-delay:340ms]" />
@@ -662,6 +733,68 @@ function ChatMenu() {
         ))}
       </nav>
     </div>
+  );
+}
+
+/**
+ * The script's links as a row of icon tiles, from the "Homepage Chat Desktop"
+ * frames: at rest they sit stacked and fanned, the first on top, and a hover or
+ * keyboard focus spreads them into a row (paper-home.css). Touch has no hover,
+ * so there the first tap on the stack spreads it, and a tap outside folds it
+ * back; once spread, a tap opens the link.
+ */
+function ConnectLinks({ links }: { links: ChatMessage[] }) {
+  const [spread, setSpread] = useState(false);
+  const listRef = useRef<HTMLUListElement>(null);
+  const lastPointer = useRef("mouse");
+
+  useEffect(() => {
+    if (!spread) return;
+
+    function onPointerDown(event: globalThis.PointerEvent) {
+      if (!listRef.current?.contains(event.target as Node)) setSpread(false);
+    }
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [spread]);
+
+  return (
+    <li className="home-chat__row">
+      <ul
+        ref={listRef}
+        className={`home-chat__links${spread ? " is-spread" : ""}`}
+        style={{ "--n": links.length } as CSSProperties}
+        aria-label="Connect with Usmaan"
+        onPointerDown={(event) => {
+          lastPointer.current = event.pointerType;
+        }}
+        onClickCapture={(event) => {
+          if (spread || lastPointer.current === "mouse") return;
+          event.preventDefault();
+          setSpread(true);
+        }}
+      >
+        {links.map((link, index) => (
+          <li
+            key={link.id}
+            className="home-chat__link"
+            style={{ zIndex: links.length - index, "--i": index } as CSSProperties}
+          >
+            <a
+              href={link.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={link.text}
+              title={link.text}
+              className="bg-bubble text-ink"
+            >
+              {link.icon && <ChatIconGlyph icon={link.icon} />}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </li>
   );
 }
 
@@ -972,12 +1105,17 @@ function AddReactionGlyph() {
 }
 
 /**
- * The link bubbles' 14px marks. LinkedIn and Instagram keep their brand
- * colours, as the frame draws them; the rest take the bubble's ink so they
- * survive the dark theme.
+ * The 14px marks of the connect tiles and of the replies' link bubbles.
+ * LinkedIn and Instagram keep their brand colours, as the frame draws them;
+ * the rest take the ink so they survive the dark theme.
  */
 function ChatIconGlyph({ icon }: { icon: ChatIcon }) {
-  const size = { width: 14, height: 14, className: "shrink-0", "aria-hidden": true } as const;
+  const size = {
+    width: 14,
+    height: 14,
+    className: "shrink-0",
+    "aria-hidden": true,
+  } as const;
 
   switch (icon) {
     case "linkedin":
@@ -1024,6 +1162,12 @@ function ChatIconGlyph({ icon }: { icon: ChatIcon }) {
           <path d="M13.125 11.375L7.875 11.375" />
           <path d="M8.75 7.875L7.875 7.875" />
           <path d="M13.125 14.875L7.875 14.875" />
+        </svg>
+      );
+    case "arena":
+      return (
+        <svg {...size} viewBox="0 0 84 84" fill="currentColor">
+          <path d="m71.51 42.82c-0.72-0.58-0.72-1.5 0-2.06l11.74-9.23c0.78-0.62 0.94-1.48 0.55-2.06-0.4-0.6-1.28-0.82-2.16-0.5l-13.830 5.6c-0.91 0.35-1.66-0.1-1.78-1.08l-1.95-14.76c-0.14-1.12-0.84-1.73-1.61-1.73-0.73 0-1.36 0.65-1.5 1.73l-2.08 14.76c-0.12 0.98-0.93 1.38-1.77 1.06l-13.61-5.42c-1.13-0.43-2-0.43-3.17 0l-13.46 5.42c-0.87 0.32-1.65-0.08-1.77-1.06l-2.08-14.76c-0.14-1.08-0.77-1.73-1.51-1.73-0.76 0-1.42 0.61-1.55 1.73l-2.02 14.76c-0.1 0.98-0.88 1.41-1.77 1.08l-13.82-5.6c-0.88-0.32-1.76-0.1-2.16 0.5-0.39 0.58-0.17 1.46 0.55 2.06l11.74 9.23c0.75 0.56 0.72 1.5 0 2.06l-11.74 9.25c-0.8 0.67-0.92 1.55-0.53 2.15 0.4 0.64 1.29 0.92 2.19 0.59l13.68-5.47c0.86-0.35 1.65 0.07 1.74 1.05l1.99 14.78c0.15 1.18 0.92 1.83 1.7 1.83 0.83 0 1.59-0.67 1.74-1.83l1.99-14.78c0.11-0.98 0.86-1.37 1.68-1.050l13.45 5.33c1.24 0.43 2.14 0.43 3.31 0l13.36-5.33c0.84-0.35 1.62 0.07 1.72 1.05l2 14.78c0.15 1.16 0.92 1.83 1.7 1.83 0.82 0 1.57-0.65 1.74-1.83l1.98-14.78c0.1-0.98 0.86-1.4 1.7-1.05l13.8 5.47c0.9 0.33 1.79 0.05 2.14-0.59 0.39-0.64 0.2-1.51-0.58-2.15l-11.74-9.25zm-17.97 0.14-10.23 7.88c-0.94 0.67-1.8 0.63-2.71 0l-10.1-7.88c-0.84-0.67-0.75-1.58 0.07-2.18l10.18-7.99c0.86-0.58 1.69-0.55 2.5 0l10.24 8.030c0.88 0.62 0.85 1.52 0.05 2.14z" />
         </svg>
       );
   }
