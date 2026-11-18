@@ -4,7 +4,7 @@ export const THEME_STORAGE_KEY = "theme";
 
 export const THEME_COLORS: Record<Theme, string> = {
   light: "#ffffff",
-  dark: "#111111",
+  dark: "#0e0e10",
 };
 
 /**
@@ -18,7 +18,7 @@ export const THEME_INIT_SCRIPT = `(function () {
     var theme = stored === 'dark' || stored === 'light'
       ? stored
       : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-    var color = theme === 'dark' ? '#111111' : '#ffffff';
+    var color = theme === 'dark' ? '#0e0e10' : '#ffffff';
     document.documentElement.setAttribute('data-theme', theme);
     document.documentElement.style.colorScheme = theme;
     document.documentElement.style.backgroundColor = color;
@@ -42,18 +42,28 @@ export function getPreferredTheme(): Theme {
 }
 
 /**
- * Every --home-* colour swaps on one frame, which reads as a flash. The class
- * below lends the document a transition on just the theme-carrying properties
- * for the length of the swap, then takes it away again -- a permanent global
- * transition would fight hover states and drag on scroll.
+ * Every --home-* colour swaps on one frame, which reads as a flash.
+ *
+ * Where the browser has view transitions, the swap is one cross-fade of the
+ * whole page: a snapshot of the old theme dissolves into the new one (the
+ * `is-theme-fading` rules in globals.css). Everything changes together,
+ * including what a CSS transition cannot interpolate -- the card's grain, its
+ * shadow, the gradients -- and the frosted glass is not re-blurred on every
+ * frame of a per-element fade, which is what made the old swap judder.
+ *
+ * Elsewhere, the `is-theme-switching` class lends the document a transition on
+ * just the theme-carrying properties for the length of the swap, then takes it
+ * away again -- a permanent global transition would fight hover states and
+ * drag on scroll.
  */
 const THEME_SWITCH_MS = 360;
 let switchTimer: number | undefined;
 
-function beginThemeSwitch() {
-  // Honour reduced motion, and skip on the server-rendered first paint.
-  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+function prefersReducedMotion() {
+  return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+}
 
+function beginThemeSwitch() {
   const root = document.documentElement;
   root.classList.add("is-theme-switching");
   window.clearTimeout(switchTimer);
@@ -63,9 +73,26 @@ function beginThemeSwitch() {
 }
 
 export function applyTheme(theme: Theme) {
-  const color = THEME_COLORS[theme];
+  if (prefersReducedMotion()) {
+    setTheme(theme);
+    return;
+  }
+
+  if (typeof document.startViewTransition === "function") {
+    const root = document.documentElement;
+    root.classList.add("is-theme-fading");
+    const transition = document.startViewTransition(() => setTheme(theme));
+    transition.finished.finally(() => root.classList.remove("is-theme-fading"));
+    return;
+  }
 
   beginThemeSwitch();
+  setTheme(theme);
+}
+
+function setTheme(theme: Theme) {
+  const color = THEME_COLORS[theme];
+
   document.documentElement.setAttribute("data-theme", theme);
   document.documentElement.style.colorScheme = theme;
   document.documentElement.style.backgroundColor = color;
