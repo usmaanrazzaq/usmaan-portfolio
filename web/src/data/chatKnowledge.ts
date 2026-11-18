@@ -19,7 +19,8 @@
  * to steer the conversation back to the work.
  */
 
-import { HERO_CHAT, type ChatCommand, type ChatIcon } from "./heroChat";
+import type { LocaleReplies } from "./chatLocales/types";
+import { heroLink, type ChatCommand, type ChatIcon } from "./heroChat";
 import { projects, type Project } from "./projects";
 
 /** A plain text bubble, or a link bubble. */
@@ -36,14 +37,13 @@ export type Intent = {
   weight?: number;
   /** "yes" and "no" mean something only in light of the previous reply. */
   kind?: "affirm" | "decline";
+  /**
+   * The replies in another language, for topics whose wording is put together
+   * here rather than written out (the projects). Every other topic is looked
+   * up by its id in that language's `topics`.
+   */
+  localize?: (locale: LocaleReplies) => ReplyBubble[][] | undefined;
 };
-
-/** One of the hero's own link bubbles (LinkedIn, Resume, ...), by its id. */
-function heroLink(id: string): ReplyBubble {
-  const message = HERO_CHAT.find((candidate) => candidate.id === id);
-  if (!message?.href) throw new Error(`heroChat has no link bubble "${id}"`);
-  return { text: message.text, href: message.href, icon: message.icon };
-}
 
 /* ------------------------------------------------------------------------ */
 /* Projects                                                                  */
@@ -138,20 +138,29 @@ function projectIntents(): Intent[] {
       weight: 3,
       replies: [[...lines, ...(offer ? [offer] : [])]],
       more: offer ? caseId : undefined,
+      localize: ({ projects: told, ui }) => {
+        const translated = told[project.slug];
+        if (!translated) return undefined;
+        const ask = project.caseHref ? ui.offerCase : project.siteHref ? ui.offerSite : null;
+        return [[...translated, ...(ask ? [ask] : [])]];
+      },
     };
 
     // What "yes" to the offer does: open the case study, or hand over the
     // live site as a link bubble (an outside site should not replace this tab).
+    const site = project.siteHref;
     const open: Intent | null = project.caseHref
       ? {
           id: caseId,
           replies: [["Opening it up."]],
           action: { open: project.caseHref },
+          localize: ({ ui }) => [[ui.openingCase]],
         }
-      : project.siteHref
+      : site
         ? {
             id: caseId,
-            replies: [["Here you go.", { text: project.title, href: project.siteHref }]],
+            replies: [["Here you go.", { text: project.title, href: site }]],
+            localize: ({ ui }) => [[ui.hereYouGo, { text: project.title, href: site }]],
           }
         : null;
 
