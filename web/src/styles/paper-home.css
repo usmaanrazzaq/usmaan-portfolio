@@ -78,25 +78,31 @@
 }
 
 /*
- * The header, thread, and composer sit on a warm card, from the "Homepage Chat
- * Desktop" frames; the scroll cue stays outside it, on the page. A fine grain
- * over the card's colour gives it the feel of paper: a tile of SVG fractal
- * noise, dark specks on the light theme and pale ones on the dark, sitting
- * under the bubbles rather than over them.
+ * The header, thread, and composer sit on a card of frosted glass, from the
+ * "Homepage Chat Desktop" frames; the scroll cue stays outside it, on the page.
+ * The glass is whiter than the nav's, with the nav's frost, a hairline of the
+ * nav's glass for an edge, and a white sheen along the top. A fine grain over
+ * the glass keeps the feel of paper: a tile of SVG fractal noise, faint dark
+ * specks on the light theme and pale ones on the dark, sitting under the
+ * bubbles rather than over them.
  *
  * On a desktop the card stands at least 708px tall, as the frames do, with
  * the thread taking up the room under the messages.
  */
 .home-chat__card {
-  --home-chat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.22 0 0 0 -0.08'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  --home-chat-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.14 0 0 0 -0.05'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
   --home-chat-head: 125px;
   display: flex;
   flex-direction: column;
   padding: 0 10px 15px;
-  border: 0.5px solid var(--home-chat-card-edge);
+  border: 0.5px solid var(--home-glass);
   border-radius: 12px;
-  background: var(--home-chat-grain), var(--home-chat-card);
-  box-shadow: var(--home-chat-card-shadow);
+  background: var(--home-chat-grain), var(--home-chat-glass);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
+  box-shadow:
+    inset 0 1px 0 var(--home-chat-sheen),
+    var(--home-chat-card-shadow);
 }
 
 html[data-theme="dark"] .home-chat__card {
@@ -143,7 +149,7 @@ html.is-theme-switching .home-chat__avatar {
  * the older bubbles slide on under the name and portrait, softened but still
  * there, the way they pass under the bar in Messages. Until the thread has
  * scrolled the glass is clear and the header is simply the card; then the pane
- * fades in: the card's colour at half strength, with its grain, over a blur.
+ * fades in: the card's glass, with its grain, over a blur.
  * It has no edge of its own: it hangs 28px past the header and a mask thins the
  * tint, grain, and blur out together over its last 40px, so the glass melts
  * into the thread rather than stopping at a line.
@@ -167,7 +173,7 @@ html.is-theme-switching .home-chat__avatar {
   border-radius: 11.5px 11.5px 0 0;
   background:
     var(--home-chat-grain),
-    color-mix(in srgb, var(--home-chat-card) 55%, transparent);
+    var(--home-chat-glass);
   -webkit-backdrop-filter: blur(10px) saturate(150%);
   backdrop-filter: blur(10px) saturate(150%);
   -webkit-mask-image: linear-gradient(#000 calc(100% - 40px), transparent);
@@ -356,7 +362,7 @@ html.is-theme-switching .home-chat__avatar {
   justify-content: center;
   width: 100%;
   height: 100%;
-  border: 0.5px solid var(--home-nav-hairline);
+  border: 0.5px solid var(--home-bubble-edge);
   border-radius: 5px;
   transition: filter 220ms var(--ease-out-expo);
   -webkit-touch-callout: none;
@@ -1110,6 +1116,14 @@ html[data-theme="dark"] .home-scroll-cue {
   transition:
     opacity 320ms var(--ease-out-expo),
     transform 320ms var(--ease-out-expo);
+}
+
+/* Keeps the icon's turn when the fallback theme fade's blanket transition
+ * (globals.css, !important) would otherwise snap it into place. */
+html.is-theme-switching .paper-home__theme .theme-icon {
+  transition:
+    opacity 320ms var(--ease-out-expo),
+    transform 320ms var(--ease-out-expo) !important;
 }
 
 html:not([data-theme="dark"]) .paper-home__theme .theme-icon--moon,

@@ -84,7 +84,7 @@ function threadItems(scripted: ChatMessage[]): ThreadItem[] {
 
 const BUBBLE_BASE =
   "home-chat__bubble flex items-center gap-[5px] rounded-[18px] px-3 py-2 text-sm leading-[18px] font-normal [overflow-wrap:anywhere]";
-const BUBBLE_RECEIVED = `${BUBBLE_BASE} bg-bubble text-ink`;
+const BUBBLE_RECEIVED = `${BUBBLE_BASE} border-[0.5px] border-bubble-edge bg-bubble text-ink`;
 const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
 
 /**
