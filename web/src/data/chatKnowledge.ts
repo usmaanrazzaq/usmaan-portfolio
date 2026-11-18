@@ -60,15 +60,16 @@ const PROJECT_TALK: Partial<
   shifts: {
     aliases: ["shifts", "shift", "shift management", "scheduling", "scheduling app", "schedule app"],
     lines: [
-      "Shifts is a team scheduling app: one calm calendar for planning who works when, for teams of five or five hundred.",
-      "I designed it and built it, so the prototype is the product.",
+      "Shifts is a team scheduling app: one calm calendar for planning who works when. I designed it and built it, so the prototype is the product.",
+      "The outcome: a local nonprofit ran its event security team on it for four days, about 15 people across 3 teams and 20 to 30 shifts, and could finally see coverage without a spreadsheet.",
     ],
   },
   rented: {
     aliases: ["rented", "rental", "rental app", "renting", "peer to peer"],
     lines: [
       "Rented is a peer-to-peer rental app for city renters. Borrow a drill instead of buying one.",
-      "I was the sole product designer, working with a team of founders and engineers. I built a functioning prototype, and it runs live inside the case study.",
+      "I was the sole product designer alongside the founders and engineers. I ran two rounds of usability testing and built a working prototype, which runs live inside the case study.",
+      "The outcome: first-task completion went from 71% to 100% between rounds, onboarding took under a minute, and the engineers got 30+ dev-ready screens.",
     ],
   },
   nmya: {
@@ -81,16 +82,17 @@ const PROJECT_TALK: Partial<
       "nonprofit",
     ],
     lines: [
-      "For the National Muslim Youth Association I led a full redesign of their website.",
+      "For the National Muslim Youth Association I led a full redesign of their website, and moved it off a malware-prone WordPress install onto Webflow.",
       "I ran focus groups across ages, roles, and how much people already knew, then redesigned and built the site around what we heard.",
+      "The outcome: within months of launch, traffic rose 30%, page views 15%, and returning visitors 10 to 15%. Key pages went from five or six clicks away to two or three.",
     ],
   },
   adsum: {
     aliases: ["adsum", "adsum nyc", "clothing brand", "size filter", "e commerce", "ecommerce"],
     lines: [
-      "Adsum NYC is a Brooklyn clothing brand with 25K+ monthly visitors. I handle everything from Shopify UI/UX, campaign and social media designs.",
-      "The result I point to most: a custom size filter that cut clicks on unavailable products by 35%.",
-      "Alongside that, I've improved the site's UX across product pages, checkout, and search, all the way down to the mobile experience.",
+      "Adsum NYC is a Brooklyn clothing brand with 25K+ monthly visitors. I design and ship the Shopify storefront with the founder, plus the campaign and email design.",
+      "The outcome I point to most: a size filter I built from scratch cut clicks on sold-out sizes by 35%.",
+      "And the launch emails I design open at 43.8%, against an industry average of about 33%.",
     ],
   },
   dpr: {
@@ -103,8 +105,8 @@ const PROJECT_TALK: Partial<
   otrs: {
     aliases: ["otrs", "on the run", "on the run studio"],
     lines: [
-      "On The Run Studio started as a visual reference account and grew into a 5,000+ community of designers and brands.",
-      "Then a merch line, then a full design studio. It's where most of my taste got trained.",
+      "On The Run Studio started in 2021 as my personal moodboard account. It's where most of my taste got trained.",
+      "The outcome: a 5,000-follower community of designers and brands within a year and a half, merch I designed selling as far as France, Spain, and the U.K., and eventually a full design studio.",
     ],
   },
   wcm: {
@@ -112,6 +114,7 @@ const PROJECT_TALK: Partial<
     lines: [
       "WCM Connect is a self-initiated concept: I redesigned a real patient app's onboarding, dashboard, and scheduling.",
       "The brief came from its App Store reviews. Users had already done the research; I just read it.",
+      "The outcome: a simpler onboarding, a dashboard built around patients' most common tasks, and less friction booking appointments. It's a concept, so there are no launch numbers, but the case study walks through every decision.",
     ],
   },
 };
