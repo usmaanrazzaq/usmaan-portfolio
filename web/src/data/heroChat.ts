@@ -45,6 +45,13 @@ export const HERO_CHAT: ChatMessage[] = [
   { id: "arena", text: "Are.na", href: "https://www.are.na/usmaan-r/channels", icon: "arena" },
 ];
 
+/** One of the hero's own link bubbles (LinkedIn, Resume, ...), by its id. */
+export function heroLink(id: string): { text: string; href: string; icon?: ChatIcon } {
+  const message = HERO_CHAT.find((candidate) => candidate.id === id);
+  if (!message?.href) throw new Error(`heroChat has no link bubble "${id}"`);
+  return { text: message.text, href: message.href, icon: message.icon };
+}
+
 /**
  * What a reply can do once it has landed (see src/data/chatKnowledge.ts).
  * `scroll` stays on the page and moves to the element with that id; `open` is

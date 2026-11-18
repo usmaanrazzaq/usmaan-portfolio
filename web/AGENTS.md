@@ -43,6 +43,9 @@ same scripts are reachable from the repo root (`npm run dev` there forwards here
 - `src/styles/` — the `paper-*.css` stylesheets, imported by the components.
 - `src/data/` — static content (`projects.ts`, `heroChat.ts`, and `chatKnowledge.ts`,
   the homepage chat's scripted replies; `src/lib/chatMatcher.ts` picks among them).
+  `chatLocales/` holds the chat's other languages (de, fr, es, pt, te, ur, ja): `keywords/`
+  is bundled with the matcher, `replies/` loads on demand. English in `chatKnowledge.ts`
+  stays the source of truth; a topic a language lacks falls back to English.
 - `src/proxy.ts` — legacy-URL normalisation (Next 16's renamed middleware).
 - `public/` — static assets, tracked in git: `hero/`, `images/`, `video/`, `shared/`,
   plus `Favicon.png`, `iOS Icon.png`, and the resume PDF. There is **no** asset copy

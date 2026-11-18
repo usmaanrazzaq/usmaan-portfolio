@@ -15,17 +15,39 @@ import LiveStatus from "@/components/LiveStatus";
 import ScrollCue from "@/components/ScrollCue";
 import type { ReplyBubble } from "@/data/chatKnowledge";
 import {
+  LOCALE_BY_CODE,
+  LOCALES,
+  isLocaleCode,
+  loadReplies,
+  prefetchPreferred,
+  type LocaleCode,
+  type LocaleReplies,
+} from "@/data/chatLocales";
+import {
   CHAT_PLACEHOLDERS,
   HERO_CHAT,
   type ChatCommand,
   type ChatIcon,
   type ChatMessage,
 } from "@/data/heroChat";
-import { INITIAL_CONTEXT, respond, type ChatContext } from "@/lib/chatMatcher";
+import {
+  INITIAL_CONTEXT,
+  detectLanguage,
+  replyLanguage,
+  respond,
+  type ChatContext,
+} from "@/lib/chatMatcher";
 import { REACTIONS, type Reaction, type Reactions } from "@/lib/chatReactions";
 
-/** A scripted bubble, a visitor's own (`from: "me"`), or a reply to one. */
-type Bubble = ChatMessage & { from?: "me" };
+/**
+ * A scripted bubble, a visitor's own (`from: "me"`), or a reply to one.
+ * `lang` is set on anything not in English, so a screen reader switches voice
+ * and Urdu runs right to left.
+ */
+type Bubble = ChatMessage & { from?: "me"; lang?: LocaleCode };
+
+/** The language the visitor picked in the menu, kept for the visit. */
+const LANGUAGE_KEY = "home-chat-language";
 
 /** The beat before the first typing dots, so the header lands first. */
 const START_DELAY_MS = 500;
@@ -45,8 +67,9 @@ function typingMs(message: ChatMessage) {
 }
 
 /** How a reply bubble is read out in the status line. */
-function spoken(bubble: ReplyBubble) {
-  return typeof bubble === "string" ? bubble : `Link: ${bubble.text}.`;
+function spoken(bubble: ReplyBubble, locale: LocaleReplies | null) {
+  if (typeof bubble === "string") return bubble;
+  return locale ? locale.ui.link(bubble.text) : `Link: ${bubble.text}.`;
 }
 
 const REACTION_LABELS: Record<Reaction, string> = {
@@ -116,6 +139,9 @@ export default function HomeChat() {
   // What a screen reader is told about the visitor's own turns. The scripted
   // thread is never announced: it is there to be read, not narrated at them.
   const [status, setStatus] = useState("");
+  const [statusLang, setStatusLang] = useState<LocaleCode>("en");
+  // "auto" follows whatever the visitor writes in; a language pins it.
+  const [language, setLanguage] = useState<LocaleCode | "auto">("auto");
 
   const [reactions, setReactions] = useState<Reactions>({});
 
@@ -130,6 +156,9 @@ export default function HomeChat() {
   // What the conversation has offered and repeated so far. Only replies read
   // it, so it never needs a render.
   const conversation = useRef<ChatContext>(INITIAL_CONTEXT);
+  // Bumped by every send, so a reply whose language is still downloading
+  // knows it has been overtaken by a newer message.
+  const turn = useRef(0);
 
   function later(run: () => void, ms: number) {
     const id = window.setTimeout(() => {
@@ -176,6 +205,18 @@ export default function HomeChat() {
       setBooted(true);
       setCount(settle ? HERO_CHAT.length : 0);
       if (!settle) later(() => send(0), START_DELAY_MS);
+
+      let saved: string | null = null;
+      try {
+        saved = window.sessionStorage.getItem(LANGUAGE_KEY);
+      } catch {
+        // Storage can be blocked; the chat simply starts on "auto".
+      }
+      if (isLocaleCode(saved)) {
+        conversation.current = { ...conversation.current, lang: saved, pinned: true };
+        setLanguage(saved);
+        void loadReplies(saved);
+      }
     }, 0);
 
     return clearTimers;
@@ -229,37 +270,75 @@ export default function HomeChat() {
     sendMessage(draft.trim());
   }
 
-  function sendMessage(text: string) {
-    if (!text) return;
-
-    // The newest message is the one that counts: whatever the last one left
-    // pending (the rest of its reply, its scroll, its navigation) is dropped, so two quick
-    // sends cannot both run or leave the typing dots behind.
+  /**
+   * The newest message is the one that counts: whatever the last one left
+   * pending (the rest of its reply, its scroll, its navigation, a language
+   * still downloading) is dropped, so two quick sends cannot both run or leave
+   * the typing dots behind. Writing in before the script has finished skips to
+   * the end of it.
+   */
+  function interrupt() {
     clearTimers();
+    turn.current++;
     setTyping(false);
     setStatus("");
 
-    // Writing in before the script has finished skips to the end of it.
     if (!booted || count < HERO_CHAT.length) {
       setBooted(true);
       setCount(HERO_CHAT.length);
     }
+  }
+
+  function sendMessage(text: string) {
+    if (!text) return;
+
+    interrupt();
+    const current = turn.current;
 
     setDraft("");
     setOpenFor(null);
-    addExtra({ id: `visitor-${nextId.current++}`, text, from: "me" });
+    const written = detectLanguage(text);
+    addExtra({
+      id: `visitor-${nextId.current++}`,
+      text,
+      from: "me",
+      lang: written && written !== "en" ? written : undefined,
+    });
 
-    const reply = respond(text, conversation.current);
+    // The reply's language may still need downloading. That runs alongside
+    // the beat the chat takes to "read" the message, and the reply starts once
+    // both are done, so a quick download costs nothing.
+    let locale: LocaleReplies | null | undefined;
+    let read = false;
+    const ready = () => {
+      if (read && locale !== undefined) answer(text, locale);
+    };
+    later(() => {
+      read = true;
+      ready();
+    }, READ_DELAY_MS);
+    void loadReplies(replyLanguage(text, conversation.current)).then((loaded) => {
+      if (current !== turn.current) return;
+      locale = loaded;
+      ready();
+    });
+  }
+
+  function answer(text: string, locale: LocaleReplies | null) {
+    const reply = respond(text, conversation.current, locale);
     conversation.current = reply.context;
+    const lang = reply.lang === "en" ? undefined : reply.lang;
 
     // Drop the keyboard on touch before a scroll or the contact modal, so the
     // scroll is not fought by it and the modal does not open under it.
     if (reply.action && !("open" in reply.action)) inputRef.current?.blur();
 
-    const messages: ChatMessage[] = reply.bubbles.map((bubble) => ({
-      ...(typeof bubble === "string" ? { text: bubble } : bubble),
-      id: `reply-${nextId.current++}`,
-    }));
+    // A link bubble's text is a name (LinkedIn, Resume), so it keeps no language.
+    const messages: Bubble[] = reply.bubbles.map((bubble) =>
+      typeof bubble === "string"
+        ? { text: bubble, id: `reply-${nextId.current++}`, lang }
+        : { ...bubble, id: `reply-${nextId.current++}` },
+    );
 
     function deliver(index: number) {
       setTyping(true);
@@ -270,13 +349,41 @@ export default function HomeChat() {
           return;
         }
         setTyping(false);
-        setStatus(`Usmaan: ${reply.bubbles.map(spoken).join(" ")}`);
+        setStatusLang(reply.lang);
+        setStatus(`Usmaan: ${reply.bubbles.map((bubble) => spoken(bubble, locale)).join(" ")}`);
         const action = reply.action;
         if (action) later(() => run(action), COMMAND_DELAY_MS);
       }, typingMs(messages[index]));
     }
 
-    later(() => deliver(0), READ_DELAY_MS);
+    deliver(0);
+  }
+
+  /**
+   * The menu's language choice. A language holds the replies in it whatever
+   * the visitor types; "auto" goes back to following them. Either way the
+   * chat says so, in the language chosen.
+   */
+  function chooseLanguage(choice: LocaleCode | "auto") {
+    interrupt();
+    const pinned = choice !== "auto";
+    const lang = pinned ? choice : conversation.current.lang;
+    conversation.current = { ...conversation.current, lang, pinned };
+    setLanguage(choice);
+
+    try {
+      if (pinned) window.sessionStorage.setItem(LANGUAGE_KEY, choice);
+      else window.sessionStorage.removeItem(LANGUAGE_KEY);
+    } catch {
+      // Not remembered past this page; the choice still holds for now.
+    }
+    if (pinned) void loadReplies(choice);
+
+    const info = LOCALE_BY_CODE.get(lang);
+    const text = (pinned ? info?.switched : info?.auto) ?? "";
+    addExtra({ id: `reply-${nextId.current++}`, text, lang: lang === "en" ? undefined : lang });
+    setStatusLang(lang);
+    setStatus(`Usmaan: ${text}`);
   }
 
   function run(command: ChatCommand) {
@@ -403,7 +510,7 @@ export default function HomeChat() {
             </ol>
           </section>
 
-          <p className="sr-only" role="status" aria-live="polite">
+          <p className="sr-only" role="status" aria-live="polite" lang={statusLang}>
             {status}
           </p>
 
@@ -413,7 +520,7 @@ export default function HomeChat() {
         </div>
 
         <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
-          <ChatMenu />
+          <ChatMenu language={language} onLanguage={chooseLanguage} />
 
           <form
             className="home-chat__composer home-chat__glass flex h-11.25 min-w-0 flex-1 items-center justify-between gap-2 rounded-pill px-3"
@@ -425,9 +532,13 @@ export default function HomeChat() {
                 type="text"
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
-                onFocus={() => setFocused(true)}
+                onFocus={() => {
+                  setFocused(true);
+                  prefetchPreferred();
+                }}
                 onBlur={() => setFocused(false)}
                 aria-label="Message Usmaan. Ask a question, or type portfolio, about, explorations, references, or contact."
+                dir="auto"
                 autoComplete="off"
                 autoCapitalize="off"
                 enterKeyHint="send"
@@ -654,22 +765,58 @@ function MenuIcon({ paths, barrel }: { paths: string[]; barrel?: boolean }) {
   );
 }
 
+const LANGUAGE_ICON = [
+  "M21 12C21 16.971 16.971 21 12 21C7.029 21 3 16.971 3 12C3 7.029 7.029 3 12 3C16.971 3 21 7.029 21 12Z",
+  "M3 12H21",
+  "M12 3C14.5 5.7 15.8 8.7 15.8 12C15.8 15.3 14.5 18.3 12 21C9.5 18.3 8.2 15.3 8.2 12C8.2 8.7 9.5 5.7 12 3Z",
+];
+const BACK_ICON = ["M15 6L9 12L15 18"];
+const CHECK_ICON = ["M5 12.5L10 17.5L19 7"];
+
 /**
  * The button beside the composer and the menu it opens: the site's routes in a
  * frosted card that rises from the button, for the stretch of the homepage
  * where the nav itself is out of the way. The links are plain anchors, like
  * the nav's, so every route is a real document load.
+ *
+ * Under the links, "Language" turns the card over to the chat's languages:
+ * "Auto" follows whatever the visitor writes in; a language holds the replies
+ * in it. Each name is written in its own language and tagged with it, so a
+ * screen reader says "Deutsch" in German.
  */
-function ChatMenu() {
+function ChatMenu({
+  language,
+  onLanguage,
+}: {
+  language: LocaleCode | "auto";
+  onLanguage: (choice: LocaleCode | "auto") => void;
+}) {
   const [open, setOpen] = useState(false);
+  const [view, setView] = useState<"links" | "languages">("links");
   const wrapRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const menuRef = useRef<HTMLElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const languageRef = useRef<HTMLButtonElement>(null);
+  // Set when Back brings the links round again, so focus lands on the row it
+  // left from rather than the first link.
+  const returning = useRef(false);
 
   useEffect(() => {
     if (!open) return;
 
-    menuRef.current?.querySelector<HTMLAnchorElement>("a")?.focus();
+    const menu = menuRef.current;
+    if (view === "languages") {
+      menu?.querySelector<HTMLButtonElement>('[aria-pressed="true"]')?.focus();
+    } else if (returning.current) {
+      returning.current = false;
+      languageRef.current?.focus();
+    } else {
+      menu?.querySelector<HTMLAnchorElement>("a")?.focus();
+    }
+  }, [open, view]);
+
+  useEffect(() => {
+    if (!open) return;
 
     function onPointerDown(event: globalThis.PointerEvent) {
       if (!wrapRef.current?.contains(event.target as Node)) setOpen(false);
@@ -682,12 +829,24 @@ function ChatMenu() {
   function handleMenuKeyDown(event: KeyboardEvent<HTMLElement>) {
     if (event.key !== "ArrowDown" && event.key !== "ArrowUp") return;
 
-    const links = Array.from(event.currentTarget.querySelectorAll("a"));
-    const index = links.indexOf(document.activeElement as HTMLAnchorElement);
+    const items = Array.from(event.currentTarget.querySelectorAll<HTMLElement>("a, button"));
+    const index = items.indexOf(document.activeElement as HTMLElement);
     const step = event.key === "ArrowDown" ? 1 : -1;
     event.preventDefault();
-    links[(index + step + links.length) % links.length]?.focus();
+    items[(index + step + items.length) % items.length]?.focus();
   }
+
+  function close() {
+    setOpen(false);
+    buttonRef.current?.focus();
+  }
+
+  function back() {
+    returning.current = true;
+    setView("links");
+  }
+
+  const current = language === "auto" ? null : LOCALE_BY_CODE.get(language);
 
   return (
     <div
@@ -695,8 +854,8 @@ function ChatMenu() {
       className="relative shrink-0"
       onKeyDown={(event) => {
         if (event.key !== "Escape" || !open) return;
-        setOpen(false);
-        buttonRef.current?.focus();
+        if (view === "languages") back();
+        else close();
       }}
       onBlur={(event) => {
         const next = event.relatedTarget;
@@ -710,7 +869,10 @@ function ChatMenu() {
         aria-label={open ? "Close menu" : "Open menu"}
         aria-expanded={open}
         aria-controls={MENU_ID}
-        onClick={() => setOpen((value) => !value)}
+        onClick={() => {
+          if (!open) setView("links");
+          setOpen(!open);
+        }}
       >
         <MenuIcon paths={MENU_ITEMS[0].paths} />
       </button>
@@ -718,20 +880,71 @@ function ChatMenu() {
       {/* Always mounted, so closing can be played as well as opening. Closed,
           it is visibility:hidden, which also takes it out of the tab order and
           the accessibility tree. */}
-      <nav
+      <div
         ref={menuRef}
         id={MENU_ID}
         className={open ? `${MENU} is-open` : MENU}
-        aria-label="Site"
         onKeyDown={handleMenuKeyDown}
       >
-        {MENU_ITEMS.map((item) => (
-          <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
-            <MenuIcon paths={item.paths} barrel={"barrel" in item} />
-            {item.label}
-          </a>
-        ))}
-      </nav>
+        {view === "links" ? (
+          <>
+            <nav className="home-chat__menu-group" aria-label="Site">
+              {MENU_ITEMS.map((item) => (
+                <a key={item.label} href={item.href} onClick={() => setOpen(false)}>
+                  <MenuIcon paths={item.paths} barrel={"barrel" in item} />
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+            <button
+              ref={languageRef}
+              type="button"
+              className="home-chat__menu-row home-chat__menu-language"
+              onClick={() => setView("languages")}
+            >
+              <MenuIcon paths={LANGUAGE_ICON} />
+              Language
+              <span className="home-chat__menu-value" lang={current?.code} dir={current?.dir}>
+                {current?.name ?? "Auto"}
+              </span>
+            </button>
+          </>
+        ) : (
+          <div className="home-chat__menu-group" role="group" aria-label="Chat language">
+            <button type="button" className="home-chat__menu-row" onClick={back}>
+              <MenuIcon paths={BACK_ICON} />
+              Back
+            </button>
+            {(["auto", ...LOCALES.map((locale) => locale.code)] as const).map((code, index) => {
+              const info = code === "auto" ? null : LOCALE_BY_CODE.get(code);
+              const chosen = language === code;
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  className="home-chat__menu-row"
+                  style={{ "--i": index + 1 } as CSSProperties}
+                  aria-pressed={chosen}
+                  onClick={() => {
+                    onLanguage(code);
+                    close();
+                  }}
+                >
+                  <span className="home-chat__menu-check" aria-hidden="true">
+                    {chosen && <MenuIcon paths={CHECK_ICON} />}
+                  </span>
+                  <span lang={info?.code} dir={info?.dir}>
+                    {info?.name ?? "Auto"}
+                  </span>
+                  {code === "auto" && (
+                    <span className="home-chat__menu-value">Matches what you write</span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
@@ -933,7 +1146,9 @@ function ChatBubble({
   const content = (
     <>
       {bubble.icon && <ChatIconGlyph icon={bubble.icon} />}
-      <span>{bubble.text}</span>
+      <span lang={bubble.lang} dir="auto">
+        {bubble.text}
+      </span>
     </>
   );
 

@@ -296,6 +296,29 @@ html.is-theme-switching .home-chat__avatar {
   -webkit-touch-callout: none;
 }
 
+/*
+ * —— Other scripts ——
+ * Replies in another language carry its `lang` (HomeChat). Urdu is read in
+ * Nastaliq where the system has it, and Nastaliq's tall stacked letters need
+ * room between lines; Telugu's stacked vowel signs need a little too. Japanese
+ * keeps its punctuation off the start of a line.
+ */
+.home-chat :lang(ur) {
+  font-family: "Noto Nastaliq Urdu", "Noto Naskh Arabic", "Geeza Pro", var(--font-sans);
+}
+
+.home-chat__bubble :lang(ur) {
+  line-height: 2;
+}
+
+.home-chat__bubble :lang(te) {
+  line-height: 1.6;
+}
+
+.home-chat__bubble :lang(ja) {
+  line-break: strict;
+}
+
 .paper-home a.home-chat__bubble:focus-visible {
   outline-offset: 2px;
 }
@@ -716,7 +739,19 @@ html.is-theme-switching .home-chat__avatar {
     visibility 0s;
 }
 
-.home-chat__menu a {
+/* The links sit in their own <nav>, and the language list in its own group,
+ * each laid out as the card itself is. */
+.home-chat__menu-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.home-chat__menu-group[role="group"] {
+  gap: 10px;
+}
+
+.home-chat__menu :is(a, .home-chat__menu-row) {
   display: flex;
   align-items: center;
   gap: 10px;
@@ -736,7 +771,35 @@ html.is-theme-switching .home-chat__avatar {
     transform 0s linear 240ms;
 }
 
-.home-chat__menu.is-open a {
+.home-chat__menu-row {
+  width: 100%;
+  margin: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+/* Last, after the five links. */
+.home-chat__menu-language {
+  --i: 5;
+}
+
+.home-chat__menu-value {
+  margin-inline-start: auto;
+  color: var(--home-muted);
+  font-size: 12px;
+}
+
+.home-chat__menu-check {
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.home-chat__menu.is-open :is(a, .home-chat__menu-row) {
   opacity: 1;
   filter: none;
   transform: none;
@@ -762,7 +825,7 @@ html.is-theme-switching .home-chat__avatar {
   --i: 4;
 }
 
-.paper-home .home-chat__menu a:focus-visible {
+.paper-home .home-chat__menu :is(a, .home-chat__menu-row):focus-visible {
   outline-offset: 2px;
 }
 
@@ -915,7 +978,7 @@ html[data-theme="dark"] .home-scroll-cue {
     transform: none;
   }
 
-  .home-chat__menu.is-open a:hover {
+  .home-chat__menu.is-open :is(a, .home-chat__menu-row):hover {
     opacity: 0.6;
     transition: opacity 220ms var(--ease-out-expo);
   }
@@ -1545,8 +1608,8 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .home-chat__menu-button,
   .home-chat__menu,
   .home-chat__menu.is-open,
-  .home-chat__menu a,
-  .home-chat__menu.is-open a,
+  .home-chat__menu :is(a, .home-chat__menu-row),
+  .home-chat__menu.is-open :is(a, .home-chat__menu-row),
   .home-chat__bubble,
   .home-chat__link,
   .home-chat__link a,
