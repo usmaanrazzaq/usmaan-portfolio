@@ -39,7 +39,12 @@ export const projects: Project[] = [
     caseHref: "/shifts/",
     siteHref: "https://shifts-schedule-khaki.vercel.app/",
     mediaLabel: "Read Shifts Management case study",
-    media: { kind: "image", src: "/images/home-shifts-showcase.webp" },
+    media: {
+      kind: "video",
+      src: "/video/Shifts-Demo-Display.mov",
+      poster: "/images/home-shifts-demo-poster.webp",
+      label: "Shifts Management web app demo showcase",
+    },
   },
   {
     slug: "rented",
