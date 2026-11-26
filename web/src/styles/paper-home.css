@@ -1389,6 +1389,12 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   --display-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%200h882a12%2012%200%200%201%2012%2012v588a12%2012%200%200%201-12%2012H12a12%2012%200%200%201-12-12V12a12%2012%200%200%201%2012-12zM52%2070h801a10%2010%200%200%201%2010%2010v451a10%2010%200%200%201-10%2010H52a10%2010%200%200%201-10-10V80a10%2010%200%200%201%2010-10zM361%20538h182v74H361z%22%2F%3E%3C%2Fsvg%3E");
 }
 
+/* The Shifts demo frames its monitor larger, so it gets its own cut-out: the
+   screen and stand as placed by the stage rules further down. */
+.paper-home__case[data-work="shifts"] .paper-home__case-media {
+  --display-wash-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20906%20612%22%20preserveAspectRatio%3D%22none%22%3E%3Cpath%20fill%3D%22white%22%20fill-rule%3D%22evenodd%22%20d%3D%22M12%200h882a12%2012%200%200%201%2012%2012v588a12%2012%200%200%201-12%2012H12a12%2012%200%200%201-12-12V12a12%2012%200%200%201%2012-12zM43.8%2070.7H861.8a4%204%200%200%201%204%204V541.1a4%204%200%200%201-4%204H542.3V612H362.7V545.1H43.8a4%204%200%200%201-4-4V74.7a4%204%200%200%201%204-4z%22%2F%3E%3C%2Fsvg%3E");
+}
+
 .paper-home__case[data-work="shifts"] .paper-home__case-media::after,
 .paper-home__case[data-work="rented"] .paper-home__case-media::after,
 .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
@@ -1407,7 +1413,8 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
 }
 
 /* Display videos sit on a black field, so the blue wash is painted around
-   the monitor — same container treatment for Adsum, NMYA, DPR, and OTRS. */
+   the monitor — same container treatment for Shifts, Adsum, NMYA, DPR, and OTRS. */
+.paper-home__case[data-work="shifts"] .paper-home__case-media::before,
 .paper-home__case[data-work="nmya"] .paper-home__case-media::before,
 .paper-home__case[data-work="adsum"] .paper-home__case-media::before,
 .paper-home__case[data-work="dpr"] .paper-home__case-media::before,
@@ -1429,6 +1436,7 @@ html[data-theme="dark"] .paper-home__theme .theme-icon--sun {
   mask-repeat: no-repeat;
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-media::after,
 .paper-home__case[data-work="nmya"] .paper-home__case-media::after,
 .paper-home__case[data-work="adsum"] .paper-home__case-media::after,
 .paper-home__case[data-work="dpr"] .paper-home__case-media::after,
@@ -1471,6 +1479,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   aspect-ratio: 906 / 612;
 }
 
+.paper-home__case[data-work="shifts"] .paper-home__case-stage,
 .paper-home__case[data-work="nmya"] .paper-home__case-stage,
 .paper-home__case[data-work="adsum"] .paper-home__case-stage,
 .paper-home__case[data-work="dpr"] .paper-home__case-stage,
@@ -1491,6 +1500,25 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   object-position: center top;
   background: transparent;
   border-radius: inherit;
+}
+
+/* The Shifts demo's monitor runs nearly edge to edge of its 16:9 frame, so a
+   cover crop would shave off the bezel. Instead the video is 108% of the card's
+   width, centred and sat on the bottom edge: the monitor lands about 40 units
+   in from each side with the stand running off the bottom. Its mask above is
+   drawn for exactly this placement, so change both together. */
+.paper-home__case[data-work="shifts"] .paper-home__case-stage video {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  display: block;
+  width: 108%;
+  max-width: none;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  transform: translateX(-50%);
+  object-fit: fill;
+  background: transparent;
 }
 
 /* Direct children only: the Rented card mounts the prototype into this host,
