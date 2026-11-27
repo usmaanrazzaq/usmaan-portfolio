@@ -6,6 +6,7 @@ import {
   useRef,
   useState,
   type CSSProperties,
+  useSyncExternalStore,
   type FormEvent,
   type KeyboardEvent,
   type PointerEvent,
@@ -30,6 +31,7 @@ import {
   type ChatIcon,
   type ChatMessage,
 } from "@/data/heroChat";
+import { isBirthday, msUntilNextMidnight } from "@/lib/birthday";
 import {
   INITIAL_CONTEXT,
   detectLanguage,
@@ -125,6 +127,109 @@ const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
  * media query in paper-home.css), or when the script arrives after the CSS
  * fallback has already shown it, the finished thread simply stays.
  */
+/**
+ * Whether the avatar wears its party hat: all of December 6th, New York time.
+ * Checked in the browser, never at build time, since the page is prerendered
+ * and would otherwise keep whatever the build day said. A timer re-checks at
+ * midnight, so a tab left open across it gains or loses the hat on cue. In
+ * development, `?hat` forces it on for a look.
+ */
+function subscribeToMidnight(onChange: () => void) {
+  let timer = 0;
+  function arm() {
+    timer = window.setTimeout(() => {
+      onChange();
+      arm();
+    }, msUntilNextMidnight());
+  }
+  arm();
+  return () => window.clearTimeout(timer);
+}
+
+function hatSnapshot() {
+  if (
+    process.env.NODE_ENV !== "production" &&
+    new URLSearchParams(window.location.search).has("hat")
+  ) {
+    return true;
+  }
+  return isBirthday();
+}
+
+function useBirthdayHat() {
+  return useSyncExternalStore(subscribeToMidnight, hatSnapshot, () => false);
+}
+
+/** A small striped cone with a pom-pom, perched off-centre on the portrait. */
+function PartyHat() {
+  return (
+    <svg
+      className="home-chat__hat"
+      width="20"
+      height="24"
+      viewBox="0 0 20 24"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M10 3 L18 22 Q10 24.5 2 22 Z" fill="#f2c94c" />
+      <path d="M7.6 8.7 L12.4 8.7 L13.9 12.3 L6.1 12.3 Z" fill="#eb5757" />
+      <path d="M4.7 15.6 L15.3 15.6 L16.8 19.2 L3.2 19.2 Z" fill="#2f80ed" />
+      <path
+        d="M10 3 L18 22 Q10 24.5 2 22 Z"
+        fill="none"
+        stroke="#00000026"
+        strokeWidth="0.5"
+      />
+      <circle cx="10" cy="3" r="2.4" fill="#eb5757" />
+    </svg>
+  );
+}
+
+const CONFETTI_COLORS = ["#f2c94c", "#eb5757", "#2f80ed", "#27ae60", "#bb6bd9"];
+const CONFETTI_PIECES = 18;
+
+/**
+ * Pops a handful of confetti out of the hat's tip: each piece is flung up and
+ * out, then falls past the portrait and fades. One burst at a time, so a
+ * cursor wiggling over the avatar doesn't pile them up, and none at all for
+ * visitors who ask for reduced motion.
+ */
+function burstConfetti(layer: HTMLElement) {
+  if (layer.childElementCount > 0) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+  const random = (min: number, max: number) => min + Math.random() * (max - min);
+  const pieces: Animation[] = [];
+
+  for (let i = 0; i < CONFETTI_PIECES; i++) {
+    const piece = document.createElement("span");
+    piece.className = "home-chat__confetti-piece";
+    piece.style.background = CONFETTI_COLORS[i % CONFETTI_COLORS.length];
+    if (i % 3 === 0) piece.style.borderRadius = "50%";
+    layer.append(piece);
+
+    const dx = random(-52, 52);
+    const rise = random(4, 12);
+    const fall = random(56, 86);
+    const spin = random(-540, 540);
+
+    pieces.push(
+      piece.animate(
+        [
+          { transform: "translate(0, 0) rotate(0deg) scale(0.4)", opacity: 1, easing: "cubic-bezier(0.2, 0.7, 0.3, 1)" },
+          { transform: `translate(${dx * 0.6}px, ${-rise}px) rotate(${spin * 0.25}deg) scale(1)`, opacity: 1, offset: 0.18, easing: "cubic-bezier(0.45, 0, 0.8, 0.7)" },
+          { transform: `translate(${dx}px, ${fall}px) rotate(${spin}deg) scale(0.9)`, opacity: 0 },
+        ],
+        { duration: random(1000, 1400), delay: random(0, 120), fill: "backwards" },
+      ),
+    );
+  }
+
+  Promise.all(pieces.map((piece) => piece.finished))
+    .catch(() => {})
+    .finally(() => layer.replaceChildren());
+}
+
 export default function HomeChat() {
   const [booted, setBooted] = useState(false);
   const [count, setCount] = useState(0);
@@ -144,6 +249,12 @@ export default function HomeChat() {
   const [language, setLanguage] = useState<LocaleCode | "auto">("auto");
 
   const [reactions, setReactions] = useState<Reactions>({});
+  const hasHat = useBirthdayHat();
+  const confettiRef = useRef<HTMLSpanElement>(null);
+
+  function popConfetti() {
+    if (confettiRef.current) burstConfetti(confettiRef.current);
+  }
 
   const timers = useRef(new Set<number>());
   const nextId = useRef(0);
@@ -434,14 +545,34 @@ export default function HomeChat() {
           className="home-chat__head flex shrink-0 flex-col items-start gap-2.5 pt-6.25 pb-2.5 to-md:pt-3.75"
         >
           <div className="home-enter flex items-center gap-2.5 [--enter-delay:100ms]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/hero/usmaan-avatar.jpg"
-              width={50}
-              height={50}
-              alt=""
-              className="home-chat__avatar bg-media size-[50px] shrink-0 rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
-            />
+            <span
+              className="relative shrink-0"
+              onPointerEnter={(event) => {
+                if (event.pointerType !== "touch") popConfetti();
+              }}
+              onPointerDown={(event) => {
+                if (event.pointerType === "touch") popConfetti();
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/hero/usmaan-avatar.jpg"
+                width={50}
+                height={50}
+                alt=""
+                className="home-chat__avatar bg-media block size-[50px] rounded-full border-[0.5px] border-[#b8b8b880] object-cover"
+              />
+              {hasHat && (
+                <>
+                  <PartyHat />
+                  <span
+                    ref={confettiRef}
+                    className="home-chat__confetti"
+                    aria-hidden="true"
+                  />
+                </>
+              )}
+            </span>
             <h1 id="home-title" className="text-ink text-sm leading-[18px] font-normal">
               Usmaan Razzaq
             </h1>
