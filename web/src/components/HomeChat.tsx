@@ -220,7 +220,8 @@ function burstConfetti(layer: HTMLElement) {
           { transform: `translate(${dx * 0.6}px, ${-rise}px) rotate(${spin * 0.25}deg) scale(1)`, opacity: 1, offset: 0.18, easing: "cubic-bezier(0.45, 0, 0.8, 0.7)" },
           { transform: `translate(${dx}px, ${fall}px) rotate(${spin}deg) scale(0.9)`, opacity: 0 },
         ],
-        { duration: random(1000, 1400), delay: random(0, 120), fill: "backwards" },
+        // Keep finished pieces invisible until the whole burst is removed.
+        { duration: random(1000, 1400), delay: random(0, 120), fill: "both" },
       ),
     );
   }
