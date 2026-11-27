@@ -135,6 +135,52 @@ html.is-theme-switching .home-chat__avatar {
   transition: filter 700ms ease !important;
 }
 
+/*
+ * December 6th's party hat. It perches off-centre on the portrait's top edge,
+ * tipped back, and drops in just after the header has risen. It keeps its
+ * colour in the dark theme, even as the portrait goes grey beneath it.
+ */
+@keyframes home-chat-hat-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) rotate(4deg);
+  }
+}
+
+.home-chat__hat {
+  position: absolute;
+  top: -15px;
+  left: 20px;
+  transform: rotate(18deg);
+  transform-origin: 50% 100%;
+  pointer-events: none;
+  filter: drop-shadow(0 0.5px 0.5px #0000001f);
+  animation: home-chat-hat-drop 450ms var(--ease-out-expo) 700ms backwards;
+}
+
+/*
+ * Hovering the birthday avatar pops confetti from the hat's tip. The layer is
+ * a zero-size point pinned there; HomeChat animates the pieces out of it.
+ */
+.home-chat__confetti {
+  position: absolute;
+  top: -13px;
+  left: 36px;
+  z-index: 1;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.home-chat__confetti-piece {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 4px;
+  height: 6px;
+  border-radius: 1px;
+}
+
 .home-chat__thread {
   position: relative;
   display: flex;
@@ -1633,6 +1679,7 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
   .paper-home__chrome.is-hero.is-ready .paper-home__theme-slot,
   .home-chat__avatar,
   .home-chat__head::before,
+  .home-chat__hat,
   .home-chat__menu-button,
   .home-chat__menu,
   .home-chat__menu.is-open,
