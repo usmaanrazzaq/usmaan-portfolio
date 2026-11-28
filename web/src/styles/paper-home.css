@@ -1750,7 +1750,9 @@ html:has(.work-stack) {
 }
 
 .work-slide {
-  --work-media-w: min(var(--home-media), 100%, calc((100svh - 468px) * 1.4804));
+  /* Never below 320px: on a landscape phone (wide but under ~470px tall) the
+     height sum goes to zero, so the slide grows past the screen instead. */
+  --work-media-w: min(var(--home-media), 100%, max(320px, calc((100svh - 468px) * 1.4804)));
   display: flex;
   align-items: center;
   justify-content: center;

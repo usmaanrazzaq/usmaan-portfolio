@@ -22,7 +22,7 @@ type Slug = Project["slug"];
 const DEFER = new Set([
   "name", "location", "bot", "hire", "rates", "personal", "contact", "resume", "socials",
   "linkedin", "instagram", "github", "twitter", "arena", "thanks", "bye", "compliment",
-  "critique", "joke", "test", "help", "explorations", "references", "site",
+  "critique", "joke", "help", "explorations", "references", "site",
   "about-open", "explorations-open", "references-open", "contact-open", "decline",
 ]);
 
@@ -61,6 +61,13 @@ function offerFor(project: Project): string | null {
   if (project.siteHref) return "Want to see the live site?";
   return null;
 }
+
+/** Things the homepage chat hands over itself, which a "link" request must not override. */
+const RESOURCES = new Set([
+  "resume", "socials", "linkedin", "instagram", "github", "twitter", "arena", "contact",
+  "contact-open", "about-open", "explorations-open", "references-open", "explorations",
+  "references",
+]);
 
 /** Words asking to go to the work itself: "show me the case study", "take me to the site". */
 const CASE_WORDS = ["case study", "case", "study", "full story", "read more", "write up", "writeup"];
@@ -117,6 +124,10 @@ export function respondAboutWork(
   const facet = pickFacet(text);
   const named = projectOf(general.intent);
 
+  // A named resource ("send me your resume link", "show me your GitHub") is
+  // the homepage chat's to hand over, even though it asks for a link.
+  if (general.intent && RESOURCES.has(general.intent)) return general;
+
   // "Show me the case study" means this work's, unless another is named. A
   // question about the outcomes or the problem still gets its answer, even
   // when it mentions the case study.
@@ -127,8 +138,8 @@ export function respondAboutWork(
     return openWork(project, ask.want, general.context);
   }
 
-  // "Yes" to the case-study offer, and topics that are not about the work,
-  // are the homepage chat's to answer.
+  // "Yes" to the case-study offer, and topics that are not about the work
+  // (this portfolio site, say), are the homepage chat's to answer.
   if (general.intent && DEFER.has(general.intent)) return general;
   if (general.intent?.endsWith("-open") && !facet) return general;
 

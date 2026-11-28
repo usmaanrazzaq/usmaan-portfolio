@@ -78,35 +78,38 @@ export default function WorkSection({
     );
     dock.observe(section);
 
-    // The current work is whichever slide covers most of the viewport; while
-    // two share it mid-scroll, the last one to cover half keeps the chat.
-    const ratios = new Map<Element, number>();
+    // The current work is whichever slide crosses the middle of the screen: a
+    // line, not a share of the viewport, so it holds however tall a slide is
+    // (a long one on a small phone never covers half of the screen's area).
     const view = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          ratios.set(entry.target, entry.intersectionRatio);
-          if (entry.isIntersecting && entry.intersectionRatio > 0.15) {
-            entry.target.classList.add("is-visible");
-          }
+          if (!entry.isIntersecting) return;
+          const index = slides.indexOf(entry.target as HTMLElement);
+          if (index >= 0) setCurrent(index);
         });
-        let best = -1;
-        let bestRatio = 0.45;
-        slides.forEach((slide, index) => {
-          const ratio = ratios.get(slide) ?? 0;
-          if (ratio > bestRatio) {
-            best = index;
-            bestRatio = ratio;
-          }
-        });
-        if (best >= 0) setCurrent(best);
       },
-      { threshold: [0, 0.15, 0.3, 0.45, 0.6, 0.75, 0.9, 1] },
+      { threshold: 0, rootMargin: "-50% 0px -50% 0px" },
     );
     slides.forEach((slide) => view.observe(slide));
+
+    // Each slide fades in once its top is well onto the screen.
+    const reveal = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          reveal.unobserve(entry.target);
+        });
+      },
+      { threshold: 0, rootMargin: "0px 0px -15% 0px" },
+    );
+    slides.forEach((slide) => reveal.observe(slide));
 
     return () => {
       dock.disconnect();
       view.disconnect();
+      reveal.disconnect();
     };
   }, []);
 
