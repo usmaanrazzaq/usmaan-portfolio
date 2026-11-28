@@ -1734,3 +1734,311 @@ html[data-theme="dark"] .paper-home__case[data-work="otrs"] .paper-home__case-me
     animation: none;
   }
 }
+
+/*
+ * —— Work section ——
+ *
+ * The "New Work Section" Wonder frames: each work fills the viewport, media
+ * on top and copy beneath, and the page snaps from one to the next. The media
+ * takes whatever height is left once the copy (about 190px), the nav above,
+ * and the docked chat below have theirs, keeping its 906 x 612 shape, so a
+ * short laptop screen still shows the whole slide. The copy keeps a readable
+ * width even when the media has shrunk below it.
+ */
+html:has(.work-stack) {
+  scroll-snap-type: y proximity;
+}
+
+.work-slide {
+  /* Never below 320px: on a landscape phone (wide but under ~470px tall) the
+     height sum goes to zero, so the slide grows past the screen instead. */
+  --work-media-w: min(var(--home-media), 100%, max(320px, calc((100svh - 468px) * 1.4804)));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100svh;
+  padding: 96px 0 104px;
+  box-sizing: border-box;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.work-slide__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: max(var(--work-media-w), min(640px, 100%));
+}
+
+.work-slide .paper-home__case-media {
+  flex: none;
+  width: var(--work-media-w);
+  max-width: 100%;
+  order: 0;
+}
+
+.work-slide__copy {
+  width: 100%;
+}
+
+/* The CTAs match the docked composer and the next/back tabs: all 45px tall. */
+.work-slide .paper-home__cta {
+  min-height: 45px;
+}
+
+@media (max-width: 768px) {
+  .work-slide {
+    --work-media-w: 100%;
+    align-items: flex-start;
+    padding: 88px 0 150px;
+    scroll-snap-stop: normal;
+  }
+
+  .work-slide__body {
+    gap: 16px;
+  }
+}
+
+/*
+ * The docked chat. It is fixed to the bottom of the screen, 560px wide like
+ * the hero's composer it glides out of (WorkChat animates the glide). While it
+ * is docked the hero's own bar is hidden, so there is only ever one composer.
+ */
+.work-chat {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: min(560px, calc(100% - 40px));
+  transform: translateX(-50%);
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.work-chat.is-shown {
+  visibility: visible;
+}
+
+.work-chat.is-shown > * {
+  pointer-events: auto;
+}
+
+/* The hero's bar fades back in as the dock fades out, like the nav. */
+[data-chat-bar] {
+  transition: opacity 400ms var(--ease-out-expo);
+}
+
+html[data-work-docked] [data-chat-bar] {
+  visibility: hidden;
+  opacity: 0;
+  transition: none;
+}
+
+/*
+ * The thread has no pane of its own: the bubbles are solid, so they sit
+ * straight on the slide, and anything around them (the copy, the CTAs) stays
+ * sharp and clickable. It never reaches the media: WorkChat caps its height at
+ * the room between the media's foot and the composer (--work-thread-max), and
+ * fades each bubble as it scrolls up toward that edge, keeping the latest
+ * question and its answer nearly solid. The mask only softens the last 24px,
+ * where a bubble scrolls out of view.
+ */
+.work-chat__thread {
+  display: none;
+  flex-direction: column;
+  max-height: var(--work-thread-max, min(499px, calc(100svh - 260px)));
+  padding: 64px 15px 12px;
+  box-sizing: border-box;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 24px);
+  mask-image: linear-gradient(to bottom, transparent, #000 24px);
+}
+
+/* Only the bubbles take the pointer; the gaps between them belong to the page. */
+.work-chat.is-shown > .work-chat__thread {
+  pointer-events: none;
+}
+
+.work-chat__list .home-chat__wrap {
+  pointer-events: auto;
+}
+
+.work-chat__thread.is-shown {
+  display: flex;
+}
+
+.work-chat__thread::-webkit-scrollbar {
+  display: none;
+}
+
+.work-chat__list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: auto 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* The work tab: the title of the work in view, and the way to stop asking about it. */
+.work-chat .work-chat__tab {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 5px;
+  max-width: 180px;
+  height: 30px;
+  padding: 0 12px;
+  border: 0.5px solid var(--home-bubble-edge);
+  border-radius: 25px;
+  background: var(--home-bubble);
+  color: var(--home-ink);
+  font-size: 14px;
+  line-height: 1.28571;
+  white-space: nowrap;
+}
+
+.work-chat .work-chat__tab {
+  transition:
+    max-width 220ms var(--ease-out-expo),
+    padding 220ms var(--ease-out-expo),
+    margin 220ms var(--ease-out-expo),
+    opacity 140ms ease,
+    border-width 220ms var(--ease-out-expo);
+}
+
+.work-chat.is-leaving .work-chat__tab {
+  max-width: 0;
+  margin-right: -8px;
+  padding-inline: 0;
+  border-width: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.work-chat__tab svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+}
+
+.work-chat__tab:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 2px;
+}
+
+/* The next and back tabs, at the bottom right, beside the composer. */
+.work-tabs {
+  position: fixed;
+  right: 25px;
+  bottom: 28px;
+  z-index: 40;
+  display: flex;
+  gap: 10px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition:
+    opacity 240ms ease,
+    transform 240ms var(--ease-out-expo),
+    visibility 0s 240ms;
+}
+
+.work-tabs.is-shown {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition:
+    opacity 320ms ease 120ms,
+    transform 480ms var(--ease-out-expo) 120ms,
+    visibility 0s;
+}
+
+.work-tabs__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 45px;
+  padding: 0 15px;
+  box-sizing: border-box;
+  border: 0.5px solid var(--home-nav-hairline);
+  border-radius: 50px;
+  background: var(--home-glass);
+  -webkit-backdrop-filter: var(--home-frost);
+  backdrop-filter: var(--home-frost);
+  color: var(--home-muted);
+  font-size: 14px;
+  line-height: 1.28571;
+  cursor: pointer;
+  transition:
+    background-color 200ms ease,
+    color 200ms ease,
+    transform 220ms var(--ease-out-expo);
+}
+
+.work-tabs__tab:active {
+  transform: scale(0.96);
+}
+
+.work-tabs__tab:focus-visible {
+  outline: 2px solid #2f5bea;
+  outline-offset: 3px;
+}
+
+@media (hover: hover) {
+  .work-tabs__tab:hover {
+    background: var(--home-pill);
+    color: var(--home-ink);
+  }
+
+  .work-chat__tab:hover svg {
+    opacity: 1;
+  }
+}
+
+/*
+ * Once the screen is too narrow for the tabs to sit beside the composer, they
+ * stack above it, lined up with its right edge, and the thread leaves room.
+ */
+@media (max-width: 1100px) {
+  .work-tabs {
+    right: max(20px, calc(50% - 280px));
+    bottom: 83px;
+  }
+
+  .work-tabs__tab {
+    padding: 0 12px;
+  }
+
+  .work-chat {
+    gap: 65px;
+  }
+}
+
+@media (max-width: 768px) {
+  .work-chat .work-chat__tab {
+    max-width: 130px;
+    padding: 0 10px;
+  }
+
+  .work-chat__thread {
+    max-height: var(--work-thread-max, min(440px, calc(100svh - 300px)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-chat-bar],
+  .work-chat .work-chat__tab,
+  .work-tabs,
+  .work-tabs.is-shown,
+  .work-tabs__tab,
+  .work-chat__tab svg {
+    transition: none;
+  }
+}

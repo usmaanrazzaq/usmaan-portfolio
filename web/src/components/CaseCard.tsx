@@ -157,54 +157,68 @@ function TitleLink({ href, children }: { href?: string; children: ReactNode }) {
   );
 }
 
+/**
+ * One work in the homepage's work section: a full-viewport slide from the "New
+ * Work Section" Wonder frame, media on top and copy beneath, sized so both fit
+ * above the docked chat. WorkSection tracks which slide is in view by its
+ * `data-work-slide` id; `data-work` keeps the media washes in paper-home.css.
+ */
 export default function CaseCard({ project }: { project: Project }) {
   const href = projectHref(project);
 
   return (
     <article
-      className="paper-home__case flex items-start justify-between gap-5 to-lg:flex-col to-lg:justify-start"
+      id={`work-${project.slug}`}
+      className="paper-home__case work-slide"
       data-work={project.slug}
+      data-work-slide={project.slug}
+      aria-labelledby={`work-${project.slug}-title`}
     >
-      <div className="flex w-[min(100%,var(--home-copy))] shrink-0 flex-col items-start gap-2.5 to-lg:w-full">
-        <div className="flex w-full items-baseline justify-between gap-4 to-sm:flex-col to-sm:items-start to-sm:gap-1">
-          <h2 className="text-ink min-w-0 text-xl leading-[1.4] font-medium">
-            <TitleLink href={href}>{project.title}</TitleLink>
-          </h2>
-          <p className="text-muted shrink-0 text-sm leading-[1.4] font-normal whitespace-nowrap">
-            {project.date}
-          </p>
-        </div>
+      <div className="work-slide__body">
+        <CaseMedia project={project} />
 
-        <h3 className="text-ink text-lg leading-[1.4] font-medium">
-          <TitleLink href={href}>{project.headline}</TitleLink>
-        </h3>
-
-        <p className="text-ink max-w-full text-base leading-[1.55] font-normal">
-          {project.description}
-        </p>
-
-        <div className="flex flex-wrap items-center gap-2.5">
-          {project.caseHref && (
-            <a className="paper-home__cta" href={project.caseHref}>
-              Read Case Study
-              <ArrowIcon />
-            </a>
-          )}
-          {project.siteHref && (
-            <a
-              className="paper-home__cta"
-              href={project.siteHref}
-              target="_blank"
-              rel="noopener noreferrer"
+        <div className="work-slide__copy flex flex-col items-start gap-2.5">
+          <div className="flex w-full items-baseline justify-between gap-4">
+            <h2
+              id={`work-${project.slug}-title`}
+              className="text-ink min-w-0 text-lg leading-[1.4] font-medium"
             >
-              View Website
-              <ArrowIcon />
-            </a>
-          )}
+              <TitleLink href={href}>{project.title}</TitleLink>
+            </h2>
+            <p className="text-muted shrink-0 text-sm leading-[1.4] font-normal whitespace-nowrap">
+              {project.date}
+            </p>
+          </div>
+
+          <h3 className="text-ink text-lg leading-[1.4] font-medium to-md:text-base">
+            <TitleLink href={href}>{project.headline}</TitleLink>
+          </h3>
+
+          <p className="text-ink max-w-full text-sm leading-[1.55] font-normal">
+            {project.description}
+          </p>
+
+          <div className="flex flex-wrap items-center gap-2.5">
+            {project.caseHref && (
+              <a className="paper-home__cta" href={project.caseHref}>
+                Read Case Study
+                <ArrowIcon />
+              </a>
+            )}
+            {project.siteHref && (
+              <a
+                className="paper-home__cta"
+                href={project.siteHref}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                View Website
+                <ArrowIcon />
+              </a>
+            )}
+          </div>
         </div>
       </div>
-
-      <CaseMedia project={project} />
     </article>
   );
 }

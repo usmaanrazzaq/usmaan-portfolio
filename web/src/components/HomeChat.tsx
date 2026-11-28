@@ -46,7 +46,7 @@ import { REACTIONS, type Reaction, type Reactions } from "@/lib/chatReactions";
  * `lang` is set on anything not in English, so a screen reader switches voice
  * and Urdu runs right to left.
  */
-type Bubble = ChatMessage & { from?: "me"; lang?: LocaleCode };
+export type Bubble = ChatMessage & { from?: "me"; lang?: LocaleCode };
 
 /** The language the visitor picked in the menu, kept for the visit. */
 const LANGUAGE_KEY = "home-chat-language";
@@ -64,12 +64,12 @@ const LONG_PRESS_MS = 450;
 const MAX_EXTRA = 30;
 
 /** Longer messages take longer to "type"; a link takes a short beat. */
-function typingMs(message: ChatMessage) {
+export function typingMs(message: ChatMessage) {
   return message.href ? 320 : Math.min(1300, 520 + message.text.length * 6);
 }
 
 /** How a reply bubble is read out in the status line. */
-function spoken(bubble: ReplyBubble, locale: LocaleReplies | null) {
+export function spoken(bubble: ReplyBubble, locale: LocaleReplies | null) {
   if (typeof bubble === "string") return bubble;
   return locale ? locale.ui.link(bubble.text) : `Link: ${bubble.text}.`;
 }
@@ -109,7 +109,7 @@ function threadItems(scripted: ChatMessage[]): ThreadItem[] {
 
 const BUBBLE_BASE =
   "home-chat__bubble flex items-center gap-[5px] rounded-[18px] px-3 py-2 text-sm leading-[18px] font-normal [overflow-wrap:anywhere]";
-const BUBBLE_RECEIVED = `${BUBBLE_BASE} border-[0.5px] border-bubble-edge bg-bubble text-ink`;
+export const BUBBLE_RECEIVED = `${BUBBLE_BASE} border-[0.5px] border-bubble-edge bg-bubble text-ink`;
 const BUBBLE_SENT = `${BUBBLE_BASE} bg-bubble-sent text-white`;
 
 /**
@@ -651,7 +651,7 @@ export default function HomeChat() {
           </noscript>
         </div>
 
-        <div className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
+        <div data-chat-bar className="home-chat__bar home-enter relative flex shrink-0 items-start gap-[5px] [--enter-delay:260ms]">
           <ChatMenu language={language} onLanguage={chooseLanguage} />
 
           <form
@@ -677,7 +677,7 @@ export default function HomeChat() {
                 maxLength={140}
                 className="text-ink min-w-0 flex-1 bg-transparent text-sm leading-[18px] font-normal outline-none"
               />
-              {!draft && <TypedPlaceholder focused={focused} />}
+              {!draft && !focused && <TypedPlaceholder focused={focused} />}
             </span>
             <button
               type="submit"
@@ -726,8 +726,15 @@ function sharedPrefix(a: string, b: string) {
  * in full, as the server renders it, and stays there with reduced motion. The
  * field's own aria-label says the same, so this is hidden from assistive tech.
  */
-function TypedPlaceholder({ focused }: { focused: boolean }) {
-  const [text, setText] = useState(CHAT_PLACEHOLDERS[0]);
+export function TypedPlaceholder({
+  focused,
+  phrases = CHAT_PLACEHOLDERS,
+}: {
+  focused: boolean;
+  /** The phrases to cycle; HomeChat's own by default. Key the component to swap them. */
+  phrases?: readonly string[];
+}) {
+  const [text, setText] = useState(phrases[0]);
   const [holding, setHolding] = useState(true);
   const [reduced, setReduced] = useState(false);
 
@@ -738,7 +745,7 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
     }
 
     let phrase = 0;
-    let length = CHAT_PLACEHOLDERS[0].length;
+    let length = phrases[0].length;
     let timer = 0;
     let next: (() => void) | null = null;
 
@@ -754,20 +761,20 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
 
     function erase() {
       setHolding(false);
-      const current = CHAT_PLACEHOLDERS[phrase];
-      const upcoming = CHAT_PLACEHOLDERS[(phrase + 1) % CHAT_PLACEHOLDERS.length];
+      const current = phrases[phrase];
+      const upcoming = phrases[(phrase + 1) % phrases.length];
       if (length > sharedPrefix(current, upcoming)) {
         length--;
         setText(current.slice(0, length));
         schedule(erase, DELETE_MS);
         return;
       }
-      phrase = (phrase + 1) % CHAT_PLACEHOLDERS.length;
+      phrase = (phrase + 1) % phrases.length;
       schedule(type, RETYPE_DELAY_MS);
     }
 
     function type() {
-      const current = CHAT_PLACEHOLDERS[phrase];
+      const current = phrases[phrase];
       length++;
       setText(current.slice(0, length));
       if (length < current.length) schedule(type, TYPE_MS + Math.random() * 40);
@@ -787,7 +794,7 @@ function TypedPlaceholder({ focused }: { focused: boolean }) {
       window.clearTimeout(timer);
       document.removeEventListener("visibilitychange", onVisibilityChange);
     };
-  }, []);
+  }, [phrases]);
 
   // A phrase longer than the field keeps its start and trails off, as a native
   // placeholder does: the command word is the part that has to stay readable.
@@ -1150,7 +1157,7 @@ function ConnectLinks({ links }: { links: ChatMessage[] }) {
  * to stay the link). A double click with a mouse hearts a text bubble, as it
  * does in Messages.
  */
-function ChatBubble({
+export function ChatBubble({
   bubble,
   reaction,
   open,
