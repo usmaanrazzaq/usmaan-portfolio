@@ -15,6 +15,8 @@ export type ProjectMedia =
 export type Project = {
   slug: "shifts" | "rented" | "nmya" | "adsum" | "dpr" | "otrs" | "wcm";
   title: string;
+  /** The name the homepage work chat uses in its placeholder and the next/back tabs. */
+  shortTitle: string;
   date: string;
   headline: string;
   description: string;
@@ -31,6 +33,7 @@ export const projects: Project[] = [
   {
     slug: "shifts",
     title: "Shifts Management",
+    shortTitle: "Shifts",
     date: "July 2026 - Oct 2026",
     headline:
       "Designing a simple and modern shifts management application for small to large scale teams.",
@@ -49,6 +52,7 @@ export const projects: Project[] = [
   {
     slug: "rented",
     title: "Rented",
+    shortTitle: "Rented",
     date: "Nov 2024 - Feb 2025",
     headline: "Designing a peer-to-peer rental experience for urban renters",
     description:
@@ -60,6 +64,7 @@ export const projects: Project[] = [
   {
     slug: "nmya",
     title: "National Muslim Youth Association",
+    shortTitle: "NMYA",
     date: "Nov 2023 - Nov 2025",
     headline: "Redesigning a non-profit site to better serve Muslim youth.",
     description:
@@ -77,6 +82,7 @@ export const projects: Project[] = [
   {
     slug: "adsum",
     title: "Adsum NYC",
+    shortTitle: "Adsum",
     date: "Nov 2025 - Present",
     headline: "Product design & Marketing for a Brooklyn-based brand.",
     description:
@@ -93,6 +99,7 @@ export const projects: Project[] = [
   {
     slug: "dpr",
     title: "DPR Studio",
+    shortTitle: "DPR Studio",
     date: "June 2025 - Present",
     headline: "Redesigning and developing a custom Shopify site for a design studio.",
     description:
@@ -109,6 +116,7 @@ export const projects: Project[] = [
   {
     slug: "otrs",
     title: "On The Run Studio",
+    shortTitle: "OTRS",
     date: "Mar 2021 - Aug 2026",
     headline: "Creating a brand and a Design Studio.",
     description:
@@ -125,6 +133,7 @@ export const projects: Project[] = [
   {
     slug: "wcm",
     title: "WCM Connect App",
+    shortTitle: "WCM Connect",
     date: "Personal Project",
     headline:
       "A self-initiated concept redesign of an existing patient app's onboarding, dashboard, and scheduling, based on public App Store reviews.",

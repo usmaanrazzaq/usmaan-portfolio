@@ -1,7 +1,6 @@
-import { Fragment } from "react";
 import CaseCard from "@/components/CaseCard";
 import HomeChat from "@/components/HomeChat";
-import WorkStack from "@/components/WorkStack";
+import WorkSection from "@/components/WorkSection";
 import { projects } from "@/data/projects";
 
 /** Runs while the parser is still above `#work`. A reload or back/forward
@@ -28,16 +27,13 @@ export default function HomeContent() {
 
       <HomeChat />
 
-      <section className="mt-[100px] scroll-mt-6 to-md:mt-16" id="work" aria-label="Selected work">
-        <WorkStack>
-          {projects.map((project, index) => (
-            <Fragment key={project.slug}>
-              {index > 0 && <hr className="bg-divider my-10 h-px w-full border-0" />}
-              <CaseCard project={project} />
-            </Fragment>
-          ))}
-        </WorkStack>
-      </section>
+      <WorkSection
+        works={projects.map(({ slug, title, shortTitle }) => ({ slug, title, shortTitle }))}
+      >
+        {projects.map((project) => (
+          <CaseCard key={project.slug} project={project} />
+        ))}
+      </WorkSection>
     </>
   );
 }
